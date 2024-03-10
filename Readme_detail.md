@@ -1,4 +1,4 @@
-# ZundaGPT2　追加資料
+# ZundaGPT2 Lite　追加資料
 
 Copyright (c) 2024 led-mirage
 
