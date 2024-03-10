@@ -4,7 +4,7 @@ Copyright (c) 2024 led-mirage
 
 ## 概要
 
-ZundaGPT2(https://github.com/led-mirage/ZundaGPT2)のライト版なのだ。ZundaGPT2から音声読み上げ機能を省いたバージョンなのだよ。
+ZundaGPT2(https://github.com/led-mirage/ZundaGPT2) のライト版なのだ。ZundaGPT2から音声読み上げ機能を省いたバージョンなのだよ。
 
 OpenAIまたは、AzureOpenAI Serviceを使って、AIとチャットできるチャットクライアントソフトウェアなのだ。
 
