@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>ZundaGPT2 Lite</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/stackoverflow-dark.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.0/marked.min.js"></script>
+<link rel="stylesheet" href="css/style.css">
+<script>
+MathJax = {
+    tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']]
+    },
+    svg: {
+        fontCache: 'global'
+    },
+    chtml: {
+        displayAlign: 'left'
+    }
+};
+</script>
+<script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+<div class="chat-container">
+  <div class="header">
+    <span id="settings-name">ZundaGPT</span>
+    <nav>
+      <ul>
+        <li><button onclick="prevChat()">prev</button></li>
+        <li><button onclick="nextChat()">next</button></li>
+        <li><button onclick="newChat()">new</button></li>
+        <li><button onclick="deleteChat()" class="emoji">🗑️</button></li>
+        <li><button onclick="settings()" class="emoji">⚙️</button></li>
+      </ul>
+    </nav>
+  </div>
+  <div id="chat-messages" class="chat-messages">
+    <!-- ここにメッセージが動的に追加される
+    <div class="chat-message">
+      <div class="speaker-name">発言者A</div>
+      <div class="message-text">こんにちは、今日は良い天気ですね。</div>
+    </div>
+    -->
+  </div>
+  <div class="chat-input">
+    <textarea id="message" placeholder="メッセージを入力..."></textarea>
+    <button id="submit-button" type="button" onclick="submit()">送信</button>
+  </div>
+</div>
+<footer>Copyright 2024 led-mirage</footer>
+
+<script>
+let g_userName = "あなた";
+let g_userColor = "#007bff";
+let g_assistantName = "ずんだ";
+let g_assistantColor = "#006400";
+
+// 初期化
+document.addEventListener("DOMContentLoaded", function() {
+    const textarea = document.getElementById("message");
+    textarea.addEventListener("input", autoResize, false);
+
+    const button = document.getElementById("submit-button");
+    button.addEventListener("click", function(){
+        autoResize.call(textarea);
+    }, false);
+
+    document.getElementById('message').addEventListener('keydown', function(event) {
+        // Enterが押されたが、Shiftが押されていない場合
+        if (event.key === 'Enter' && !event.shiftKey) {
+            event.preventDefault(); // デフォルトのEnterによる改行を防ぐ
+            submit(); // 送信処理を実行
+            autoResize.call(textarea);
+        }
+    });
+
+    autoResize.call(textarea);
+
+    function autoResize() {
+        this.style.height = "auto";
+        this.style.height = this.scrollHeight - rem2px(2) + "px";
+    }
+});
+
+// pywebviewの初期化完了
+window.addEventListener("pywebviewready", function() {
+    pywebview.api.page_loaded();
+})
+
+// remをpxに変換
+function rem2px(rem) {
+    var rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
+    return rem * rootFontSize;
+}
+
+// IME対策
+// IMEがONの状態かつフォーカスがテキストボックスにある状態で、
+// 別のアプリを見るなどしてウィンドウのフォーカスが失われ再度戻ってきたときに、
+// IMEの変換がテキストボックス内でできなくなる現象に対処
+window.onfocus = function() {
+    document.getElementById("message").blur();
+}
+
+// 送信ボタン押下時イベントハンドラ
+async function submit() {
+    const text = document.getElementById("message").value;
+    if (text === "") return;
+
+    // HTMLにメッセージを追加
+    addChatMessage("user", g_userName, g_userColor, text)
+    scrollToBottom();
+    document.getElementById("message").value = "";
+
+    // Python側に通知
+    try {
+        await pywebview.api.send_message_to_chatgpt(text);
+    }
+    catch (error) {
+        console.error("Error: " + error)
+    }
+}
+
+// チャットメッセージを下端までスクロールする
+function scrollToBottom() {
+    const messageContainer = document.querySelector(".chat-messages");
+        messageContainer.scrollTop = messageContainer.scrollHeight;
+}
+
+// 文字列をHTML用にエスケープする
+function escapeHtml(text) {
+    return text
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#x27;")
+        .replace(/\n/g, "<br>")
+        .replace(/ /g, "&nbsp;")
+        .replace(/\t/g, "&nbsp;&nbsp;&nbsp;&nbsp;");
+}
+
+function escapeHtml2(text) {
+    return text
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;");
+}
+
+// チャットメッセージブロックを追加する
+function addChatMessage(role, speakerName, color, messageText) {
+    // チャットメッセージコンテナを取得
+    const chatMessagesContainer = document.getElementById('chat-messages');
+
+    // 新しいチャットメッセージ要素を作成
+    const chatMessageElement = document.createElement('div');
+    chatMessageElement.classList.add('chat-message');
+
+    // 発言者名を表示する要素を作成
+    const speakerElement = document.createElement('div');
+    speakerElement.classList.add('speaker-name');
+    speakerElement.style.color = color;
+    speakerElement.textContent = speakerName;
+
+    // メッセージテキストを表示する要素を作成
+    const messageElement = document.createElement('div');
+    messageElement.classList.add('message-text');
+    if (role === "assistant") {
+        messageElement.innerHTML = marked.parse(messageText);
+        messageElement.querySelectorAll('pre code').forEach((block) => {
+            hljs.highlightElement(block);
+        });
+        addTargetBlank(messageElement);
+    }
+    else {
+        messageElement.innerHTML = escapeHtml(messageText);
+    }
+
+    // チャットメッセージ要素に発言者名とメッセージテキストの要素を追加
+    chatMessageElement.appendChild(speakerElement);
+    chatMessageElement.appendChild(messageElement);
+
+    // 作成したチャットメッセージをコンテナに追加
+    chatMessagesContainer.appendChild(chatMessageElement);
+}
+
+// 要素中の<a>タグにtarget="_blank"を設定する
+function addTargetBlank(targetElement) {
+    const links = targetElement.getElementsByTagName('a');
+    for (let i = 0; i < links.length; i++) {
+        if (!links[i].hasAttribute('target')) {
+            links[i].setAttribute('target', '_blank');
+            links[i].setAttribute('title', links[i].getAttribute('href'));
+        }
+    }
+}
+
+// 新規チャット開始
+async function newChat() {
+    // チャット要素を削除
+    document.getElementById('chat-messages').innerHTML = "";
+
+    // Python側に通知
+    try {
+        await pywebview.api.new_chat();
+    }
+    catch (error) {
+        console.error("Error: " + error)
+    }
+}
+
+// ひとつ前のチャットに移動する
+async function prevChat() {
+    try {
+        await pywebview.api.prev_chat();
+    }
+    catch (error) {
+        console.error("Error: " + error)
+    }
+}
+
+// ひとつ後のチャットに移動する
+async function nextChat() {
+    try {
+        await pywebview.api.next_chat();
+    }
+    catch (error) {
+        console.error("Error: " + error)
+    }
+}
+
+// 現在表示しているチャットを削除する
+async function deleteChat() {
+    const messageTextElements = document.querySelectorAll('#chat-messages .message-text');
+    if (messageTextElements.length === 0) return;
+
+    if (!confirm("本当に削除しますか？")) return;
+
+    try {
+        await pywebview.api.delete_current_chat();
+    }
+    catch (error) {
+        console.error("Error: " + error)
+    }
+}
+
+// 設定ボタンが押された
+async function settings() {
+    try {
+        await pywebview.api.move_to_settings();
+    }
+    catch (error) {
+        console.error("Error: " + error)
+    }
+}
+
+// Pythonから呼び出される関数
+// 情報をセットする
+function setChatInfo(displayName, userName, userColor, assistantName, assistantColor) {
+    g_userName = userName;
+    g_userColor = userColor;
+    g_assistantName = assistantName;
+    g_assistantColor = assistantColor;
+
+    if (displayName === "") {
+        displayName = assistantName;
+    }
+    document.getElementById("settings-name").textContent = displayName;
+}
+
+// Pythonから呼び出される関数
+// AIからのチャット応答を開始する
+function startResponse() {
+    addChatMessage("assistant", g_assistantName, g_assistantColor, "");
+    scrollToBottom();
+
+    const nameTextElements = document.querySelectorAll('#chat-messages .speaker-name');
+    const lastNameTextElements = nameTextElements[nameTextElements.length - 1];
+    if(lastNameTextElements) {
+        lastNameTextElements.classList.add('flowing-text');
+    }
+}
+
+// Pythonから呼び出される関数
+// AIからの応答（チャンク）を表示する
+function addChunk(text) {
+    const messageTextElements = document.querySelectorAll('#chat-messages .message-text');
+    const lastMessageTextElement = messageTextElements[messageTextElements.length - 1];
+    if(lastMessageTextElement) {
+        lastMessageTextElement.innerHTML += escapeHtml(text);
+        scrollToBottom();
+    }
+}
+
+// Pythonから呼び出される関数
+// センテンスの読み上げが終わったときに呼び出される
+function parsedSentence(sentence) {
+    MathJax.typesetPromise();
+}
+
+// Pythonから呼び出される関数
+// AIからのチャット応答が終了した
+function endResponse(content) {
+    const nameTextElements = document.querySelectorAll('#chat-messages .speaker-name');
+    const lastNameTextElements = nameTextElements[nameTextElements.length - 1];
+    if(lastNameTextElements) {
+        lastNameTextElements.classList.remove('flowing-text');
+    }
+
+    const messageTextElements = document.querySelectorAll('#chat-messages .message-text');
+    const lastMessageTextElement = messageTextElements[messageTextElements.length - 1];
+    if(lastMessageTextElement) {
+        lastMessageTextElement.innerHTML = marked.parse(content);
+        lastMessageTextElement.querySelectorAll('pre code').forEach((block) => {
+            hljs.highlightElement(block);
+        });
+        addTargetBlank(lastMessageTextElement);
+    }
+
+    MathJax.typesetPromise();
+}
+
+// Pythonから呼び出される関数
+// チャット応答で例外が発生した
+function handleChatException(message) {
+    alert(message)
+    endResponse()
+}
+
+// Pythonから呼び出される関数
+// チャット応答で例外が発生した
+async function handleChatTimeoutException(message) {
+    if (confirm(`${message}\nリトライしますか？`)) {
+        // Python側に通知
+        try {
+            await pywebview.api.retry_send_message_to_chatgpt();
+        }
+        catch (error) {
+            console.error("Error: " + error)
+        }
+    }
+    else {
+        endResponse()
+    }
+}
+
+// Pythonから呼び出される関数
+// チャットのメッセージを再設定する
+function setChatMessages(messages) {
+    console.log(messages);
+    document.getElementById("chat-messages").innerHTML = "";
+    for (let message of messages) {
+        let speakerName = "";
+        let speakerColor = "";
+        if (message.role === "assistant") {
+            speakerName = g_assistantName;
+            speakerColor = g_assistantColor;
+        }
+        else {
+            speakerName = g_userName;
+            speakerColor = g_userColor;
+        }
+        addChatMessage(message.role, speakerName, speakerColor, message.content);
+    }
+    MathJax.typesetPromise();
+    scrollToBottom();
+}
+</script>
+
+</body>
+</html>

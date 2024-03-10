@@ -1,0 +1,9 @@
+{
+    "file_ver": 1,
+    "system": {
+        "log_folder": "log",
+        "settings_file": "settings.json",
+        "window_width": 1000,
+        "window_height": 800
+    }
+}

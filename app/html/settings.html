@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>ZundaGPT2</title>
+<link rel="stylesheet" href="css/style.css">
+<style>
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+th, td {
+    border: 1px solid black;
+    padding: 0.5rem;
+    text-align: left;
+    font-size: 0.9rem;
+}
+thead {
+    background-color: #f2f2f2;
+}  
+th:nth-child(1), th:nth-child(2), td:nth-child(1), td:nth-child(2) {
+    width: 1%;
+    white-space: nowrap;
+}
+td:nth-child(1) {
+    text-align: center;
+    background-color:#faf3e7;
+    cursor: pointer;
+}
+th:nth-child(3), td:nth-child(3) {
+    width: auto;
+}
+.remark {
+    color: gray;
+    font-size: 0.7rem;
+}
+</style>
+</head>
+<body>
+<div class="chat-container">
+  <div class="header">
+    <span>設定切替</span>
+    <nav>
+      <ul>
+        <li><button onclick="cancel()">cancel</button></li>
+        <li><button onclick="submit()">ok</button></li>
+      </ul>
+    </nav>
+  </div>
+  <div id="chat-messages" class="chat-messages">
+    <table id="jsonTable">
+      <thead>
+        <tr>
+          <th>選択</th>
+          <th>表示名</th>
+          <th>説明</th>
+        </tr>
+      </thead>
+      <tbody>
+      <!-- JavaScriptからテーブルの行がここに挿入される -->
+      </tbody>
+    </table>
+  </div>
+</div>
+<footer>Copyright 2024 led-mirage</footer>
+
+<script>
+let g_selectedIndex = -1;
+let g_settingFiles = null;
+
+// 初期化
+document.addEventListener("DOMContentLoaded", function() {
+});
+
+// pywebviewの初期化完了
+window.addEventListener("pywebviewready", async function() {
+    // Python側に通知
+    try {
+      g_settingFiles = await pywebview.api.get_settings_files();
+        create_table(g_settingFiles);
+    }
+    catch (error) {
+        console.error("Error: " + error)
+    }
+})
+
+// 設定表の作成
+function create_table(settingsFiles) {
+    // テーブルのtbody要素を取得
+    const tableBody = document.getElementById("jsonTable").getElementsByTagName("tbody")[0];
+
+    // JSONデータからテーブルの行を生成
+    settingsFiles.forEach((item, index) => {
+        // 新しい行とセルを作成
+        let newRow = tableBody.insertRow();
+        let cell1 = newRow.insertCell(0);
+        let cell2 = newRow.insertCell(1);
+        let cell3 = newRow.insertCell(2);
+
+        // セルにテキストを設定
+        cell1.textContent = item.current ? "✅" : "";
+
+        filename = escapeHtml(item.filename);
+        displayName = escapeHtml(item.displayName);
+        description = escapeHtml(item.description);
+        userName = escapeHtml(item.userName);
+        assistantName = escapeHtml(item.assistantName);
+        api = escapeHtml(item.api);
+        model = escapeHtml(item.model);
+
+        cell2.innerHTML = `${displayName}<br><span class="remark">${assistantName} x ${userName}</span>`;
+        cell3.innerHTML = `${description}<br><span class="remark">${api}　${model}　${filename}</span>`;
+
+        if (item.current)
+            g_selectedIndex = index;
+
+        cell1.classList.add('selectable');
+        cell1.setAttribute('data-index', index);
+    });
+
+    // 選択マークの移動機能
+    document.querySelectorAll('.selectable').forEach(cell => {
+        cell.addEventListener('click', function() {
+            if (g_selectedIndex != -1) {
+                elm = document.querySelector('.selectable[data-index="' + g_selectedIndex + '"]')
+                elm.textContent = "";
+            }
+            this.textContent = "✅"; // 新しい選択を設定
+            g_selectedIndex = this.getAttribute('data-index');
+        });
+    });
+}
+
+// OKボタン押下イベント
+async function submit() {
+    // Python側に通知
+    try {
+        selectedFile = g_settingFiles[g_selectedIndex].filename;
+        await pywebview.api.submit_settings(selectedFile);
+    }
+    catch (error) {
+        console.error("Error: " + error)
+    }
+}
+
+// キャンセルボタン押下イベント
+async function cancel() {
+    // Python側に通知
+    try {
+        await pywebview.api.cancel_settings();
+    }
+    catch (error) {
+        console.error("Error: " + error)
+    }
+}
+
+// 文字列をHTML用にエスケープする
+function escapeHtml(text) {
+    return text
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#x27;")
+        .replace(/\n/g, "<br>")
+        .replace(/ /g, "&nbsp;")
+        .replace(/\t/g, "&nbsp;&nbsp;&nbsp;&nbsp;");
+}
+</script>
+
+</body>
+</html>
