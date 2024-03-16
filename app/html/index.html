@@ -141,10 +141,14 @@ function escapeHtml(text) {
         .replace(/\t/g, "&nbsp;&nbsp;&nbsp;&nbsp;");
 }
 
-function escapeHtml2(text) {
-    return text
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;");
+// TeX用の文字列をエスケープする
+function escapeTex(text) {
+    return text.replace(/\\/g, "\\\\");
+}
+
+// TeX用にエスケープした文字列を元に戻す
+function unescapeTex(text) {
+    return text.replace(/\\\\/g, "\\");
 }
 
 // チャットメッセージブロックを追加する
@@ -166,7 +170,10 @@ function addChatMessage(role, speakerName, color, messageText) {
     const messageElement = document.createElement('div');
     messageElement.classList.add('message-text');
     if (role === "assistant") {
-        messageElement.innerHTML = marked.parse(messageText);
+        let html = escapeTex(messageText);
+        html = marked.parse(html);
+        html = unescapeTex(html);
+        messageElement.innerHTML = html;
         messageElement.querySelectorAll('pre code').forEach((block) => {
             hljs.highlightElement(block);
         });
@@ -310,7 +317,10 @@ function endResponse(content) {
     const messageTextElements = document.querySelectorAll('#chat-messages .message-text');
     const lastMessageTextElement = messageTextElements[messageTextElements.length - 1];
     if(lastMessageTextElement) {
-        lastMessageTextElement.innerHTML = marked.parse(content);
+        let html = escapeTex(content);
+        html = marked.parse(html);
+        html = unescapeTex(html);
+        lastMessageTextElement.innerHTML = html;
         lastMessageTextElement.querySelectorAll('pre code').forEach((block) => {
             hljs.highlightElement(block);
         });

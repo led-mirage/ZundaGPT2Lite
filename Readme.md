@@ -49,7 +49,7 @@ Windowsの場合は、Windowsの検索窓で「環境変数を編集」で検索
 
 以下のリンクから ZundaGPT2Lite.ZIP をダウンロードして、作成したフォルダに展開するのだ。
 
-https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v0.1.0
+https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v0.1.1
 
 #### 3. 実行
 
@@ -171,3 +171,7 @@ VirusTotalでのチェック結果は以下の通りなのだ（73個中7つで�
  
 - ファーストリリース
 - ZundaGTP2 v0.5.0から分岐
+
+### 0.1.1 (2024/3/16)
+
+- 数式が正常にレンダリングされないバグを修正
