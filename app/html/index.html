@@ -10,13 +10,13 @@
 <script>
 MathJax = {
     tex: {
-        inlineMath: [['$', '$'], ['\\(', '\\)']]
+        inlineMath: [["$", "$"], ["\\(", "\\)"]]
     },
     svg: {
-        fontCache: 'global'
+        fontCache: "global"
     },
     chtml: {
-        displayAlign: 'left'
+        displayAlign: "left"
     }
 };
 </script>
@@ -38,8 +38,8 @@ MathJax = {
   </div>
   <div id="chat-messages" class="chat-messages">
     <!-- ここにメッセージが動的に追加される
-    <div class="chat-message">
-      <div class="speaker-name">発言者A</div>
+    <div class="chat-message" id="message-0">
+      <div class="speaker-name">発言者A<button class="message-delete-btn">🗑️</button></div>
       <div class="message-text">こんにちは、今日は良い天気ですね。</div>
     </div>
     -->
@@ -56,6 +56,7 @@ let g_userName = "あなた";
 let g_userColor = "#007bff";
 let g_assistantName = "ずんだ";
 let g_assistantColor = "#006400";
+let g_nextMessageIndex = 0;
 
 // 初期化
 document.addEventListener("DOMContentLoaded", function() {
@@ -67,9 +68,9 @@ document.addEventListener("DOMContentLoaded", function() {
         autoResize.call(textarea);
     }, false);
 
-    document.getElementById('message').addEventListener('keydown', function(event) {
+    document.getElementById("message").addEventListener("keydown", function(event) {
         // Enterが押されたが、Shiftが押されていない場合
-        if (event.key === 'Enter' && !event.shiftKey) {
+        if (event.key === "Enter" && !event.shiftKey) {
             event.preventDefault(); // デフォルトのEnterによる改行を防ぐ
             submit(); // 送信処理を実行
             autoResize.call(textarea);
@@ -154,27 +155,37 @@ function unescapeTex(text) {
 // チャットメッセージブロックを追加する
 function addChatMessage(role, speakerName, color, messageText) {
     // チャットメッセージコンテナを取得
-    const chatMessagesContainer = document.getElementById('chat-messages');
+    const chatMessagesContainer = document.getElementById("chat-messages");
 
     // 新しいチャットメッセージ要素を作成
-    const chatMessageElement = document.createElement('div');
-    chatMessageElement.classList.add('chat-message');
+    const chatMessageElement = document.createElement("div");
+    chatMessageElement.classList.add("chat-message");
+    chatMessageElement.id = "message-" + g_nextMessageIndex++;
 
     // 発言者名を表示する要素を作成
-    const speakerElement = document.createElement('div');
-    speakerElement.classList.add('speaker-name');
+    const speakerElement = document.createElement("div");
+    speakerElement.classList.add("speaker-name");
     speakerElement.style.color = color;
     speakerElement.textContent = speakerName;
 
+    // 削除ボタンをつける
+    if (role === "user") {
+        const deleteElement = document.createElement("button");
+        deleteElement.classList.add("message-delete-btn");
+        deleteElement.textContent = "🗑️";
+        deleteElement.addEventListener("click", deleteChatMessage);
+        speakerElement.appendChild(deleteElement);
+    }
+
     // メッセージテキストを表示する要素を作成
-    const messageElement = document.createElement('div');
-    messageElement.classList.add('message-text');
+    const messageElement = document.createElement("div");
+    messageElement.classList.add("message-text");
     if (role === "assistant") {
         let html = escapeTex(messageText);
         html = marked.parse(html);
         html = unescapeTex(html);
         messageElement.innerHTML = html;
-        messageElement.querySelectorAll('pre code').forEach((block) => {
+        messageElement.querySelectorAll("pre code").forEach((block) => {
             hljs.highlightElement(block);
         });
         addTargetBlank(messageElement);
@@ -193,11 +204,11 @@ function addChatMessage(role, speakerName, color, messageText) {
 
 // 要素中の<a>タグにtarget="_blank"を設定する
 function addTargetBlank(targetElement) {
-    const links = targetElement.getElementsByTagName('a');
+    const links = targetElement.getElementsByTagName("a");
     for (let i = 0; i < links.length; i++) {
-        if (!links[i].hasAttribute('target')) {
-            links[i].setAttribute('target', '_blank');
-            links[i].setAttribute('title', links[i].getAttribute('href'));
+        if (!links[i].hasAttribute("target")) {
+            links[i].setAttribute("target", "_blank");
+            links[i].setAttribute("title", links[i].getAttribute("href"));
         }
     }
 }
@@ -205,7 +216,7 @@ function addTargetBlank(targetElement) {
 // 新規チャット開始
 async function newChat() {
     // チャット要素を削除
-    document.getElementById('chat-messages').innerHTML = "";
+    document.getElementById("chat-messages").innerHTML = "";
 
     // Python側に通知
     try {
@@ -238,7 +249,7 @@ async function nextChat() {
 
 // 現在表示しているチャットを削除する
 async function deleteChat() {
-    const messageTextElements = document.querySelectorAll('#chat-messages .message-text');
+    const messageTextElements = document.querySelectorAll("#chat-messages .message-text");
     if (messageTextElements.length === 0) return;
 
     if (!confirm("本当に削除しますか？")) return;
@@ -261,6 +272,27 @@ async function settings() {
     }
 }
 
+// メッセージの削除ボタンが押された
+async function deleteChatMessage(event) {
+    if (!confirm("以降のメッセージを削除しますか？")) return;
+
+    let messageDiv = event.target.closest(".chat-message");
+    let messageId = messageDiv.id;
+    let messageIndex = parseInt(messageId.split("-")[1], 10);
+
+    try {
+        await pywebview.api.trancate_messages(messageIndex);
+        g_nextMessageIndex = messageIndex;
+        while (messageDiv.nextSibling) {
+            messageDiv.nextSibling.remove();
+        }
+        messageDiv.remove();
+    }
+    catch (error) {
+        console.error("Error: " + error)
+    }
+}
+
 // Pythonから呼び出される関数
 // 情報をセットする
 function setChatInfo(displayName, userName, userColor, assistantName, assistantColor) {
@@ -268,6 +300,7 @@ function setChatInfo(displayName, userName, userColor, assistantName, assistantC
     g_userColor = userColor;
     g_assistantName = assistantName;
     g_assistantColor = assistantColor;
+    g_nextMessageIndex = 0;
 
     if (displayName === "") {
         displayName = assistantName;
@@ -281,17 +314,17 @@ function startResponse() {
     addChatMessage("assistant", g_assistantName, g_assistantColor, "");
     scrollToBottom();
 
-    const nameTextElements = document.querySelectorAll('#chat-messages .speaker-name');
+    const nameTextElements = document.querySelectorAll("#chat-messages .speaker-name");
     const lastNameTextElements = nameTextElements[nameTextElements.length - 1];
     if(lastNameTextElements) {
-        lastNameTextElements.classList.add('flowing-text');
+        lastNameTextElements.classList.add("flowing-text");
     }
 }
 
 // Pythonから呼び出される関数
 // AIからの応答（チャンク）を表示する
 function addChunk(text) {
-    const messageTextElements = document.querySelectorAll('#chat-messages .message-text');
+    const messageTextElements = document.querySelectorAll("#chat-messages .message-text");
     const lastMessageTextElement = messageTextElements[messageTextElements.length - 1];
     if(lastMessageTextElement) {
         lastMessageTextElement.innerHTML += escapeHtml(text);
@@ -308,20 +341,20 @@ function parsedSentence(sentence) {
 // Pythonから呼び出される関数
 // AIからのチャット応答が終了した
 function endResponse(content) {
-    const nameTextElements = document.querySelectorAll('#chat-messages .speaker-name');
+    const nameTextElements = document.querySelectorAll("#chat-messages .speaker-name");
     const lastNameTextElements = nameTextElements[nameTextElements.length - 1];
     if(lastNameTextElements) {
-        lastNameTextElements.classList.remove('flowing-text');
+        lastNameTextElements.classList.remove("flowing-text");
     }
 
-    const messageTextElements = document.querySelectorAll('#chat-messages .message-text');
+    const messageTextElements = document.querySelectorAll("#chat-messages .message-text");
     const lastMessageTextElement = messageTextElements[messageTextElements.length - 1];
     if(lastMessageTextElement) {
         let html = escapeTex(content);
         html = marked.parse(html);
         html = unescapeTex(html);
         lastMessageTextElement.innerHTML = html;
-        lastMessageTextElement.querySelectorAll('pre code').forEach((block) => {
+        lastMessageTextElement.querySelectorAll("pre code").forEach((block) => {
             hljs.highlightElement(block);
         });
         addTargetBlank(lastMessageTextElement);

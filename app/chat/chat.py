@@ -29,6 +29,10 @@ class Chat:
         self.chat_start_time = datetime.now()
         self.chat_update_time = datetime.now()
 
+    # 指定index以下のメッセージを切り捨てる
+    def truncate_messages(self, index):
+        self.messages = self.messages[:index]
+
     # メッセージを送信して回答を得る
     def send_message(
         self,

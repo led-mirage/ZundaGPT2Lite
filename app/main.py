@@ -15,7 +15,7 @@ from chat import Chat
 from chat_log import ChatLog
 
 APP_NAME = "ZundaGPT2 Lite"
-APP_VERSION = "0.1.1"
+APP_VERSION = "0.2.0"
 COPYRIGHT = "Copyright 2024 led-mirage"
 
 # アプリケーションクラス
@@ -197,6 +197,11 @@ class Application:
             self.on_end_response,
             self.on_chat_error)
     
+    # メッセージ削除イベントハンドラ（UI）
+    def trancate_messages(self, index):
+        self.chat.truncate_messages(index)
+        ChatLog.save(self.settings, self.chat)
+
     # チャンク受信イベントハンドラ（Chat）
     def on_recieve_chunk(self, chunk):
         self.window.evaluate_js(f"addChunk('{self.escape_js_string(chunk)}')")
