@@ -152,12 +152,12 @@ VirusTotalでのチェック結果は以下の通りなのだ。
 
 ### 🔖 Highlight.js 11.9.0
 
-ホームページ：https://github.com/highlightjs/highlight.js
+ホームページ：https://github.com/highlightjs/highlight.js  
 ライセンス：BSD-3-Clause license
 
 ### 🔖 Marked 12.0.0
 
-ホームページ：https://github.com/markedjs/marked
+ホームページ：https://github.com/markedjs/marked  
 ライセンス：MIT license
 
 ## ライセンス
