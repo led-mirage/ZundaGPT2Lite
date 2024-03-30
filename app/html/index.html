@@ -112,6 +112,7 @@ async function submit() {
     // HTMLにメッセージを追加
     addChatMessage("user", g_userName, g_userColor, text)
     scrollToBottom();
+    hideChatRetryButton();
     document.getElementById("message").value = "";
 
     // Python側に通知
@@ -168,13 +169,22 @@ function addChatMessage(role, speakerName, color, messageText) {
     speakerElement.style.color = color;
     speakerElement.textContent = speakerName;
 
-    // 削除ボタンをつける
     if (role === "user") {
+        // 削除ボタンをつける
         const deleteElement = document.createElement("button");
         deleteElement.classList.add("message-delete-btn");
         deleteElement.textContent = "🗑️";
         deleteElement.addEventListener("click", deleteChatMessage);
         speakerElement.appendChild(deleteElement);
+    }
+    else {
+        // 再回答ボタンをつける
+        const retryElement = document.createElement("button");
+        retryElement.classList.add("chat-reanswer-btn");
+        retryElement.textContent = "🔄️";
+        retryElement.style.display = "none";
+        retryElement.addEventListener("click", reAnswerChat);
+        speakerElement.appendChild(retryElement);
     }
 
     // メッセージテキストを表示する要素を作成
@@ -276,6 +286,8 @@ async function settings() {
 async function deleteChatMessage(event) {
     if (!confirm("以降のメッセージを削除しますか？")) return;
 
+    hideChatRetryButton();
+
     let messageDiv = event.target.closest(".chat-message");
     let messageId = messageDiv.id;
     let messageIndex = parseInt(messageId.split("-")[1], 10);
@@ -287,6 +299,24 @@ async function deleteChatMessage(event) {
             messageDiv.nextSibling.remove();
         }
         messageDiv.remove();
+    }
+    catch (error) {
+        console.error("Error: " + error)
+    }
+
+    showChatRetryButton();
+}
+
+// チャットの再回答ボタンが押された
+async function reAnswerChat(event) {
+    let messageDiv = event.target.closest(".chat-message");
+    let messageId = messageDiv.id;
+    let messageIndex = parseInt(messageId.split("-")[1], 10);
+    messageDiv.remove();
+
+    try {
+        await pywebview.api.ask_another_reply_to_chatgpt(messageIndex);
+        g_nextMessageIndex = messageIndex;
     }
     catch (error) {
         console.error("Error: " + error)
@@ -341,6 +371,8 @@ function parsedSentence(sentence) {
 // Pythonから呼び出される関数
 // AIからのチャット応答が終了した
 function endResponse(content) {
+    showChatRetryButton();
+
     const nameTextElements = document.querySelectorAll("#chat-messages .speaker-name");
     const lastNameTextElements = nameTextElements[nameTextElements.length - 1];
     if(lastNameTextElements) {
@@ -407,6 +439,25 @@ function setChatMessages(messages) {
     }
     MathJax.typesetPromise();
     scrollToBottom();
+    showChatRetryButton()
+}
+
+// 再回答ボタンをすべて非表示にする
+function hideChatRetryButton() {
+    const buttons = document.querySelectorAll(".chat-reanswer-btn");
+    buttons.forEach((button, index) => {
+        button.style.display = "none";
+    });    
+}
+
+// 最後の再回答ボタンだけ表示する
+function showChatRetryButton() {
+    const buttons = document.querySelectorAll(".chat-reanswer-btn");
+    buttons.forEach((button, index) => {
+        if (index === buttons.length - 1) {
+            button.style.display = "inline";
+        }
+    });
 }
 </script>
 

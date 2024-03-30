@@ -41,7 +41,7 @@ body, html {
     background-color: #e0e0e0; /* ホバー時の背景色を少し濃くする */
     color: #000; /* ホバー時のテキスト色を黒にする */
 }
-.message-delete-btn {
+.message-delete-btn, .chat-reanswer-btn {
     background-color: #f0f0f0;
     color: #333;
     border: 1px solid #ccc;

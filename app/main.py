@@ -15,7 +15,7 @@ from chat import Chat
 from chat_log import ChatLog
 
 APP_NAME = "ZundaGPT2 Lite"
-APP_VERSION = "0.2.0"
+APP_VERSION = "0.3.0"
 COPYRIGHT = "Copyright 2024 led-mirage"
 
 # アプリケーションクラス
@@ -126,16 +126,17 @@ class Application:
         next_logfile = ChatLog.get_prev_logfile(self.chat)
         if next_logfile is None:
             next_logfile = ChatLog.get_next_logfile(self.chat)
-        if next_logfile is None:
-            return
         
         ChatLog.delete_log_file(self.chat)
-        
-        loaded_settings, loaded_chat = ChatLog.load(next_logfile)
-        if loaded_settings is None:
-            return
 
-        self.change_current_chat(loaded_settings, loaded_chat)
+        if next_logfile is not None:
+            loaded_settings, loaded_chat = ChatLog.load(next_logfile)
+            if loaded_settings is None:
+                return
+
+            self.change_current_chat(loaded_settings, loaded_chat)
+        else:
+            self.window.evaluate_js(f"newChat()")
 
     # 設定画面遷移イベントハンドラ（UI）
     def move_to_settings(self):
@@ -196,11 +197,18 @@ class Application:
             self.on_recieve_sentence,
             self.on_end_response,
             self.on_chat_error)
-    
+        
     # メッセージ削除イベントハンドラ（UI）
     def trancate_messages(self, index):
         self.chat.truncate_messages(index)
         ChatLog.save(self.settings, self.chat)
+
+    # 別の回答を取得するイベントハンドラ（UI）
+    def ask_another_reply_to_chatgpt(self, index):
+        text = self.chat.messages[index - 1]["content"]
+        self.chat.truncate_messages(index - 1)
+        ChatLog.save(self.settings, self.chat)
+        self.send_message_to_chatgpt(text)
 
     # チャンク受信イベントハンドラ（Chat）
     def on_recieve_chunk(self, chunk):
