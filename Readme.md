@@ -49,7 +49,7 @@ Windowsの場合は、Windowsの検索窓で「環境変数を編集」で検索
 
 以下のリンクから ZundaGPT2Lite.ZIP をダウンロードして、作成したフォルダに展開するのだ。
 
-https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v0.3.0
+https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v0.4.0
 
 #### 3. 実行
 
@@ -125,9 +125,9 @@ OpenAIのAPIキーはあなただけのものなので、人に教えたらダ�
 これが嫌な人は（ボクも嫌だけど）、Python本体をインストールしてPythonから普通に実行して欲しいのだ。実行ファイルのほうが手軽だし、そのほうがPythonに詳しくない人にとっては簡単なんだけど、誤認問題がついて回ることは覚えておいて欲しいのだ。
 
 VirusTotalでのチェック結果は以下の通りなのだ。  
-（72個中5個のアンチウィルスエンジンで検出 :2024/03/30 v0.3.0）。
+（72個中5個のアンチウィルスエンジンで検出 :2024/04/07 v0.4.0）。
 
-<img src="doc/virustotal_0.3.0.png" width="600">
+<img src="doc/virustotal_0.4.0.png" width="600">
 
 ### ⚡ 免責事項
 
@@ -160,6 +160,11 @@ VirusTotalでのチェック結果は以下の通りなのだ。
 ホームページ：https://github.com/markedjs/marked  
 ライセンス：MIT license
 
+### 🔖 mark.js 8.11.1
+
+ホームページ：https://github.com/julkue/mark.js  
+ライセンス：MIT license
+
 ## ライセンス
 
 © 2024 led-mirage
@@ -185,3 +190,12 @@ VirusTotalでのチェック結果は以下の通りなのだ。
 
 - 再回答ボタンを追加
 - チャットログが１つしかない場合に、そのログを削除できないバグを修正
+
+### 0.4.0 (2024/4/7)
+
+- メッセージ送信中止機能を追加
+- Ctrl + F でテキストを検索する機能を追加（F3 or Shift + F3で候補移動）
+- Welcomeメッセージの追加
+- 設定ファイルのフォーマット変更（Welcome関連項目追加）
+- Copyrightを動的に設定するように修正
+- 英文が右端で折り返さない問題を修正

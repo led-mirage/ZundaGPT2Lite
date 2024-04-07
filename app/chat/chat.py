@@ -8,6 +8,7 @@
 
 import os
 import httpx
+import threading
 from datetime import datetime
 from typing import Callable
 
@@ -28,10 +29,15 @@ class Chat:
         self.history_size = history_size
         self.chat_start_time = datetime.now()
         self.chat_update_time = datetime.now()
+        self.stop_send_event = threading.Event()
 
     # 指定index以下のメッセージを切り捨てる
     def truncate_messages(self, index):
         self.messages = self.messages[:index]
+
+    # 進行中のsend_message関数の送信を停止する
+    def stop_send_message(self):
+        self.stop_send_event.set()
 
     # メッセージを送信して回答を得る
     def send_message(
@@ -43,6 +49,8 @@ class Chat:
         on_error: Callable[[Exception, str], None]) -> str:
 
         try:
+            self.stop_send_event.clear()
+
             self.messages.append({"role": "user", "content": text})
             messages = self.messages[-self.history_size:]
             messages.insert(0, {"role": "system", "content": self.instruction})
@@ -52,6 +60,9 @@ class Chat:
             sentence = ""
             role = ""
             for chunk in stream:
+                if self.stop_send_event.is_set():
+                    break
+
                 if chunk.choices[0].delta.role is not None:
                     role = chunk.choices[0].delta.role
 

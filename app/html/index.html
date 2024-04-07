@@ -6,6 +6,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/stackoverflow-dark.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.0/marked.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js"></script>
 <link rel="stylesheet" href="css/style.css">
 <script>
 MathJax = {
@@ -49,7 +50,7 @@ MathJax = {
     <button id="submit-button" type="button" onclick="submit()">送信</button>
   </div>
 </div>
-<footer>Copyright 2024 led-mirage</footer>
+<footer><span id="copyright">Copyright</span></footer>
 
 <script>
 let g_userName = "あなた";
@@ -57,6 +58,10 @@ let g_userColor = "#007bff";
 let g_assistantName = "ずんだ";
 let g_assistantColor = "#006400";
 let g_nextMessageIndex = 0;
+let g_searchTextIndex = 0;
+let g_searchTextTotal = 0;
+let g_welcomeTitle = "";
+let g_welcomeMessage = "";
 
 // 初期化
 document.addEventListener("DOMContentLoaded", function() {
@@ -71,9 +76,42 @@ document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("message").addEventListener("keydown", function(event) {
         // Enterが押されたが、Shiftが押されていない場合
         if (event.key === "Enter" && !event.shiftKey) {
-            event.preventDefault(); // デフォルトのEnterによる改行を防ぐ
-            submit(); // 送信処理を実行
-            autoResize.call(textarea);
+            const button = document.getElementById("submit-button");
+            if (button) {
+                if (!button.classList.contains("submit-button-disabled")) {
+                    event.preventDefault(); // デフォルトのEnterによる改行を防ぐ
+                    submit(); // 送信処理を実行
+                    autoResize.call(textarea);
+                }
+            }
+        }
+    });
+
+    document.addEventListener("keydown", function(event) {
+        if ((event.ctrlKey || event.metaKey) && event.keyCode === 70) { // Ctrl + F
+            searchText();
+        }
+        else if (event.keyCode == 27) { // ESC
+            var instance = new Mark(document.body);
+            g_searchTextIndex = g_searchTextTotal = 0;
+            instance.unmark();
+        }
+        else if (event.keyCode == 114) { // F3
+            if (g_searchTextTotal > 0) {
+                if (event.shiftKey) {
+                    g_searchTextIndex--;
+                    if (g_searchTextIndex < 0) {
+                        g_searchTextIndex = g_searchTextTotal - 1;
+                    }
+                }
+                else {
+                    g_searchTextIndex++;
+                    if (g_searchTextIndex >= g_searchTextTotal) {
+                        g_searchTextIndex = 0;
+                    }
+                }
+                highlightSearchResult();
+            }
         }
     });
 
@@ -86,8 +124,21 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 // pywebviewの初期化完了
-window.addEventListener("pywebviewready", function() {
-    pywebview.api.page_loaded();
+window.addEventListener("pywebviewready", async function() {
+    try {
+        copyright = await pywebview.api.get_copyright();
+        footer = document.getElementById("copyright");
+        if (footer) {
+            footer.textContent = copyright;
+        }
+
+        await pywebview.api.page_loaded();
+        addWelcome();
+    }
+    catch (error) {
+        console.error("Error: " + error)
+    }
+
 })
 
 // remをpxに変換
@@ -105,9 +156,24 @@ window.onfocus = function() {
 }
 
 // 送信ボタン押下時イベントハンドラ
-async function submit() {
+function submit() {
+    const button = document.getElementById("submit-button");
+    if (button) {
+        if (!button.classList.contains("submit-button-disabled")) {
+            sendMessage();
+        }
+        else {
+            stopSendMessage();
+        }
+    }
+}
+
+// メッセージを送信する
+async function sendMessage() {
     const text = document.getElementById("message").value;
     if (text === "") return;
+
+    setSubmitButtonState(true);
 
     // HTMLにメッセージを追加
     addChatMessage("user", g_userName, g_userColor, text)
@@ -121,6 +187,32 @@ async function submit() {
     }
     catch (error) {
         console.error("Error: " + error)
+    }
+}
+
+// メッセージを送信を中止する
+async function stopSendMessage() {
+    // Python側に通知
+    try {
+        await pywebview.api.stop_send_message_to_chatgpt();
+    }
+    catch (error) {
+        console.error("Error: " + error)
+    }
+}
+
+// 送信ボタンの状態を設定する
+function setSubmitButtonState(isSending) {
+    const button = document.getElementById("submit-button");
+    if (button) {
+        if (isSending) {
+            button.textContent = "停止";
+            button.classList.add("submit-button-disabled")
+        }
+        else {
+            button.textContent = "送信";
+            button.classList.remove("submit-button-disabled")
+        }
     }
 }
 
@@ -153,8 +245,50 @@ function unescapeTex(text) {
     return text.replace(/\\\\/g, "\\");
 }
 
+// Welcomeメッセージの表示をON/OFFする
+function showWelcome(show) {
+    const welcome = document.getElementById("welcome");
+    if (welcome) {
+        if (show) {
+            welcome.style.display = "flex";
+        }
+        else {
+            welcome.style.display = "none";
+        }
+    }
+}
+
+// Welcomeメッセージブロックを追加する
+function addWelcome() {
+    // チャットメッセージコンテナを取得
+    const chatMessagesContainer = document.getElementById("chat-messages");
+
+    // Welcomeコンテナを作成
+    const welcomeConainer = document.createElement("div");
+    welcomeConainer.id = "welcome"
+    welcomeConainer.classList.add("welcome");
+    chatMessagesContainer.appendChild(welcomeConainer);
+
+    // Welcomeタイトルを作成
+    const welcomeTitle = document.createElement("div");
+    welcomeTitle.id = "welcome-title";
+    welcomeTitle.classList.add("welcome-title");
+    welcomeTitle.textContent = g_welcomeTitle;
+    welcomeConainer.appendChild(welcomeTitle);
+
+    // Welcomeメッセージを作成
+    const welcomeMessage = document.createElement("div");
+    welcomeMessage.id = "welcome-message";
+    welcomeMessage.classList.add("welcome-message");
+    welcomeMessage.textContent = g_welcomeMessage;
+    welcomeConainer.appendChild(welcomeMessage);
+}
+
 // チャットメッセージブロックを追加する
 function addChatMessage(role, speakerName, color, messageText) {
+    // Welcomeメッセージの非表示
+    showWelcome(false);
+
     // チャットメッセージコンテナを取得
     const chatMessagesContainer = document.getElementById("chat-messages");
 
@@ -231,6 +365,7 @@ async function newChat() {
     // Python側に通知
     try {
         await pywebview.api.new_chat();
+        addWelcome();
     }
     catch (error) {
         console.error("Error: " + error)
@@ -282,6 +417,45 @@ async function settings() {
     }
 }
 
+// テキストを検索する
+function searchText() {
+    const searchText = prompt("検索する文字列を入力してください", "");
+    if (searchText) {
+        g_searchTextIndex = 0;
+        index = 0;
+        var instance = new Mark(document.body);
+        instance.unmark();
+        instance.mark(searchText, {
+            each: function(element) {
+                // この中の処理は、見つかった各検索結果に対して実行される
+            },
+            done: function(totalMarks) {
+                // 検索が完了した後に実行される処理
+                g_searchTextTotal = totalMarks;
+                highlightSearchResult(250);
+            }
+        });
+    }
+}
+
+// テキスト検索で見つかったテキストのハイライト処理を行う
+function highlightSearchResult(delay=0) {
+    document.querySelectorAll("mark").forEach((element, index) => {
+        if (index === g_searchTextIndex) {
+            element.style.color = "red";
+            element.style.backgroundColor = ""
+            element.scrollIntoView({ behavior: "smooth" });
+            setTimeout(() => {
+                element.scrollIntoView({ behavior: "smooth" });
+            }, delay);
+        }
+        else {
+            element.style.color = "";
+            element.style.backgroundColor = "khaki"
+        }
+    });    
+}
+
 // メッセージの削除ボタンが押された
 async function deleteChatMessage(event) {
     if (!confirm("以降のメッセージを削除しますか？")) return;
@@ -309,6 +483,7 @@ async function deleteChatMessage(event) {
 
 // チャットの再回答ボタンが押された
 async function reAnswerChat(event) {
+    setSubmitButtonState(true);
     let messageDiv = event.target.closest(".chat-message");
     let messageId = messageDiv.id;
     let messageIndex = parseInt(messageId.split("-")[1], 10);
@@ -325,12 +500,14 @@ async function reAnswerChat(event) {
 
 // Pythonから呼び出される関数
 // 情報をセットする
-function setChatInfo(displayName, userName, userColor, assistantName, assistantColor) {
+function setChatInfo(displayName, userName, userColor, assistantName, assistantColor, welcomeTitle, welcomeMessage) {
     g_userName = userName;
     g_userColor = userColor;
     g_assistantName = assistantName;
     g_assistantColor = assistantColor;
     g_nextMessageIndex = 0;
+    g_welcomeTitle = welcomeTitle;
+    g_welcomeMessage = welcomeMessage;
 
     if (displayName === "") {
         displayName = assistantName;
@@ -371,6 +548,7 @@ function parsedSentence(sentence) {
 // Pythonから呼び出される関数
 // AIからのチャット応答が終了した
 function endResponse(content) {
+    setSubmitButtonState(false);
     showChatRetryButton();
 
     const nameTextElements = document.querySelectorAll("#chat-messages .speaker-name");
@@ -406,6 +584,12 @@ function handleChatException(message) {
 // チャット応答で例外が発生した
 async function handleChatTimeoutException(message) {
     if (confirm(`${message}\nリトライしますか？`)) {
+        const messageTextElements = document.querySelectorAll("#chat-messages .message-text");
+        const lastMessageTextElement = messageTextElements[messageTextElements.length - 1];
+        if (lastMessageTextElement) {
+            lastMessageTextElement.textContent = "";
+        }
+
         // Python側に通知
         try {
             await pywebview.api.retry_send_message_to_chatgpt();

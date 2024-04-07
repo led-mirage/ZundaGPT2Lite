@@ -15,7 +15,7 @@ from chat import Chat
 from chat_log import ChatLog
 
 APP_NAME = "ZundaGPT2 Lite"
-APP_VERSION = "0.3.0"
+APP_VERSION = "0.4.0"
 COPYRIGHT = "Copyright 2024 led-mirage"
 
 # アプリケーションクラス
@@ -26,8 +26,8 @@ class Application:
         self.settings = None
         self.chat = None
         self.settings = None
-        self.window = None
         self.last_send_message = None
+        self._window = None # 先頭にアンダーバーをつけないと pywebview 5.0.x ではエラーになる
     
     # 開始する
     def start(self):
@@ -37,7 +37,7 @@ class Application:
         height = self.app_config.system["window_height"]
 
         window_title = f"{APP_NAME}  ver {APP_VERSION}"
-        self.window = webview.create_window(window_title, url="html/index.html", width=width, height=height, js_api=self, text_select=True)
+        self._window = webview.create_window(window_title, url="html/index.html", width=width, height=height, js_api=self, text_select=True)
         webview.start()
 
     # ページロードイベントハンドラ（UI）
@@ -71,7 +71,7 @@ class Application:
     def set_window_title(self):
         logfile = ChatLog.get_logfile_name(self.chat)
         window_title = f"{APP_NAME}  ver {APP_VERSION} - {logfile}"
-        self.window.set_title(window_title)
+        self._window.set_title(window_title)
 
     # チャットの情報をUIに通知する
     def set_chatinfo_to_ui(self):
@@ -80,7 +80,10 @@ class Application:
         user_color = self.settings.user["name_color"]
         assistant_name = self.settings.assistant["name"]
         assistant_color = self.settings.assistant["name_color"]
-        self.window.evaluate_js(f"setChatInfo('{display_name}', '{user_name}', '{user_color}', '{assistant_name}', '{assistant_color}')")
+        welcome_title = self.settings.settings.get("welcome_title", "")
+        welcome_message = self.settings.settings.get("welcome_message", "")
+        self._window.evaluate_js(
+            f"setChatInfo('{display_name}', '{user_name}', '{user_color}', '{assistant_name}', '{assistant_color}', '{welcome_title}', '{welcome_message}')")
 
     # ひとつ前のチャットを表示して続ける
     def prev_chat(self):
@@ -116,7 +119,11 @@ class Application:
 
     # チャットの内容をUIに送信する
     def set_chatmessages_to_ui(self, messages: list[dict]):
-        self.window.evaluate_js(f"setChatMessages({messages})")
+        self._window.evaluate_js(f"setChatMessages({messages})")
+
+    # コピーライト取得
+    def get_copyright(self):
+        return COPYRIGHT
 
     # カレントチャット削除イベントハンドラ（UI）
     def delete_current_chat(self):
@@ -136,11 +143,11 @@ class Application:
 
             self.change_current_chat(loaded_settings, loaded_chat)
         else:
-            self.window.evaluate_js(f"newChat()")
+            self._window.evaluate_js(f"newChat()")
 
     # 設定画面遷移イベントハンドラ（UI）
     def move_to_settings(self):
-        self.window.load_url("html/settings.html")
+        self._window.load_url("html/settings.html")
 
     # 設定画面ファイル一覧要求イベントハンドラ（UI）
     def get_settings_files(self):
@@ -169,18 +176,18 @@ class Application:
 
     # 設定画面確定イベントハンドラ（UI）
     def submit_settings(self, settings_file):
-        self.window.load_url("html/index.html")
+        self._window.load_url("html/index.html")
         self.app_config.system["settings_file"] = settings_file
         self.app_config.save()
         self.chat = None
 
     # 設定画面キャンセルイベントハンドラ（UI）
     def cancel_settings(self):
-        self.window.load_url("html/index.html")
+        self._window.load_url("html/index.html")
 
     # メッセージ送信イベントハンドラ（UI）
     def send_message_to_chatgpt(self, text):
-        self.window.evaluate_js(f"startResponse()")
+        self._window.evaluate_js(f"startResponse()")
         self.last_send_message = text
         self.chat.send_message(
             text,
@@ -197,7 +204,11 @@ class Application:
             self.on_recieve_sentence,
             self.on_end_response,
             self.on_chat_error)
-        
+
+    # メッセージ送信中止イベントハンドラ（UI）
+    def stop_send_message_to_chatgpt(self):
+        self.chat.stop_send_message()
+
     # メッセージ削除イベントハンドラ（UI）
     def trancate_messages(self, index):
         self.chat.truncate_messages(index)
@@ -212,16 +223,16 @@ class Application:
 
     # チャンク受信イベントハンドラ（Chat）
     def on_recieve_chunk(self, chunk):
-        self.window.evaluate_js(f"addChunk('{self.escape_js_string(chunk)}')")
+        self._window.evaluate_js(f"addChunk('{self.escape_js_string(chunk)}')")
 
     # センテンス読み上げイベントハンドラ（Chat）
     def on_recieve_sentence(self, sentence):
-        self.window.evaluate_js(f"parsedSentence('{self.escape_js_string(sentence)}')")
+        self._window.evaluate_js(f"parsedSentence('{self.escape_js_string(sentence)}')")
     
     # レスポンス受信完了イベントハンドラ（Chat）
     def on_end_response(self, content):
         ChatLog.save(self.settings, self.chat)
-        self.window.evaluate_js(f"endResponse('{self.escape_js_string(content)}')")
+        self._window.evaluate_js(f"endResponse('{self.escape_js_string(content)}')")
 
     # チャット例外イベントハンドラ（Chat）
     def on_chat_error(self, e: Exception, cause: str):
@@ -231,7 +242,7 @@ class Application:
 
         if cause == "Timeout":
             message = "APIの呼び出しがタイムアウトしたのだ"
-            self.window.evaluate_js(f"handleChatTimeoutException('{message}')")
+            self._window.evaluate_js(f"handleChatTimeoutException('{message}')")
         else:
             if cause == "Authentication":
                 message = "APIの認証に失敗したのだ"
@@ -239,7 +250,7 @@ class Application:
                 message = "APIのエンドポイントが間違っているのだ"
             else:
                 message = f"なんかわからないエラーが発生したのだ（{class_name}）"
-            self.window.evaluate_js(f"handleChatException('{message}')")
+            self._window.evaluate_js(f"handleChatException('{message}')")
 
     # 文字をエスケープする
     def escape_js_string(self, s):

@@ -88,6 +88,7 @@ body, html {
     padding: 0.5rem;
     line-height: 1.75rem;
     font-size: 1rem;
+    overflow-wrap: break-word;
 }
 .message-text p {
     padding: 0;
@@ -130,6 +131,9 @@ body, html {
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     transition: all 0.3s ease;
 }
+.chat-input button.submit-button-disabled {
+    background-image: linear-gradient(to bottom, silver, gray);
+}
 .chat-input button:hover {
     box-shadow: 0 6px 12px rgba(0,0,0,0.2);
     transform: scale(1.05);
@@ -161,4 +165,29 @@ footer {
 .flowing-text {
     animation: glowing 3s linear infinite;
     color: #fff; /* 文字の色を設定 */
+}
+mark {
+    scroll-margin-top: 20px;
+}
+.welcome {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+.welcome-title {
+    display: blcok;
+    width: 100%;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+.welcome-message {
+    display: block;
+    width: 100%;
+    margin-top: 1rem;
+    text-align: center;
+    font-size: 0.8rem;
+    color: dimgray;
 }

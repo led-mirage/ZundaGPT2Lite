@@ -8,6 +8,7 @@
 table {
     width: 100%;
     border-collapse: collapse;
+    background-color: white;
 }
 th, td {
     border: 1px solid black;
@@ -17,7 +18,10 @@ th, td {
 }
 thead {
     background-color: #f2f2f2;
-}  
+}
+th {
+    background-color: lightskyblue;
+}
 th:nth-child(1), th:nth-child(2), td:nth-child(1), td:nth-child(2) {
     width: 1%;
     white-space: nowrap;
@@ -62,7 +66,7 @@ th:nth-child(3), td:nth-child(3) {
     </table>
   </div>
 </div>
-<footer>Copyright 2024 led-mirage</footer>
+<footer><span>Copyright</span></footer>
 
 <script>
 let g_selectedIndex = -1;
@@ -76,7 +80,13 @@ document.addEventListener("DOMContentLoaded", function() {
 window.addEventListener("pywebviewready", async function() {
     // Python側に通知
     try {
-      g_settingFiles = await pywebview.api.get_settings_files();
+        copyright = await pywebview.api.get_copyright();
+        footer = document.getElementById("copyright");
+        if (footer) {
+            footer.textContent = copyright;
+        }
+
+        g_settingFiles = await pywebview.api.get_settings_files();
         create_table(g_settingFiles);
     }
     catch (error) {
