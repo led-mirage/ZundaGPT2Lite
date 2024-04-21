@@ -15,7 +15,7 @@ from chat import Chat
 from chat_log import ChatLog
 
 APP_NAME = "ZundaGPT2 Lite"
-APP_VERSION = "0.4.0"
+APP_VERSION = "0.5.0"
 COPYRIGHT = "Copyright 2024 led-mirage"
 
 # アプリケーションクラス
@@ -61,7 +61,8 @@ class Application:
             self.settings.chat["model"],
             self.settings.chat["instruction"],
             self.settings.chat["bad_response"],
-            self.settings.chat["history_size"]
+            self.settings.chat["history_size"],
+            self.app_config.system["chat_api_timeout"]
         )
 
         self.set_chatinfo_to_ui()

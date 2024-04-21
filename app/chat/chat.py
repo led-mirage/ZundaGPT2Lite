@@ -99,12 +99,12 @@ class Chat:
         
 # OpenAI チャットクラス
 class ChatOpenAI(Chat):
-    def __init__(self, model: str, instruction: str, bad_response: str, history_size: int):
+    def __init__(self, model: str, instruction: str, bad_response: str, history_size: int, api_timeout: float):
         api_key = os.environ.get("OPENAI_API_KEY")
         if api_key is None:
             raise ValueError("環境変数 OPENAI_API_KEY が設定されていません。")
 
-        client = OpenAI(timeout=httpx.Timeout(20.0, connect=5.0))
+        client = OpenAI(timeout=httpx.Timeout(api_timeout, connect=5.0))
         super().__init__(
             client = client,
             model = model,
@@ -115,7 +115,7 @@ class ChatOpenAI(Chat):
 
 # Azure OpenAI チャットクラス
 class ChatAzureOpenAI(Chat):
-    def __init__(self, model: str, instruction: str, bad_response: str, history_size: int):
+    def __init__(self, model: str, instruction: str, bad_response: str, history_size: int, api_timeout: float):
         endpoint = os.environ.get("AZURE_OPENAI_ENDPOINT")
         if endpoint is None:
             raise ValueError("環境変数 AZURE_OPENAI_ENDPOINT が設定されていません。")
@@ -124,7 +124,7 @@ class ChatAzureOpenAI(Chat):
         if api_key is None:
             raise ValueError("環境変数 AZURE_OPENAI_API_KEY が設定されていません。")
 
-        client = AzureOpenAI(azure_endpoint=endpoint, api_key=api_key, api_version="2023-05-15", timeout=httpx.Timeout(20.0, connect=5.0))
+        client = AzureOpenAI(azure_endpoint=endpoint, api_key=api_key, api_version="2023-05-15", timeout=httpx.Timeout(api_timeout, connect=5.0))
         super().__init__(
             client = client,
             model = model,
@@ -137,10 +137,10 @@ class ChatAzureOpenAI(Chat):
 class ChatFactory:
     # api_idに基づいてChatオブジェクトを作成する
     @staticmethod
-    def create(api_id: str, model: str, instruction: str, bad_response: str, history_size: int) -> Chat:
+    def create(api_id: str, model: str, instruction: str, bad_response: str, history_size: int, api_timeout: float) -> Chat:
         if api_id == "OpenAI":
-            return ChatOpenAI(model, instruction, bad_response, history_size)
+            return ChatOpenAI(model, instruction, bad_response, history_size, api_timeout)
         elif api_id == "AzureOpenAI":
-            return ChatAzureOpenAI(model, instruction, bad_response, history_size)
+            return ChatAzureOpenAI(model, instruction, bad_response, history_size, api_timeout)
         else:
             raise ValueError("API IDが間違っています。")

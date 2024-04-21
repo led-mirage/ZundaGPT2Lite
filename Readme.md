@@ -49,7 +49,7 @@ Windowsの場合は、Windowsの検索窓で「環境変数を編集」で検索
 
 以下のリンクから ZundaGPT2Lite.ZIP をダウンロードして、作成したフォルダに展開するのだ。
 
-https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v0.4.0
+https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v0.5.0
 
 #### 3. 実行
 
@@ -125,9 +125,9 @@ OpenAIのAPIキーはあなただけのものなので、人に教えたらダ�
 これが嫌な人は（ボクも嫌だけど）、Python本体をインストールしてPythonから普通に実行して欲しいのだ。実行ファイルのほうが手軽だし、そのほうがPythonに詳しくない人にとっては簡単なんだけど、誤認問題がついて回ることは覚えておいて欲しいのだ。
 
 VirusTotalでのチェック結果は以下の通りなのだ。  
-（72個中5個のアンチウィルスエンジンで検出 :2024/04/07 v0.4.0）。
+（71個中6個のアンチウィルスエンジンで検出 :2024/04/21 v0.5.0）。
 
-<img src="doc/virustotal_0.4.0.png" width="600">
+<img src="doc/virustotal_0.5.0.png" width="600">
 
 ### ⚡ 免責事項
 
@@ -135,7 +135,12 @@ VirusTotalでのチェック結果は以下の通りなのだ。
 
 ## 使用しているライブラリ
 
-### 🔖 openai 1.12.0
+### 🔖 pywebview 4.4.1
+
+ホームページ： https://github.com/r0x0r/pywebview  
+ライセンス：BSD-3-Clause license
+
+### 🔖 openai 1.23.2
 
 ホームページ： https://github.com/openai/openai-python  
 ライセンス：Apache License 2.0
@@ -199,3 +204,10 @@ VirusTotalでのチェック結果は以下の通りなのだ。
 - 設定ファイルのフォーマット変更（Welcome関連項目追加）
 - Copyrightを動的に設定するように修正
 - 英文が右端で折り返さない問題を修正
+
+### 0.5.0 (2024/4/21)
+
+- Readmeの使用しているライブラリ欄に、pywebviewの記載が洩れていたため追記
+- openaiのバージョンを1.12.0から1.23.2に更新
+- ChatAPIのタイムアウト値を設定ファイル（app_config.json）に持つように変更
+- AIの回答中にあるURLが正しくリンク表示にならない問題に対処

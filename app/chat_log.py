@@ -10,6 +10,7 @@ import json
 import os
 from datetime import datetime
 
+from app_config import AppConfig
 from app_settings import Settings
 from chat import Chat
 from chat import ChatFactory
@@ -69,6 +70,9 @@ class ChatLog:
                     "description": ""
                 }
 
+            app_config = AppConfig()
+            app_config.load()
+
             settings = Settings()
             settings.load()
             settings.settings = data["settings"]
@@ -81,7 +85,8 @@ class ChatLog:
                 settings.chat["model"],
                 settings.chat["instruction"],
                 settings.chat["bad_response"],
-                settings.chat["history_size"]
+                settings.chat["history_size"],
+                app_config.system["chat_api_timeout"]
             )
             chat.messages = data["messages"]
             chat.chat_start_time = datetime.fromisoformat(data["chat_start_time"])

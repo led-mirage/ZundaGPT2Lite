@@ -326,6 +326,7 @@ function addChatMessage(role, speakerName, color, messageText) {
     messageElement.classList.add("message-text");
     if (role === "assistant") {
         let html = escapeTex(messageText);
+        html = adjustURL(html);
         html = marked.parse(html);
         html = unescapeTex(html);
         messageElement.innerHTML = html;
@@ -344,6 +345,15 @@ function addChatMessage(role, speakerName, color, messageText) {
 
     // 作成したチャットメッセージをコンテナに追加
     chatMessagesContainer.appendChild(chatMessageElement);
+}
+
+// markedがリンクに連続する文字列全体をリンクに変換してしまう問題に対処
+function adjustURL(text) {
+    // https://またはhttp://では始まらない、www.で始まるドメイン名の前後にバッククォートを入れる
+    text = text.replace(/(?<!https?:\/\/)(www\.[\w.]+)/g, " `$1` ");
+    // https://またはhttp://で始まるURLの前後に半角スペースをいれる
+    text = text.replace(/(https?:\/\/[\w.?=&%+#\/\-]+)/g, ' $1 ');
+    return text;
 }
 
 // 要素中の<a>タグにtarget="_blank"を設定する
@@ -561,6 +571,7 @@ function endResponse(content) {
     const lastMessageTextElement = messageTextElements[messageTextElements.length - 1];
     if(lastMessageTextElement) {
         let html = escapeTex(content);
+        html = adjustURL(html);
         html = marked.parse(html);
         html = unescapeTex(html);
         lastMessageTextElement.innerHTML = html;

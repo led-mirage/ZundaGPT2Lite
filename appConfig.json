@@ -1,9 +1,10 @@
 {
-    "file_ver": 1,
+    "file_ver": 2,
     "system": {
         "log_folder": "log",
         "settings_file": "settings.json",
         "window_width": 1000,
-        "window_height": 800
+        "window_height": 800,
+        "chat_api_timeout": 30
     }
 }

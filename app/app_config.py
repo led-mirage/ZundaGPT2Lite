@@ -12,7 +12,7 @@ import os
 import threading
 
 class AppConfig:
-    FILE_VER = 1
+    FILE_VER = 2
     FILE_CONFIG = "appConfig.json"
 
     def __init__(self, config_file_path=FILE_CONFIG):
@@ -25,7 +25,8 @@ class AppConfig:
             "log_folder": "log",
             "settings_file": "settings.json",
             "window_width": 600,
-            "window_height": 800
+            "window_height": 800,
+            "chat_api_timeout": 30
         }
 
     # deepcopy
