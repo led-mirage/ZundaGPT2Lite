@@ -237,12 +237,12 @@ function escapeHtml(text) {
 
 // TeX用の文字列をエスケープする
 function escapeTex(text) {
-    return text.replace(/\\/g, "\\\\");
+    return text.replace(/\\/g, "@@@@");
 }
 
 // TeX用にエスケープした文字列を元に戻す
 function unescapeTex(text) {
-    return text.replace(/\\\\/g, "\\");
+    return text.replace(/@@@@/g, "\\");
 }
 
 // Welcomeメッセージの表示をON/OFFする
