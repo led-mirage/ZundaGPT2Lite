@@ -86,7 +86,8 @@ class ChatLog:
                 settings.chat["instruction"],
                 settings.chat["bad_response"],
                 settings.chat["history_size"],
-                app_config.system["chat_api_timeout"]
+                app_config.system["chat_api_timeout"],
+                app_config.gemini
             )
             chat.messages = data["messages"]
             chat.chat_start_time = datetime.fromisoformat(data["chat_start_time"])

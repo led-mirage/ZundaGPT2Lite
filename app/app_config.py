@@ -12,7 +12,7 @@ import os
 import threading
 
 class AppConfig:
-    FILE_VER = 2
+    FILE_VER = 3
     FILE_CONFIG = "appConfig.json"
 
     def __init__(self, config_file_path=FILE_CONFIG):
@@ -28,6 +28,12 @@ class AppConfig:
             "window_height": 800,
             "chat_api_timeout": 30
         }
+        self.gemini = {
+            "safty_filter_harassment": "BLOCK_MEDIUM_AND_ABOVE",
+            "safty_filter_hate_speech": "BLOCK_MEDIUM_AND_ABOVE",
+            "safty_filter_sexually_explicit": "BLOCK_MEDIUM_AND_ABOVE",
+            "safty_filter_dangerous_content": "BLOCK_MEDIUM_AND_ABOVE",
+        }
 
     # deepcopy
     def __deepcopy__(self, memo):
@@ -35,6 +41,7 @@ class AppConfig:
         memo[id(self)] = new_copy
         new_copy._config_file_path = self._config_file_path
         new_copy.system = copy.deepcopy(self.system, memo)
+        new_copy.gemini = copy.deepcopy(self.gemini, memo)
         return new_copy
 
     # 設定ファイルを保存する
@@ -47,6 +54,7 @@ class AppConfig:
             config = {}
             config["file_ver"] = AppConfig.FILE_VER
             config["system"] = self.system
+            config["gemini"] = self.gemini
 
             json.dump(config, file, ensure_ascii=False, indent=4)
 
@@ -62,6 +70,7 @@ class AppConfig:
                 data = json.load(file)
                 file_ver = data.get("file_ver", 0)
                 self.update_dict(self.system, data.get("system", self.system))
+                self.update_dict(self.gemini, data.get("gemini", self.gemini))
 
         if file_ver < AppConfig.FILE_VER:
             self._save_nolock()

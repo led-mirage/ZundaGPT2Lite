@@ -15,7 +15,7 @@ from chat import Chat
 from chat_log import ChatLog
 
 APP_NAME = "ZundaGPT2 Lite"
-APP_VERSION = "0.6.0"
+APP_VERSION = "0.7.0"
 COPYRIGHT = "Copyright 2024 led-mirage"
 
 # アプリケーションクラス
@@ -62,7 +62,8 @@ class Application:
             self.settings.chat["instruction"],
             self.settings.chat["bad_response"],
             self.settings.chat["history_size"],
-            self.app_config.system["chat_api_timeout"]
+            self.app_config.system["chat_api_timeout"],
+            self.app_config.gemini
         )
 
         self.set_chatinfo_to_ui()
@@ -237,8 +238,9 @@ class Application:
 
     # チャット例外イベントハンドラ（Chat）
     def on_chat_error(self, e: Exception, cause: str):
+        module_name = type(e).__module__
         class_name = type(e).__name__
-        print(class_name)
+        print(f"{module_name}.{class_name}")
         print(e)
 
         if cause == "Timeout":
@@ -249,6 +251,8 @@ class Application:
                 message = "APIの認証に失敗したのだ"
             elif cause == "EndPointNotFound":
                 message = "APIのエンドポイントが間違っているのだ"
+            elif cause == "UnsafeContent":
+                message = "会話の内容が不適切だと判断されたのだ"
             else:
                 message = f"なんかわからないエラーが発生したのだ（{class_name}）"
             self._window.evaluate_js(f"handleChatException('{message}')")

@@ -6,7 +6,11 @@ Copyright (c) 2024 led-mirage
 
 ZundaGPT2(https://github.com/led-mirage/ZundaGPT2) のライト版なのだ。ZundaGPT2から音声読み上げ機能を省いたバージョンなのだよ。
 
-OpenAIまたは、AzureOpenAI Serviceを使って、AIとチャットできるチャットクライアントソフトウェアなのだ。
+OpenAI、AzureOpenAI Service、Google Geminiを使って、AIとチャットできるチャットクライアントソフトウェアなのだ。
+
+## 最新情報 バージョン 0.7.0
+
+Google Gemini APIに対応したのだ！
 
 ## スクリーンショット
 
@@ -25,15 +29,22 @@ OpenAIまたは、AzureOpenAI Serviceを使って、AIとチャットできる�
 
 このアプリ自体は無料だけど、[OpenAI](https://platform.openai.com/)のアカウントとAPIの利用登録（課金およびAPIキーの作成）が必要なのだ。
 
+### ✅ Google Gemini APIのAPIキー
+
+バージョン0.7.0からGoogle Gemini APIにも対応したので、OpenAIの代わりにGoogle Gemini APIを使用することもできるのだ。
+
+現時点でGoogle Gemini APIには無料プランが設定されているので、OpenAIのAPIよりも気軽に利用することができるのだ。Google Gemini APIを使用したい場合は、[専用の資料](Readme_gemini.md)を用意したので、それを参照して欲しいのだ。
+
 ## 実行方法
 
 ### 🛩️ 準備：OSの環境変数を追加
 
-OpenAIのAPIキーをOSの環境変数に登録しておく必要があるのだ。変数名を`OPENAI_API_KEY`として、取得したAPIキーの値を登録するのだ。
+OpenAIのAPIキー、もしくはGoogle Gemini APIのAPIキーをOSの環境変数に登録しておく必要があるのだ。
 
-| キー | 意味 |
-|------|------|
-| OPENAI_API_KEY  | APIキー |
+| AI | 変数名 | 値 |
+|------|------|------|
+| OpenAI | OPENAI_API_KEY  | OpenAIで取得したAPIキー |
+| Google Gemini | GEMINI_API_KEY  | Googleで取得したAPIキー |
 
 Windowsの場合は、Windowsの検索窓で「環境変数を編集」で検索すると設定画面が立ち上がるので、そこでユーザー環境変数を追加すればいいのだ。
 
@@ -49,7 +60,7 @@ Windowsの場合は、Windowsの検索窓で「環境変数を編集」で検索
 
 以下のリンクから ZundaGPT2Lite.ZIP をダウンロードして、作成したフォルダに展開するのだ。
 
-https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v0.6.0
+https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v0.7.0
 
 #### 3. 実行
 
@@ -110,13 +121,17 @@ python app\main.py
 
 そもそも自動チャージ設定を有効にしなければチャージされた分しか課金されないはずなので、そこまで心配する必要はないけれど、OpenAIのサイトでは月毎の利用上限なども設定できるのでそれらを活用して思わぬ出費を防ぐといいのだ。
 
-### ⚡ OpenAIのAPIキーについて
+### ⚡ Google Gemini APIの利用料金について
 
-OpenAIのAPIキーはあなただけのものなので、人に教えたらダメなのだ。流出すると悪い人に勝手に使われてしまう可能性があるのだ。もし流出してしまったら、OpenAIのサイトで現在使っているAPIキーを削除して、別のAPIキーを作ればいいのだ。
+[この資料](Readme_gemini.md)にも書いたけど、現時点でGoogle Gemini APIには無料枠があるのだ。だから、基本的には無料枠を使ってアプリを利用すればいいと思うけど、もっとハードに使いたい場合は有料プランを考えてみるのもいいのだ。ただ、有料プランにした場合は、先に書いたOpenAIと同じように使い過ぎには注意して欲しいのだ。
 
-ただ、APIキーをひとつしか持っていない場合、新しいAPIキーを作ってからじゃないと古いAPIキーを削除できないようなのだ。これはOpenAIの仕様のようなんだけど、ボク的にはちょっといただけない仕様だと思っているのだ。将来的に改善することを願っているけれど、最悪支払い情報（クレジットカード情報）を削除してしまえばいいような気もするのだ。
+### ⚡ APIキーの重要性について
 
-なにわともあれ、APIキーと利用料金には注意を払って欲しいのだ。
+OpenAIやGoogle GeminiのAPIキーはあなただけのものなので、人に教えたらダメなのだ。流出すると悪い人に勝手に使われてしまう可能性があるのだ。もし流出してしまったら、OpenAIやGoogleのサイトで現在使っているAPIキーを削除して、別のAPIキーを作ればいいのだ。
+
+ただOpenAIでは、APIキーをひとつしか持っていない場合、新しいAPIキーを作ってからじゃないと古いAPIキーを削除できないようなのだ。これはOpenAIの仕様のようなんだけど、ボク的にはちょっといただけない仕様だと思っているのだ。将来的に改善することを願っているけれど、最悪支払い情報（クレジットカード情報）を削除してしまえばいいような気もするのだ。
+
+なにはともあれ、APIキーと利用料金には注意を払って欲しいのだ。
 
 ### ⚡ ウィルス対策ソフトの誤認問題
 
@@ -125,9 +140,9 @@ OpenAIのAPIキーはあなただけのものなので、人に教えたらダ�
 これが嫌な人は（ボクも嫌だけど）、Python本体をインストールしてPythonから普通に実行して欲しいのだ。実行ファイルのほうが手軽だし、そのほうがPythonに詳しくない人にとっては簡単なんだけど、誤認問題がついて回ることは覚えておいて欲しいのだ。
 
 VirusTotalでのチェック結果は以下の通りなのだ。  
-（72個中5個のアンチウィルスエンジンで検出 :2024/04/29 v0.6.0）。
+（73個中2個のアンチウィルスエンジンで検出 :2024/05/19 v0.7.0）。
 
-<img src="doc/virustotal_0.6.0.png" width="600">
+<img src="doc/virustotal_0.7.0.png" width="600">
 
 ### ⚡ 免責事項
 
@@ -143,6 +158,11 @@ VirusTotalでのチェック結果は以下の通りなのだ。
 ### 🔖 openai 1.23.2
 
 ホームページ： https://github.com/openai/openai-python  
+ライセンス：Apache License 2.0
+
+### 🔖 google-generativeai 0.5.4
+
+ホームページ： https://github.com/google-gemini/generative-ai-python  
 ライセンス：Apache License 2.0
 
 ### 🔖 requests 2.31.0
@@ -215,3 +235,7 @@ VirusTotalでのチェック結果は以下の通りなのだ。
 ### 0.6.0 (2024/4/29)
 
 - Tex形式の行列式が正しく表示されない問題を解消
+
+### 0.7.0 (2024/5/19)
+
+- Google Gemini APIに対応

@@ -22,6 +22,12 @@ APIキーの作成は特に難しくないのだ。OpenAI APIの設定画面に�
 
 OpenAI … https://platform.openai.com/
 
+### ✅ Google Gemini APIのAPIキー
+
+バージョン0.7.0からGoogle Gemini APIにも対応したので、OpenAIの代わりにGoogle Gemini APIを使用することもできるのだ。
+
+現時点でGoogle Gemini APIには無料プランが設定されているので、OpenAIのAPIよりも気軽に利用することができるのだ。Google Gemini APIを使用したい場合は、[専用の資料](Readme_gemini.md)を用意したので、それを参照して欲しいのだ。
+
 ## 設定ファイル
 
 設定ファイルは２つあるのだ。ひとつはシステムの設定が書かれているapp_config.json。もうひとつはチャットするキャラクターの情報が書かれているsettings.jsonなのだ。
@@ -48,6 +54,22 @@ OpenAI … https://platform.openai.com/
 
 Chat APIのタイムアウト値を秒数で指定するのだ。
 
+#### ✨ gemini/safty_filter_harassment（既定値 BLOCK_MEDIUM_AND_ABOVE）
+
+Gemini用の安全性フィルタ設定なのだ。ハラスメントに関するしきい値を設定できるのだ。詳しくは[こちらの資料](Readme_gemini.md)を参照して欲しいのだ。
+
+#### ✨ gemini/safty_filter_hate_speech（既定値 BLOCK_MEDIUM_AND_ABOVE）
+
+Gemini用の安全性フィルタ設定なのだ。ヘイトスピーチに関するしきい値を設定できるのだ。詳しくは[こちらの資料](Readme_gemini.md)を参照して欲しいのだ。
+
+#### ✨ gemini/safty_filter_sexually_explicit（既定値 BLOCK_MEDIUM_AND_ABOVE）
+
+Gemini用の安全性フィルタ設定なのだ。性表現に関するしきい値を設定できるのだ。詳しくは[こちらの資料](Readme_gemini.md)を参照して欲しいのだ。
+
+#### ✨ gemini/safty_filter_dangerous_content（既定値 BLOCK_MEDIUM_AND_ABOVE）
+
+Gemini用の安全性フィルタ設定なのだ。危険な内容に関するしきい値を設定できるのだ。詳しくは[こちらの資料](Readme_gemini.md)を参照して欲しいのだ。
+
 ### ⚙️ settings.json
 
 settings.jsonはsettingsフォルダの中に格納されているのだ。声のキャラクターを変えたいときなどは、このファイルを編集するといいのだ。また、このファイルをコピーして別の名前を付けて保存することで、複数の設定を保存しておくことができるのだ。設定を切り替えるには、ウィンドウの設定ボタンを押すといいのだ。
@@ -70,23 +92,51 @@ settings.jsonはsettingsフォルダの中に格納されているのだ。声�
 
 #### ✨ chat/api（既定値 OpenAI）
 
-使用するAPIの設定なのだ。設定できる値は`OpenAI`と`AzureOpenAI`の二つなのだ。あまり使っている人はいないかもしれないけど、Azure OpenAI ServiceのAPIを使用する場合は`AzureOpenAI`にするのだ。
+使用するAPIの設定なのだ。設定できる値は`OpenAI`と`AzureOpenAI`と`Gemini`の３つなのだ。
 
-`AzureOpenAI`を使う場合は、設定しないといけない環境変数が違うので注意して欲しいのだ。
+使用するAPIによって設定しないといけない環境変数が異なるから注意して欲しいのだ。
 
-| キー | 意味 |
+**OpenAI**
+
+| 変数名 | 値 |
+|------|------|
+| OPENAI_API_KEY  | OpenAIで取得したAPIキー |
+
+**AzureOpenAI**
+
+| 変数名 | 値 |
 |------|------|
 | AZURE_OPENAI_ENDPOINT | Azure OpenAI Serviceの通信先（エンドポイント）|
-| AZURE_OPENAI_API_KEY  | APIキー |
+| AZURE_OPENAI_API_KEY  | Azureで取得したAPIキー |
 
-需要がないと思うのでAzure OpenAI Serviceの詳しい説明は省略するのだ。使いたい人は自分で調べて欲しいのだ。
+**Gemini**
+
+| 変数名 | 値 |
+|------|------|
+| GEMINI_API_KEY  | Googleで取得したAPIキー |
 
 #### ✨ chat/model（既定値 gpt-3.5-turbo-0125）
 
-OpenAIのテキスト生成のモデル名を指定するのだ。これを変更することでAIの賢さが変わるのだ。既定はリーズナブルなGTP3.5を使用しているのだ。もっと賢くしたい場合はGPT4.0系も使えるけれど、その分利用量が上がるので注意するのだ。使用できるモデルの一覧と利用料金は以下のリンクで確認できるのだ。
+使用するAIのモデル名を指定するのだ。使用するAPIによって指定できるモデル名が異なるので注意して欲しいのだ。
+
+**OpenAI**
+
+既定はリーズナブルなGTP3.5を使用しているのだ。もっと賢くしたい場合はGPT4.0系も使えるけれど、その分利用量が上がるので注意するのだ。使用できるモデルの一覧と利用料金は以下のリンクで確認できるのだ。
 
 モデルの一覧 … https://platform.openai.com/docs/models  
 利用料金 … https://openai.com/pricing#language-models
+
+**AzureOpenAI**
+
+Azure上でモデルをデプロイする際につけてモデル名を指定するのだ。
+
+**Gemini**
+
+Geminiでは以下のモデル名を指定できるのだ。詳しくは、[こちらの資料](Readme_gemini.md)を参照して欲しいのだ。
+
+- gemini-1.0-pro-latest
+- gemini-1.5-flash-latest
+- gemini-1.5-pro-latest
 
 #### ✨ chat/instraction（既定値 君は優秀なアシスタント…以下略）
 
@@ -108,11 +158,15 @@ AIに送信する過去の会話の履歴数を設定するのだ。この値が
 
 ### 🌐 OpenAI API（HTTPS）
 
-チャットの回答を取得するためにOpenAIのサーバーと通信を行っているのだ。通信方法は、OpenAIのライブラリを使用しているのだ。
+chat/apiに`OpenAI`を指定した場合は、チャットの回答を取得するために OpenAIのサーバーと通信を行うのだ。通信方法は、OpenAIのライブラリを使用しているのだ。
 
 ### 🌐 Azure OpenAI Service（HTTPS）
 
 chat/apiに`AzureOpenAI`を指定した場合は、チャットの回答を取得するために Microsoft Azure OpenAI Serviceと通信を行うのだ。通信方法は、OpenAIのライブラリを使用しているのだ。
+
+### 🌐 Google Gemini API（HTTPS）
+
+chat/apiに`Gemini`を指定した場合は、チャットの回答を取得するために Googleのサーバーと通信を行うのだ。通信方法は、Googleのライブラリを使用しているのだ。
 
 ### ➰ pywebview（TCP）
 
