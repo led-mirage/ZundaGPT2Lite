@@ -140,9 +140,9 @@ OpenAIやGoogle GeminiのAPIキーはあなただけのものなので、人に�
 これが嫌な人は（ボクも嫌だけど）、Python本体をインストールしてPythonから普通に実行して欲しいのだ。実行ファイルのほうが手軽だし、そのほうがPythonに詳しくない人にとっては簡単なんだけど、誤認問題がついて回ることは覚えておいて欲しいのだ。
 
 VirusTotalでのチェック結果は以下の通りなのだ。  
-（73個中2個のアンチウィルスエンジンで検出 :2024/05/19 v0.7.0）。
+（71個中3個のアンチウィルスエンジンで検出 :2024/06/08 v1.0.0）。
 
-<img src="doc/virustotal_0.7.0.png" width="600">
+<img src="doc/virustotal_1.0.0.png" width="600">
 
 ### ⚡ 免責事項
 
@@ -165,7 +165,7 @@ VirusTotalでのチェック結果は以下の通りなのだ。
 ホームページ： https://github.com/google-gemini/generative-ai-python  
 ライセンス：Apache License 2.0
 
-### 🔖 requests 2.31.0
+### 🔖 requests 2.32.3
 
 ホームページ： https://requests.readthedocs.io/en/latest/  
 ライセンス：Apache License 2.0
@@ -239,3 +239,8 @@ VirusTotalでのチェック結果は以下の通りなのだ。
 ### 0.7.0 (2024/5/19)
 
 - Google Gemini APIに対応
+
+### 1.0.0 (2024/6/08)
+
+- バージョン番号をZundaGTP2に合わせて1.x.xに改定
+- requestsのバージョンを2.32.3に更新
