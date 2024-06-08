@@ -60,7 +60,7 @@ Windowsの場合は、Windowsの検索窓で「環境変数を編集」で検索
 
 以下のリンクから ZundaGPT2Lite.ZIP をダウンロードして、作成したフォルダに展開するのだ。
 
-https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v0.7.0
+https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.0.0
 
 #### 3. 実行
 
