@@ -1,4 +1,4 @@
 pywebview==4.4.1
 requests==2.32.3
-openai==1.23.2
-google-generativeai==0.5.4
+openai==1.33.0
+google-generativeai==0.6.0

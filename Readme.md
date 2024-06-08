@@ -8,9 +8,9 @@ ZundaGPT2(https://github.com/led-mirage/ZundaGPT2) のライト版なのだ。Zu
 
 OpenAI、AzureOpenAI Service、Google Geminiを使って、AIとチャットできるチャットクライアントソフトウェアなのだ。
 
-## 最新情報 バージョン 0.7.0
+## 最新情報 バージョン 1.0.1
 
-Google Gemini APIに対応したのだ！
+使用しているライブラリを更新したのだ！
 
 ## スクリーンショット
 
@@ -60,7 +60,7 @@ Windowsの場合は、Windowsの検索窓で「環境変数を編集」で検索
 
 以下のリンクから ZundaGPT2Lite.ZIP をダウンロードして、作成したフォルダに展開するのだ。
 
-https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.0.0
+https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.0.1
 
 #### 3. 実行
 
@@ -140,9 +140,9 @@ OpenAIやGoogle GeminiのAPIキーはあなただけのものなので、人に�
 これが嫌な人は（ボクも嫌だけど）、Python本体をインストールしてPythonから普通に実行して欲しいのだ。実行ファイルのほうが手軽だし、そのほうがPythonに詳しくない人にとっては簡単なんだけど、誤認問題がついて回ることは覚えておいて欲しいのだ。
 
 VirusTotalでのチェック結果は以下の通りなのだ。  
-（71個中3個のアンチウィルスエンジンで検出 :2024/06/08 v1.0.0）。
+（72個中4個のアンチウィルスエンジンで検出 :2024/06/08 v1.0.1）。
 
-<img src="doc/virustotal_1.0.0.png" width="600">
+<img src="doc/virustotal_1.0.1.png" width="600">
 
 ### ⚡ 免責事項
 
@@ -155,12 +155,12 @@ VirusTotalでのチェック結果は以下の通りなのだ。
 ホームページ： https://github.com/r0x0r/pywebview  
 ライセンス：BSD-3-Clause license
 
-### 🔖 openai 1.23.2
+### 🔖 openai 1.33.0
 
 ホームページ： https://github.com/openai/openai-python  
 ライセンス：Apache License 2.0
 
-### 🔖 google-generativeai 0.5.4
+### 🔖 google-generativeai 0.6.0
 
 ホームページ： https://github.com/google-gemini/generative-ai-python  
 ライセンス：Apache License 2.0
@@ -244,3 +244,9 @@ VirusTotalでのチェック結果は以下の通りなのだ。
 
 - バージョン番号をZundaGTP2に合わせて1.x.xに改定
 - requestsのバージョンを2.32.3に更新
+
+### 1.0.1 (2024/x/x)
+
+- openaiのバージョンを1.33.0に更新
+- google-generativeaiのバージョンを0.6.0に更新
+- appConfig.jsonの初期値を訂正

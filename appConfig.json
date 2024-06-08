@@ -2,7 +2,7 @@
     "file_ver": 3,
     "system": {
         "log_folder": "log",
-        "settings_file": "settings_gemini.json",
+        "settings_file": "settings.json",
         "window_width": 1000,
         "window_height": 800,
         "chat_api_timeout": 30
