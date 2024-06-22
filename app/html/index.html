@@ -29,11 +29,12 @@ MathJax = {
     <span id="settings-name">ZundaGPT</span>
     <nav>
       <ul>
-        <li><button onclick="prevChat()">prev</button></li>
-        <li><button onclick="nextChat()">next</button></li>
-        <li><button onclick="newChat()">new</button></li>
-        <li><button onclick="deleteChat()" class="emoji">🗑️</button></li>
-        <li><button onclick="settings()" class="emoji">⚙️</button></li>
+        <li><button onclick="prevChat()" class="tooltip">prev<span class="tooltiptext">前の会話</span></button></li>
+        <li><button onclick="nextChat()" class="tooltip">next<span class="tooltiptext">次の会話</span></button></li>
+        <li><button onclick="newChat()" class="tooltip">new<span class="tooltiptext">新しい会話</span></button></li>
+        <li><button onclick="deleteChat()" class="emoji tooltip">🗑️<span class="tooltiptext">削除</span></button></li>
+        <li><button onclick="print()" class="emoji tooltip">🖨️<span class="tooltiptext">印刷</span></button></li>
+        <li><button onclick="settings()" class="emoji tooltip">⚙️<span class="tooltiptext">設定</span></button></li>
       </ul>
     </nav>
   </div>
