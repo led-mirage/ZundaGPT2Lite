@@ -29,13 +29,13 @@ body, html {
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 0.8rem; /* フォントサイズを少し小さくする */
+    font-size: 0.9rem; /* フォントサイズを少し小さくする */
     border-radius: 3px; /* 角の丸みを控えめにする */
     cursor: pointer;
     transition: background-color 0.3s, color 0.3s; /* 背景色とテキスト色の変化を滑らかにする */
 }
 .header button.emoji {
-    font-size: 0.7rem;
+    font-size: 0.8rem;
 }
 .header button:hover {
     background-color: #e0e0e0; /* ホバー時の背景色を少し濃くする */
@@ -190,4 +190,30 @@ mark {
     text-align: center;
     font-size: 0.8rem;
     color: dimgray;
+}
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+.tooltip .tooltiptext {
+    visibility: hidden;
+    max-width: 200px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    padding: 5px;
+    border-radius: 6px;
+    position: absolute;
+    z-index: 1;
+    top: 150%;
+    left: 25%;
+    transform: translateY(-50%);
+    white-space: nowrap;
+    opacity: 0; /* 初期状態で透明にする */
+    transition: opacity 0.5s ease, visibility 0s ease 0.5s; /* アニメーションを設定 */
+}
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1; /* ホバー時に不透明にする */
+    transition-delay: 3.0s;
 }
