@@ -227,6 +227,10 @@ mark {
     html {
         font-size: 80%;
     }
+    code {
+        white-space: pre-wrap;
+        word-wrap: break-word;        
+    }
     .header nav {
         display: none;
         visibility: hidden;

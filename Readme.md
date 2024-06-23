@@ -1,4 +1,4 @@
-# ZundaGPT2 Lite
+# <img src="assets/ZundaGPT2.ico" width="48"> ZundaGPT2 Lite
 
 Copyright (c) 2024 led-mirage
 
@@ -8,9 +8,9 @@ ZundaGPT2(https://github.com/led-mirage/ZundaGPT2) のライト版なのだ。Zu
 
 OpenAI、AzureOpenAI Service、Google Geminiを使って、AIとチャットできるチャットクライアントソフトウェアなのだ。
 
-## 最新情報 バージョン 1.1.0
+## 最新情報 バージョン 1.2.0
 
-印刷機能を追加したのだ！
+アプリのアイコンを追加したのだ！
 
 ## スクリーンショット
 
@@ -60,7 +60,7 @@ Windowsの場合は、Windowsの検索窓で「環境変数を編集」で検索
 
 以下のリンクから ZundaGPT2Lite.ZIP をダウンロードして、作成したフォルダに展開するのだ。
 
-https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.1.0
+https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.2.0
 
 #### 3. 実行
 
@@ -115,13 +115,13 @@ python app\main.py
 
 #### 7. 起動用のバッチファイル（オプション）
 
-以下のような起動用のバッチファイルを用意しておくと便利です。
+以下のような起動用のバッチファイルを用意しておくと便利なのだ。
 
 ```bash
 start pythonw app\main.py
 ```
 
-Pythonの仮想環境を使用している場合は、以下の例のようにすればOKです。
+Pythonの仮想環境を使用している場合は、以下の例のようにすればOKなのだ。
 
 ```bash
 call venv\scripts\activate
@@ -155,9 +155,9 @@ OpenAIやGoogle GeminiのAPIキーはあなただけのものなので、人に�
 これが嫌な人は（ボクも嫌だけど）、Python本体をインストールしてPythonから普通に実行して欲しいのだ。実行ファイルのほうが手軽だし、そのほうがPythonに詳しくない人にとっては簡単なんだけど、誤認問題がついて回ることは覚えておいて欲しいのだ。
 
 VirusTotalでのチェック結果は以下の通りなのだ。  
-（74個中6個のアンチウィルスエンジンで検出 :2024/06/22 v1.1.1）。
+（73個中4個のアンチウィルスエンジンで検出 :2024/06/23 v1.2.0）。
 
-<img src="doc/virustotal_1.1.1.png" width="600">
+<img src="doc/virustotal_1.2.0.png" width="600">
 
 ### ⚡ 免責事項
 
@@ -275,3 +275,8 @@ VirusTotalでのチェック結果は以下の通りなのだ。
 ### 1.1.1 (2024/06/22)
 
 - 印刷機能の不備を修正するHotfix
+
+### 1.2.0 (2024/06/23)
+
+- アプリケーションアイコンの追加
+- 印刷する場合、codeブロックの中のテキストを右端で折り返すように修正
