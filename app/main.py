@@ -15,7 +15,7 @@ from chat import Chat
 from chat_log import ChatLog
 
 APP_NAME = "ZundaGPT2 Lite"
-APP_VERSION = "1.1.1"
+APP_VERSION = "1.2.0"
 COPYRIGHT = "Copyright 2024 led-mirage"
 
 # アプリケーションクラス

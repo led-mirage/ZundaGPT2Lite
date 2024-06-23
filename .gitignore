@@ -160,6 +160,7 @@ cython_debug/
 #.idea/
 
 # Zunda
+ZundaGPT2Lite.exe
 log
 settings/*
 !settings/settings.json
