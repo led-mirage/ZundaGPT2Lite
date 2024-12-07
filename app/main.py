@@ -6,6 +6,7 @@
 # このソースコードは MITライセンス の下でライセンスされています。
 # ライセンスの詳細については、このプロジェクトのLICENSEファイルを参照してください。
 
+import sys
 import webview
 
 from app_config import AppConfig
@@ -14,8 +15,11 @@ from chat import ChatFactory
 from chat import Chat
 from chat_log import ChatLog
 
+if getattr(sys, "frozen", False):
+    import pyi_splash
+
 APP_NAME = "ZundaGPT2 Lite"
-APP_VERSION = "1.2.2"
+APP_VERSION = "1.3.0"
 COPYRIGHT = "Copyright 2024 led-mirage"
 
 # アプリケーションクラス
@@ -269,5 +273,8 @@ class Application:
         )
 
 if __name__ == '__main__':
+    if getattr(sys, "frozen", False):
+        pyi_splash.close()
+
     app = Application()
     app.start()

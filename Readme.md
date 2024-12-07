@@ -8,13 +8,15 @@ ZundaGPT2(https://github.com/led-mirage/ZundaGPT2) のライト版なのだ。Zu
 
 OpenAI、AzureOpenAI Service、Google Geminiを使って、AIとチャットできるチャットクライアントソフトウェアなのだ。
 
-## 最新情報 バージョン 1.2.2
+## 最新情報 バージョン 1.3.0
 
-最新のライブラリを使うようにしたのだ！
+起動時に表示されるスプラッシュ画面を追加したのだ！
 
 ## スクリーンショット
 
-<img src="doc/screenshot.png" width="600">
+<img src="assets/ZundaGPT2_splash.png" width="200">
+
+<img src="doc/screenshot_1.3.0.png" width="600">
 
 ## 動作確認環境
 
@@ -60,11 +62,13 @@ Windowsの場合は、Windowsの検索窓で「環境変数を編集」で検索
 
 以下のリンクから ZundaGPT2Lite.ZIP をダウンロードして、作成したフォルダに展開するのだ。
 
-https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.2.1
+https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.3.0
 
 #### 3. 実行
 
 ZundaGPT2Lite.exeをダブルクリックすればアプリが起動するのだ。
+
+※起動時にスプラッシュ画面を表示したくない人は、`ZundaGPT2Lite.ns.exe`を替わりに使ってほしいのだ。
 
 #### 4. 注意事項
 
@@ -154,9 +158,8 @@ OpenAIやGoogle GeminiのAPIキーはあなただけのものなので、人に�
 
 これが嫌な人は（ボクも嫌だけど）、Python本体をインストールしてPythonから普通に実行して欲しいのだ。実行ファイルのほうが手軽だし、そのほうがPythonに詳しくない人にとっては簡単なんだけど、誤認問題がついて回ることは覚えておいて欲しいのだ。
 
-VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/4b86dd12eb7bfb5902545c438753197e9fbe147fbda889b3c0068c27e444c4e2
-)は以下の通りなのだ。  
-（71個中4個のアンチウィルスエンジンで検出 :2024/12/07 v1.2.2）。
+VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/77f31ba267eb56614cd11f1f261adbea9931cc93c6165bf71b87b7a951ac7764)は以下の通りなのだ。  
+（72個中4個のアンチウィルスエンジンで検出 :2024/12/07 v1.3.0）。
 
 <img src="doc/virustotal_1.2.2.png" width="600">
 
@@ -293,3 +296,7 @@ VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/4b86dd1
 - pywebviewのバージョンを5.3.2に更新
 - openaiのバージョンを1.57.0に更新
 - google-generativeaiのバージョンを0.8.3に更新
+
+### 1.3.0 (2024/12/08)
+
+- 起動時に表示されるスプラッシュ画面を追加
