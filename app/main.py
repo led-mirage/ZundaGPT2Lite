@@ -16,10 +16,10 @@ from chat import Chat
 from chat_log import ChatLog
 
 if getattr(sys, "frozen", False):
-    import pyi_splash
+    import pyi_splash # type: ignore
 
 APP_NAME = "ZundaGPT2 Lite"
-APP_VERSION = "1.3.0"
+APP_VERSION = "1.4.0"
 COPYRIGHT = "Copyright 2024 led-mirage"
 
 # アプリケーションクラス
@@ -43,6 +43,7 @@ class Application:
         window_title = f"{APP_NAME}  ver {APP_VERSION}"
         self._window = webview.create_window(window_title, url="html/index.html", width=width, height=height, js_api=self, text_select=True)
         webview.start()
+        #webview.start(debug=True) # 開発者ツールを表示する場合
 
     # ページロードイベントハンドラ（UI）
     def page_loaded(self):
@@ -257,6 +258,8 @@ class Application:
                 message = "APIのエンドポイントが間違っているのだ"
             elif cause == "UnsafeContent":
                 message = "会話の内容が不適切だと判断されたのだ"
+            elif cause == "RateLimit":
+                message = "レート制限に達したのだ"
             else:
                 message = f"なんかわからないエラーが発生したのだ（{class_name}）"
             self._window.evaluate_js(f"handleChatException('{message}')")

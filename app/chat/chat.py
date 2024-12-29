@@ -20,6 +20,7 @@ from openai import APITimeoutError, AuthenticationError, NotFoundError
 import google.generativeai as genai
 import google.api_core.exceptions as google_exceptions
 from google.generativeai.types import HarmCategory, HarmBlockThreshold
+import anthropic
 
 # チャット基底クラス
 class Chat:
@@ -273,6 +274,97 @@ class ChatGemini(Chat):
                 gemini_messages.append({"role": "model", "parts": [ message["content"] ]})
         return gemini_messages
 
+# Anthropic Claude チャットクラス
+class ChatClaude(Chat):
+    def __init__(self, model: str, instruction: str, bad_response: str, history_size: int):
+        api_key = os.environ.get("ANTHROPIC_API_KEY")
+        if api_key is None:
+            raise ValueError("環境変数 GEMINI_API_KEY が設定されていません。")
+        genai.configure(api_key=api_key)
+
+        client = anthropic.Anthropic()
+        super().__init__(
+            client = client,
+            model = model,
+            instruction = instruction,
+            bad_response = bad_response,
+            history_size = history_size
+        )
+
+    # メッセージを送信して回答を得る
+    def send_message(
+        self,
+        text: str,
+        recieve_chunk: Callable[[str], None],
+        recieve_sentence: Callable[[str], None],
+        end_response: Callable[[str], None],
+        on_error: Callable[[Exception, str], None]) -> str:
+
+        try:
+            self.stop_send_event.clear()
+
+            self.messages.append({"role": "user", "content": text})
+            messages = self.messages[-self.history_size:]
+
+            content = ""
+            sentence = ""
+
+            with self.client.messages.stream(
+                max_tokens=4096,
+                system=self.instruction,
+                messages=messages,
+                model=self.model,
+            ) as stream:
+                for text in stream.text_stream:
+                    if self.stop_send_event.is_set():
+                        break
+
+                    if text is not None:
+                        chunk_content = text
+
+                        content += chunk_content
+                        sentence += chunk_content
+                        recieve_chunk(chunk_content)
+
+                        if sentence.endswith(("。", "\n", "？", "！")):
+                            recieve_sentence(sentence)
+                            sentence = ""
+
+                if sentence != "":
+                    recieve_sentence(sentence)
+
+                if content:
+                    self.messages.append({"role": "assistant", "content": content})
+                    self.chat_update_time = datetime.now()
+                    end_response(content)
+                    return content
+                else:
+                    end_response(self.bad_response)
+                    return self.bad_response
+        except anthropic.APITimeoutError as e:
+            on_error(e, "Timeout")
+        except anthropic.APIConnectionError as e:
+            on_error(e, "APIConnectionError")
+        except anthropic.RateLimitError as e:
+            on_error(e, "RateLimit")
+        except anthropic.APIStatusError as e:
+            if e.status_code == 400:
+                on_error(e, "BadRequest")
+            elif e.status_code == 401:
+                on_error(e, "Authentication")
+            elif e.status_code == 403:
+                on_error(e, "PermissionDeniedError")
+            elif e.status_code == 422:
+                on_error(e, "UnprocessableEntity")
+            elif e.status_code == 429:
+                on_error(e, "RateLimit")
+            elif e.status_code == 500:
+                on_error(e, "InternalServerError")
+            else:
+                on_error(e, "APIConnectionError")
+        except Exception as e:
+            on_error(e, "Exception")
+
 # チャットファクトリー
 class ChatFactory:
     # api_idに基づいてChatオブジェクトを作成する
@@ -284,5 +376,7 @@ class ChatFactory:
             return ChatAzureOpenAI(model, instruction, bad_response, history_size, api_timeout)
         elif api_id == "Gemini":
             return ChatGemini(model, instruction, bad_response, history_size, gemini_option)
+        elif api_id == "Claude":
+            return ChatClaude(model, instruction, bad_response, history_size)
         else:
             raise ValueError("API IDが間違っています。")

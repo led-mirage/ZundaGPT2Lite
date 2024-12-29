@@ -20,6 +20,11 @@ MathJax = {
         displayAlign: "left"
     }
 };
+marked.setOptions(
+    {
+        breaks: true
+    }
+);
 </script>
 <script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js"></script>
 </head>
@@ -326,7 +331,8 @@ function addChatMessage(role, speakerName, color, messageText) {
     const messageElement = document.createElement("div");
     messageElement.classList.add("message-text");
     if (role === "assistant") {
-        let html = escapeTex(messageText);
+        let html = convertTextToHtmlWithMarkdown(messageText);
+        html = escapeTex(html);
         html = adjustURL(html);
         html = marked.parse(html);
         html = unescapeTex(html);
@@ -346,6 +352,26 @@ function addChatMessage(role, speakerName, color, messageText) {
 
     // 作成したチャットメッセージをコンテナに追加
     chatMessagesContainer.appendChild(chatMessageElement);
+}
+
+// マークダウンテキスト内のコードブロックを保護しながらHTML変換する関数
+function convertTextToHtmlWithMarkdown(text) {
+    // コードブロックを一時保存
+    let codeBlocks = [];
+    text = text.replace(/```[\s\S]*?```/g, match => {
+        codeBlocks.push(match);
+        return `__CODE_BLOCK_${codeBlocks.length-1}__`;
+    });
+  
+    // バッククォート文字を変換
+    text = text.replace(/\\`/g, '\\\''); 
+
+    // コードブロックを戻す
+    codeBlocks.forEach((block, i) => {
+        text = text.replace(`__CODE_BLOCK_${i}__`, block);
+    });
+  
+    return text;
 }
 
 // markedがリンクに連続する文字列全体をリンクに変換してしまう問題に対処
@@ -571,7 +597,8 @@ function endResponse(content) {
     const messageTextElements = document.querySelectorAll("#chat-messages .message-text");
     const lastMessageTextElement = messageTextElements[messageTextElements.length - 1];
     if(lastMessageTextElement) {
-        let html = escapeTex(content);
+        let html = convertTextToHtmlWithMarkdown(content);
+        html = escapeTex(html);
         html = adjustURL(html);
         html = marked.parse(html);
         html = unescapeTex(html);
