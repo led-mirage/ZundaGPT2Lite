@@ -165,4 +165,5 @@ log
 settings/*
 !settings/settings.json
 !settings/settings_gemini.json
+!settings/settings_claude.json
 起動.bat
