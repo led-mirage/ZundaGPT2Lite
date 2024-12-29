@@ -28,6 +28,11 @@ OpenAI … https://platform.openai.com/
 
 現時点でGoogle Gemini APIには無料プランが設定されているので、OpenAIのAPIよりも気軽に利用することができるのだ。Google Gemini APIを使用したい場合は、[専用の資料](Readme_gemini.md)を用意したので、それを参照して欲しいのだ。
 
+
+### ✅ Anthropic APIのAPIキー
+
+バージョン1.4.0からAnthropic API（Claudeシリーズ）にも対応したのだ。APIを利用するには[Anthropic Console](https://console.anthropic.com/)のアカウントとAPIの利用登録（課金およびAPIキーの作成）が必要なのだ。
+
 ## 設定ファイル
 
 設定ファイルは２つあるのだ。ひとつはシステムの設定が書かれているapp_config.json。もうひとつはチャットするキャラクターの情報が書かれているsettings.jsonなのだ。
@@ -92,7 +97,7 @@ settings.jsonはsettingsフォルダの中に格納されているのだ。声�
 
 #### ✨ chat/api（既定値 OpenAI）
 
-使用するAPIの設定なのだ。設定できる値は`OpenAI`と`AzureOpenAI`と`Gemini`の３つなのだ。
+使用するAPIの設定なのだ。設定できる値は`OpenAI`と`AzureOpenAI`と`Gemini`と`Claude`の４つなのだ。
 
 使用するAPIによって設定しないといけない環境変数が異なるから注意して欲しいのだ。
 
@@ -114,6 +119,12 @@ settings.jsonはsettingsフォルダの中に格納されているのだ。声�
 | 変数名 | 値 |
 |------|------|
 | GEMINI_API_KEY  | Googleで取得したAPIキー |
+
+**Claude**
+
+| 変数名 | 値 |
+|------|------|
+| ANTHROPIC_API_KEY  | Anthropicで取得したAPIキー |
 
 #### ✨ chat/model（既定値 gpt-3.5-turbo-0125）
 
@@ -137,6 +148,17 @@ Geminiでは以下のモデル名を指定できるのだ。詳しくは、[こ�
 - gemini-1.0-pro-latest
 - gemini-1.5-flash-latest
 - gemini-1.5-pro-latest
+
+**Claude**
+
+Anthropicの場合、2024年12月29日時点で、以下のモデルを指定できるのだ。
+
+- Claude 3.5 Sonnet 2024-10-22
+- Claude 3.5 Sonnet 2024-06-20
+- Claude 3.5 Haiku
+- Claude 3 Opus
+- Claude 3 Sonnet
+- Claude 3 Haiku
 
 #### ✨ chat/instraction（既定値 君は優秀なアシスタント…以下略）
 
@@ -167,6 +189,10 @@ chat/apiに`AzureOpenAI`を指定した場合は、チャットの回答を取�
 ### 🌐 Google Gemini API（HTTPS）
 
 chat/apiに`Gemini`を指定した場合は、チャットの回答を取得するために Googleのサーバーと通信を行うのだ。通信方法は、Googleのライブラリを使用しているのだ。
+
+### 🌐 Anthropic API（HTTPS）
+
+chat/apiに`Claude`を指定した場合は、チャットの回答を取得するために Anthropicのサーバーと通信を行うのだ。通信方法は、Anthropicのライブラリを使用しているのだ。
 
 ### ➰ pywebview（TCP）
 

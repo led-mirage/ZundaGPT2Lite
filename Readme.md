@@ -6,11 +6,18 @@ Copyright (c) 2024 led-mirage
 
 ZundaGPT2(https://github.com/led-mirage/ZundaGPT2) のライト版なのだ。ZundaGPT2から音声読み上げ機能を省いたバージョンなのだよ。
 
-OpenAI、AzureOpenAI Service、Google Geminiを使って、AIとチャットできるチャットクライアントソフトウェアなのだ。
+簡単に言うと、AIとチャットできるチャットクライアントソフトウェアなのだ。
 
-## 最新情報 バージョン 1.3.0
+使用できるAIサービスは以下の4つなのだよ。
 
-起動時に表示されるスプラッシュ画面を追加したのだ！
+- OpenAI
+- AzureOpenAI
+- Google Gemini
+- Anthropic Claude
+
+## 最新情報 バージョン 1.4.0
+
+Anthropic社のClaudeシリーズに対応したのだ✨
 
 ## スクリーンショット
 
@@ -25,28 +32,39 @@ OpenAI、AzureOpenAI Service、Google Geminiを使って、AIとチャットで�
 
 ## 必要なもの
 
-このアプリを動作させるには以下のものが必要になるのだ。ここでは軽く触れておくだけにするけど、詳しいことは[こっち](Readme_detail.md)を見てほしいのだ。
+このアプリ自体は無料だけど、このアプリを動作させるには以下のいずれかのAPIキーが必要になるのだ。
+
+ここでは軽く触れておくだけにするけど、詳しいことは[こっち](Readme_detail.md)を見てほしいのだ。
 
 ### ✅ OpenAIアカウントとAPIキー
 
-このアプリ自体は無料だけど、[OpenAI](https://platform.openai.com/)のアカウントとAPIの利用登録（課金およびAPIキーの作成）が必要なのだ。
+OpenAIのAPIを使用する場合は、[OpenAI](https://platform.openai.com/)のアカウントとAPIの利用登録（課金およびAPIキーの作成）が必要なのだ。
 
 ### ✅ Google Gemini APIのAPIキー
 
-バージョン0.7.0からGoogle Gemini APIにも対応したので、OpenAIの代わりにGoogle Gemini APIを使用することもできるのだ。
+バージョン0.7.0からGoogle Gemini APIにも対応したのだ。
 
-現時点でGoogle Gemini APIには無料プランが設定されているので、OpenAIのAPIよりも気軽に利用することができるのだ。Google Gemini APIを使用したい場合は、[専用の資料](Readme_gemini.md)を用意したので、それを参照して欲しいのだ。
+2024年5月19日時点でGoogle Gemini APIには無料プランが設定されているので、OpenAIのAPIよりも気軽に利用することができるのだ。Google Gemini APIを使用したい場合は、[専用の資料](Readme_gemini.md)を用意したので、それを参照して欲しいのだ。
+
+### ✅ Anthropic APIのAPIキー
+
+バージョン1.4.0からAnthropic API（Claudeシリーズ）にも対応したのだ。
+
+APIを利用するには[Anthropic Console](https://console.anthropic.com/)のアカウントとAPIの利用登録（課金およびAPIキーの作成）が必要なのだ。
+
+2024年12月29日時点の最新のモデルは`Claude 3.5 Sonnet`なのだ。
 
 ## 実行方法
 
 ### 🛩️ 準備：OSの環境変数を追加
 
-OpenAIのAPIキー、もしくはGoogle Gemini APIのAPIキーをOSの環境変数に登録しておく必要があるのだ。
+OpenAIのAPIキー、またはGoogle Gemini API、またはAnthropic APIのAPIキーをOSの環境変数に登録しておく必要があるのだ。
 
 | AI | 変数名 | 値 |
 |------|------|------|
 | OpenAI | OPENAI_API_KEY  | OpenAIで取得したAPIキー |
 | Google Gemini | GEMINI_API_KEY  | Googleで取得したAPIキー |
+| Anthropic Claude | ANTHROPIC_API_KEY | Anthropicで取得したAPIキー |
 
 Windowsの場合は、Windowsの検索窓で「環境変数を編集」で検索すると設定画面が立ち上がるので、そこでユーザー環境変数を追加すればいいのだ。
 
@@ -62,11 +80,11 @@ Windowsの場合は、Windowsの検索窓で「環境変数を編集」で検索
 
 以下のリンクから ZundaGPT2Lite.ZIP をダウンロードして、作成したフォルダに展開するのだ。
 
-https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.3.0
+https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.4.0
 
 #### 3. 実行
 
-ZundaGPT2Lite.exeをダブルクリックすればアプリが起動するのだ。
+`ZundaGPT2Lite.exe`をダブルクリックすればアプリが起動するのだ。
 
 ※起動時にスプラッシュ画面を表示したくない人は、`ZundaGPT2Lite.ns.exe`を替わりに使ってほしいのだ。
 
@@ -144,9 +162,13 @@ start pythonw app\main.py
 
 [この資料](Readme_gemini.md)にも書いたけど、現時点でGoogle Gemini APIには無料枠があるのだ。だから、基本的には無料枠を使ってアプリを利用すればいいと思うけど、もっとハードに使いたい場合は有料プランを考えてみるのもいいのだ。ただ、有料プランにした場合は、先に書いたOpenAIと同じように使い過ぎには注意して欲しいのだ。
 
+### ⚡ Anthropic APIの利用料金について
+
+Anthropic APIを利用するのにも別途料金（従量制）が発生するのだ。2024年12月29日時点で確認したところ、無料枠というものはなさそうなのだ。クレジットカードで好きな金額を課金するとAPIを利用できるようになるのだ。ただ、他のAPIと同じように使い過ぎには注意して欲しいのだ。
+
 ### ⚡ APIキーの重要性について
 
-OpenAIやGoogle GeminiのAPIキーはあなただけのものなので、人に教えたらダメなのだ。流出すると悪い人に勝手に使われてしまう可能性があるのだ。もし流出してしまったら、OpenAIやGoogleのサイトで現在使っているAPIキーを削除して、別のAPIキーを作ればいいのだ。
+OpenAIやGoogle Gemini、AnthropicのAPIキーはあなただけのものなので、人に教えたらダメなのだ。流出すると悪い人に勝手に使われてしまう可能性があるのだ。もし流出してしまったら、OpenAIやGoogle、Anthropicのサイトで現在使っているAPIキーを削除して、別のAPIキーを作ればいいのだ。
 
 ただOpenAIでは、APIキーをひとつしか持っていない場合、新しいAPIキーを作ってからじゃないと古いAPIキーを削除できないようなのだ。これはOpenAIの仕様のようなんだけど、ボク的にはちょっといただけない仕様だと思っているのだ。将来的に改善することを願っているけれど、最悪支払い情報（クレジットカード情報）を削除してしまえばいいような気もするのだ。
 
@@ -158,10 +180,10 @@ OpenAIやGoogle GeminiのAPIキーはあなただけのものなので、人に�
 
 これが嫌な人は（ボクも嫌だけど）、Python本体をインストールしてPythonから普通に実行して欲しいのだ。実行ファイルのほうが手軽だし、そのほうがPythonに詳しくない人にとっては簡単なんだけど、誤認問題がついて回ることは覚えておいて欲しいのだ。
 
-VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/77f31ba267eb56614cd11f1f261adbea9931cc93c6165bf71b87b7a951ac7764)は以下の通りなのだ。  
-（72個中4個のアンチウィルスエンジンで検出 :2024/12/07 v1.3.0）。
+VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/be1aecbe11a35ed23172f389d096ae91ed35675e814e238bf41bd7061ad4b994)は以下の通りなのだ。  
+（72個中4個のアンチウィルスエンジンで検出 :2024/12/29 v1.4.0）。
 
-<img src="doc/virustotal_1.2.2.png" width="600">
+<img src="doc/virustotal_1.4.0.png" width="600">
 
 ### ⚡ 免責事項
 
@@ -183,6 +205,11 @@ VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/77f31ba
 
 ホームページ： https://github.com/google-gemini/generative-ai-python  
 ライセンス：Apache License 2.0
+
+### 🔖 anthropic 0.42.0
+
+ホームページ： https://github.com/anthropics/anthropic-sdk-python  
+ライセンス：MIT license
 
 ### 🔖 requests 2.32.3
 
@@ -300,3 +327,8 @@ VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/77f31ba
 ### 1.3.0 (2024/12/08)
 
 - 起動時に表示されるスプラッシュ画面を追加
+
+### 1.4.0 (2024/12/29)
+
+- Anthropic社のAI、Claudeシリーズに対応
+- チャット内容の表示を改善
