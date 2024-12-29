@@ -181,7 +181,7 @@ OpenAIやGoogle Gemini、AnthropicのAPIキーはあなただけのものなの�
 これが嫌な人は（ボクも嫌だけど）、Python本体をインストールしてPythonから普通に実行して欲しいのだ。実行ファイルのほうが手軽だし、そのほうがPythonに詳しくない人にとっては簡単なんだけど、誤認問題がついて回ることは覚えておいて欲しいのだ。
 
 VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/be1aecbe11a35ed23172f389d096ae91ed35675e814e238bf41bd7061ad4b994)は以下の通りなのだ。  
-（72個中4個のアンチウィルスエンジンで検出 :2024/12/29 v1.4.0）。
+（71個中4個のアンチウィルスエンジンで検出 :2024/12/29 v1.4.0）。
 
 <img src="doc/virustotal_1.4.0.png" width="600">
 
