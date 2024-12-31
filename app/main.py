@@ -2,7 +2,7 @@
 #
 # メイン
 #
-# Copyright (c) 2024 led-mirage
+# Copyright (c) 2024-2025 led-mirage
 # このソースコードは MITライセンス の下でライセンスされています。
 # ライセンスの詳細については、このプロジェクトのLICENSEファイルを参照してください。
 
@@ -19,8 +19,8 @@ if getattr(sys, "frozen", False):
     import pyi_splash # type: ignore
 
 APP_NAME = "ZundaGPT2 Lite"
-APP_VERSION = "1.4.0"
-COPYRIGHT = "Copyright 2024 led-mirage"
+APP_VERSION = "1.4.2"
+COPYRIGHT = "Copyright 2024-2025 led-mirage"
 
 # アプリケーションクラス
 class Application:
