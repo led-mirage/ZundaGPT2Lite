@@ -1,6 +1,6 @@
 # <img src="assets/ZundaGPT2.ico" width="48"> ZundaGPT2 Lite
 
-Copyright (c) 2024 led-mirage
+Copyright (c) 2024-2025 led-mirage
 
 ## 概要
 
@@ -15,7 +15,13 @@ ZundaGPT2(https://github.com/led-mirage/ZundaGPT2) のライト版なのだ。Zu
 - Google Gemini
 - Anthropic Claude
 
-## 最新情報 バージョン 1.4.0
+## 最新情報
+
+### バージョン 1.4.2
+
+バグフィックス
+
+### バージョン 1.4.0
 
 Anthropic社のClaudeシリーズに対応したのだ✨
 
@@ -80,7 +86,7 @@ Windowsの場合は、Windowsの検索窓で「環境変数を編集」で検索
 
 以下のリンクから ZundaGPT2Lite.ZIP をダウンロードして、作成したフォルダに展開するのだ。
 
-https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.4.0
+https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.4.2
 
 #### 3. 実行
 
@@ -180,10 +186,10 @@ OpenAIやGoogle Gemini、AnthropicのAPIキーはあなただけのものなの�
 
 これが嫌な人は（ボクも嫌だけど）、Python本体をインストールしてPythonから普通に実行して欲しいのだ。実行ファイルのほうが手軽だし、そのほうがPythonに詳しくない人にとっては簡単なんだけど、誤認問題がついて回ることは覚えておいて欲しいのだ。
 
-VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/be1aecbe11a35ed23172f389d096ae91ed35675e814e238bf41bd7061ad4b994)は以下の通りなのだ。  
-（71個中4個のアンチウィルスエンジンで検出 :2024/12/29 v1.4.0）。
+VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/e2061e4bdb1310a9e9e8ddaa33118efe086d23007f700f2655b032386ab766ad)は以下の通りなのだ。  
+（72個中3個のアンチウィルスエンジンで検出 :2025/01/01 v1.4.2）。
 
-<img src="doc/virustotal_1.4.0.png" width="600">
+<img src="doc/virustotal_1.4.2.png" width="600">
 
 ### ⚡ 免責事項
 
@@ -332,3 +338,8 @@ VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/be1aecb
 
 - Anthropic社のAI、Claudeシリーズに対応
 - チャット内容の表示を改善
+
+### 1.4.2 (2025/01/01)
+
+- コードブロック中にURLがあった場合に、不要な変換がおこなわれてしまう不具合を修正
+- ZundaGPT2に合わせるために、バージョン1.4.1は欠番

@@ -376,10 +376,23 @@ function convertTextToHtmlWithMarkdown(text) {
 
 // markedがリンクに連続する文字列全体をリンクに変換してしまう問題に対処
 function adjustURL(text) {
+    // コードブロックを一時保存
+    let codeBlocks = [];
+    text = text.replace(/```[\s\S]*?```/g, match => {
+        codeBlocks.push(match);
+        return `__CODE_BLOCK_${codeBlocks.length-1}__`;
+    });
+
     // https://またはhttp://では始まらない、www.で始まるドメイン名の前後にバッククォートを入れる
     text = text.replace(/(?<!https?:\/\/)(www\.[\w.]+)/g, " `$1` ");
     // https://またはhttp://で始まるURLの前後に半角スペースをいれる
     text = text.replace(/(https?:\/\/[\w.?=&%+#\/\-]+)/g, ' $1 ');
+
+    // コードブロックを戻す
+    codeBlocks.forEach((block, i) => {
+        text = text.replace(`__CODE_BLOCK_${i}__`, block);
+    });
+
     return text;
 }
 
