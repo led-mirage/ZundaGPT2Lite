@@ -2,7 +2,7 @@
 #
 # チャットクラス
 #
-# Copyright (c) 2024 led-mirage
+# Copyright (c) 2024-2025 led-mirage
 # このソースコードは MITライセンス の下でライセンスされています。
 # ライセンスの詳細については、このプロジェクトのLICENSEファイルを参照してください。
 
@@ -51,7 +51,7 @@ class Chat:
         recieve_chunk: Callable[[str], None],
         recieve_sentence: Callable[[str], None],
         end_response: Callable[[str], None],
-        on_error: Callable[[Exception, str], None]) -> str:
+        on_error: Callable[[Exception, str, str | None], None]) -> str:
 
         try:
             self.stop_send_event.clear()
@@ -349,19 +349,23 @@ class ChatClaude(Chat):
             on_error(e, "RateLimit")
         except anthropic.APIStatusError as e:
             if e.status_code == 400:
-                on_error(e, "BadRequest")
+                on_error(e, "APIError", "Invalid Request(400)")
             elif e.status_code == 401:
                 on_error(e, "Authentication")
             elif e.status_code == 403:
-                on_error(e, "PermissionDeniedError")
+                on_error(e, "APIError", "Permission Denied(403)")
+            elif e.status_code == 404:
+                on_error(e, "APIError", "Not Found(404)")
+            elif e.status_code == 413:
+                on_error(e, "APIError", "Request too large(413)")
             elif e.status_code == 422:
-                on_error(e, "UnprocessableEntity")
+                on_error(e, "APIError", "UnprocessableEntity(422)")
             elif e.status_code == 429:
-                on_error(e, "RateLimit")
-            elif e.status_code == 500:
-                on_error(e, "InternalServerError")
+                on_error(e, "APIError", "RateLimit")
+            elif e.status_code == 529:
+                on_error(e, "APIError", "Overloaded(529)")
             else:
-                on_error(e, "APIConnectionError")
+                on_error(e, "APIError", f"Internal Server Error({e.status_code})")
         except Exception as e:
             on_error(e, "Exception")
 
