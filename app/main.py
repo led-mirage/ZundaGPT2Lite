@@ -19,7 +19,7 @@ if getattr(sys, "frozen", False):
     import pyi_splash # type: ignore
 
 APP_NAME = "ZundaGPT2 Lite"
-APP_VERSION = "1.4.2"
+APP_VERSION = "1.4.3-dev"
 COPYRIGHT = "Copyright 2024-2025 led-mirage"
 
 # アプリケーションクラス
@@ -242,7 +242,7 @@ class Application:
         self._window.evaluate_js(f"endResponse('{self.escape_js_string(content)}')")
 
     # チャット例外イベントハンドラ（Chat）
-    def on_chat_error(self, e: Exception, cause: str):
+    def on_chat_error(self, e: Exception, cause: str, info: str=""):
         module_name = type(e).__module__
         class_name = type(e).__name__
         print(f"{module_name}.{class_name}")
@@ -260,6 +260,8 @@ class Application:
                 message = "会話の内容が不適切だと判断されたのだ"
             elif cause == "RateLimit":
                 message = "レート制限に達したのだ"
+            elif cause == "APIError":
+                message = f"APIエラーが発生したのだ\n{info}"
             else:
                 message = f"なんかわからないエラーが発生したのだ（{class_name}）"
             self._window.evaluate_js(f"handleChatException('{message}')")
