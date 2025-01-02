@@ -17,9 +17,9 @@ ZundaGPT2(https://github.com/led-mirage/ZundaGPT2) のライト版なのだ。Zu
 
 ## 最新情報
 
-### バージョン 1.4.2
+### バージョン 1.4.2 - 1.4.3 
 
-バグフィックス
+バグフィックス、機能改善
 
 ### バージョン 1.4.0
 
@@ -86,7 +86,7 @@ Windowsの場合は、Windowsの検索窓で「環境変数を編集」で検索
 
 以下のリンクから ZundaGPT2Lite.ZIP をダウンロードして、作成したフォルダに展開するのだ。
 
-https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.4.2
+https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.4.3
 
 #### 3. 実行
 
@@ -186,8 +186,8 @@ OpenAIやGoogle Gemini、AnthropicのAPIキーはあなただけのものなの�
 
 これが嫌な人は（ボクも嫌だけど）、Python本体をインストールしてPythonから普通に実行して欲しいのだ。実行ファイルのほうが手軽だし、そのほうがPythonに詳しくない人にとっては簡単なんだけど、誤認問題がついて回ることは覚えておいて欲しいのだ。
 
-VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/e2061e4bdb1310a9e9e8ddaa33118efe086d23007f700f2655b032386ab766ad)は以下の通りなのだ。  
-（72個中3個のアンチウィルスエンジンで検出 :2025/01/01 v1.4.2）。
+VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/d5d9ff6593878f0b65fdd30708547a50fd272b01053b53fb2271663ff5175fbc)は以下の通りなのだ。  
+（72個中3個のアンチウィルスエンジンで検出 :2025/01/02 v1.4.3）。
 
 <img src="doc/virustotal_1.4.2.png" width="600">
 
@@ -343,3 +343,7 @@ VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/e2061e4
 
 - コードブロック中にURLがあった場合に、不要な変換がおこなわれてしまう不具合を修正
 - ZundaGPT2に合わせるために、バージョン1.4.1は欠番
+
+### 1.4.3 (2025/01/02)
+
+- Anthropic APIでエラーが発生したときのメッセージを分かりやすくした
