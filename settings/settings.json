@@ -1,5 +1,5 @@
 {
-    "file_ver": 4,
+    "file_ver": 5,
     "settings": {
         "display_name": "ZundaGPT",
         "description": "既定値",
@@ -8,11 +8,13 @@
     },
     "user": {
         "name": "あなた",
-        "name_color": "#007bff"
+        "name_color": "#007bff",
+        "icon": "chat_icons/user_black.png"
     },
     "assistant": {
         "name": "ずんだ",
-        "name_color": "#006400"
+        "name_color": "#006400",
+        "icon": "chat_icons/zunda_lime.png"
     },
     "chat": {
         "api": "OpenAI",

@@ -217,6 +217,15 @@ mark {
     opacity: 1; /* ホバー時に不透明にする */
     transition-delay: 2.0s;
 }
+.welcome-chat-icon {
+    width: 5.0rem;
+    height: 5.0rem;
+}
+.chat-icon {
+    margin-right: 0.5rem;
+    width: 2.5rem;
+    height: 2.5rem;
+}
 @media print {
     @page {
         margin-top: 1.5cm;

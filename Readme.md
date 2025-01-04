@@ -17,9 +17,9 @@ ZundaGPT2(https://github.com/led-mirage/ZundaGPT2) のライト版なのだ。Zu
 
 ## 最新情報
 
-### バージョン 1.4.2 - 1.4.3 
+### バージョン 1.5.0 
 
-バグフィックス、機能改善
+チャット用のアイコンが表示できるようになったのだ✨
 
 ### バージョン 1.4.0
 
@@ -29,7 +29,7 @@ Anthropic社のClaudeシリーズに対応したのだ✨
 
 <img src="assets/ZundaGPT2_splash.png" width="200">
 
-<img src="doc/screenshot_1.3.0.png" width="600">
+<img src="doc/screenshot_1.5.0.png" width="600">
 
 ## 動作確認環境
 
@@ -186,10 +186,10 @@ OpenAIやGoogle Gemini、AnthropicのAPIキーはあなただけのものなの�
 
 これが嫌な人は（ボクも嫌だけど）、Python本体をインストールしてPythonから普通に実行して欲しいのだ。実行ファイルのほうが手軽だし、そのほうがPythonに詳しくない人にとっては簡単なんだけど、誤認問題がついて回ることは覚えておいて欲しいのだ。
 
-VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/d5d9ff6593878f0b65fdd30708547a50fd272b01053b53fb2271663ff5175fbc)は以下の通りなのだ。  
-（72個中3個のアンチウィルスエンジンで検出 :2025/01/02 v1.4.3）。
+VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/49c81f7d0475d9c0caec0d3fdfa4ecedc674d160764e0ad4a489440f37ff401d)は以下の通りなのだ。  
+（72個中3個のアンチウィルスエンジンで検出 :2025/01/04 v1.5.0）。
 
-<img src="doc/virustotal_1.4.2.png" width="600">
+<img src="doc/virustotal_1.5.0.png" width="600">
 
 ### ⚡ 免責事項
 
@@ -244,7 +244,7 @@ VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/d5d9ff6
 
 ## ライセンス
 
-© 2024 led-mirage
+© 2024-2025 led-mirage
 
 本アプリケーションは [MITライセンス](https://opensource.org/licenses/MIT) の下で公開されているのだ。詳細については、プロジェクトに含まれる LICENSE ファイルを参照して欲しいのだ。
 
@@ -347,3 +347,7 @@ VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/d5d9ff6
 ### 1.4.3 (2025/01/02)
 
 - Anthropic APIでエラーが発生したときのメッセージを分かりやすくした
+
+### 1.5.0 (2025/01/04)
+
+- チャットアイコンを表示する機能を追加
