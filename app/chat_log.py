@@ -2,7 +2,7 @@
 #
 # メイン
 #
-# Copyright (c) 2024 led-mirage
+# Copyright (c) 2024-2025 led-mirage
 # このソースコードは MITライセンス の下でライセンスされています。
 # ライセンスの詳細については、このプロジェクトのLICENSEファイルを参照してください。
 
@@ -17,7 +17,7 @@ from chat import ChatFactory
 
 # チャットログクラス
 class ChatLog:
-    FILE_VER = 3
+    FILE_VER = 4
     LOG_FOLDER = "log"
 
     # ログをファイルに保存する
@@ -64,11 +64,15 @@ class ChatLog:
             if data["file_ver"] == 1:
                 return (None, None)
             
-            if data["file_ver"] == 2:
+            if data["file_ver"] <= 2:
                 data["settings"] = {
                     "display_name": "ZundaGPT",
                     "description": ""
                 }
+            
+            if data["file_ver"] <= 3:
+                data["user"]["icon"] = ""
+                data["assistant"]["icon"] = ""
 
             app_config = AppConfig()
             app_config.load()

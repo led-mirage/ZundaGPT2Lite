@@ -2,7 +2,7 @@
 #
 # メイン
 #
-# Copyright (c) 2024 led-mirage
+# Copyright (c) 2024-2025 led-mirage
 # このソースコードは MITライセンス の下でライセンスされています。
 # ライセンスの詳細については、このプロジェクトのLICENSEファイルを参照してください。
 
@@ -15,7 +15,7 @@ import threading
 from app_config import AppConfig
 
 class Settings:
-    FILE_VER = 4
+    FILE_VER = 5
     FOLDER_NAME = "settings"
 
     def __init__(self, settings_filename=None):
@@ -40,10 +40,12 @@ class Settings:
         self.user = {
             "name": "あなた",
             "name_color": "#007bff",
+            "icon": "",
         }
         self.assistant = {
             "name": "ずんだ",
             "name_color": "#006400",
+            "icon": "",
         }
         self.chat = {
             "api": "OpenAI",

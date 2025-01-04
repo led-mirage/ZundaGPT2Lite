@@ -61,8 +61,10 @@ marked.setOptions(
 <script>
 let g_userName = "あなた";
 let g_userColor = "#007bff";
+let g_userIcon = "";
 let g_assistantName = "ずんだ";
 let g_assistantColor = "#006400";
+let g_assistantIcon = "";
 let g_nextMessageIndex = 0;
 let g_searchTextIndex = 0;
 let g_searchTextTotal = 0;
@@ -275,6 +277,14 @@ function addWelcome() {
     welcomeConainer.classList.add("welcome");
     chatMessagesContainer.appendChild(welcomeConainer);
 
+    // アシスタントアイコンを作成
+    if (g_assistantIcon != "") {
+        const imgElement = document.createElement("img");
+        imgElement.classList.add("welcome-chat-icon");
+        imgElement.src = `data:image/png;base64,${g_assistantIcon}`;
+        welcomeConainer.appendChild(imgElement);
+    }
+
     // Welcomeタイトルを作成
     const welcomeTitle = document.createElement("div");
     welcomeTitle.id = "welcome-title";
@@ -308,6 +318,25 @@ function addChatMessage(role, speakerName, color, messageText) {
     speakerElement.classList.add("speaker-name");
     speakerElement.style.color = color;
     speakerElement.textContent = speakerName;
+
+    if (role === "user") {
+        if (g_userIcon != "") {
+            // ユーザーアイコンをつける
+            const imgElement = document.createElement("img");
+            imgElement.classList.add("chat-icon");
+            imgElement.src = `data:image/png;base64,${g_userIcon}`;
+            speakerElement.prepend(imgElement);
+        }
+    }
+    else if (role === "assistant") {
+        if (g_assistantIcon != "") {
+            // アシスタントアイコンをつける
+            const imgElement = document.createElement("img");
+            imgElement.classList.add("chat-icon");
+            imgElement.src = `data:image/png;base64,${g_assistantIcon}`;
+            speakerElement.prepend(imgElement);
+        }
+    }
 
     if (role === "user") {
         // 削除ボタンをつける
@@ -550,11 +579,13 @@ async function reAnswerChat(event) {
 
 // Pythonから呼び出される関数
 // 情報をセットする
-function setChatInfo(displayName, userName, userColor, assistantName, assistantColor, welcomeTitle, welcomeMessage) {
+function setChatInfo(displayName, userName, userColor, userIcon, assistantName, assistantColor, assistantIcon, welcomeTitle, welcomeMessage) {
     g_userName = userName;
     g_userColor = userColor;
+    g_userIcon = userIcon;
     g_assistantName = assistantName;
     g_assistantColor = assistantColor;
+    g_assistantIcon = assistantIcon;
     g_nextMessageIndex = 0;
     g_welcomeTitle = welcomeTitle;
     g_welcomeMessage = welcomeMessage;

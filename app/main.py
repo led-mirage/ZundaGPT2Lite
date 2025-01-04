@@ -8,6 +8,7 @@
 
 import sys
 import webview
+import base64
 
 from app_config import AppConfig
 from app_settings import Settings
@@ -19,7 +20,7 @@ if getattr(sys, "frozen", False):
     import pyi_splash # type: ignore
 
 APP_NAME = "ZundaGPT2 Lite"
-APP_VERSION = "1.4.3"
+APP_VERSION = "1.5.0"
 COPYRIGHT = "Copyright 2024-2025 led-mirage"
 
 # アプリケーションクラス
@@ -80,17 +81,30 @@ class Application:
         window_title = f"{APP_NAME}  ver {APP_VERSION} - {logfile}"
         self._window.set_title(window_title)
 
+    # 画像をBase64エンコードする
+    def get_image_base64(self, path: str):
+        if not path:
+            return ""
+        try:
+            with open(path, 'rb') as f:
+                data = base64.b64encode(f.read())
+                return data.decode('utf-8')
+        except:
+            return ""
+
     # チャットの情報をUIに通知する
     def set_chatinfo_to_ui(self):
         display_name = self.settings.settings.get("display_name", "")
         user_name = self.settings.user["name"]
         user_color = self.settings.user["name_color"]
+        user_icon = self.get_image_base64(self.settings.user["icon"])
         assistant_name = self.settings.assistant["name"]
         assistant_color = self.settings.assistant["name_color"]
+        assistant_icon = self.get_image_base64(self.settings.assistant["icon"])
         welcome_title = self.settings.settings.get("welcome_title", "")
         welcome_message = self.settings.settings.get("welcome_message", "")
         self._window.evaluate_js(
-            f"setChatInfo('{display_name}', '{user_name}', '{user_color}', '{assistant_name}', '{assistant_color}', '{welcome_title}', '{welcome_message}')")
+            f"setChatInfo('{display_name}', '{user_name}', '{user_color}', '{user_icon}', '{assistant_name}', '{assistant_color}', '{assistant_icon}', '{welcome_title}', '{welcome_message}')")
 
     # ひとつ前のチャットを表示して続ける
     def prev_chat(self):
