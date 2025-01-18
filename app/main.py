@@ -15,12 +15,13 @@ from app_settings import Settings
 from chat import ChatFactory
 from chat import Chat
 from chat_log import ChatLog
+from multi_lang import set_current_language, get_text_resource
 
 if getattr(sys, "frozen", False):
     import pyi_splash # type: ignore
 
 APP_NAME = "ZundaGPT2 Lite"
-APP_VERSION = "1.5.0"
+APP_VERSION = "1.6.0"
 COPYRIGHT = "Copyright 2024-2025 led-mirage"
 
 # アプリケーションクラス
@@ -48,6 +49,10 @@ class Application:
 
     # ページロードイベントハンドラ（UI）
     def page_loaded(self):
+        lang = self.app_config.system["language"]
+        set_current_language(lang)
+        self._window.evaluate_js(f"initUIComponents('{lang}')")
+
         if self.chat == None:
             self.new_chat()
         else:
@@ -263,21 +268,21 @@ class Application:
         print(e)
 
         if cause == "Timeout":
-            message = "APIの呼び出しがタイムアウトしたのだ"
+            message = get_text_resource("ERROR_API_TIMEOUT")
             self._window.evaluate_js(f"handleChatTimeoutException('{message}')")
         else:
             if cause == "Authentication":
-                message = "APIの認証に失敗したのだ"
+                message = get_text_resource("ERROR_API_AUTHENTICATION_FAILED")
             elif cause == "EndPointNotFound":
-                message = "APIのエンドポイントが間違っているのだ"
+                message = get_text_resource("ERROR_API_ENDPOINT_INCORRECT")
             elif cause == "UnsafeContent":
-                message = "会話の内容が不適切だと判断されたのだ"
+                message = get_text_resource("ERROR_CONVERSATION_CONTENT_INAPPROPRIATE")
             elif cause == "RateLimit":
-                message = "レート制限に達したのだ"
+                message = get_text_resource("ERROR_RATE_LIMIT_REACHED")
             elif cause == "APIError":
-                message = f"APIエラーが発生したのだ\n{info}"
+                message = get_text_resource("ERROR_API_ERROR_OCCURRED") + f"\n{info}"
             else:
-                message = f"なんかわからないエラーが発生したのだ（{class_name}）"
+                message = get_text_resource("ERROR_UNKNOWN_OCCURED") + f"（{class_name}）"
             self._window.evaluate_js(f"handleChatException('{message}')")
 
     # 文字をエスケープする

@@ -27,6 +27,7 @@ marked.setOptions(
 );
 </script>
 <script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js"></script>
+<script src="js/textResources.js" defer></script>
 </head>
 <body>
 <div class="chat-container">
@@ -34,12 +35,12 @@ marked.setOptions(
     <span id="settings-name">ZundaGPT</span>
     <nav>
       <ul>
-        <li><button onclick="prevChat()" class="tooltip">prev<span class="tooltiptext">前の会話</span></button></li>
-        <li><button onclick="nextChat()" class="tooltip">next<span class="tooltiptext">次の会話</span></button></li>
-        <li><button onclick="newChat()" class="tooltip">new<span class="tooltiptext">新しい会話</span></button></li>
-        <li><button onclick="deleteChat()" class="emoji tooltip">🗑️<span class="tooltiptext">削除</span></button></li>
-        <li><button onclick="print()" class="emoji tooltip">🖨️<span class="tooltiptext">印刷</span></button></li>
-        <li><button onclick="settings()" class="emoji tooltip">⚙️<span class="tooltiptext">設定</span></button></li>
+        <li><button id="prev-button" onclick="prevChat()" class="tooltip">prev<span class="tooltiptext">前の会話</span></button></li>
+        <li><button id="next-button" onclick="nextChat()" class="tooltip">next<span class="tooltiptext">次の会話</span></button></li>
+        <li><button id="new-button" onclick="newChat()" class="tooltip">new<span class="tooltiptext">新しい会話</span></button></li>
+        <li><button id="delete-button" onclick="deleteChat()" class="emoji tooltip">🗑️<span class="tooltiptext">削除</span></button></li>
+        <li><button id="print-button" onclick="print()" class="emoji tooltip">🖨️<span class="tooltiptext">印刷</span></button></li>
+        <li><button id="settings-button" onclick="settings()" class="emoji tooltip">⚙️<span class="tooltiptext">設定</span></button></li>
       </ul>
     </nav>
   </div>
@@ -163,6 +164,75 @@ window.onfocus = function() {
     document.getElementById("message").blur();
 }
 
+// コンポーネントの初期化
+function initUIComponents(language) {
+    setCurrentLanguage(language);
+
+    let button = document.getElementById("submit-button");
+    if (button) {
+        button.textContent = getTextResource("submitButton");
+    }
+
+    button = document.getElementById("prev-button");
+    if (button) {
+        button.childNodes[0].nodeValue = getTextResource("prevButton");
+        const tooltip = button.querySelector('.tooltiptext');
+        if (tooltip) {
+            tooltip.textContent = getTextResource("prevButtonTooltip");
+        }
+    }
+
+    button = document.getElementById("next-button");
+    if (button) {
+        button.childNodes[0].nodeValue = getTextResource("nextButton");
+        const tooltip = button.querySelector('.tooltiptext');
+        if (tooltip) {
+            tooltip.textContent = getTextResource("nextButtonTooltip");
+        }
+    }
+
+    button = document.getElementById("new-button");
+    if (button) {
+        button.childNodes[0].nodeValue = getTextResource("newButton");
+        const tooltip = button.querySelector('.tooltiptext');
+        if (tooltip) {
+            tooltip.textContent = getTextResource("newButtonTooltip");
+        }
+    }
+
+    button = document.getElementById("delete-button");
+    if (button) {
+        button.childNodes[0].nodeValue = getTextResource("deleteButton");
+        const tooltip = button.querySelector('.tooltiptext');
+        if (tooltip) {
+            tooltip.textContent = getTextResource("deleteButtonTooltip");
+        }
+    }
+
+    button = document.getElementById("print-button");
+    if (button) {
+        button.childNodes[0].nodeValue = getTextResource("printButton");
+        const tooltip = button.querySelector('.tooltiptext');
+        if (tooltip) {
+            tooltip.textContent = getTextResource("printButtonTooltip");
+        }
+    }
+
+    button = document.getElementById("settings-button");
+    if (button) {
+        button.childNodes[0].nodeValue = getTextResource("settingsButton");
+        const tooltip = button.querySelector('.tooltiptext');
+        if (tooltip) {
+            tooltip.textContent = getTextResource("settingsButtonTooltip");
+        }
+    }
+
+    let textarea = document.getElementById("message");
+    if (textarea) {
+        textarea.placeholder = getTextResource("messagePlaceholder");
+    }
+}
+
 // 送信ボタン押下時イベントハンドラ
 function submit() {
     const button = document.getElementById("submit-button");
@@ -214,11 +284,11 @@ function setSubmitButtonState(isSending) {
     const button = document.getElementById("submit-button");
     if (button) {
         if (isSending) {
-            button.textContent = "停止";
+            button.textContent = getTextResource("stopButton");
             button.classList.add("submit-button-disabled")
         }
         else {
-            button.textContent = "送信";
+            button.textContent = getTextResource("submitButton");
             button.classList.remove("submit-button-disabled")
         }
     }
@@ -476,7 +546,7 @@ async function deleteChat() {
     const messageTextElements = document.querySelectorAll("#chat-messages .message-text");
     if (messageTextElements.length === 0) return;
 
-    if (!confirm("本当に削除しますか？")) return;
+    if (!confirm(getTextResource("deleteConfirm"))) return;
 
     try {
         await pywebview.api.delete_current_chat();
@@ -498,7 +568,7 @@ async function settings() {
 
 // テキストを検索する
 function searchText() {
-    const searchText = prompt("検索する文字列を入力してください", "");
+    const searchText = prompt(getTextResource("searchPrompt"), "");
     if (searchText) {
         g_searchTextIndex = 0;
         index = 0;
@@ -537,7 +607,7 @@ function highlightSearchResult(delay=0) {
 
 // メッセージの削除ボタンが押された
 async function deleteChatMessage(event) {
-    if (!confirm("以降のメッセージを削除しますか？")) return;
+    if (!confirm(getTextResource("deleteFromHereConfirm"))) return;
 
     hideChatRetryButton();
 
@@ -666,7 +736,7 @@ function handleChatException(message) {
 // Pythonから呼び出される関数
 // チャット応答で例外が発生した
 async function handleChatTimeoutException(message) {
-    if (confirm(`${message}\nリトライしますか？`)) {
+    if (confirm(`${message}\n` + getTextResource("retryConfirm"))) {
         const messageTextElements = document.querySelectorAll("#chat-messages .message-text");
         const lastMessageTextElement = messageTextElements[messageTextElements.length - 1];
         if (lastMessageTextElement) {
