@@ -106,7 +106,7 @@ Windowsの場合は、Windowsの検索窓で「環境変数を編集」で検索
 
 以下のリンクから ZundaGPT2Lite.ZIP をダウンロードして、作成したフォルダに展開するのだ。
 
-https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.6.0
+https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.6.1
 
 #### 3. 実行
 
@@ -216,10 +216,10 @@ OpenAIやGoogle Gemini、AnthropicのAPIキーはあなただけのものなの�
 
 これが嫌な人は（ボクも嫌だけど）、Python本体をインストールしてPythonから普通に実行して欲しいのだ。実行ファイルのほうが手軽だし、そのほうがPythonに詳しくない人にとっては簡単なんだけど、誤認問題がついて回ることは覚えておいて欲しいのだ。
 
-VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/3b0dd3e47e7e925c67286a63dbb3cac55fda4764c88f6796f9dca9e994b4ed55)は以下の通りなのだ。  
-（72個中3個のアンチウィルスエンジンで検出 :2025/01/18 v1.6.0）。
+VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/f60fe38160e5ea67550957d2be1c0593beff62f18843245117be71d09e3011cd)は以下の通りなのだ。  
+（72個中3個のアンチウィルスエンジンで検出 :2025/01/18 v1.6.1）。
 
-<img src="doc/virustotal_1.6.0.png" width="600">
+<img src="doc/virustotal_1.6.1.png" width="600">
 
 ### ⚡ 免責事項
 
@@ -385,3 +385,7 @@ VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/3b0dd3e
 ### 1.6.0 (2025/01/18)
 
 - 言語サポート機能の追加（英語）
+
+### 1.6.1 (2025/01/18)
+
+- Fix: index.htmlで使っているscriptタグにSRIハッシュを追加
