@@ -2,6 +2,8 @@
 
 Copyright (c) 2024-2025 led-mirage
 
+[English](Readme.en.md)
+
 ## 概要
 
 ZundaGPT2(https://github.com/led-mirage/ZundaGPT2) のライト版なのだ。ZundaGPT2から音声読み上げ機能を省いたバージョンなのだよ。
@@ -16,6 +18,10 @@ ZundaGPT2(https://github.com/led-mirage/ZundaGPT2) のライト版なのだ。Zu
 - Anthropic Claude
 
 ## 最新情報
+
+### バージョン 1.6.0
+
+言語サポート機能（英語）を追加したのだ✨
 
 ### バージョン 1.5.0 
 
@@ -35,6 +41,20 @@ Anthropic社のClaudeシリーズに対応したのだ✨
 
 - Windows 11 Pro 23H2、24H2
 - Python 3.12.0
+
+## 言語サポート
+
+バージョン1.6.0から表示言語を日本語と英語から選べるようになったのだ。
+
+使用する言語を変更するには`appConfig.json`ファイルの`language`設定を変更すればいいのだ。
+
+```json
+"language": "en"
+```
+
+設定できる値は `ja`（日本語）と `en`（英語）なのだ。
+
+また、英語版のキャラクター設定ファイル `settings.en.json`も用意したので、それも使ってみるといいのだ。
 
 ## 必要なもの
 
@@ -86,7 +106,7 @@ Windowsの場合は、Windowsの検索窓で「環境変数を編集」で検索
 
 以下のリンクから ZundaGPT2Lite.ZIP をダウンロードして、作成したフォルダに展開するのだ。
 
-https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.5.0
+https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.6.0
 
 #### 3. 実行
 
@@ -156,6 +176,16 @@ call venv\scripts\activate
 start pythonw app\main.py
 ```
 
+## キャラクターの設定
+
+画面右上の⚙️ボタンを押すことで、使用するキャラクターを選択することができるのだ。
+
+いくつかのデフォルトの設定がすでにあるけれど、設定ファイルをコピーして自分で編集することで自分好みのキャラクターを作ることができるのだ。
+
+キャラクターの設定ファイル（settings_xxx.json）は`settings`フォルダの中に格納されているから、それをコピーして編集すればOKなのだ。
+
+詳しい設定方法は[こちら](Readme_detail.md)をみて欲しいのだ。
+
 ## 注意事項
 
 ### ⚡ OpenAIの利用料金について
@@ -186,10 +216,10 @@ OpenAIやGoogle Gemini、AnthropicのAPIキーはあなただけのものなの�
 
 これが嫌な人は（ボクも嫌だけど）、Python本体をインストールしてPythonから普通に実行して欲しいのだ。実行ファイルのほうが手軽だし、そのほうがPythonに詳しくない人にとっては簡単なんだけど、誤認問題がついて回ることは覚えておいて欲しいのだ。
 
-VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/49c81f7d0475d9c0caec0d3fdfa4ecedc674d160764e0ad4a489440f37ff401d)は以下の通りなのだ。  
-（72個中3個のアンチウィルスエンジンで検出 :2025/01/04 v1.5.0）。
+VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/3b0dd3e47e7e925c67286a63dbb3cac55fda4764c88f6796f9dca9e994b4ed55)は以下の通りなのだ。  
+（72個中3個のアンチウィルスエンジンで検出 :2025/01/18 v1.6.0）。
 
-<img src="doc/virustotal_1.5.0.png" width="600">
+<img src="doc/virustotal_1.6.0.png" width="600">
 
 ### ⚡ 免責事項
 
@@ -351,3 +381,7 @@ VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/49c81f7
 ### 1.5.0 (2025/01/04)
 
 - チャットアイコンを表示する機能を追加
+
+### 1.6.0 (2025/01/18)
+
+- 言語サポート機能の追加（英語）

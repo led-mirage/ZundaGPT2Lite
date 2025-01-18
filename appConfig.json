@@ -1,11 +1,12 @@
 {
-    "file_ver": 3,
+    "file_ver": 4,
     "system": {
         "log_folder": "log",
-        "settings_file": "settings.json",
+        "settings_file": "settings.en.json",
         "window_width": 1000,
         "window_height": 800,
-        "chat_api_timeout": 30
+        "chat_api_timeout": 30,
+        "language": "en"
     },
     "gemini": {
         "safty_filter_harassment": "BLOCK_MEDIUM_AND_ABOVE",

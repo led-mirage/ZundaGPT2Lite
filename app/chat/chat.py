@@ -22,6 +22,8 @@ import google.api_core.exceptions as google_exceptions
 from google.generativeai.types import HarmCategory, HarmBlockThreshold
 import anthropic
 
+from multi_lang import get_text_resource
+
 # チャット基底クラス
 class Chat:
     # コンストラクタ
@@ -107,7 +109,7 @@ class ChatOpenAI(Chat):
     def __init__(self, model: str, instruction: str, bad_response: str, history_size: int, api_timeout: float):
         api_key = os.environ.get("OPENAI_API_KEY")
         if api_key is None:
-            raise ValueError("環境変数 OPENAI_API_KEY が設定されていません。")
+            raise ValueError(get_text_resource("ERROR_MISSING_OPENAI_API_KEY"))
 
         client = OpenAI(timeout=httpx.Timeout(api_timeout, connect=5.0))
         super().__init__(
@@ -123,31 +125,11 @@ class ChatAzureOpenAI(Chat):
     def __init__(self, model: str, instruction: str, bad_response: str, history_size: int, api_timeout: float):
         endpoint = os.environ.get("AZURE_OPENAI_ENDPOINT")
         if endpoint is None:
-            raise ValueError("環境変数 AZURE_OPENAI_ENDPOINT が設定されていません。")
+            raise ValueError(get_text_resource("ERROR_MISSING_AZURE_OPENAI_ENDPOINT"))
 
         api_key = os.environ.get("AZURE_OPENAI_API_KEY")
         if api_key is None:
-            raise ValueError("環境変数 AZURE_OPENAI_API_KEY が設定されていません。")
-
-        client = AzureOpenAI(azure_endpoint=endpoint, api_key=api_key, api_version="2023-05-15", timeout=httpx.Timeout(api_timeout, connect=5.0))
-        super().__init__(
-            client = client,
-            model = model,
-            instruction = instruction,
-            bad_response = bad_response,
-            history_size = history_size
-        )
-
-# Azure OpenAI チャットクラス
-class ChatAzureOpenAI(Chat):
-    def __init__(self, model: str, instruction: str, bad_response: str, history_size: int, api_timeout: float):
-        endpoint = os.environ.get("AZURE_OPENAI_ENDPOINT")
-        if endpoint is None:
-            raise ValueError("環境変数 AZURE_OPENAI_ENDPOINT が設定されていません。")
-
-        api_key = os.environ.get("AZURE_OPENAI_API_KEY")
-        if api_key is None:
-            raise ValueError("環境変数 AZURE_OPENAI_API_KEY が設定されていません。")
+            raise ValueError(get_text_resource("ERROR_MISSING_AZURE_OPENAI_API_KEY"))
 
         client = AzureOpenAI(azure_endpoint=endpoint, api_key=api_key, api_version="2023-05-15", timeout=httpx.Timeout(api_timeout, connect=5.0))
         super().__init__(
@@ -165,7 +147,7 @@ class ChatGemini(Chat):
 
         api_key = os.environ.get("GEMINI_API_KEY")
         if api_key is None:
-            raise ValueError("環境変数 GEMINI_API_KEY が設定されていません。")
+            raise ValueError(get_text_resource("ERROR_MISSING_GEMINI_API_KEY"))
         genai.configure(api_key=api_key)
 
         client = genai.GenerativeModel(model)
@@ -279,7 +261,7 @@ class ChatClaude(Chat):
     def __init__(self, model: str, instruction: str, bad_response: str, history_size: int):
         api_key = os.environ.get("ANTHROPIC_API_KEY")
         if api_key is None:
-            raise ValueError("環境変数 GEMINI_API_KEY が設定されていません。")
+            raise ValueError(get_text_resource("ERROR_MISSING_ANTHROPIC_API_KEY"))
         genai.configure(api_key=api_key)
 
         client = anthropic.Anthropic()
@@ -383,4 +365,4 @@ class ChatFactory:
         elif api_id == "Claude":
             return ChatClaude(model, instruction, bad_response, history_size)
         else:
-            raise ValueError("API IDが間違っています。")
+            raise ValueError(get_text_resource("ERROR_API_ID_IS_INCORRECT"))

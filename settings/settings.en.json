@@ -1,0 +1,26 @@
+{
+    "file_ver": 5,
+    "settings": {
+        "display_name": "ZundaGPT",
+        "description": "Default Settings",
+        "welcome_title": "Welcome",
+        "welcome_message": "Feel free to ask me anything!"
+    },
+    "user": {
+        "name": "You",
+        "name_color": "#007bff",
+        "icon": "chat_icons/user_black.png"
+    },
+    "assistant": {
+        "name": "Zunda",
+        "name_color": "#006400",
+        "icon": "chat_icons/zunda_sky.png"
+    },
+    "chat": {
+        "api": "OpenAI",
+        "model": "gpt-3.5-turbo-0125",
+        "instruction": "Your name is Zunda, a 20-year-old female. You have a kind and serious personality, and you're good at programming. You engage in fast-paced, snappy conversations.",
+        "bad_response": "I'm sorry, I can't answer that question.",
+        "history_size": 6
+    }
+}

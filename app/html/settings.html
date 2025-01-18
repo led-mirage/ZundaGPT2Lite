@@ -39,11 +39,12 @@ th:nth-child(3), td:nth-child(3) {
     font-size: 0.7rem;
 }
 </style>
+<script src="js/textResources.js" defer></script>
 </head>
 <body>
 <div class="chat-container">
   <div class="header">
-    <span>設定切替</span>
+    <span id="title">設定切替</span>
     <nav>
       <ul>
         <li><button onclick="cancel()">cancel</button></li>
@@ -55,9 +56,9 @@ th:nth-child(3), td:nth-child(3) {
     <table id="jsonTable">
       <thead>
         <tr>
-          <th>選択</th>
-          <th>表示名</th>
-          <th>説明</th>
+          <th id="column-select">選択</th>
+          <th id="column-display-name">表示名</th>
+          <th id="column-description">説明</th>
         </tr>
       </thead>
       <tbody>
@@ -74,6 +75,7 @@ let g_settingFiles = null;
 
 // 初期化
 document.addEventListener("DOMContentLoaded", function() {
+    initUIComponents();
 });
 
 // pywebviewの初期化完了
@@ -93,6 +95,29 @@ window.addEventListener("pywebviewready", async function() {
         console.error("Error: " + error)
     }
 })
+
+// コンポーネントの初期化
+function initUIComponents() {
+    let elm = document.getElementById("title");
+    if (elm) {
+        elm.textContent = getTextResource("settingsTitle");
+    }
+
+    elm = document.getElementById("column-select");
+    if (elm) {
+        elm.textContent = getTextResource("settingsColumnSelect");
+    }
+
+    elm = document.getElementById("column-display-name");
+    if (elm) {
+        elm.textContent = getTextResource("settingsColumnDisplayName");
+    }
+
+    elm = document.getElementById("column-description");
+    if (elm) {
+        elm.textContent = getTextResource("settingsColumnDescription");
+    }
+}
 
 // 設定表の作成
 function create_table(settingsFiles) {

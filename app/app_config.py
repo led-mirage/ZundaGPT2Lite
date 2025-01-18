@@ -2,7 +2,7 @@
 #
 # メイン
 #
-# Copyright (c) 2024 led-mirage
+# Copyright (c) 2024-2025 led-mirage
 # このソースコードは MITライセンス の下でライセンスされています。
 # ライセンスの詳細については、このプロジェクトのLICENSEファイルを参照してください。
 
@@ -12,7 +12,7 @@ import os
 import threading
 
 class AppConfig:
-    FILE_VER = 3
+    FILE_VER = 4
     FILE_CONFIG = "appConfig.json"
 
     def __init__(self, config_file_path=FILE_CONFIG):
@@ -26,7 +26,8 @@ class AppConfig:
             "settings_file": "settings.json",
             "window_width": 600,
             "window_height": 800,
-            "chat_api_timeout": 30
+            "chat_api_timeout": 30,
+            "language": "ja",
         }
         self.gemini = {
             "safty_filter_harassment": "BLOCK_MEDIUM_AND_ABOVE",
