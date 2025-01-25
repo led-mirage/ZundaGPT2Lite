@@ -37,6 +37,11 @@ class Chat:
         self.chat_start_time = datetime.now()
         self.chat_update_time = datetime.now()
         self.stop_send_event = threading.Event()
+        self.client_creation_error = ""
+
+    # AIエージェントが利用可能かどうかを返す
+    def is_ai_agent_available(self):
+        return self.client is not None
 
     # 指定index以下のメッセージを切り捨てる
     def truncate_messages(self, index):
@@ -108,10 +113,11 @@ class Chat:
 class ChatOpenAI(Chat):
     def __init__(self, model: str, instruction: str, bad_response: str, history_size: int, api_timeout: float):
         api_key = os.environ.get("OPENAI_API_KEY")
-        if api_key is None:
-            raise ValueError(get_text_resource("ERROR_MISSING_OPENAI_API_KEY"))
 
-        client = OpenAI(timeout=httpx.Timeout(api_timeout, connect=5.0))
+        client = None
+        if api_key:
+            client = OpenAI(timeout=httpx.Timeout(api_timeout, connect=5.0))
+
         super().__init__(
             client = client,
             model = model,
@@ -119,19 +125,20 @@ class ChatOpenAI(Chat):
             bad_response = bad_response,
             history_size = history_size
         )
+
+        if api_key is None:
+            self.client_creation_error = get_text_resource("ERROR_MISSING_OPENAI_API_KEY")
 
 # Azure OpenAI チャットクラス
 class ChatAzureOpenAI(Chat):
     def __init__(self, model: str, instruction: str, bad_response: str, history_size: int, api_timeout: float):
         endpoint = os.environ.get("AZURE_OPENAI_ENDPOINT")
-        if endpoint is None:
-            raise ValueError(get_text_resource("ERROR_MISSING_AZURE_OPENAI_ENDPOINT"))
-
         api_key = os.environ.get("AZURE_OPENAI_API_KEY")
-        if api_key is None:
-            raise ValueError(get_text_resource("ERROR_MISSING_AZURE_OPENAI_API_KEY"))
 
-        client = AzureOpenAI(azure_endpoint=endpoint, api_key=api_key, api_version="2023-05-15", timeout=httpx.Timeout(api_timeout, connect=5.0))
+        client = None
+        if endpoint and api_key:
+            client = AzureOpenAI(azure_endpoint=endpoint, api_key=api_key, api_version="2023-05-15", timeout=httpx.Timeout(api_timeout, connect=5.0))
+
         super().__init__(
             client = client,
             model = model,
@@ -139,6 +146,11 @@ class ChatAzureOpenAI(Chat):
             bad_response = bad_response,
             history_size = history_size
         )
+
+        if endpoint is None:
+            self.client_creation_error = get_text_resource("ERROR_MISSING_AZURE_OPENAI_ENDPOINT")
+        if api_key is None:
+            self.client_creation_error = get_text_resource("ERROR_MISSING_AZURE_OPENAI_API_KEY")
 
 # Google Gemini チャットクラス
 class ChatGemini(Chat):
@@ -146,11 +158,12 @@ class ChatGemini(Chat):
         self.gemini_option = gemini_option
 
         api_key = os.environ.get("GEMINI_API_KEY")
-        if api_key is None:
-            raise ValueError(get_text_resource("ERROR_MISSING_GEMINI_API_KEY"))
-        genai.configure(api_key=api_key)
 
-        client = genai.GenerativeModel(model)
+        client = None
+        if api_key:
+            genai.configure(api_key=api_key)
+            client = genai.GenerativeModel(model)
+
         super().__init__(
             client = client,
             model = model,
@@ -158,6 +171,9 @@ class ChatGemini(Chat):
             bad_response = bad_response,
             history_size = history_size
         )
+
+        if api_key is None:
+            self.client_creation_error = get_text_resource("ERROR_MISSING_GEMINI_API_KEY")
 
     # メッセージを送信して回答を得る
     def send_message(
@@ -260,11 +276,11 @@ class ChatGemini(Chat):
 class ChatClaude(Chat):
     def __init__(self, model: str, instruction: str, bad_response: str, history_size: int):
         api_key = os.environ.get("ANTHROPIC_API_KEY")
-        if api_key is None:
-            raise ValueError(get_text_resource("ERROR_MISSING_ANTHROPIC_API_KEY"))
-        genai.configure(api_key=api_key)
 
-        client = anthropic.Anthropic()
+        client = None
+        if api_key:
+            client = anthropic.Anthropic()
+
         super().__init__(
             client = client,
             model = model,
@@ -272,6 +288,9 @@ class ChatClaude(Chat):
             bad_response = bad_response,
             history_size = history_size
         )
+
+        if api_key is None:
+            self.client_creation_error = get_text_resource("ERROR_MISSING_ANTHROPIC_API_KEY")
 
     # メッセージを送信して回答を得る
     def send_message(
