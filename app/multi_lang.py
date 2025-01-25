@@ -1,6 +1,6 @@
 # ZundaGPT2 Lite
 #
-# メイン
+# 多言語対応文字リソース
 #
 # Copyright (c) 2024-2025 led-mirage
 # このソースコードは MITライセンス の下でライセンスされています。

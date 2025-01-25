@@ -9,6 +9,9 @@
 import sys
 import webview
 import base64
+import os
+import platform
+import subprocess
 
 from app_config import AppConfig
 from app_settings import Settings
@@ -21,7 +24,7 @@ if getattr(sys, "frozen", False):
     import pyi_splash # type: ignore
 
 APP_NAME = "ZundaGPT2 Lite"
-APP_VERSION = "1.6.2"
+APP_VERSION = "1.7.0"
 COPYRIGHT = "Copyright 2024-2025 led-mirage"
 
 # アプリケーションクラス
@@ -51,7 +54,7 @@ class Application:
     def page_loaded(self):
         lang = self.app_config.system["language"]
         set_current_language(lang)
-        self._window.evaluate_js(f"initUIComponents('{lang}')")
+        self._window.evaluate_js(f"initUIComponents('{self.escape_js_string(lang)}')")
 
         if self.chat == None:
             self.new_chat()
@@ -113,17 +116,17 @@ class Application:
 
         self._window.evaluate_js(
             f"setChatInfo("
-            f"'{display_name}', "
-            f"'{user_name}', "
-            f"'{user_color}', "
-            f"'{user_icon}', "
-            f"'{assistant_name}', "
-            f"'{assistant_color}', "
-            f"'{assistant_icon}', "
-            f"'{welcome_title}', "
-            f"'{welcome_message}', "
+            f"'{self.escape_js_string(display_name)}', "
+            f"'{self.escape_js_string(user_name)}', "
+            f"'{self.escape_js_string(user_color)}', "
+            f"'{self.escape_js_string(user_icon)}', "
+            f"'{self.escape_js_string(assistant_name)}', "
+            f"'{self.escape_js_string(assistant_color)}', "
+            f"'{self.escape_js_string(assistant_icon)}', "
+            f"'{self.escape_js_string(welcome_title)}', "
+            f"'{self.escape_js_string(welcome_message)}', "
             f"{ai_agent_available}, "
-            f"'{ai_agent_creation_error}'"
+            f"'{self.escape_js_string(ai_agent_creation_error)}'"
             f")"
         )
 
@@ -216,6 +219,23 @@ class Application:
             })
         return view_model
 
+    # 設定画面編集イベントハンドラ（UI）
+    def edit_settings(self, settings_file):
+        path = Settings(settings_file).get_path()
+        self.open_file(path)
+
+    # ファイルを開く
+    def open_file(self, path):
+        system = platform.system().lower()
+        if system == "windows":
+            os.startfile(path)
+        elif system == "darwin":
+            subprocess.Popen(["open", path])
+        elif system == "linux":
+            subprocess.Popen(["xdg-open", path])
+        else:
+            raise OSError(f'Unsupported OS: {platform.system()}')
+            
     # 設定画面確定イベントハンドラ（UI）
     def submit_settings(self, settings_file):
         self._window.load_url("html/index.html")
@@ -285,7 +305,7 @@ class Application:
 
         if cause == "Timeout":
             message = get_text_resource("ERROR_API_TIMEOUT")
-            self._window.evaluate_js(f"handleChatTimeoutException('{message}')")
+            self._window.evaluate_js(f"handleChatTimeoutException('{self.escape_js_string(message)}')")
         else:
             if cause == "Authentication":
                 message = get_text_resource("ERROR_API_AUTHENTICATION_FAILED")
@@ -299,7 +319,7 @@ class Application:
                 message = get_text_resource("ERROR_API_ERROR_OCCURRED") + f"\n{info}"
             else:
                 message = get_text_resource("ERROR_UNKNOWN_OCCURED") + f"（{class_name}）"
-            self._window.evaluate_js(f"handleChatException('{message}')")
+            self._window.evaluate_js(f"handleChatException('{self.escape_js_string(message)}')")
 
     # 文字をエスケープする
     def escape_js_string(self, s):

@@ -1,6 +1,6 @@
 # ZundaGPT2 Lite
 #
-# メイン
+# チャットログクラス
 #
 # Copyright (c) 2024-2025 led-mirage
 # このソースコードは MITライセンス の下でライセンスされています。
