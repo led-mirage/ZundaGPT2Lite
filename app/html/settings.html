@@ -38,6 +38,10 @@ th:nth-child(3), td:nth-child(3) {
     color: gray;
     font-size: 0.7rem;
 }
+a {
+    color: royalblue;
+    text-decoration: underline;
+}
 </style>
 <script src="js/textResources.js" defer></script>
 </head>
@@ -47,6 +51,7 @@ th:nth-child(3), td:nth-child(3) {
     <span id="title">設定切替</span>
     <nav>
       <ul>
+        <li><button onclick="refresh()">🔄️</button></li>
         <li><button onclick="cancel()">cancel</button></li>
         <li><button onclick="submit()">ok</button></li>
       </ul>
@@ -66,8 +71,9 @@ th:nth-child(3), td:nth-child(3) {
       </tbody>
     </table>
   </div>
+  <div style="height: 1em;"></div>
 </div>
-<footer><span>Copyright</span></footer>
+<footer><span id="copyright">Copyright</span></footer>
 
 <script>
 let g_selectedIndex = -1;
@@ -90,6 +96,9 @@ window.addEventListener("pywebviewready", async function() {
 
         g_settingFiles = await pywebview.api.get_settings_files();
         create_table(g_settingFiles);
+
+        elm = document.querySelector('.selectable[data-index="' + g_selectedIndex + '"]');
+        elm.scrollIntoView({ behavior: 'smooth' });
     }
     catch (error) {
         console.error("Error: " + error)
@@ -123,6 +132,7 @@ function initUIComponents() {
 function create_table(settingsFiles) {
     // テーブルのtbody要素を取得
     const tableBody = document.getElementById("jsonTable").getElementsByTagName("tbody")[0];
+    tableBody.innerHTML = "";
 
     // JSONデータからテーブルの行を生成
     settingsFiles.forEach((item, index) => {
@@ -144,7 +154,7 @@ function create_table(settingsFiles) {
         model = escapeHtml(item.model);
 
         cell2.innerHTML = `${displayName}<br><span class="remark">${assistantName} x ${userName}</span>`;
-        cell3.innerHTML = `${description}<br><span class="remark">${api}　${model}　${filename}</span>`;
+        cell3.innerHTML = `${description}<br><span class="remark">${api}　${model}　<a href="javascript:void(0);" onclick="edit(${index});">${filename}</a></span>`;
 
         if (item.current)
             g_selectedIndex = index;
@@ -164,6 +174,30 @@ function create_table(settingsFiles) {
             g_selectedIndex = this.getAttribute('data-index');
         });
     });
+}
+
+// テーブルの更新
+async function refresh() {
+    // Python側に通知
+    try {
+        g_settingFiles = await pywebview.api.get_settings_files();
+        create_table(g_settingFiles);
+    }
+    catch (error) {
+        console.error("Error: " + error)
+    }
+}
+
+// 編集リンク押下イベント
+async function edit(index) {
+    // Python側に通知
+    try {
+        selectedFile = g_settingFiles[index].filename;
+        await pywebview.api.edit_settings(selectedFile);
+    }
+    catch (error) {
+        console.error("Error: " + error)
+    }
 }
 
 // OKボタン押下イベント
