@@ -19,6 +19,10 @@ ZundaGPT2(https://github.com/led-mirage/ZundaGPT2) のライト版なのだ。Zu
 
 ## 最新情報
 
+### バージョン 1.8.0
+
+コードブロックにコピーボタンをつけて、簡単にクリップボードにコピーできるようにしたのだ✨
+
 ### バージョン 1.7.0
 
 設定画面からチャット設定ファイルを開けるようにしたのだ✨
@@ -26,10 +30,6 @@ ZundaGPT2(https://github.com/led-mirage/ZundaGPT2) のライト版なのだ。Zu
 ### バージョン 1.6.0
 
 言語サポート機能（英語）を追加したのだ✨
-
-### バージョン 1.5.0 
-
-チャット用のアイコンが表示できるようになったのだ✨
 
 ## スクリーンショット
 
@@ -106,7 +106,7 @@ Windowsの場合は、Windowsの検索窓で「環境変数を編集」で検索
 
 以下のリンクから ZundaGPT2Lite.ZIP をダウンロードして、作成したフォルダに展開するのだ。
 
-https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.7.0
+https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.8.0
 
 #### 3. 実行
 
@@ -216,10 +216,10 @@ OpenAIやGoogle Gemini、AnthropicのAPIキーはあなただけのものなの�
 
 これが嫌な人は（ボクも嫌だけど）、Python本体をインストールしてPythonから普通に実行して欲しいのだ。実行ファイルのほうが手軽だし、そのほうがPythonに詳しくない人にとっては簡単なんだけど、誤認問題がついて回ることは覚えておいて欲しいのだ。
 
-VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/fd9e5c42ca5005b741a6981566a98dbd850ae4e9b1c4618d7bc5282d66ffde0b)は以下の通りなのだ。  
-（72個中3個のアンチウィルスエンジンで検出 :2025/01/26 v1.7.0）。
+VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/e7999fded1684b24631794c8df1134e397d04cc076c008051f40087fd0a47757)は以下の通りなのだ。  
+（72個中3個のアンチウィルスエンジンで検出 :2025/02/02 v1.8.0）。
 
-<img src="doc/virustotal_1.7.0.png" width="600">
+<img src="doc/virustotal_1.8.0.png" width="600">
 
 ### ⚡ 免責事項
 
@@ -272,6 +272,11 @@ VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/fd9e5c4
 ホームページ：https://github.com/julkue/mark.js  
 ライセンス：MIT license
 
+### 🔖 Font Awesome Free 6.7.2
+
+ホームページ：https://fontawesome.com/
+ライセンス：Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License
+
 ## ライセンス
 
 © 2024-2025 led-mirage
@@ -279,6 +284,10 @@ VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/fd9e5c4
 本アプリケーションは [MITライセンス](https://opensource.org/licenses/MIT) の下で公開されているのだ。詳細については、プロジェクトに含まれる LICENSE ファイルを参照して欲しいのだ。
 
 ## バージョン履歴
+
+### 1.8.0 (2025/02/02)
+
+- コードブロックにクリップボードにコピーするボタンを追加
 
 ### 1.7.0 (2025/01/26)
 

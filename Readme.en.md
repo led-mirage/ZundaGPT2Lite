@@ -237,6 +237,11 @@ License：MIT license
 Homepage：https://github.com/julkue/mark.js  
 License：MIT license
 
+### 🔖 Font Awesome Free 6.7.2
+
+Homepage：https://fontawesome.com/
+License：Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License
+
 ## License
 
 © 2024-2025 led-mirage

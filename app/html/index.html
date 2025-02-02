@@ -7,6 +7,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" integrity="sha512-D9gUyxqja7hBtkWpPWGt9wfbfaMGVt9gnyCvYa+jojwwPHLCzUm5i8rpk7vD7wNee9bA35eYIjobYPaQuKS1MQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.0/marked.min.js" integrity="sha512-tjg8I2d6Fi0OBGz1csmr7RfI4uupYaCfL/RqhVRTS42RMGwfBsjwBGmhzhI+e2dPmyew8cFkoxnVkGvADDLvbg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 <link rel="stylesheet" href="css/style.css">
 <script>
 MathJax = {
@@ -454,12 +455,46 @@ function addChatMessage(role, speakerName, color, messageText) {
         messageElement.innerHTML = escapeHtml(messageText);
     }
 
+    // コードブロックにコピー用ボタンを追加
+    addCopyToClipboardButton(messageElement);
+
     // チャットメッセージ要素に発言者名とメッセージテキストの要素を追加
     chatMessageElement.appendChild(speakerElement);
     chatMessageElement.appendChild(messageElement);
 
     // 作成したチャットメッセージをコンテナに追加
     chatMessagesContainer.appendChild(chatMessageElement);
+}
+
+// チャットメッセージのコードブロックにコピー用ボタンを追加する
+function addCopyToClipboardButton(element) {
+    element.querySelectorAll("pre").forEach((block) => {
+        const button = document.createElement("button");
+        button.innerHTML = "<i class='fa-regular fa-copy'></i>";
+        button.className = "copy-button";
+
+        const toast = document.createElement("div");
+        toast.className = "toast";
+        toast.textContent = getTextResource("copy2clipboardToast");
+        button.appendChild(toast);
+
+        button.addEventListener("click", () => {
+            const code = block.querySelector("code");
+            navigator.clipboard.writeText(code.textContent)
+                .then(() => showToast(toast))
+                .catch(err => console.error(`${getTextResource("copy2clipboardFailed")}: `, err));
+        });
+
+        block.appendChild(button);
+    });    
+}
+
+// コードをクリップボードにコピーしたときのトーストを表示する
+function showToast(toast) {
+    toast.classList.add('show');
+    setTimeout(() => {
+        toast.classList.remove('show');
+    }, 2000);
 }
 
 // マークダウンテキスト内のコードブロックを保護しながらHTML変換する関数
@@ -736,6 +771,7 @@ function endResponse(content) {
             hljs.highlightElement(block);
         });
         addTargetBlank(lastMessageTextElement);
+        addCopyToClipboardButton(lastMessageTextElement);
     }
 
     MathJax.typesetPromise();
