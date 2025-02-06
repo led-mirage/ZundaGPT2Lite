@@ -41,7 +41,7 @@ body, html {
     background-color: #e0e0e0; /* ホバー時の背景色を少し濃くする */
     color: #000; /* ホバー時のテキスト色を黒にする */
 }
-.message-delete-btn, .chat-reanswer-btn {
+.message-delete-btn, .chat-reanswer-btn, .message-copy-btn {
     background-color: #f0f0f0;
     color: #333;
     border: 1px solid #ccc;
@@ -55,8 +55,11 @@ body, html {
     cursor: pointer;
     opacity: 0.6;
     transition: opacity 1s, box-shadow 1s;
+    width: 1.75rem;
+    height: 1.75rem;
+    line-height: 1rem;
 }
-.message-delete-btn:hover {
+.message-delete-btn:hover, .chat-reanswer-btn:hover, .message-copy-btn:hover {
     opacity: 1;
     box-shadow: 0 0 10px rgba(0,0,0,0.3);
 }
@@ -248,7 +251,7 @@ pre {
 .copy-button:hover i {
     color: White;
 }
-.toast {
+.code-toast {
     visibility: hidden;
     min-width: 100px;
     background-color: #333;
@@ -264,17 +267,41 @@ pre {
     transition: opacity 0.3s ease-in-out, visibility 0.3s;
     z-index: 1;
 }
-.toast.show {
+.code-toast.show {
     visibility: visible;
     opacity: 1;
 }
-@keyframes fadein {
-    from {bottom: 0; opacity: 0;}
-    to {bottom: 30px; opacity: 1;}
+.contextmenu {
+    position: absolute;
+    background-color: whitesmoke;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
 }
-@keyframes fadeout {
-    from {bottom: 30px; opacity: 1;}
-    to {bottom: 0; opacity: 0;}
+.contextmenu button {
+    border: none;
+    background-color: transparent;
+    padding: 4px 8px;
+    cursor: pointer;
+}
+.copy-toast {
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 14px;
+    white-space: nowrap;
+    z-index: 1000;
+    opacity: 0;
+    animation: toastFade 2s ease;
+}
+@keyframes toastFade {
+    0% { opacity: 0; }
+    15% { opacity: 1; }
+    85% { opacity: 1; }
+    100% { opacity: 0; }
 }
 @media print {
     @page {
