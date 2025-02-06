@@ -99,33 +99,11 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 
-    document.addEventListener("keydown", function(event) {
-        if ((event.ctrlKey || event.metaKey) && event.keyCode === 70) { // Ctrl + F
-            searchText();
-        }
-        else if (event.keyCode == 27) { // ESC
-            var instance = new Mark(document.body);
-            g_searchTextIndex = g_searchTextTotal = 0;
-            instance.unmark();
-        }
-        else if (event.keyCode == 114) { // F3
-            if (g_searchTextTotal > 0) {
-                if (event.shiftKey) {
-                    g_searchTextIndex--;
-                    if (g_searchTextIndex < 0) {
-                        g_searchTextIndex = g_searchTextTotal - 1;
-                    }
-                }
-                else {
-                    g_searchTextIndex++;
-                    if (g_searchTextIndex >= g_searchTextTotal) {
-                        g_searchTextIndex = 0;
-                    }
-                }
-                highlightSearchResult();
-            }
-        }
-    });
+    // キーダウンイベントハンドラの登録
+    document.addEventListener("keydown", handleKeyDown);
+
+    // コンテキストメニューイベントハンドラの登録
+    document.addEventListener("contextmenu", handleContextMenu);
 
     autoResize.call(textarea);
 
@@ -134,6 +112,75 @@ document.addEventListener("DOMContentLoaded", function() {
         this.style.height = this.scrollHeight - rem2px(2) + "px";
     }
 });
+
+// キーダウンイベントハンドラ
+function handleKeyDown(event) {
+    if ((event.ctrlKey || event.metaKey) && event.keyCode === 70) { // Ctrl + F
+        searchText();
+    }
+    else if (event.keyCode == 27) { // ESC
+        var instance = new Mark(document.body);
+        g_searchTextIndex = g_searchTextTotal = 0;
+        instance.unmark();
+    }
+    else if (event.keyCode == 114) { // F3
+        if (g_searchTextTotal > 0) {
+            if (event.shiftKey) {
+                g_searchTextIndex--;
+                if (g_searchTextIndex < 0) {
+                    g_searchTextIndex = g_searchTextTotal - 1;
+                }
+            }
+            else {
+                g_searchTextIndex++;
+                if (g_searchTextIndex >= g_searchTextTotal) {
+                    g_searchTextIndex = 0;
+                }
+            }
+            highlightSearchResult();
+        }
+    }
+}
+
+// コンテキストメニューイベントハンドラ
+function handleContextMenu(event) {
+    event.preventDefault();
+
+    const existingMenu = document.querySelector('.contextmenu');
+    if (existingMenu) {
+        document.body.removeChild(existingMenu);
+    }
+
+    const selectedText = window.getSelection().toString();
+
+    if (selectedText) {
+        const menu = document.createElement("div");
+        menu.className = "contextmenu";
+        menu.style.top = `${event.pageY}px`;
+        menu.style.left = `${event.pageX}px`;
+
+        let menuContent = "";
+        if (selectedText) {
+            menuContent += `<button id="copy">${getTextResource("copyContextMenu")}</button>`;
+        }
+        
+        menu.innerHTML = menuContent;
+        document.body.appendChild(menu);
+
+        if (selectedText) {
+            document.getElementById("copy").addEventListener("click", function() {
+                navigator.clipboard.writeText(selectedText);
+                document.body.removeChild(menu);
+            });
+        }
+
+        document.addEventListener("click", function() {
+            if (document.body.contains(menu)) {
+                document.body.removeChild(menu);
+            }
+        }, { once: true });
+    }
+}
 
 // pywebviewの初期化完了
 window.addEventListener("pywebviewready", async function() {
@@ -145,12 +192,14 @@ window.addEventListener("pywebviewready", async function() {
         }
 
         await pywebview.api.page_loaded();
-        addWelcome();
+
+        if (document.querySelectorAll(".chat-message").length === 0) {
+            addWelcome();
+        }
     }
     catch (error) {
         console.error("Error: " + error)
     }
-
 })
 
 // remをpxに変換
@@ -416,6 +465,13 @@ function addChatMessage(role, speakerName, color, messageText) {
         }
     }
 
+    // コピーボタンをつける
+    const copyElement = document.createElement("button");
+    copyElement.classList.add("message-copy-btn");
+    copyElement.innerHTML = "<i class='fa-regular fa-copy'></i>";
+    copyElement.addEventListener("click", copyChatMessage);
+    speakerElement.appendChild(copyElement);
+
     if (role === "user") {
         // 削除ボタンをつける
         const deleteElement = document.createElement("button");
@@ -474,15 +530,14 @@ function addCopyToClipboardButton(element) {
         button.className = "copy-button";
 
         const toast = document.createElement("div");
-        toast.className = "toast";
+        toast.className = "code-toast";
         toast.textContent = getTextResource("copy2clipboardToast");
         button.appendChild(toast);
 
-        button.addEventListener("click", () => {
+        button.addEventListener("click", async () => {
             const code = block.querySelector("code");
-            navigator.clipboard.writeText(code.textContent)
-                .then(() => showToast(toast))
-                .catch(err => console.error(`${getTextResource("copy2clipboardFailed")}: `, err));
+            await navigator.clipboard.writeText(code.textContent);
+            showCodeToast(toast)
         });
 
         block.appendChild(button);
@@ -490,7 +545,7 @@ function addCopyToClipboardButton(element) {
 }
 
 // コードをクリップボードにコピーしたときのトーストを表示する
-function showToast(toast) {
+function showCodeToast(toast) {
     toast.classList.add('show');
     setTimeout(() => {
         toast.classList.remove('show');
@@ -683,12 +738,53 @@ async function reAnswerChat(event) {
     messageDiv.remove();
 
     try {
-        await pywebview.api.ask_another_reply_to_chatgpt(messageIndex);
         g_nextMessageIndex = messageIndex;
+        await pywebview.api.ask_another_reply_to_chatgpt(messageIndex);
     }
     catch (error) {
         console.error("Error: " + error)
     }
+}
+
+// メッセージのコピーボタンが押された
+async function copyChatMessage(event) {
+    const button = event.currentTarget;
+
+    let messageDiv = event.target.closest(".chat-message");
+    let messageId = messageDiv.id;
+    let messageIndex = parseInt(messageId.split("-")[1], 10);
+
+    try {
+        messageText = await pywebview.api.get_message_text(messageIndex);
+        await navigator.clipboard.writeText(messageText);
+        showCopyToast(button);
+    }
+    catch (error) {
+        console.error("Error: " + error)
+    }
+}
+
+// メッセージがクリップボードにコピーされた時のトーストを表示する
+function showCopyToast(button) {
+    // トースト要素を作成
+    const toast = document.createElement("div");
+    toast.classList.add("copy-toast");
+    toast.textContent = getTextResource("copy2clipboardToast");;
+
+    // ボタンの位置を取得
+    const buttonRect = button.getBoundingClientRect();
+    
+    // トーストをbodyに追加
+    document.body.appendChild(toast);
+    
+    // ボタンの右端に合わせて配置
+    toast.style.left = `${buttonRect.right + 5}px`; // ボタンの右端から5px空ける
+    toast.style.top = `${buttonRect.top}px`;        // ボタンと同じ高さ
+    
+    // 2秒後に消える
+    setTimeout(() => {
+        toast.remove();
+    }, 2000);        
 }
 
 // Pythonから呼び出される関数

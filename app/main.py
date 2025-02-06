@@ -24,7 +24,7 @@ if getattr(sys, "frozen", False):
     import pyi_splash # type: ignore
 
 APP_NAME = "ZundaGPT2 Lite"
-APP_VERSION = "1.8.0"
+APP_VERSION = "1.9.0"
 COPYRIGHT = "Copyright 2024-2025 led-mirage"
 
 # アプリケーションクラス
@@ -282,6 +282,11 @@ class Application:
         self.chat.truncate_messages(index - 1)
         ChatLog.save(self.settings, self.chat)
         self.send_message_to_chatgpt(text)
+
+    # チャットメッセージのテキストを取得する（UI）
+    def get_message_text(self, index):
+        text = self.chat.messages[index]["content"] + "\n"
+        return text
 
     # チャンク受信イベントハンドラ（Chat）
     def on_recieve_chunk(self, chunk):
