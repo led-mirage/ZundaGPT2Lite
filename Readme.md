@@ -37,7 +37,7 @@ ZundaGPT2(https://github.com/led-mirage/ZundaGPT2) のライト版なのだ。Zu
 
 <img src="assets/ZundaGPT2_splash.png" width="200">
 
-<img src="doc/screenshot_1.5.0.png" width="600">
+<img src="doc/screenshot_1.10.0.png" width="600">
 
 ## 動作確認環境
 
