@@ -17,19 +17,24 @@ The AI services you can use are as follows:
 
 ## Screenshot
 
-<img src="doc/screenshot_1.6.0.en.png" width="600">
+<img src="doc/screenshot_1.10.0.en.png" width="600">
 
 ## Language Support
 
-Starting from version 1.6.0, ZundaGPT2 Lite supports both English and Japanese, allowing for flexible use depending on your language preference.
-
-To change the language, modify the "language" setting in the appConfig.json file:
+To change the language, modify the `language` setting in the `appConfig.json` file:
 
 ```json
 "language": "en"
 ```
 
-You can switch between "en" for English and "ja" for Japanese.
+The following values can be configured:
+
+| Setting | Language | Character Settings File | Implementation Version |
+|---------|----------|--------------------------|-------------------------|
+| ja      | Japanese | settings.json           | 1.6.0                   |
+| en      | English  | settings.en.json        | 1.6.0                   |
+| fi      | Finnish  | settings.fi.json        | 1.10.0                  |
+| es      | Spanish  | settings.es.json        | 1.10.0                  |
 
 ## Tested Environments
 

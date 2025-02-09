@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>ZundaGPT2</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 <link rel="stylesheet" href="css/style.css">
 <style>
 table {
@@ -51,9 +52,9 @@ a {
     <span id="title">設定切替</span>
     <nav>
       <ul>
-        <li><button onclick="refresh()">🔄️</button></li>
-        <li><button onclick="cancel()">cancel</button></li>
-        <li><button onclick="submit()">ok</button></li>
+        <li><button onclick="refresh()"><i class="fa-solid fa-rotate-right"></i></button></li>
+        <li><button id="cancel-button" onclick="cancel()">cancel</button></li>
+        <li><button id="submit-button" onclick="submit()">ok</button></li>
       </ul>
     </nav>
   </div>
@@ -110,6 +111,16 @@ function initUIComponents() {
     let elm = document.getElementById("title");
     if (elm) {
         elm.textContent = getTextResource("settingsTitle");
+    }
+
+    elm = document.getElementById("cancel-button");
+    if (elm) {
+        elm.textContent = getTextResource("cancelButton");
+    }
+
+    elm = document.getElementById("submit-button");
+    if (elm) {
+        elm.textContent = getTextResource("okButton");
     }
 
     elm = document.getElementById("column-select");
