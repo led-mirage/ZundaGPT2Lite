@@ -20,6 +20,8 @@ class ChatLog:
     FILE_VER = 4
     LOG_FOLDER = "log"
 
+    cache = {}
+
     # ログをファイルに保存する
     @staticmethod
     def save(settings: Settings, chat: Chat):
@@ -45,6 +47,8 @@ class ChatLog:
         path = os.path.join(log_folder, filename)
         with open(path, "w", encoding="utf-8") as file:
             json.dump(data, file, ensure_ascii=False, indent=4)
+        
+        ChatLog.cache[filename] = (settings, chat)
 
     # ログファイルの名前を取得する
     @staticmethod
@@ -54,6 +58,9 @@ class ChatLog:
     # ログファイルを読み込んで、SettingsオブジェクトとChatオブジェクトを返す
     @staticmethod
     def load(logfile: str):
+        if logfile in ChatLog.cache:
+            return ChatLog.cache[logfile]
+
         path = os.path.join(ChatLog.LOG_FOLDER, logfile)
         if not os.path.exists(path):
             return (None, None)
@@ -96,6 +103,8 @@ class ChatLog:
             chat.messages = data["messages"]
             chat.chat_start_time = datetime.fromisoformat(data["chat_start_time"])
             chat.chat_update_time = datetime.fromisoformat(data["chat_update_time"])
+
+            ChatLog.cache[logfile] = (settings, chat)
 
             return (settings, chat)
 
@@ -151,3 +160,30 @@ class ChatLog:
         logfile = ChatLog.get_logfile_name(chat)
         path = os.path.join(ChatLog.LOG_FOLDER, logfile)
         os.remove(path)
+
+        if logfile in ChatLog.cache:
+            del ChatLog.cache[logfile]
+
+    @staticmethod
+    def search_text_in_file(logfile: str, search_text: str):
+        results = []
+
+        path = os.path.join(ChatLog.LOG_FOLDER, logfile)
+        if not os.path.exists(path):
+            return results
+
+        search_text = search_text.lower()
+
+        message_index = 0
+        keyword = "\"content\":"
+        with open(path, 'r', encoding='utf-8') as file:
+            for line in file:
+                line = line.strip()
+                if line.startswith(keyword):
+                    content = line[len(keyword):].strip(" \"")
+                    content_lower = content.lower()
+                    if search_text in content_lower:
+                        results.append({"message_index": message_index, "message_content": content})
+                    message_index += 1 
+                    
+        return results

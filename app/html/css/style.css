@@ -125,6 +125,8 @@ body, html {
     height: 3rem; /* 高さの初期値、必要に応じて */
 }
 .chat-input button {
+    width: 6rem;
+    font-size: 1rem;
     padding: 10px 20px;
     background-image: linear-gradient(to bottom, #007bff, #0056b3); /* グラデーション適用 */
     color: white;
@@ -209,7 +211,7 @@ mark {
     position: absolute;
     z-index: 1;
     top: 150%;
-    left: 25%;
+    right: 0;
     transform: translateY(-50%);
     white-space: nowrap;
     opacity: 0; /* 初期状態で透明にする */
@@ -274,6 +276,7 @@ pre {
 .contextmenu {
     position: absolute;
     background-color: whitesmoke;
+    padding: 0.5rem;
     border: none;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);

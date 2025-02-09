@@ -1,0 +1,26 @@
+{
+    "file_ver": 5,
+    "settings": {
+        "display_name": "ZundaGPT",
+        "description": "Configuración predeterminada",
+        "welcome_title": "Bienvenido",
+        "welcome_message": "¡Pregúntame lo que quieras!"
+    },
+    "user": {
+        "name": "Tú",
+        "name_color": "#007bff",
+        "icon": "chat_icons/user_black.png"
+    },
+    "assistant": {
+        "name": "Zunda",
+        "name_color": "#006400",
+        "icon": "chat_icons/zunda_sky.png"
+    },
+    "chat": {
+        "api": "OpenAI",
+        "model": "gpt-4o-mini",
+        "instruction": "Tu nombre es Zunda, una mujer de 20 años. Tienes una personalidad amable y seria, y eres buena en programación. Te involucras en conversaciones rápidas y dinámicas.",
+        "bad_response": "Lo siento, no puedo responder a esa pregunta.",
+        "history_size": 10
+    }
+}

@@ -8,6 +8,7 @@
 
 # テキストリソースの定義
 text_resources = {
+    # 日本語
     "ja": {
         "ERROR_MISSING_OPENAI_API_KEY": "環境変数 OPENAI_API_KEY が設定されていません。",
         "ERROR_MISSING_AZURE_OPENAI_ENDPOINT": "環境変数 AZURE_OPENAI_ENDPOINT が設定されていません。",
@@ -23,6 +24,7 @@ text_resources = {
         "ERROR_API_ERROR_OCCURRED": "APIエラーが発生したのだ",
         "ERROR_UNKNOWN_OCCURED": "なんかわからないエラーが発生したのだ",
     },
+    # 英語
     "en": {
         "ERROR_MISSING_OPENAI_API_KEY": "The environment variable OPENAI_API_KEY is not set.",
         "ERROR_MISSING_AZURE_OPENAI_ENDPOINT": "The environment variable AZURE_OPENAI_ENDPOINT is not set.",
@@ -37,6 +39,38 @@ text_resources = {
         "ERROR_RATE_LIMIT_REACHED": "Rate limit reached.",
         "ERROR_API_ERROR_OCCURRED": "An API error occurred.",
         "ERROR_UNKNOWN_OCCURED": "An unknown error has occurred.",
+    },
+    # フィンランド語
+    "fi": {
+        "ERROR_MISSING_OPENAI_API_KEY": "Ympäristömuuttujaa OPENAI_API_KEY ei ole asetettu.",
+        "ERROR_MISSING_AZURE_OPENAI_ENDPOINT": "Ympäristömuuttujaa AZURE_OPENAI_ENDPOINT ei ole asetettu.",
+        "ERROR_MISSING_AZURE_OPENAI_API_KEY": "Ympäristömuuttujaa AZURE_OPENAI_API_KEY ei ole asetettu.",
+        "ERROR_MISSING_GEMINI_API_KEY": "Ympäristömuuttujaa GEMINI_API_KEY ei ole asetettu.",
+        "ERROR_MISSING_ANTHROPIC_API_KEY": "Ympäristömuuttujaa ANTHROPIC_API_KEY ei ole asetettu.",
+        "ERROR_API_ID_IS_INCORRECT": "API-tunnus on virheellinen.",
+        "ERROR_API_TIMEOUT": "API-kutsu aikakatkaistiin.",
+        "ERROR_API_AUTHENTICATION_FAILED": "API:n todennus epäonnistui.",
+        "ERROR_API_ENDPOINT_INCORRECT": "API:n päätepiste on virheellinen.",
+        "ERROR_CONVERSATION_CONTENT_INAPPROPRIATE": "Keskustelun sisältö todettiin sopimattomaksi.",
+        "ERROR_RATE_LIMIT_REACHED": "Nopeusraja on saavutettu.",
+        "ERROR_API_ERROR_OCCURRED": "API-virhe tapahtui.",
+        "ERROR_UNKNOWN_OCCURED": "Tapahtui tuntematon virhe.",
+    },
+    # スペイン語語
+    "es": {
+        "ERROR_MISSING_OPENAI_API_KEY": "La variable de entorno OPENAI_API_KEY no está configurada.",
+        "ERROR_MISSING_AZURE_OPENAI_ENDPOINT": "La variable de entorno AZURE_OPENAI_ENDPOINT no está configurada.",
+        "ERROR_MISSING_AZURE_OPENAI_API_KEY": "La variable de entorno AZURE_OPENAI_API_KEY no está configurada.",
+        "ERROR_MISSING_GEMINI_API_KEY": "La variable de entorno GEMINI_API_KEY no está configurada.",
+        "ERROR_MISSING_ANTHROPIC_API_KEY": "La variable de entorno ANTHROPIC_API_KEY no está configurada.",
+        "ERROR_API_ID_IS_INCORRECT": "El ID de la API es incorrecto.",
+        "ERROR_API_TIMEOUT": "La llamada a la API se agotó.",
+        "ERROR_API_AUTHENTICATION_FAILED": "Falló la autenticación de la API.",
+        "ERROR_API_ENDPOINT_INCORRECT": "El endpoint de la API es incorrecto.",
+        "ERROR_CONVERSATION_CONTENT_INAPPROPRIATE": "El contenido de la conversación fue considerado inapropiado.",
+        "ERROR_RATE_LIMIT_REACHED": "Se alcanzó el límite de solicitudes.",
+        "ERROR_API_ERROR_OCCURRED": "Ocurrió un error en la API.",
+        "ERROR_UNKNOWN_OCCURED": "Ocurrió un error desconocido.",
     }
 }
 

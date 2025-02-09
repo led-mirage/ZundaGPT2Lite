@@ -1,18 +1,19 @@
 const textResources = {
+    // 日本語
     ja: {
+        // 汎用
+        okButton: "OK",
+        cancelButton: "Cancel",
+        closeButton: "閉じる",
+        // メイン画面
         submitButton: "送信",
         stopButton: "停止",
-        prevButton: "prev",
         prevButtonTooltip: "前の会話",
-        nextButton: "next",
         nextButtonTooltip: "次の会話",
-        newButton: "new",
         newButtonTooltip: "新しい会話",
-        deleteButton: "🗑️",
+        crossSearchButtonTooltip: "ファイル横断検索",
         deleteButtonTooltip: "削除",
-        printButton: "🖨️",
         printButtonTooltip: "印刷",
-        settingsButton: "⚙️",
         settingsButtonTooltip: "設定",
         messagePlaceholder: "メッセージを入力...",
         deleteConfirm: "本当に削除しますか？",
@@ -21,25 +22,34 @@ const textResources = {
         retryConfirm: "リトライしますか？",
         copy2clipboardToast: "コピーしました",
         copyContextMenu: "コピー",
+        searchContextMenu: "検索",
+        // 設定画面
         settingsTitle: "設定切替",
         settingsColumnSelect: "選択",
         settingsColumnDisplayName: "表示名",
         settingsColumnDescription: "説明",
+        // ファイル横断検索画面
+        crossFileSearchTitle: "ファイル横断検索",
+        crossFileSearchColumnResult: "検索結果",
+        crossFileSearchColumnLogFile: "ログファイル",
+        searchPlaceHolder: "検索文字列を入力してください",
+        searchResultsFound: "検索結果：${count} 件",
     },
+    // 英語
     en: {
+        // General
+        okButton: "OK",
+        cancelButton: "Cancel",
+        closeButton: "Close",
+        // Main Screen
         submitButton: "Send",
         stopButton: "Stop",
-        prevButton: "Prev",
         prevButtonTooltip: "Previous chat",
-        nextButton: "Next",
         nextButtonTooltip: "Next chat",
-        newButton: "New",
         newButtonTooltip: "Create new chat",
-        deleteButton: "🗑️",
+        crossSearchButtonTooltip: "Cross-File Search",
         deleteButtonTooltip: "Delete chat",
-        printButton: "🖨️",
         printButtonTooltip: "Print",
-        settingsButton: "⚙️",
         settingsButtonTooltip: "Settings",
         messagePlaceholder: "Enter your message…",
         deleteConfirm: "Are you sure you want to delete this chat?",
@@ -48,10 +58,90 @@ const textResources = {
         retryConfirm: "Do you want to retry?",
         copy2clipboardToast: "Copied!",
         copyContextMenu: "Copy",
+        searchContextMenu: "Search",
+        // Settings Screen
         settingsTitle: "Switch Settings",
         settingsColumnSelect: "Select",
         settingsColumnDisplayName: "Display Name",
         settingsColumnDescription: "Description",
+        // Cross-File Search Screen
+        crossFileSearchTitle: "Cross-File Search",
+        crossFileSearchColumnResult: "Search Result",
+        crossFileSearchColumnLogFile: "Log File",
+        searchPlaceHolder: "Enter search term",
+        searchResultsFound: "Results found: ${count}",
+    },
+    // フィンランド語
+    fi: {
+        // Yleistä (一般)
+        okButton: "OK",
+        cancelButton: "Peruuta",
+        closeButton: "Sulje",
+        // Päänäyttö (メイン画面)
+        submitButton: "Lähetä",
+        stopButton: "Pysäytä",
+        prevButtonTooltip: "Edellinen keskustelu",
+        nextButtonTooltip: "Seuraava keskustelu",
+        newButtonTooltip: "Luo uusi keskustelu",
+        crossSearchButtonTooltip: "Hae tiedostoista",
+        deleteButtonTooltip: "Poista keskustelu",
+        printButtonTooltip: "Tulosta",
+        settingsButtonTooltip: "Asetukset",
+        messagePlaceholder: "Kirjoita viesti...",
+        deleteConfirm: "Haluatko varmasti poistaa tämän keskustelun?",
+        deleteFromHereConfirm: "Haluatko poistaa viestit tästä eteenpäin?",
+        searchPrompt: "Syötä hakutermi",
+        retryConfirm: "Haluatko yrittää uudelleen?",
+        copy2clipboardToast: "Kopioitu!",
+        copyContextMenu: "Kopioi",
+        searchContextMenu: "Hae",
+        // Asetusnäyttö (設定画面)
+        settingsTitle: "Vaihda asetuksia",
+        settingsColumnSelect: "Valitse",
+        settingsColumnDisplayName: "Näytettävä nimi",
+        settingsColumnDescription: "Kuvaus",
+        // Tiedostojen välinen haku (ファイル横断検索)
+        crossFileSearchTitle: "Tiedostojen välinen haku",
+        crossFileSearchColumnResult: "Hakutulos",
+        crossFileSearchColumnLogFile: "Lokitiedosto",
+        searchPlaceHolder: "Syötä hakutermi",
+        searchResultsFound: "Hakutulokset: ${count}",
+    },
+    // スペイン語
+    es: {
+        // General (汎用)
+        okButton: "OK",
+        cancelButton: "Cancelar",
+        closeButton: "Cerrar",
+        // Pantalla principal (メイン画面)
+        submitButton: "Enviar",
+        stopButton: "Detener",
+        prevButtonTooltip: "Chat anterior",
+        nextButtonTooltip: "Siguiente chat",
+        newButtonTooltip: "Crear nuevo chat",
+        crossSearchButtonTooltip: "Búsqueda entre archivos",
+        deleteButtonTooltip: "Eliminar chat",
+        printButtonTooltip: "Imprimir",
+        settingsButtonTooltip: "Configuración",
+        messagePlaceholder: "Escribe tu mensaje...",
+        deleteConfirm: "¿Estás seguro de que deseas eliminar este chat?",
+        deleteFromHereConfirm: "¿Deseas eliminar los mensajes desde este punto en adelante?",
+        searchPrompt: "Por favor, ingresa un término de búsqueda",
+        retryConfirm: "¿Deseas intentarlo nuevamente?",
+        copy2clipboardToast: "¡Copiado!",
+        copyContextMenu: "Copiar",
+        searchContextMenu: "Buscar",
+        // Pantalla de configuración (設定画面)
+        settingsTitle: "Cambiar configuración",
+        settingsColumnSelect: "Seleccionar",
+        settingsColumnDisplayName: "Nombre visible",
+        settingsColumnDescription: "Descripción",
+        // Pantalla de búsqueda entre archivos (ファイル横断検索画面)
+        crossFileSearchTitle: "Búsqueda entre archivos",
+        crossFileSearchColumnResult: "Resultado de la búsqueda",
+        crossFileSearchColumnLogFile: "Archivo de registro",
+        searchPlaceHolder: "Por favor, ingresa un término de búsqueda",
+        searchResultsFound: "Resultados encontrados: ${count}",
     }
 };
 

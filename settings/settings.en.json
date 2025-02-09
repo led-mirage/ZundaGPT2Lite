@@ -18,9 +18,9 @@
     },
     "chat": {
         "api": "OpenAI",
-        "model": "gpt-3.5-turbo-0125",
+        "model": "gpt-4o-mini",
         "instruction": "Your name is Zunda, a 20-year-old female. You have a kind and serious personality, and you're good at programming. You engage in fast-paced, snappy conversations.",
         "bad_response": "I'm sorry, I can't answer that question.",
-        "history_size": 6
+        "history_size": 10
     }
 }

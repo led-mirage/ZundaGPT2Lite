@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>ZundaGPT2</title>
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="js/textResources.js" defer></script>
+<style>
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+}
+th, td {
+    border: 1px solid black;
+    padding: 0.5rem;
+    text-align: left;
+    font-size: 0.9rem;
+}
+thead {
+    background-color: #f2f2f2;
+}
+th {
+    background-color: lightskyblue;
+}
+th:nth-child(1), td:nth-child(1) {
+    width: auto;
+}
+th:nth-child(2), td:nth-child(2) {
+    width: 1%;
+    white-space: nowrap;
+}
+.match-context {
+    color: #444;
+    font-size: 0.8rem;
+}
+.log-filename {
+    color: gray;
+    font-size: 0.7rem;
+}
+a {
+    font-size: 0.9rem;
+    color: royalblue;
+    text-decoration: none;
+}
+.search-box {
+    width: 20rem;
+    margin-left: 2rem;
+    padding: 5px;
+    font-size:0.9rem;
+}
+</style>
+<script src="js/textResources.js" defer></script>
+</head>
+<body>
+<div class="chat-container">
+  <div class="header">
+    <div>
+        <span id="title">ファイル横断検索</span>
+        <input type="text" id="search-query" class="search-box" onkeydown="handleEnterKey(event);" autofocus />
+        <button id="search-button" onclick="startSearch()"><i class="fa-solid fa-magnifying-glass"></i></button>
+    </div>
+    <nav>
+      <ul>
+        <li><button id="close-button" onclick="closeWindow()">Close</button></li>
+      </ul>
+    </nav>
+  </div>
+  <div id="chat-messages" class="chat-messages">
+    <span id="progress-text"></span>
+    <table id="resultTable">
+      <thead>
+        <tr>
+          <th id="column-result">検索結果</th>
+          <th id="column-logfile">ログファイル</th>
+        </tr>
+      </thead>
+      <tbody>
+      <!-- JavaScriptからテーブルの行がここに挿入される -->
+      </tbody>
+    </table>
+  </div>
+  <div style="height: 1em;"></div>
+</div>
+<footer><span id="copyright">Copyright</span></footer>
+
+<script>
+let g_searchText = "";
+let g_foundCount = 0;
+let g_searchResults = [];
+
+// 初期化
+document.addEventListener("DOMContentLoaded", function() {
+    initUIComponents();
+});
+
+// pywebviewの初期化完了
+window.addEventListener("pywebviewready", async function() {
+    // Python側に通知
+    try {
+        copyright = await pywebview.api.get_copyright();
+        footer = document.getElementById("copyright");
+        if (footer) {
+            footer.textContent = copyright;
+        }
+
+        response = await pywebview.api.get_cross_search_results();
+        data = JSON.parse(response);
+        g_searchText = data.search_text;
+        searchResults = data.results;
+        searchResults.forEach(item => {
+            const [logfile, messageIndex, matchContext] = item;
+            appendSearchResult(g_searchText, logfile, messageIndex, matchContext);
+        });
+        if (searchResults.length > 0) {
+            displaySearchResults(searchResults.length);
+        }
+    }
+    catch (error) {
+        console.error("Error: " + error)
+    }
+})
+
+// UIコンポーネントの初期化
+function initUIComponents() {
+    let elm = document.getElementById("title");
+    if (elm) {
+        elm.textContent = getTextResource("crossFileSearchTitle");
+    }
+
+    elm = document.getElementById("search-query");
+    if (elm) {
+        elm.placeholder = getTextResource("searchPlaceHolder");
+    }
+
+    elm = document.getElementById("close-button");
+    if (elm) {
+        elm.textContent = getTextResource("closeButton");
+    }
+
+    elm = document.getElementById("column-result");
+    if (elm) {
+        elm.textContent = getTextResource("crossFileSearchColumnResult");
+    }
+
+    elm = document.getElementById("column-logfile");
+    if (elm) {
+        elm.textContent = getTextResource("crossFileSearchColumnLogFile");
+    }
+}
+
+// Enterキーで検索開始
+function handleEnterKey(event) {
+    if (event.key === "Enter") {
+        document.getElementById("search-button").click();
+    }
+}
+
+// 検索処理開始
+function startSearch() {
+    let searchText = document.getElementById("search-query").value;
+    searchText = searchText.replace(/^\s+|\s+$/g, "");  // 前後の全角半角スペースを除去
+
+    // 検索処理
+    if (searchText) {
+        try {
+            g_searchText = searchText;
+            g_foundCount = 0;
+            g_searchResults = [];
+
+            const tableBody = document.getElementById("resultTable").getElementsByTagName("tbody")[0];
+            tableBody.innerHTML = "";
+
+            pywebview.api.search_across_files(searchText);
+        }
+        catch (error) {
+            console.error("Error: " + error);
+        }
+    }
+}
+
+// 進捗表示
+function updateProgress(index, totalCount) {
+    let progress = document.getElementById("progress-text");
+    if (progress) {
+        progress.textContent = `${index} / ${totalCount}`;
+        if (index == totalCount) {
+            displaySearchResults(g_searchResults.length);
+        }
+    }
+}
+
+// 検索結果の表示
+function displaySearchResults(count) {
+    let progress = document.getElementById("progress-text");
+    const searchResult = getTextResource("searchResultsFound")
+        .replace("${count}", count);
+    progress.textContent = searchResult;
+}
+
+// 検索結果レコードの追加
+function appendSearchResult(searchText, logfile, messageIndex, matchContext) {
+    const entry = { logfile: logfile, messageIndex: messageIndex, matchContext: matchContext };
+    g_searchResults.push(entry);
+
+    appendResultRowToTable(searchText, logfile, messageIndex, matchContext);
+}
+
+// テーブルに検索結果を１行追加
+function appendResultRowToTable(searchText, logfile, messageIndex, matchContext) {
+    const tableBody = document.getElementById("resultTable").getElementsByTagName("tbody")[0];
+
+    let newRow = tableBody.insertRow();
+    let cell1 = newRow.insertCell(0);
+    let cell2 = newRow.insertCell(1);
+
+    cell1.innerHTML = `<a href="javascript:void(0);" onclick="goToSelectedChat(${g_foundCount});"><i class="fa-regular fa-comment"></i></a>　<span class="match-context">${matchContext}</span>`;
+    cell2.innerHTML = `<span class="log-filename">${logfile}</span>`;
+
+    var instance = new Mark(newRow);
+    instance.mark(searchText);
+
+    g_foundCount++;
+}
+
+// ユーザーが選んだチャットを表示する
+function goToSelectedChat(index) {
+    try {
+        const logfile = g_searchResults[index].logfile;
+        const messageIndex = g_searchResults[index].messageIndex;
+        pywebview.api.move_to_chat_at(logfile, messageIndex, g_searchText);
+    }
+    catch (error) {
+        console.error("Error: " + error)
+    }
+}
+
+// クローズボタン押下イベント
+async function closeWindow() {
+    // Python側に通知
+    try {
+        await pywebview.api.close_cross_file_search();
+    }
+    catch (error) {
+        console.error("Error: " + error)
+    }
+}
+
+// 文字列をHTML用にエスケープする
+function escapeHtml(text) {
+    return text
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#x27;")
+        .replace(/\n/g, "<br>")
+        .replace(/ /g, "&nbsp;")
+        .replace(/\t/g, "&nbsp;&nbsp;&nbsp;&nbsp;");
+}
+</script>
+
+</body>
+</html>

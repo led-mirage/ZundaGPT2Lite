@@ -6,17 +6,18 @@
 # このソースコードは MITライセンス の下でライセンスされています。
 # ライセンスの詳細については、このプロジェクトのLICENSEファイルを参照してください。
 
-import sys
-import webview
 import base64
+import json
 import os
 import platform
 import subprocess
+import sys
+
+import webview
 
 from app_config import AppConfig
 from app_settings import Settings
-from chat import ChatFactory
-from chat import Chat
+from chat import ChatFactory, Chat
 from chat_log import ChatLog
 from multi_lang import set_current_language, get_text_resource
 
@@ -24,7 +25,7 @@ if getattr(sys, "frozen", False):
     import pyi_splash # type: ignore
 
 APP_NAME = "ZundaGPT2 Lite"
-APP_VERSION = "1.9.0"
+APP_VERSION = "1.10.0"
 COPYRIGHT = "Copyright 2024-2025 led-mirage"
 
 # アプリケーションクラス
@@ -36,6 +37,10 @@ class Application:
         self.chat = None
         self.settings = None
         self.last_send_message = None
+        self.initial_message_index = -1
+        self.initial_highlight_text = ""
+        self.cross_search_text = ""
+        self.cross_search_results = []
         self._window = None # 先頭にアンダーバーをつけないと pywebview 5.0.x ではエラーになる
     
     # 開始する
@@ -62,6 +67,10 @@ class Application:
             self.set_chatinfo_to_ui()
             self.set_chatmessages_to_ui(self.chat.messages)
             self.set_window_title()
+            if self.initial_message_index >= 0:
+                self._window.evaluate_js(f"moveToMessageAt({self.initial_message_index}, '{self.escape_js_string(self.initial_highlight_text)}')")
+                self.initial_message_index = -1
+                self.initial_highlight_text = ""
 
     # 新しいチャットを開始する
     def new_chat(self):
@@ -247,6 +256,68 @@ class Application:
     def cancel_settings(self):
         self._window.load_url("html/index.html")
 
+    # ファイル横断検索画面遷移イベントハンドラ（UI）
+    def move_to_cross_file_search(self):
+        self._window.load_url("html/cross_file_search.html")
+
+    # ファイル横断検索画面クローズイベントハンドラ（UI）
+    def close_cross_file_search(self):
+        self._window.load_url("html/index.html")
+
+    # ファイル横断検索結果を取得する（UI）
+    def get_cross_search_results(self):
+        data = {
+            "search_text": self.cross_search_text,
+            "results": self.cross_search_results,
+        }
+        return json.dumps(data)
+
+    # ファイル横断検索の実行
+    def search_across_files(self, search_text):
+        self.cross_search_text = search_text
+        self.cross_search_results = []
+        logfiles = ChatLog.get_logfiles()
+        logfiles.reverse()
+        total_count = len(logfiles)
+        for index, logfile in enumerate(logfiles):
+            self._window.evaluate_js(f"updateProgress({index}, {total_count})")
+            results = ChatLog.search_text_in_file(logfile, search_text)
+            for result in results:
+                message_index = result["message_index"]
+                message_content = result["message_content"]
+                match_context = self.extract_match_context(message_content, search_text)
+                self.cross_search_results.append((logfile, message_index, match_context))
+                self._window.evaluate_js(f"appendSearchResult('{self.escape_js_string(search_text)}', '{self.escape_js_string(logfile)}', {message_index}, '{self.escape_js_string(match_context)}')")
+        self._window.evaluate_js(f"updateProgress({total_count}, {total_count})")
+
+    # 見つかったテキストの周囲の文字列を切り取り、改行を空白に置き換えて返す
+    def extract_match_context(self, content, search_text, before_length=20, after_length=35):
+        start_index = content.lower().find(search_text.lower())
+        if start_index == -1:
+            return ""
+        
+        start = max(0, start_index - before_length)
+        end = min(len(content), start_index + len(search_text) + after_length)
+
+        match_text = content[start:end].replace('\\n', ' ')
+
+        if start > 0:
+            match_text = "..." + match_text
+        if end < len(content):
+            match_text = match_text + "..."
+
+        return match_text
+
+    # カレントチャット変更イベントハンドラ（UI）
+    def move_to_chat_at(self, logfile, messageIndex, searchText):
+        loaded_settings, loaded_chat = ChatLog.load(logfile)
+        if loaded_settings:
+            self.settings = loaded_settings
+            self.chat = loaded_chat
+            self.initial_message_index = messageIndex
+            self.initial_highlight_text = searchText
+            self._window.load_url("html/index.html")
+            
     # メッセージ送信イベントハンドラ（UI）
     def send_message_to_chatgpt(self, text):
         self._window.evaluate_js(f"startResponse()")

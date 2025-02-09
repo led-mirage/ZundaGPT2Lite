@@ -35,14 +35,16 @@ marked.setOptions(
   <div class="header">
     <span id="settings-name">ZundaGPT</span>
     <nav>
-      <ul>
-        <li><button id="prev-button" onclick="prevChat()" class="tooltip">prev<span class="tooltiptext">前の会話</span></button></li>
-        <li><button id="next-button" onclick="nextChat()" class="tooltip">next<span class="tooltiptext">次の会話</span></button></li>
-        <li><button id="new-button" onclick="newChat()" class="tooltip">new<span class="tooltiptext">新しい会話</span></button></li>
-        <li><button id="delete-button" onclick="deleteChat()" class="emoji tooltip">🗑️<span class="tooltiptext">削除</span></button></li>
-        <li><button id="print-button" onclick="print()" class="emoji tooltip">🖨️<span class="tooltiptext">印刷</span></button></li>
-        <li><button id="settings-button" onclick="settings()" class="emoji tooltip">⚙️<span class="tooltiptext">設定</span></button></li>
-      </ul>
+        <ul>
+          <li><button id="prev-button" onclick="prevChat()" class="tooltip"><i class="fa-solid fa-backward-step"></i><span class="tooltiptext">前の会話</span></button></li>
+          <li><button id="next-button" onclick="nextChat()" class="tooltip"><i class="fa-solid fa-forward-step"></i><span class="tooltiptext">次の会話</span></button></li>
+          <li><button id="new-button" onclick="newChat()" class="tooltip" style="width: 4rem;"><i class="fa-solid fa-plus"></i><span class="tooltiptext">新しい会話</span></button></li>
+          <li style="width: 1.25rem;"></li>
+          <li><button id="cross-search-button" onclick="crossFileSearch()" class="tooltip"><i class="fa fa-search"></i><span class="tooltiptext">ファイル横断検索</span></button></li>
+          <li><button id="delete-button" onclick="deleteChat()" class="tooltip"><i class="fa-regular fa-trash-can"></i><span class="tooltiptext">削除</span></button></li>
+          <li><button id="print-button" onclick="print()" class="tooltip"><i class="fa-solid fa-print"></i><span class="tooltiptext">印刷</span></button></li>
+          <li><button id="settings-button" onclick="settings()" class="tooltip"><i class="fa-solid fa-gear"></i><span class="tooltiptext">設定</span></button></li>
+        </ul>
     </nav>
   </div>
   <div id="chat-messages" class="chat-messages">
@@ -57,8 +59,8 @@ marked.setOptions(
     <textarea id="message" placeholder="メッセージを入力..."></textarea>
     <button id="submit-button" type="button" onclick="submit()">送信</button>
   </div>
+  <footer><span id="copyright">Copyright</span></footer>
 </div>
-<footer><span id="copyright">Copyright</span></footer>
 
 <script>
 let g_userName = "あなた";
@@ -115,7 +117,11 @@ document.addEventListener("DOMContentLoaded", function() {
 
 // キーダウンイベントハンドラ
 function handleKeyDown(event) {
-    if ((event.ctrlKey || event.metaKey) && event.keyCode === 70) { // Ctrl + F
+    if ((event.ctrlKey || event.metaKey) && event.shiftKey && event.keyCode === 70) { // Ctrl + Shift + F
+        crossFileSearch();
+    }
+    else if ((event.ctrlKey || event.metaKey) && event.keyCode === 70) { // Ctrl + F
+        alert(navigator.platform);
         searchText();
     }
     else if (event.keyCode == 27) { // ESC
@@ -146,40 +152,51 @@ function handleKeyDown(event) {
 function handleContextMenu(event) {
     event.preventDefault();
 
+    // 既に表示されているメニューがあれば消す
     const existingMenu = document.querySelector('.contextmenu');
     if (existingMenu) {
         document.body.removeChild(existingMenu);
     }
 
+    let menuContent = "";
     const selectedText = window.getSelection().toString();
-
     if (selectedText) {
-        const menu = document.createElement("div");
-        menu.className = "contextmenu";
-        menu.style.top = `${event.pageY}px`;
-        menu.style.left = `${event.pageX}px`;
-
-        let menuContent = "";
-        if (selectedText) {
-            menuContent += `<button id="copy">${getTextResource("copyContextMenu")}</button>`;
-        }
-        
-        menu.innerHTML = menuContent;
-        document.body.appendChild(menu);
-
-        if (selectedText) {
-            document.getElementById("copy").addEventListener("click", function() {
-                navigator.clipboard.writeText(selectedText);
-                document.body.removeChild(menu);
-            });
-        }
-
-        document.addEventListener("click", function() {
-            if (document.body.contains(menu)) {
-                document.body.removeChild(menu);
-            }
-        }, { once: true });
+        menuContent += `<button id="copy"><i class="fa-regular fa-copy"></i> ${getTextResource("copyContextMenu")}</button><br>`;
     }
+    menuContent += `<button id="search"><i class="fa-solid fa-magnifying-glass"></i> ${getTextResource("searchContextMenu")}</button><br>`;
+
+    const menu = document.createElement("div");
+    menu.className = "contextmenu";
+    menu.style.top = `${event.pageY}px`;
+    menu.style.left = `${event.pageX}px`;
+    menu.innerHTML = menuContent;
+    document.body.appendChild(menu);
+
+    const copyButton = document.getElementById("copy");
+    if (copyButton) {
+        copyButton.addEventListener("click", function() {
+            document.body.removeChild(menu);
+            navigator.clipboard.writeText(selectedText);
+        });
+    }
+
+    const searchButton = document.getElementById("search");
+    if (searchButton) {
+        searchButton.addEventListener("click", function() {
+            document.body.removeChild(menu);
+            // 少しタイミングを遅らせないとメニューが消えない
+            setTimeout(function() {
+                searchText(selectedText)
+            }, 100);
+        });
+    }
+
+    // どこかクリックされたらコンテキストメニューを消す
+    document.addEventListener("click", function() {
+        if (document.body.contains(menu)) {
+            document.body.removeChild(menu);
+        }
+    }, { once: true });
 }
 
 // pywebviewの初期化完了
@@ -227,7 +244,6 @@ function initUIComponents(language) {
 
     button = document.getElementById("prev-button");
     if (button) {
-        button.childNodes[0].nodeValue = getTextResource("prevButton");
         const tooltip = button.querySelector('.tooltiptext');
         if (tooltip) {
             tooltip.textContent = getTextResource("prevButtonTooltip");
@@ -236,7 +252,6 @@ function initUIComponents(language) {
 
     button = document.getElementById("next-button");
     if (button) {
-        button.childNodes[0].nodeValue = getTextResource("nextButton");
         const tooltip = button.querySelector('.tooltiptext');
         if (tooltip) {
             tooltip.textContent = getTextResource("nextButtonTooltip");
@@ -245,16 +260,22 @@ function initUIComponents(language) {
 
     button = document.getElementById("new-button");
     if (button) {
-        button.childNodes[0].nodeValue = getTextResource("newButton");
         const tooltip = button.querySelector('.tooltiptext');
         if (tooltip) {
             tooltip.textContent = getTextResource("newButtonTooltip");
         }
     }
 
+    button = document.getElementById("cross-search-button");
+    if (button) {
+        const tooltip = button.querySelector('.tooltiptext');
+        if (tooltip) {
+            tooltip.textContent = getTextResource("crossSearchButtonTooltip");
+        }
+    }
+
     button = document.getElementById("delete-button");
     if (button) {
-        button.childNodes[0].nodeValue = getTextResource("deleteButton");
         const tooltip = button.querySelector('.tooltiptext');
         if (tooltip) {
             tooltip.textContent = getTextResource("deleteButtonTooltip");
@@ -263,7 +284,6 @@ function initUIComponents(language) {
 
     button = document.getElementById("print-button");
     if (button) {
-        button.childNodes[0].nodeValue = getTextResource("printButton");
         const tooltip = button.querySelector('.tooltiptext');
         if (tooltip) {
             tooltip.textContent = getTextResource("printButtonTooltip");
@@ -272,7 +292,6 @@ function initUIComponents(language) {
 
     button = document.getElementById("settings-button");
     if (button) {
-        button.childNodes[0].nodeValue = getTextResource("settingsButton");
         const tooltip = button.querySelector('.tooltiptext');
         if (tooltip) {
             tooltip.textContent = getTextResource("settingsButtonTooltip");
@@ -354,7 +373,7 @@ function setSubmitButtonState(isSending) {
 // チャットメッセージを下端までスクロールする
 function scrollToBottom() {
     const messageContainer = document.querySelector(".chat-messages");
-        messageContainer.scrollTop = messageContainer.scrollHeight;
+    messageContainer.scrollTop = messageContainer.scrollHeight;
 }
 
 // 文字列をHTML用にエスケープする
@@ -476,7 +495,7 @@ function addChatMessage(role, speakerName, color, messageText) {
         // 削除ボタンをつける
         const deleteElement = document.createElement("button");
         deleteElement.classList.add("message-delete-btn");
-        deleteElement.textContent = "🗑️";
+        deleteElement.innerHTML = "<i class='fa-regular fa-trash-can'></i>";
         deleteElement.addEventListener("click", deleteChatMessage);
         speakerElement.appendChild(deleteElement);
     }
@@ -485,7 +504,7 @@ function addChatMessage(role, speakerName, color, messageText) {
         if (g_aiAgentAvailable) {
             const retryElement = document.createElement("button");
             retryElement.classList.add("chat-reanswer-btn");
-            retryElement.textContent = "🔄️";
+            retryElement.innerHTML = "<i class='fa-solid fa-rotate'></i>";
             retryElement.style.display = "none";
             retryElement.addEventListener("click", reAnswerChat);
             speakerElement.appendChild(retryElement);
@@ -666,8 +685,8 @@ async function settings() {
 }
 
 // テキストを検索する
-function searchText() {
-    const searchText = prompt(getTextResource("searchPrompt"), "");
+function searchText(query = "") {
+    const searchText = prompt(getTextResource("searchPrompt"), query);
     if (searchText) {
         g_searchTextIndex = 0;
         index = 0;
@@ -702,6 +721,16 @@ function highlightSearchResult(delay=0) {
             element.style.backgroundColor = "khaki"
         }
     });    
+}
+
+// ファイル横断検索機能のエントリポイント
+async function crossFileSearch() {
+    try {
+        await pywebview.api.move_to_cross_file_search();
+    }
+    catch (error) {
+        console.error("Error: " + error)
+    }
 }
 
 // メッセージの削除ボタンが押された
@@ -924,6 +953,17 @@ function setChatMessages(messages) {
     MathJax.typesetPromise();
     scrollToBottom();
     showChatRetryButton();
+}
+
+// Pythonから呼び出される関数
+// 指定されたメッセージに移動する
+function moveToMessageAt(messageIndex, highlightText) {
+    const element = document.getElementById(`message-${messageIndex}`);
+    if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+        var instance = new Mark(document.body);
+        instance.mark(highlightText);
+    }
 }
 
 // 再回答ボタンをすべて非表示にする

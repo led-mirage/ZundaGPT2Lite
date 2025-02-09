@@ -19,17 +19,19 @@ ZundaGPT2(https://github.com/led-mirage/ZundaGPT2) のライト版なのだ。Zu
 
 ## 最新情報
 
+### バージョン 1.10.0
+
+- ファイル横断検索機能を実装したのだ✨
+- ボタンデザインを変更したのだ✨
+- フィンランド語とスペイン語に対応したのだ✨
+
 ### バージョン 1.9.0
 
-メッセージをコピーするボタンとコンテキストメニューを追加したのだ✨
+- メッセージをコピーするボタンとコンテキストメニューを追加したのだ✨
 
 ### バージョン 1.8.0
 
-コードブロックにコピーボタンをつけて、簡単にクリップボードにコピーできるようにしたのだ✨
-
-### バージョン 1.7.0
-
-設定画面からチャット設定ファイルを開けるようにしたのだ✨
+- コードブロックにコピーボタンをつけて、簡単にクリップボードにコピーできるようにしたのだ✨
 
 ## スクリーンショット
 
@@ -44,17 +46,20 @@ ZundaGPT2(https://github.com/led-mirage/ZundaGPT2) のライト版なのだ。Zu
 
 ## 言語サポート
 
-バージョン1.6.0から表示言語を日本語と英語から選べるようになったのだ。
-
 使用する言語を変更するには`appConfig.json`ファイルの`language`設定を変更すればいいのだ。
 
 ```json
 "language": "en"
 ```
 
-設定できる値は `ja`（日本語）と `en`（英語）なのだ。
+設定できる値は以下の通りなのだ。
 
-また、英語版のキャラクター設定ファイル `settings.en.json`も用意したので、それも使ってみるといいのだ。
+| 設定値 | 言語 | キャラクター設定ファイル | 実装バージョン |
+|-|-|-|-|
+| ja | 日本語 | settings.json | 1.6.0 |
+| en | 英語 | settings.en.json | 1.6.0 |
+| fi | フィンランド語 | settings.fi.json | 1.10.0 |
+| es | スペイン語 | settings.es.json | 1.10.0 |
 
 ## 必要なもの
 
@@ -106,7 +111,7 @@ Windowsの場合は、Windowsの検索窓で「環境変数を編集」で検索
 
 以下のリンクから ZundaGPT2Lite.ZIP をダウンロードして、作成したフォルダに展開するのだ。
 
-https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.9.0
+https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.10.0
 
 #### 3. 実行
 
@@ -216,10 +221,10 @@ OpenAIやGoogle Gemini、AnthropicのAPIキーはあなただけのものなの�
 
 これが嫌な人は（ボクも嫌だけど）、Python本体をインストールしてPythonから普通に実行して欲しいのだ。実行ファイルのほうが手軽だし、そのほうがPythonに詳しくない人にとっては簡単なんだけど、誤認問題がついて回ることは覚えておいて欲しいのだ。
 
-VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/a57ed7273e1ead6de31e18be3e8ea1666337ad3610f03524ddf682621f691c09)は以下の通りなのだ。  
-（71個中3個のアンチウィルスエンジンで検出 :2025/02/06 v1.9.0）。
+VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/b486602ea56cb8f3aaeebd6d365f0ca252f812e78c8ed00a7208bba6dbd17a95)は以下の通りなのだ。  
+（71個中3個のアンチウィルスエンジンで検出 :2025/02/09 v1.10.0）。
 
-<img src="doc/virustotal_1.9.0.png" width="600">
+<img src="doc/virustotal_1.10.0.png" width="600">
 
 ### ⚡ 免責事項
 
@@ -284,6 +289,12 @@ VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/a57ed72
 本アプリケーションは [MITライセンス](https://opensource.org/licenses/MIT) の下で公開されているのだ。詳細については、プロジェクトに含まれる LICENSE ファイルを参照して欲しいのだ。
 
 ## バージョン履歴
+
+### 1.10.0 (2025/02/09)
+
+- ファイル横断検索機能の実装
+- ボタンデザインを変更
+- フィンランド語とスペイン語に対応
 
 ### 1.9.0 (2025/02/06)
 
