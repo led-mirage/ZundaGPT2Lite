@@ -25,7 +25,7 @@ if getattr(sys, "frozen", False):
     import pyi_splash # type: ignore
 
 APP_NAME = "ZundaGPT2 Lite"
-APP_VERSION = "1.10.0"
+APP_VERSION = "1.11.0"
 COPYRIGHT = "Copyright 2024-2025 led-mirage"
 
 # アプリケーションクラス
@@ -216,11 +216,13 @@ class Application:
             current = filename == current_settings_file
             diaplayName = settings.settings["display_name"]
             description = settings.settings["description"]
+            group = settings.settings["group"]
             view_model.append({
                 "current": current,
                 "filename": filename,
                 "displayName": diaplayName,
                 "description": description,
+                "group": group,
                 "userName": settings.user["name"],
                 "assistantName": settings.assistant["name"],
                 "api": settings.chat["api"],

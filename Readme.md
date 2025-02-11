@@ -19,6 +19,11 @@ ZundaGPT2(https://github.com/led-mirage/ZundaGPT2) のライト版なのだ。Zu
 
 ## 最新情報
 
+### バージョン 1.11.0
+
+- 設定切替画面で設定ファイルのグルーピングができるようになったのだ✨
+- 設定ファイルが多くなった時に便利なのだ✨
+
 ### バージョン 1.10.0
 
 - ファイル横断検索機能を実装したのだ✨
@@ -28,10 +33,6 @@ ZundaGPT2(https://github.com/led-mirage/ZundaGPT2) のライト版なのだ。Zu
 ### バージョン 1.9.0
 
 - メッセージをコピーするボタンとコンテキストメニューを追加したのだ✨
-
-### バージョン 1.8.0
-
-- コードブロックにコピーボタンをつけて、簡単にクリップボードにコピーできるようにしたのだ✨
 
 ## スクリーンショット
 
@@ -111,7 +112,7 @@ Windowsの場合は、Windowsの検索窓で「環境変数を編集」で検索
 
 以下のリンクから ZundaGPT2Lite.ZIP をダウンロードして、作成したフォルダに展開するのだ。
 
-https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.10.0
+https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.11.0
 
 #### 3. 実行
 
@@ -221,10 +222,10 @@ OpenAIやGoogle Gemini、AnthropicのAPIキーはあなただけのものなの�
 
 これが嫌な人は（ボクも嫌だけど）、Python本体をインストールしてPythonから普通に実行して欲しいのだ。実行ファイルのほうが手軽だし、そのほうがPythonに詳しくない人にとっては簡単なんだけど、誤認問題がついて回ることは覚えておいて欲しいのだ。
 
-VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/b486602ea56cb8f3aaeebd6d365f0ca252f812e78c8ed00a7208bba6dbd17a95)は以下の通りなのだ。  
-（71個中3個のアンチウィルスエンジンで検出 :2025/02/09 v1.10.0）。
+VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/439f20f401d7dcf4d39c7875776029f3df1bf15c07fb51be6b48608244a5b06b)は以下の通りなのだ。  
+（72個中3個のアンチウィルスエンジンで検出 :2025/02/11 v1.11.0）。
 
-<img src="doc/virustotal_1.10.0.png" width="600">
+<img src="doc/virustotal_1.11.0.png" width="600">
 
 ### ⚡ 免責事項
 
@@ -289,6 +290,10 @@ VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/b486602
 本アプリケーションは [MITライセンス](https://opensource.org/licenses/MIT) の下で公開されているのだ。詳細については、プロジェクトに含まれる LICENSE ファイルを参照して欲しいのだ。
 
 ## バージョン履歴
+
+### 1.11.0 (2025/02/11)
+
+- 設定切替画面で設定ファイルのグルーピングができるようにした
 
 ### 1.10.0 (2025/02/09)
 

@@ -15,7 +15,7 @@ import threading
 from app_config import AppConfig
 
 class Settings:
-    FILE_VER = 5
+    FILE_VER = 6
     FOLDER_NAME = "settings"
 
     def __init__(self, settings_filename=None):
@@ -35,7 +35,8 @@ class Settings:
             "display_name": "ZundaGPT",
             "description": "既定値",
             "welcome_title": "Welcome",
-            "welcome_message": "なんでも聞いてほしいのだ！"
+            "welcome_message": "なんでも聞いてほしいのだ！",
+            "group": "Default"
         }
         self.user = {
             "name": "あなた",

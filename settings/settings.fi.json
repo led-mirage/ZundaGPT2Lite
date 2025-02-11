@@ -1,10 +1,11 @@
 {
-    "file_ver": 5,
+    "file_ver": 6,
     "settings": {
         "display_name": "ZundaGPT",
         "description": "Oletusasetukset",
         "welcome_title": "Tervetuloa",
-        "welcome_message": "Kysy minulta mitä tahansa!"
+        "welcome_message": "Kysy minulta mitä tahansa!",
+        "group": "Default"
     },
     "user": {
         "name": "Sinä",

@@ -1,10 +1,11 @@
 {
-    "file_ver": 5,
+    "file_ver": 6,
     "settings": {
         "display_name": "ZundaGPT",
         "description": "既定値",
         "welcome_title": "Welcome",
-        "welcome_message": "なんでも聞いてほしいのだ！"
+        "welcome_message": "なんでも聞いてほしいのだ！",
+        "group": "Default"
     },
     "user": {
         "name": "あなた",
