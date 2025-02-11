@@ -1,10 +1,11 @@
 {
-    "file_ver": 5,
+    "file_ver": 6,
     "settings": {
         "display_name": "ZundaGPT",
         "description": "Default Settings",
         "welcome_title": "Welcome",
-        "welcome_message": "Feel free to ask me anything!"
+        "welcome_message": "Feel free to ask me anything!",
+        "group": "Default"
     },
     "user": {
         "name": "You",
