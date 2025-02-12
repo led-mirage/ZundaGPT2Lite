@@ -112,7 +112,7 @@ Windowsの場合は、Windowsの検索窓で「環境変数を編集」で検索
 
 以下のリンクから ZundaGPT2Lite.ZIP をダウンロードして、作成したフォルダに展開するのだ。
 
-https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.11.0
+https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.11.1
 
 #### 3. 実行
 
@@ -222,10 +222,10 @@ OpenAIやGoogle Gemini、AnthropicのAPIキーはあなただけのものなの�
 
 これが嫌な人は（ボクも嫌だけど）、Python本体をインストールしてPythonから普通に実行して欲しいのだ。実行ファイルのほうが手軽だし、そのほうがPythonに詳しくない人にとっては簡単なんだけど、誤認問題がついて回ることは覚えておいて欲しいのだ。
 
-VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/439f20f401d7dcf4d39c7875776029f3df1bf15c07fb51be6b48608244a5b06b)は以下の通りなのだ。  
-（72個中3個のアンチウィルスエンジンで検出 :2025/02/11 v1.11.0）。
+VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/71a9d8c73d0b7078e60b2dccf9613e7d43914b6aac27c8486c6b481651ca487e)は以下の通りなのだ。  
+（72個中3個のアンチウィルスエンジンで検出 :2025/02/13 v1.11.1）
 
-<img src="doc/virustotal_1.11.0.png" width="600">
+<img src="doc/virustotal_1.11.1.png" width="600">
 
 ### ⚡ 免責事項
 
@@ -280,7 +280,7 @@ VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/439f20f
 
 ### 🔖 Font Awesome Free 6.7.2
 
-ホームページ：https://fontawesome.com/
+ホームページ：https://fontawesome.com/  
 ライセンス：Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License
 
 ## ライセンス
@@ -290,6 +290,12 @@ VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/439f20f
 本アプリケーションは [MITライセンス](https://opensource.org/licenses/MIT) の下で公開されているのだ。詳細については、プロジェクトに含まれる LICENSE ファイルを参照して欲しいのだ。
 
 ## バージョン履歴
+
+### 1.11.1 (2025/02/xx)
+
+- Fix: ファイル横断検索画面でのHTMLエンコード抜けの修正
+- Fix: プログラムコード部分や、ユーザーのメッセージ部分はMathJaxで数式に変換しないように修正
+- Fix: Ctrl + F で不要なアラートが表示されていたのを修正
 
 ### 1.11.0 (2025/02/11)
 

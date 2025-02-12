@@ -216,8 +216,8 @@ function appendResultRowToTable(searchText, logfile, messageIndex, matchContext)
     let cell1 = newRow.insertCell(0);
     let cell2 = newRow.insertCell(1);
 
-    cell1.innerHTML = `<a href="javascript:void(0);" onclick="goToSelectedChat(${g_foundCount});"><i class="fa-regular fa-comment"></i></a>　<span class="match-context">${matchContext}</span>`;
-    cell2.innerHTML = `<span class="log-filename">${logfile}</span>`;
+    cell1.innerHTML = `<a href="javascript:void(0);" onclick="goToSelectedChat(${g_foundCount});"><i class="fa-regular fa-comment"></i></a>　<span class="match-context">${escapeHtml(matchContext)}</span>`;
+    cell2.innerHTML = `<span class="log-filename">${escapeHtml(logfile)}</span>`;
 
     var instance = new Mark(newRow);
     instance.mark(searchText);

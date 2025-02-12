@@ -19,6 +19,10 @@ MathJax = {
     },
     chtml: {
         displayAlign: "left"
+    },
+    options: {
+        skipHtmlTags: ["script", "noscript", "style", "textarea", "pre", "code"],
+        ignoreHtmlClass: "mathjax_ignore",
     }
 };
 marked.setOptions(
@@ -121,7 +125,6 @@ function handleKeyDown(event) {
         crossFileSearch();
     }
     else if ((event.ctrlKey || event.metaKey) && event.keyCode === 70) { // Ctrl + F
-        alert(navigator.platform);
         searchText();
     }
     else if (event.keyCode == 27) { // ESC
@@ -527,6 +530,7 @@ function addChatMessage(role, speakerName, color, messageText) {
         addTargetBlank(messageElement);
     }
     else {
+        messageElement.classList.add("mathjax_ignore");
         messageElement.innerHTML = escapeHtml(messageText);
     }
 
