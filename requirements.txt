@@ -3,3 +3,4 @@ requests==2.32.3
 openai==1.57.0
 google-generativeai==0.8.3
 anthropic==0.42.0
+langdetect==1.0.9

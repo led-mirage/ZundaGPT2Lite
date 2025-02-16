@@ -65,6 +65,24 @@ marked.setOptions(
   </div>
   <footer><span id="copyright">Copyright</span></footer>
 </div>
+<!-- 進捗モーダル -->
+<div id="progress-modal" class="modal">
+    <div class="modal-content">
+        <div class="loader"></div>
+        <p id="progress-modal-message"></p>
+    </div>
+</div>
+<!-- 要約表示モーダル -->
+<div id="summary-modal" class="summary-modal">
+    <div class="summary-modal-content">
+        <div class="summary-modal-header">
+            <span id="summary-modal-close-button" class="close">&times;</span>
+        </div>
+        <div class="summary-modal-body">
+            <p id="summary-modal-content"></p>
+        </div>
+    </div>
+</div>
 
 <script>
 let g_userName = "あなた";
@@ -162,24 +180,44 @@ function handleContextMenu(event) {
     }
 
     let menuContent = "";
-    const selectedText = window.getSelection().toString();
-    if (selectedText) {
-        menuContent += `<button id="copy"><i class="fa-regular fa-copy"></i> ${getTextResource("copyContextMenu")}</button><br>`;
-    }
+    menuContent += `<button id="copy"><i class="fa-regular fa-copy"></i> ${getTextResource("copyContextMenu")}</button><br>`;
     menuContent += `<button id="search"><i class="fa-solid fa-magnifying-glass"></i> ${getTextResource("searchContextMenu")}</button><br>`;
+    menuContent += `<button id="summary"><i class="fa-solid fa-compress"></i> ${getTextResource("summaryContextMenu")}</button><br>`;
 
     const menu = document.createElement("div");
     menu.className = "contextmenu";
-    menu.style.top = `${event.pageY}px`;
-    menu.style.left = `${event.pageX}px`;
+    menu.style.visibility = "hidden";
     menu.innerHTML = menuContent;
     document.body.appendChild(menu);
+    const menuWidth = menu.offsetWidth;
+    const menuHeight = menu.offsetHeight;
+    const windowWidth = window.innerWidth;
+    const windowHeight = window.innerHeight;
+    let xPos = event.pageX;
+    let yPos = event.pageY;
+    if (xPos + menuWidth > windowWidth) {
+        xPos = windowWidth - menuWidth - 10;
+    } 
+    if (yPos + menuHeight > windowHeight) {
+        yPos = windowHeight - menuHeight - 10;
+    }
+    menu.style.left = `${xPos}px`;
+    menu.style.top = `${yPos}px`;
+    menu.style.visibility = "visible";
 
     const copyButton = document.getElementById("copy");
     if (copyButton) {
-        copyButton.addEventListener("click", function() {
-            document.body.removeChild(menu);
-            navigator.clipboard.writeText(selectedText);
+        copyButton.addEventListener("click", function(clickEvent) {
+            const selectedText = window.getSelection().toString();
+            if (selectedText) {
+                document.body.removeChild(menu);
+                navigator.clipboard.writeText(selectedText);
+                showToast(clickEvent, getTextResource("textCopiedMessage"));
+            }
+            else {
+                copyChatAllMessages();
+                showToast(clickEvent, getTextResource("allMessageCopiedMessage"));
+            }
         });
     }
 
@@ -189,7 +227,19 @@ function handleContextMenu(event) {
             document.body.removeChild(menu);
             // 少しタイミングを遅らせないとメニューが消えない
             setTimeout(function() {
-                searchText(selectedText)
+                const selectedText = window.getSelection().toString();
+                searchText(selectedText);
+            }, 100);
+        });
+    }
+
+    const summaryButton = document.getElementById("summary");
+    if (summaryButton) {
+        summaryButton.addEventListener("click", function(clickEvent) {
+            document.body.removeChild(menu);
+            // 少しタイミングを遅らせないとメニューが消えない
+            setTimeout(function() {
+                summarizeChat(clickEvent);
             }, 100);
         });
     }
@@ -554,7 +604,7 @@ function addCopyToClipboardButton(element) {
 
         const toast = document.createElement("div");
         toast.className = "code-toast";
-        toast.textContent = getTextResource("copy2clipboardToast");
+        toast.textContent = getTextResource("textCopiedMessage");
         button.appendChild(toast);
 
         button.addEventListener("click", async () => {
@@ -779,6 +829,17 @@ async function reAnswerChat(event) {
     }
 }
 
+// チャットの全メッセージのコピーイベントハンドラ
+async function copyChatAllMessages() {
+    try {
+        const chatText = await pywebview.api.get_all_message_text();
+        navigator.clipboard.writeText(chatText);
+    }
+    catch (error) {
+        console.error("Error: " + error)
+    }
+}
+
 // メッセージのコピーボタンが押された
 async function copyChatMessage(event) {
     const button = event.currentTarget;
@@ -790,34 +851,85 @@ async function copyChatMessage(event) {
     try {
         messageText = await pywebview.api.get_message_text(messageIndex);
         await navigator.clipboard.writeText(messageText);
-        showCopyToast(button);
+        showToast(event, getTextResource("messageCopiedMessage"));
     }
     catch (error) {
         console.error("Error: " + error)
     }
 }
 
-// メッセージがクリップボードにコピーされた時のトーストを表示する
-function showCopyToast(button) {
+// チャットを要約する
+async function summarizeChat(event) {
+    try {
+        showProgressModal(getTextResource("summarizingProgressMessage"));
+        summary = await pywebview.api.summarize_chat();
+        hideProgressModal();
+
+        if (summary) {
+            await navigator.clipboard.writeText(summary);
+            showToast(event, getTextResource("summaryCopiedMessage"), ToastPosition.CenterScreen);
+            showSummaryModal(summary);
+        }
+    }
+    catch (error) {
+        console.error("Error: " + error)
+    }
+}
+
+// 要約モーダルを表示する
+function showSummaryModal(summary) {
+    const modal = document.getElementById("summary-modal");
+    const content = document.getElementById("summary-modal-content");
+    const closeButton = document.getElementById("summary-modal-close-button");
+
+    if (modal && content && closeButton) {
+        content.innerHTML = marked.parse(summary);
+        closeButton.addEventListener("click", function() {
+            hideSummaryModal();
+        });
+        modal.style.display = "block";
+    }
+}
+
+// 要約モーダルを非表示にする
+function hideSummaryModal() {
+    const modal = document.getElementById("summary-modal");
+    if (modal) {
+        modal.style.display = "none";
+    }
+}
+
+// トーストの表示位置
+const ToastPosition = {
+    ClickPos: "click-pos",
+    CenterScreen: "center-screen"
+};
+
+// トーストを表示する
+function showToast(event, message, position = ToastPosition.ClickPos, duration = 2000) {
     // トースト要素を作成
     const toast = document.createElement("div");
-    toast.classList.add("copy-toast");
-    toast.textContent = getTextResource("copy2clipboardToast");;
+    toast.classList.add("toast");
+    toast.textContent = message;
 
-    // ボタンの位置を取得
-    const buttonRect = button.getBoundingClientRect();
-    
     // トーストをbodyに追加
     document.body.appendChild(toast);
     
-    // ボタンの右端に合わせて配置
-    toast.style.left = `${buttonRect.right + 5}px`; // ボタンの右端から5px空ける
-    toast.style.top = `${buttonRect.top}px`;        // ボタンと同じ高さ
+    if (position === ToastPosition.ClickPos) {
+        // クリック位置の右側に配置
+        toast.style.left = `${Math.min(window.innerWidth - toast.offsetWidth, event.pageX + 16)}px`;
+        toast.style.top = `${Math.min(window.innerHeight - toast.offsetHeight, event.pageY)}px`;
+    }
+    else {
+        // デフォルトで画面中央に配置
+        toast.style.left = `${(window.innerWidth - toast.offsetWidth) / 2}px`;
+        toast.style.top = `${(window.innerHeight - toast.offsetHeight) / 2}px`;
+    }
     
     // 2秒後に消える
     setTimeout(() => {
         toast.remove();
-    }, 2000);        
+    }, duration);        
 }
 
 // Pythonから呼び出される関数
@@ -986,6 +1098,20 @@ function showChatRetryButton() {
             button.style.display = "inline";
         }
     });
+}
+
+// 処理中モーダルを表示する
+function showProgressModal(message) {
+    const modal = document.getElementById("progress-modal");
+    const messageEl = document.getElementById("progress-modal-message");
+    messageEl.textContent = message;
+    modal.style.display = "block";
+}
+
+// 処理中モーダルを非表示にする
+function hideProgressModal() {
+    const modal = document.getElementById("progress-modal");
+    modal.style.display = "none";
 }
 </script>
 

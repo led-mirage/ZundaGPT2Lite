@@ -273,6 +273,8 @@ pre {
     visibility: visible;
     opacity: 1;
 }
+
+/* コンテキストメニュー */
 .contextmenu {
     position: absolute;
     background-color: whitesmoke;
@@ -285,10 +287,18 @@ pre {
 .contextmenu button {
     border: none;
     background-color: transparent;
-    padding: 4px 8px;
+    padding: 8px 16px;
     cursor: pointer;
+    width: 100%;
+    text-align: left;
+    white-space: nowrap;
 }
-.copy-toast {
+.contextmenu button:hover {
+    background-color: #cee
+}
+
+/* トースト */
+.toast {
     position: fixed;
     background-color: rgba(0, 0, 0, 0.8);
     color: white;
@@ -306,6 +316,107 @@ pre {
     85% { opacity: 1; }
     100% { opacity: 0; }
 }
+
+/* 進捗モーダル */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 300px;
+    text-align: center;
+    box-shadow: 0 5px 8px rgba(0, 0, 0, 0.3);
+    animation-name: modalOpen;
+    animation-duration: 0.4s;
+}
+@keyframes modalOpen {
+    from { transform: scale(0.7); }
+    to { transform: scale(1); }
+}
+.loader {
+    border: 8px solid #f3f3f3; /* ライトグレーの外側 */
+    border-top: 8px solid #3498db; /* 青色のトップ */
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 2s linear infinite;
+    margin: 0 auto;
+}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* テキスト表示モーダル */
+.summary-modal {
+    display: none; /* 最初は表示しない */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5); /* 半透明の黒背景 */
+}
+.summary-modal-content {
+    background-color: #fefefe;
+    margin: 10% auto;
+    padding: 0px;
+    overflow-y: auto; /* 内容が大きいときにスクロールバーを表示 */
+    border: 1px solid #888;
+    width: 80%;
+    max-height: 70vh; /* モーダルウィンドウの最大高さを指定 */
+}
+.summary-modal-header {
+    position: sticky;
+    top: 0;
+    z-index: 10; /* 表示優先度を高める */
+}
+.summary-modal-body {
+    padding-left: 2rem;
+    padding-right: 2rem;
+    padding-bottom: 2rem;
+}
+.summary-modal-body pre {
+    white-space: pre-wrap;       /* 折り返しを有効に */
+    word-wrap: break-word;       /* 長い単語も折り返し */
+    overflow-x: auto;            /* 必要な場合のみ横スクロール */
+    padding: 1rem;
+}
+.summary-modal-body code {
+    white-space: pre-wrap;       /* コード内も同様に */
+    word-wrap: break-word;
+    padding: 0.3rem;
+}
+.summary-modal .close {
+    position: absolute;
+    top: 0;
+    right: 10px;
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+}
+.summary-modal .close:hover,
+.summary-modal .close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* 印刷用 */
 @media print {
     @page {
         margin-top: 1.5cm;

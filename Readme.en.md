@@ -222,6 +222,11 @@ License：MIT license
 Homepage： https://requests.readthedocs.io/en/latest/  
 License：Apache License 2.0
 
+### 🔖 langdetect 1.0.9
+
+Homepage： https://github.com/Mimino666/langdetect  
+License：Apache License 2.0
+
 ### 🔖 MathJax 3.2.2
 
 Homepage： https://github.com/mathjax/MathJax  

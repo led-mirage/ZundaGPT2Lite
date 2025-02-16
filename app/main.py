@@ -10,9 +10,11 @@ import base64
 import json
 import os
 import platform
+import re
 import subprocess
 import sys
 
+import langdetect
 import webview
 
 from app_config import AppConfig
@@ -25,7 +27,7 @@ if getattr(sys, "frozen", False):
     import pyi_splash # type: ignore
 
 APP_NAME = "ZundaGPT2 Lite"
-APP_VERSION = "1.11.1"
+APP_VERSION = "1.12.0"
 COPYRIGHT = "Copyright 2024-2025 led-mirage"
 
 # アプリケーションクラス
@@ -360,6 +362,54 @@ class Application:
     def get_message_text(self, index):
         text = self.chat.messages[index]["content"] + "\n"
         return text
+
+    # チャットのすべてのメッセージを取得する（UI）
+    def get_all_message_text(self, add_header=True):
+        text = ""
+
+        if add_header:
+            text += "---\n"
+            text += f"{self.settings.settings["display_name"]}\n"
+            text += f"チャット開始日時: {self.chat.chat_start_time.strftime("%Y-%m-%d %H:%M:%S")}\n"
+            text += f"チャット更新日時: {self.chat.chat_update_time.strftime("%Y-%m-%d %H:%M:%S")}\n"
+            text += f"ログファイル: {ChatLog.get_logfile_name(self.chat)}\n"
+            text += f"API: {self.settings.chat["api"]}\n"
+            text += f"モデル: {self.settings.chat["model"]}\n"
+            text += "---\n"
+            text += "\n"
+
+        for message in self.chat.messages:
+            role = message["role"]
+            if role == "user":
+                name = self.settings.user["name"]
+            elif role == "assistant":
+                name = self.settings.assistant["name"]
+            else:
+                continue
+
+            text += f"## {name}\n\n"
+            text += f"{message['content']}\n\n"
+        return text
+    
+    # チャットの内容を要約する
+    def summarize_chat(self):
+        messages = self.get_all_message_text(add_header=False)
+        lang = langdetect.detect(messages)
+        query = get_text_resource("SUMMARIZE_PROMPT", lang) + messages
+
+        try:
+            summary = self.chat.send_onetime_message(query)
+
+            # 回答全体がコードブロックで囲まれていたら、それを外す
+            pattern = r'```[a-zA-Z]*\n(.*?)\n```'
+            match = re.search(pattern, summary, re.DOTALL)
+            if match:
+                summary = match.group(1)
+
+            return summary
+        except Exception as e:
+            print(e)
+            return ""
 
     # チャンク受信イベントハンドラ（Chat）
     def on_recieve_chunk(self, chunk):
