@@ -19,6 +19,11 @@ ZundaGPT2(https://github.com/led-mirage/ZundaGPT2) のライト版なのだ。Zu
 
 ## 最新情報
 
+### バージョン 1.12.0
+
+- チャットを要約する機能を追加したのだ✨
+- チャット全体をクリップボードにコピーする機能を追加したのだ✨
+
 ### バージョン 1.11.0
 
 - 設定切替画面で設定ファイルのグルーピングができるようになったのだ✨
@@ -29,10 +34,6 @@ ZundaGPT2(https://github.com/led-mirage/ZundaGPT2) のライト版なのだ。Zu
 - ファイル横断検索機能を実装したのだ✨
 - ボタンデザインを変更したのだ✨
 - フィンランド語とスペイン語に対応したのだ✨
-
-### バージョン 1.9.0
-
-- メッセージをコピーするボタンとコンテキストメニューを追加したのだ✨
 
 ## スクリーンショット
 
@@ -112,7 +113,7 @@ Windowsの場合は、Windowsの検索窓で「環境変数を編集」で検索
 
 以下のリンクから ZundaGPT2Lite.ZIP をダウンロードして、作成したフォルダに展開するのだ。
 
-https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.11.1
+https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.12.0
 
 #### 3. 実行
 
@@ -222,10 +223,10 @@ OpenAIやGoogle Gemini、AnthropicのAPIキーはあなただけのものなの�
 
 これが嫌な人は（ボクも嫌だけど）、Python本体をインストールしてPythonから普通に実行して欲しいのだ。実行ファイルのほうが手軽だし、そのほうがPythonに詳しくない人にとっては簡単なんだけど、誤認問題がついて回ることは覚えておいて欲しいのだ。
 
-VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/71a9d8c73d0b7078e60b2dccf9613e7d43914b6aac27c8486c6b481651ca487e)は以下の通りなのだ。  
-（72個中3個のアンチウィルスエンジンで検出 :2025/02/13 v1.11.1）
+VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/2ef744ce59d8cdabdb26618bf9fad039a9f54b0883df260fd3a5999503d02af1)は以下の通りなのだ。  
+（72個中3個のアンチウィルスエンジンで検出 :2025/02/16 v1.12.0）
 
-<img src="doc/virustotal_1.11.1.png" width="600">
+<img src="doc/virustotal_1.12.0.png" width="600">
 
 ### ⚡ 免責事項
 
@@ -256,6 +257,11 @@ VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/71a9d8c
 ### 🔖 requests 2.32.3
 
 ホームページ： https://requests.readthedocs.io/en/latest/  
+ライセンス：Apache License 2.0
+
+### 🔖 langdetect 1.0.9
+
+ホームページ： https://github.com/Mimino666/langdetect  
 ライセンス：Apache License 2.0
 
 ### 🔖 MathJax 3.2.2
@@ -290,6 +296,11 @@ VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/71a9d8c
 本アプリケーションは [MITライセンス](https://opensource.org/licenses/MIT) の下で公開されているのだ。詳細については、プロジェクトに含まれる LICENSE ファイルを参照して欲しいのだ。
 
 ## バージョン履歴
+
+### 1.12.0 (2025/02/16)
+
+- チャットを要約する機能を追加
+- チャット全体をクリップボードにコピーする機能を追加
 
 ### 1.11.1 (2025/02/13)
 

@@ -51,6 +51,14 @@ class Chat:
     def stop_send_message(self):
         self.stop_send_event.set()
 
+    # メッセージを送信して回答を得る（同期処理、一度きりの質問）
+    def send_onetime_message(self, text:str):
+        messages = []
+        messages.append({"role": "system", "content": self.instruction})
+        messages.append({"role": "user", "content": text})
+        completion = self.client.chat.completions.create(model=self.model, messages=messages)
+        return completion.choices[0].message.content
+
     # メッセージを送信して回答を得る
     def send_message(
         self,
@@ -175,6 +183,11 @@ class ChatGemini(Chat):
         if api_key is None:
             self.client_creation_error = get_text_resource("ERROR_MISSING_GEMINI_API_KEY")
 
+    # メッセージを送信して回答を得る（同期処理、一度きりの質問）
+    def send_onetime_message(self, text:str):
+        response = self.client.generate_content(contents=[text])
+        return response.text
+
     # メッセージを送信して回答を得る
     def send_message(
         self,
@@ -291,6 +304,17 @@ class ChatClaude(Chat):
 
         if api_key is None:
             self.client_creation_error = get_text_resource("ERROR_MISSING_ANTHROPIC_API_KEY")
+
+    # メッセージを送信して回答を得る（同期処理、一度きりの質問）
+    def send_onetime_message(self, text:str):
+        messages = []
+        messages.append({"role": "user", "content": text})
+        response = self.client.messages.create(
+            max_tokens=4096,
+            system=self.instruction,
+            messages=messages,
+            model=self.model)
+        return response.content[0].text
 
     # メッセージを送信して回答を得る
     def send_message(
