@@ -19,6 +19,10 @@ ZundaGPT2(https://github.com/led-mirage/ZundaGPT2) のライト版なのだ。Zu
 
 ## 最新情報
 
+### バージョン 1.13.0
+
+- OpenAI o1-preview、o1-miniモデルに対応したのだ✨
+
 ### バージョン 1.12.0
 
 - チャットを要約する機能を追加したのだ✨
@@ -113,7 +117,7 @@ Windowsの場合は、Windowsの検索窓で「環境変数を編集」で検索
 
 以下のリンクから ZundaGPT2Lite.ZIP をダウンロードして、作成したフォルダに展開するのだ。
 
-https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.12.0
+https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.13.0
 
 #### 3. 実行
 
@@ -223,10 +227,10 @@ OpenAIやGoogle Gemini、AnthropicのAPIキーはあなただけのものなの�
 
 これが嫌な人は（ボクも嫌だけど）、Python本体をインストールしてPythonから普通に実行して欲しいのだ。実行ファイルのほうが手軽だし、そのほうがPythonに詳しくない人にとっては簡単なんだけど、誤認問題がついて回ることは覚えておいて欲しいのだ。
 
-VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/2ef744ce59d8cdabdb26618bf9fad039a9f54b0883df260fd3a5999503d02af1)は以下の通りなのだ。  
-（72個中3個のアンチウィルスエンジンで検出 :2025/02/16 v1.12.0）
+VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/4a83be0af2b444c184621b1742026fc5dcf48dbe31bdcefd931d130c432e3bb2)は以下の通りなのだ。  
+（72個中3個のアンチウィルスエンジンで検出 :2025/02/18 v1.13.0）
 
-<img src="doc/virustotal_1.12.0.png" width="600">
+<img src="doc/virustotal_1.13.0.png" width="600">
 
 ### ⚡ 免責事項
 
@@ -296,6 +300,11 @@ VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/2ef744c
 本アプリケーションは [MITライセンス](https://opensource.org/licenses/MIT) の下で公開されているのだ。詳細については、プロジェクトに含まれる LICENSE ファイルを参照して欲しいのだ。
 
 ## バージョン履歴
+
+### 1.13.0 (2025/02/18)
+
+- OpenAI o1-preview、o1-miniモデルに対応
+  - o1、o3-miniはティア制限のため未検証
 
 ### 1.12.0 (2025/02/16)
 
