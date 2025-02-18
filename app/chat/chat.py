@@ -73,7 +73,8 @@ class Chat:
 
             self.messages.append({"role": "user", "content": text})
             messages = self.messages[-self.history_size:]
-            messages.insert(0, {"role": "system", "content": self.instruction})
+            if not self.model.startswith("o1") and not self.model.startswith("o3") and self.instruction:
+                messages.insert(0, {"role": "system", "content": self.instruction})
             stream = self.client.chat.completions.create(model=self.model, messages=messages, stream=True)
 
             content = ""
