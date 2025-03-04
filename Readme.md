@@ -19,6 +19,11 @@ ZundaGPT2(https://github.com/led-mirage/ZundaGPT2) のライト版なのだ。Zu
 
 ## 最新情報
 
+### バージョン 1.14.0
+
+- Claude 3.7 SonnetのExtended Thinkingモードに対応したのだ✨
+  - Extended Thinkingモードを有効にするには、settings.jsonファイルのextended_thinkingプロパティをtrueにするとよいのだよ。
+
 ### バージョン 1.13.0
 
 - OpenAI o1-preview、o1-miniモデルに対応したのだ✨
@@ -27,17 +32,6 @@ ZundaGPT2(https://github.com/led-mirage/ZundaGPT2) のライト版なのだ。Zu
 
 - チャットを要約する機能を追加したのだ✨
 - チャット全体をクリップボードにコピーする機能を追加したのだ✨
-
-### バージョン 1.11.0
-
-- 設定切替画面で設定ファイルのグルーピングができるようになったのだ✨
-- 設定ファイルが多くなった時に便利なのだ✨
-
-### バージョン 1.10.0
-
-- ファイル横断検索機能を実装したのだ✨
-- ボタンデザインを変更したのだ✨
-- フィンランド語とスペイン語に対応したのだ✨
 
 ## スクリーンショット
 
@@ -117,7 +111,7 @@ Windowsの場合は、Windowsの検索窓で「環境変数を編集」で検索
 
 以下のリンクから ZundaGPT2Lite.ZIP をダウンロードして、作成したフォルダに展開するのだ。
 
-https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.13.0
+https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.14.0
 
 #### 3. 実行
 
@@ -227,10 +221,10 @@ OpenAIやGoogle Gemini、AnthropicのAPIキーはあなただけのものなの�
 
 これが嫌な人は（ボクも嫌だけど）、Python本体をインストールしてPythonから普通に実行して欲しいのだ。実行ファイルのほうが手軽だし、そのほうがPythonに詳しくない人にとっては簡単なんだけど、誤認問題がついて回ることは覚えておいて欲しいのだ。
 
-VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/4a83be0af2b444c184621b1742026fc5dcf48dbe31bdcefd931d130c432e3bb2)は以下の通りなのだ。  
-（72個中3個のアンチウィルスエンジンで検出 :2025/02/18 v1.13.0）
+VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/a0e3bce69a596e20681cf74786317d3a2289ea03e3b66562ef8a28f37db25ac2)は以下の通りなのだ。  
+（72個中3個のアンチウィルスエンジンで検出 :2025/03/05 v1.14.0）
 
-<img src="doc/virustotal_1.13.0.png" width="600">
+<img src="doc/virustotal_1.14.0.png" width="600">
 
 ### ⚡ 免責事項
 
@@ -253,7 +247,7 @@ VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/4a83be0
 ホームページ： https://github.com/google-gemini/generative-ai-python  
 ライセンス：Apache License 2.0
 
-### 🔖 anthropic 0.42.0
+### 🔖 anthropic 0.49.0
 
 ホームページ： https://github.com/anthropics/anthropic-sdk-python  
 ライセンス：MIT license
@@ -301,8 +295,9 @@ VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/4a83be0
 
 ## バージョン履歴
 
-### 次回リリース時の修正項目
+### 1.14.0 (2025/03/05)
 
+- Claude 3.7 Sonnet の Extended Thinking（拡張思考モード）に対応
 - モーダルダイアログのCSSのリファクタリング
 
 ### 1.13.0 (2025/02/18)

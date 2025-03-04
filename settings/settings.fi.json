@@ -1,5 +1,5 @@
 {
-    "file_ver": 6,
+    "file_ver": 7,
     "settings": {
         "display_name": "ZundaGPT",
         "description": "Oletusasetukset",
@@ -23,5 +23,10 @@
         "instruction": "Nimesi on Zunda, 20-vuotias nainen. Sinulla on ystävällinen ja vakava persoonallisuus, ja olet hyvä ohjelmoinnissa. Keskustelusi on nopeatahtista ja nopeaa.",
         "bad_response": "Anteeksi, en voi vastata tuohon kysymykseen.",
         "history_size": 10
+    },
+    "claude_options": {
+        "max_tokens": 4096,
+        "extended_thinking": false,
+        "budget_tokens": 2048
     }
 }

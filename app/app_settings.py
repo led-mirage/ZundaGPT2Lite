@@ -15,7 +15,7 @@ import threading
 from app_config import AppConfig
 
 class Settings:
-    FILE_VER = 6
+    FILE_VER = 7
     FOLDER_NAME = "settings"
 
     def __init__(self, settings_filename=None):
@@ -55,6 +55,11 @@ class Settings:
             "bad_response": "答えられないのだ",
             "history_size": 6,
         }
+        self.claude_options = {
+            "max_tokens": 4096,
+            "extended_thinking": False,
+            "budget_tokens": 2048,
+        }
 
     # deepcopy
     def __deepcopy__(self, memo):
@@ -65,6 +70,7 @@ class Settings:
         new_copy.user = copy.deepcopy(self.user, memo)
         new_copy.assistant = copy.deepcopy(self.assistant, memo)
         new_copy.chat = copy.deepcopy(self.chat, memo)
+        new_copy.claude_options = copy.deepcopy(self.claude_options, memo)
         return new_copy
 
     # 設定ファイルを保存する
@@ -80,6 +86,7 @@ class Settings:
             setting["user"] = self.user
             setting["assistant"] = self.assistant
             setting["chat"] = self.chat
+            setting["claude_options"] = self.claude_options
 
             json.dump(setting, file, ensure_ascii=False, indent=4)
 
@@ -98,6 +105,7 @@ class Settings:
                 self.update_dict(self.user, data.get("user", self.user))
                 self.update_dict(self.assistant, data.get("assistant", self.assistant))
                 self.update_dict(self.chat, data.get("chat", self.chat))
+                self.update_dict(self.claude_options, data.get("claude_options", self.claude_options))
 
         if file_ver < Settings.FILE_VER:
             self._save_nolock()

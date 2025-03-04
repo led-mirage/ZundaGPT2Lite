@@ -17,7 +17,7 @@ from chat import ChatFactory
 
 # チャットログクラス
 class ChatLog:
-    FILE_VER = 4
+    FILE_VER = 5
     LOG_FOLDER = "log"
 
     cache = {}
@@ -41,6 +41,7 @@ class ChatLog:
         data["user"] = settings.user
         data["assistant"] = settings.assistant
         data["chat"] = settings.chat
+        data["claude_options"] = settings.claude_options
         data["messages"] = chat.messages
 
         filename = ChatLog.get_logfile_name(chat)
@@ -81,6 +82,13 @@ class ChatLog:
                 data["user"]["icon"] = ""
                 data["assistant"]["icon"] = ""
 
+            if data["file_ver"] <= 4:
+                data["claude_options"] = {
+                    "max_tokens": 4096,
+                    "extended_thinking": False,
+                    "budget_tokens": 2048,
+                }
+
             app_config = AppConfig()
             app_config.load()
 
@@ -90,6 +98,7 @@ class ChatLog:
             settings.user = data["user"]
             settings.assistant = data["assistant"]
             settings.chat = data["chat"]
+            settings.claude_options = data["claude_options"]
 
             chat = ChatFactory.create(
                 settings.chat["api"],
@@ -98,7 +107,8 @@ class ChatLog:
                 settings.chat["bad_response"],
                 settings.chat["history_size"],
                 app_config.system["chat_api_timeout"],
-                app_config.gemini
+                app_config.gemini,
+                settings.claude_options
             )
             chat.messages = data["messages"]
             chat.chat_start_time = datetime.fromisoformat(data["chat_start_time"])
