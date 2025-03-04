@@ -27,7 +27,7 @@ if getattr(sys, "frozen", False):
     import pyi_splash # type: ignore
 
 APP_NAME = "ZundaGPT2 Lite"
-APP_VERSION = "1.13.0"
+APP_VERSION = "1.14.0"
 COPYRIGHT = "Copyright 2024-2025 led-mirage"
 
 # アプリケーションクラス
@@ -88,7 +88,8 @@ class Application:
             self.settings.chat["bad_response"],
             self.settings.chat["history_size"],
             self.app_config.system["chat_api_timeout"],
-            self.app_config.gemini
+            self.app_config.gemini,
+            self.settings.claude_options
         )
 
         self.set_chatinfo_to_ui()

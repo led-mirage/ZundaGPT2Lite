@@ -1,5 +1,5 @@
 {
-    "file_ver": 6,
+    "file_ver": 7,
     "settings": {
         "display_name": "ZundaGPT",
         "description": "Default Settings",
@@ -23,5 +23,10 @@
         "instruction": "Your name is Zunda, a 20-year-old female. You have a kind and serious personality, and you're good at programming. You engage in fast-paced, snappy conversations.",
         "bad_response": "I'm sorry, I can't answer that question.",
         "history_size": 10
+    },
+    "claude_options": {
+        "max_tokens": 4096,
+        "extended_thinking": false,
+        "budget_tokens": 2048
     }
 }

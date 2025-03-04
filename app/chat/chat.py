@@ -288,7 +288,9 @@ class ChatGemini(Chat):
 
 # Anthropic Claude チャットクラス
 class ChatClaude(Chat):
-    def __init__(self, model: str, instruction: str, bad_response: str, history_size: int):
+    def __init__(self, model: str, instruction: str, bad_response: str, history_size: int, claude_options: dict):
+        self.claude_options = claude_options
+
         api_key = os.environ.get("ANTHROPIC_API_KEY")
 
         client = None
@@ -335,8 +337,20 @@ class ChatClaude(Chat):
             content = ""
             sentence = ""
 
+            max_tokens = self.claude_options["max_tokens"]
+            if self.claude_options["extended_thinking"]:
+                thinking = {
+                    "type": "enabled",
+                    "budget_tokens": self.claude_options["budget_tokens"]
+                }
+            else:
+                thinking = {
+                    "type": "disabled"
+                }
+
             with self.client.messages.stream(
-                max_tokens=4096,
+                max_tokens=max_tokens,
+                thinking=thinking,
                 system=self.instruction,
                 messages=messages,
                 model=self.model,
@@ -399,7 +413,8 @@ class ChatClaude(Chat):
 class ChatFactory:
     # api_idに基づいてChatオブジェクトを作成する
     @staticmethod
-    def create(api_id: str, model: str, instruction: str, bad_response: str, history_size: int, api_timeout: float, gemini_option: dict=None) -> Chat:
+    def create(api_id: str, model: str, instruction: str, bad_response: str, history_size: int, api_timeout: float,
+               gemini_option: dict=None, claude_options: dict=None) -> Chat:
         if api_id == "OpenAI":
             return ChatOpenAI(model, instruction, bad_response, history_size, api_timeout)
         elif api_id == "AzureOpenAI":
@@ -407,6 +422,6 @@ class ChatFactory:
         elif api_id == "Gemini":
             return ChatGemini(model, instruction, bad_response, history_size, gemini_option)
         elif api_id == "Claude":
-            return ChatClaude(model, instruction, bad_response, history_size)
+            return ChatClaude(model, instruction, bad_response, history_size, claude_options)
         else:
             raise ValueError(get_text_resource("ERROR_API_ID_IS_INCORRECT"))
