@@ -162,6 +162,47 @@ const textResources = {
         crossFileSearchColumnLogFile: "Archivo de registro",
         searchPlaceHolder: "Por favor, ingresa un término de búsqueda",
         searchResultsFound: "Resultados encontrados: ${count}",
+    },
+    // ドイツ語
+    de: {
+        // Allgemeines (汎用)
+        okButton: "OK",
+        cancelButton: "Abbrechen",
+        closeButton: "Schließen",
+        // Hauptbildschirm (メイン画面)
+        submitButton: "Senden",
+        stopButton: "Stopp",
+        prevButtonTooltip: "Vorheriger Chat",
+        nextButtonTooltip: "Nächster Chat",
+        newButtonTooltip: "Neuen Chat erstellen",
+        crossSearchButtonTooltip: "Dateiübergreifende Suche",
+        deleteButtonTooltip: "Chat löschen",
+        printButtonTooltip: "Drucken",
+        settingsButtonTooltip: "Einstellungen",
+        messagePlaceholder: "Nachricht eingeben...",
+        deleteConfirm: "Möchten Sie diesen Chat wirklich löschen?",
+        deleteFromHereConfirm: "Möchten Sie die Nachrichten ab hier löschen?",
+        searchPrompt: "Bitte geben Sie einen Suchbegriff ein",
+        retryConfirm: "Möchten Sie es erneut versuchen?",
+        copyContextMenu: "Kopieren",
+        textCopiedMessage: "Kopiert!",
+        messageCopiedMessage: "Nachricht kopiert!",
+        allMessageCopiedMessage: "Alle Nachrichten kopiert!",
+        searchContextMenu: "Suchen",
+        summaryContextMenu: "Chat-Zusammenfassung",
+        summarizingProgressMessage: "Chat wird zusammengefasst...",
+        summaryCopiedMessage: "Zusammenfassung in die Zwischenablage kopiert",
+        // Einstellungsbildschirm (設定画面)
+        settingsTitle: "Einstellungen ändern",
+        settingsColumnSelect: "Auswählen",
+        settingsColumnDisplayName: "Anzeigename",
+        settingsColumnDescription: "Beschreibung",
+        // Dateiübergreifende Suche (ファイル横断検索)
+        crossFileSearchTitle: "Dateiübergreifende Suche",
+        crossFileSearchColumnResult: "Suchergebnis",
+        crossFileSearchColumnLogFile: "Protokolldatei",
+        searchPlaceHolder: "Suchbegriff eingeben",
+        searchResultsFound: "Ergebnisse gefunden: ${count}",
     }
 };
 
