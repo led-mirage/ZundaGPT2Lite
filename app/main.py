@@ -27,7 +27,7 @@ if getattr(sys, "frozen", False):
     import pyi_splash # type: ignore
 
 APP_NAME = "ZundaGPT2 Lite"
-APP_VERSION = "1.14.0"
+APP_VERSION = "1.15.0"
 COPYRIGHT = "Copyright 2024-2025 led-mirage"
 
 # アプリケーションクラス
@@ -35,7 +35,6 @@ class Application:
     # コンストラクタ
     def __init__(self):
         self.app_config = None
-        self.settings = None
         self.chat = None
         self.settings = None
         self.last_send_message = None
@@ -88,6 +87,8 @@ class Application:
             self.settings.chat["bad_response"],
             self.settings.chat["history_size"],
             self.app_config.system["chat_api_timeout"],
+            self.settings.chat["api_key_envvar"],
+            self.settings.chat["api_endpoint_envvar"],
             self.app_config.gemini,
             self.settings.claude_options
         )
@@ -447,7 +448,7 @@ class Application:
             elif cause == "APIError":
                 message = get_text_resource("ERROR_API_ERROR_OCCURRED") + f"\n{info}"
             else:
-                message = get_text_resource("ERROR_UNKNOWN_OCCURED") + f"（{class_name}）"
+                message = get_text_resource("ERROR_UNKNOWN_OCCURRED") + f"（{class_name}）"
             self._window.evaluate_js(f"handleChatException('{self.escape_js_string(message)}')")
 
     # 文字をエスケープする

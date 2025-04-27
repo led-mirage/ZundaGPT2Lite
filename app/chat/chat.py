@@ -120,8 +120,13 @@ class Chat:
         
 # OpenAI チャットクラス
 class ChatOpenAI(Chat):
-    def __init__(self, model: str, instruction: str, bad_response: str, history_size: int, api_timeout: float):
-        api_key = os.environ.get("OPENAI_API_KEY")
+    def __init__(self, model: str, instruction: str, bad_response: str, history_size: int, api_timeout: float,
+                 api_key_envvar: str=None):
+
+        if api_key_envvar:
+            api_key = os.environ.get(api_key_envvar)
+        else:
+            api_key = os.environ.get("OPENAI_API_KEY")
 
         client = None
         if api_key:
@@ -140,9 +145,17 @@ class ChatOpenAI(Chat):
 
 # Azure OpenAI チャットクラス
 class ChatAzureOpenAI(Chat):
-    def __init__(self, model: str, instruction: str, bad_response: str, history_size: int, api_timeout: float):
-        endpoint = os.environ.get("AZURE_OPENAI_ENDPOINT")
-        api_key = os.environ.get("AZURE_OPENAI_API_KEY")
+    def __init__(self, model: str, instruction: str, bad_response: str, history_size: int, api_timeout: float,
+                 api_key_envvar: str=None, api_endpoint: str=None):
+        if api_key_envvar:
+            api_key = os.environ.get(api_key_envvar)
+        else:
+            api_key = os.environ.get("AZURE_OPENAI_API_KEY")
+
+        if api_endpoint:
+            endpoint = os.environ.get(api_endpoint)
+        else:
+            endpoint = os.environ.get("AZURE_OPENAI_ENDPOINT")
 
         client = None
         if endpoint and api_key:
@@ -163,10 +176,15 @@ class ChatAzureOpenAI(Chat):
 
 # Google Gemini チャットクラス
 class ChatGemini(Chat):
-    def __init__(self, model: str, instruction: str, bad_response: str, history_size: int, gemini_option: dict):
+    def __init__(self, model: str, instruction: str, bad_response: str, history_size: int,
+                 api_key_envvar: str=None, gemini_option: dict=None):
+
         self.gemini_option = gemini_option
 
-        api_key = os.environ.get("GEMINI_API_KEY")
+        if api_key_envvar:
+            api_key = os.environ.get(api_key_envvar)
+        else:
+            api_key = os.environ.get("GEMINI_API_KEY")
 
         client = None
         if api_key:
@@ -288,10 +306,15 @@ class ChatGemini(Chat):
 
 # Anthropic Claude チャットクラス
 class ChatClaude(Chat):
-    def __init__(self, model: str, instruction: str, bad_response: str, history_size: int, claude_options: dict):
+    def __init__(self, model: str, instruction: str, bad_response: str, history_size: int,
+                 api_key_envvar: str=None, claude_options: dict=None):
+
         self.claude_options = claude_options
 
-        api_key = os.environ.get("ANTHROPIC_API_KEY")
+        if api_key_envvar:
+            api_key = os.environ.get(api_key_envvar)
+        else:
+            api_key = os.environ.get("ANTHROPIC_API_KEY")
 
         client = None
         if api_key:
@@ -414,14 +437,14 @@ class ChatFactory:
     # api_idに基づいてChatオブジェクトを作成する
     @staticmethod
     def create(api_id: str, model: str, instruction: str, bad_response: str, history_size: int, api_timeout: float,
-               gemini_option: dict=None, claude_options: dict=None) -> Chat:
+               api_key_envvar: str=None, api_key_endpoint: str=None, gemini_option: dict=None, claude_options: dict=None) -> Chat:
         if api_id == "OpenAI":
-            return ChatOpenAI(model, instruction, bad_response, history_size, api_timeout)
+            return ChatOpenAI(model, instruction, bad_response, history_size, api_timeout, api_key_envvar)
         elif api_id == "AzureOpenAI":
-            return ChatAzureOpenAI(model, instruction, bad_response, history_size, api_timeout)
+            return ChatAzureOpenAI(model, instruction, bad_response, history_size, api_timeout, api_key_envvar, api_key_endpoint)
         elif api_id == "Gemini":
-            return ChatGemini(model, instruction, bad_response, history_size, gemini_option)
+            return ChatGemini(model, instruction, bad_response, history_size, api_key_envvar, gemini_option)
         elif api_id == "Claude":
-            return ChatClaude(model, instruction, bad_response, history_size, claude_options)
+            return ChatClaude(model, instruction, bad_response, history_size, api_key_envvar, claude_options)
         else:
             raise ValueError(get_text_resource("ERROR_API_ID_IS_INCORRECT"))

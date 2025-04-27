@@ -35,6 +35,7 @@ The following values can be configured:
 | en      | English  | settings.en.json        | 1.6.0                   |
 | fi      | Finnish  | settings.fi.json        | 1.10.0                  |
 | es      | Spanish  | settings.es.json        | 1.10.0                  |
+| de      | German   | settings.de.json        | 1.15.0                  |
 
 ## Tested Environments
 
@@ -101,6 +102,8 @@ This executable file (EXE) is created using a library called PyInstaller. Unfort
 
 Rest assured, there are no malicious programs included in this app. However, if you have concerns, please execute it using the "Running with Python" method described below.
 
+<div class="page" />
+
 ### 🛩️ Execution Method ②: Running with Python
 
 #### 1. Install Python
@@ -156,6 +159,7 @@ If you're using a Python virtual environment, you can set it up like the example
 call venv\scripts\activate
 start pythonw app\main.py
 ```
+<div class="page" />
 
 ## Character Settings
 
@@ -166,6 +170,8 @@ While there are several default character settings available, you can create you
 Character setting files (settings_xxx.json) are stored in the `settings` folder. Simply copy an existing file and modify it to create your own character.
 
 For detailed information about character configuration, please refer to [this guide](Readme_detail.md).
+
+<div class="page" />
 
 ## Important Notes
 
@@ -195,6 +201,8 @@ Above all, please pay close attention to your API keys and usage fees.
 
 So far, no particular issues have been found, but bugs are inherently potential issues and can never be entirely eliminated. Additionally, please understand that the copyright holder cannot be held liable for any damages you may incur as a result of these bugs. Use the app with this understanding.
 
+<div class="page" />
+
 ## Libraries Used
 
 ### 🔖 pywebview 5.3.2
@@ -202,17 +210,17 @@ So far, no particular issues have been found, but bugs are inherently potential 
 Homepage: https://github.com/r0x0r/pywebview  
 License: BSD-3-Clause license
 
-### 🔖 openai 1.57.0
+### 🔖 openai 1.76.0
 
 Homepage： https://github.com/openai/openai-python  
 License：Apache License 2.0
 
-### 🔖 google-generativeai 0.8.3
+### 🔖 google-generativeai 0.8.5
 
 Homepage： https://github.com/google-gemini/generative-ai-python  
 License：Apache License 2.0
 
-### 🔖 anthropic 0.42.0
+### 🔖 anthropic 0.50.0
 
 Homepage： https://github.com/anthropics/anthropic-sdk-python  
 License：MIT license
@@ -251,6 +259,8 @@ License：MIT license
 
 Homepage：https://fontawesome.com/
 License：Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License
+
+<div class="page" />
 
 ## License
 

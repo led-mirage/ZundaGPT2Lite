@@ -166,6 +166,7 @@ settings/*
 !settings/settings.en.json
 !settings/settings.es.json
 !settings/settings.fi.json
+!settings/settings.de.json
 !settings/settings.json
 !settings/settings_gemini.json
 !settings/settings_claude.json
@@ -184,3 +185,5 @@ chat_icons/*
 !chat_icons/zunda_peach.png
 !chat_icons/zunda_sky.png
 起動.bat
+readme.pdf
+readme.en.pdf

@@ -1,5 +1,5 @@
 {
-    "file_ver": 7,
+    "file_ver": 8,
     "settings": {
         "display_name": "ZundaGPT",
         "description": "Oletusasetukset",
@@ -19,6 +19,8 @@
     },
     "chat": {
         "api": "OpenAI",
+        "api_key_envvar": "",
+        "api_endpoint_envvar": "",
         "model": "gpt-4o-mini",
         "instruction": "Nimesi on Zunda, 20-vuotias nainen. Sinulla on ystävällinen ja vakava persoonallisuus, ja olet hyvä ohjelmoinnissa. Keskustelusi on nopeatahtista ja nopeaa.",
         "bad_response": "Anteeksi, en voi vastata tuohon kysymykseen.",
