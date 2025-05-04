@@ -110,8 +110,8 @@ class ChatLog:
                 settings.chat["bad_response"],
                 settings.chat["history_size"],
                 app_config.system["chat_api_timeout"],
-                None,
-                None,
+                settings.chat["api_key_envvar"],
+                settings.chat["api_endpoint_envvar"],
                 app_config.gemini,
                 settings.claude_options
             )

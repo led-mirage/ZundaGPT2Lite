@@ -164,7 +164,7 @@ Windowsの場合は、Windowsの検索窓で「環境変数を編集」で検索
 
 以下のリンクから ZundaGPT2Lite.ZIP をダウンロードして、作成したフォルダに展開するのだ。
 
-https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.15.0
+https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.15.1
 
 #### 3. 実行
 
@@ -282,10 +282,10 @@ OpenAIやGoogle Gemini、AnthropicのAPIキーはあなただけのものなの�
 
 これが嫌な人は（ボクも嫌だけど）、Python本体をインストールしてPythonから普通に実行して欲しいのだ。実行ファイルのほうが手軽だし、そのほうがPythonに詳しくない人にとっては簡単なんだけど、誤認問題がついて回ることは覚えておいて欲しいのだ。
 
-VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/8fcc011210b18bcec9ea1d7cd1cf2b85ec1a71011cde8e7e011307899bcce17c?nocache=1)は以下の通りなのだ。  
-（71個中3個のアンチウィルスエンジンで検出 :2025/04/27 v1.15.0）
+VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/c4d799dda67006746db6c076287258907826042937ea551c51b228b63864aa35?nocache=1)は以下の通りなのだ。  
+（72個中4個のアンチウィルスエンジンで検出 :2025/05/04 v1.15.1）
 
-<img src="doc/virustotal_1.15.0.png" width="600">
+<img src="doc/virustotal_1.15.1.png" width="600">
 
 ### ⚡ 免責事項
 
@@ -363,6 +363,11 @@ VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/8fcc011
 <div class="page" />
 
 ## バージョン履歴
+
+### 1.15.1 (2025/05/05)
+
+- Fix: api_key_envvarを指定した場合、過去ログからのチャット継続ができない問題を修正
+- Feat: PyInstallerのバージョンを6.12.0に更新
 
 ### 1.15.0 (2025/04/27) 
 
