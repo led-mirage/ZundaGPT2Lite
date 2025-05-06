@@ -12,7 +12,7 @@ import os
 import threading
 
 class AppConfig:
-    FILE_VER = 4
+    FILE_VER = 5
     FILE_CONFIG = "appConfig.json"
 
     def __init__(self, config_file_path=FILE_CONFIG):
@@ -28,6 +28,8 @@ class AppConfig:
             "window_height": 800,
             "chat_api_timeout": 30,
             "language": "ja",
+            "font_family": "Söhne, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif, Helvetica Neue, Arial, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji",
+            "font_size": 16,
         }
         self.gemini = {
             "safty_filter_harassment": "BLOCK_MEDIUM_AND_ABOVE",

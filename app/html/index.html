@@ -33,6 +33,7 @@ marked.setOptions(
 </script>
 <script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js"></script>
 <script src="js/textResources.js" defer></script>
+<script src="js/util.js" defer></script>
 </head>
 <body>
 <div class="chat-container">
@@ -255,11 +256,8 @@ function handleContextMenu(event) {
 // pywebviewの初期化完了
 window.addEventListener("pywebviewready", async function() {
     try {
-        copyright = await pywebview.api.get_copyright();
-        footer = document.getElementById("copyright");
-        if (footer) {
-            footer.textContent = copyright;
-        }
+        const appConfig = await pywebview.api.get_app_config_js();
+        initUIComponents(appConfig);
 
         await pywebview.api.page_loaded();
 
@@ -287,8 +285,10 @@ window.onfocus = function() {
 }
 
 // コンポーネントの初期化
-function initUIComponents(language) {
-    setCurrentLanguage(language);
+async function initUIComponents(appConfig) {
+    setCurrentLanguage(appConfig.language);
+    util.setFontFamilyAndSize(appConfig.fontFamily, appConfig.fontSize);
+    util.setCopyright(appConfig.copyright);
 
     let button = document.getElementById("submit-button");
     if (button) {
@@ -355,6 +355,8 @@ function initUIComponents(language) {
     if (textarea) {
         textarea.placeholder = getTextResource("messagePlaceholder");
     }
+
+    util.showBody();
 }
 
 // 送信ボタン押下時イベントハンドラ

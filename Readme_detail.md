@@ -59,6 +59,20 @@ OpenAI … https://platform.openai.com/
 
 Chat APIのタイムアウト値を秒数で指定するのだ。
 
+#### ✨ system/language（既定値 ja）
+
+表示用の言語を指定するのだ。
+
+#### ✨ system/font_family（既定値 下記参照）
+
+テキストが表示されるときに使用するフォントの種類を指定するのだ。
+
+規定値：Söhne, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif, Helvetica Neue, Arial, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji
+
+#### ✨ system/font_size（既定値 16）
+
+テキストが表示されるときに使用するフォントサイズを指定するのだ。
+
 #### ✨ gemini/safty_filter_harassment（既定値 BLOCK_MEDIUM_AND_ABOVE）
 
 Gemini用の安全性フィルタ設定なのだ。ハラスメントに関するしきい値を設定できるのだ。詳しくは[こちらの資料](Readme_gemini.md)を参照して欲しいのだ。

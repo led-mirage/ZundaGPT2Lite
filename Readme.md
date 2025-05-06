@@ -19,6 +19,12 @@ ZundaGPT2(https://github.com/led-mirage/ZundaGPT2) のライト版なのだ。Zu
 
 ## 最新情報
 
+### バージョン 1.16.0
+
+- アプリケーション設定ファイルにフォントファミリとフォントサイズの項目を追加したのだ✨
+  - **font_family**: フォントの一覧（優先順）
+  - **font_size**: フォントサイズ（px単位）
+
 ### バージョン 1.15.0
 
 - キャラクター設定ファイル（settings_xxx.json）に以下の項目を追加したのだ✨
@@ -30,10 +36,6 @@ ZundaGPT2(https://github.com/led-mirage/ZundaGPT2) のライト版なのだ。Zu
 
 - Claude 3.7 SonnetのExtended Thinkingモードに対応したのだ✨
   - Extended Thinkingモードを有効にするには、settings.jsonファイルのextended_thinkingプロパティをtrueにするとよいのだよ。
-
-### バージョン 1.13.0
-
-- OpenAI o1-preview、o1-miniモデルに対応したのだ✨
 
 <div class="page" />
 
@@ -363,6 +365,12 @@ VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/c4d799d
 <div class="page" />
 
 ## バージョン履歴
+
+### 1.16.0 (2025/05/xx)
+
+- アプリケーション設定ファイルにフォントファミリとフォントサイズの項目を追加
+  - **font_family**: フォントの一覧（優先順）
+  - **font_size**: フォントサイズ（px単位）
 
 ### 1.15.1 (2025/05/05)
 
