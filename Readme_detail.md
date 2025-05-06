@@ -63,11 +63,12 @@ Chat APIのタイムアウト値を秒数で指定するのだ。
 
 表示用の言語を指定するのだ。
 
-#### ✨ system/font_family（既定値 下記参照）
+#### ✨ system/font_family（既定値 空文字）
 
 テキストが表示されるときに使用するフォントの種類を指定するのだ。
 
-規定値：Söhne, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif, Helvetica Neue, Arial, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji
+値が空文字の場合は以下のデフォルト値が使われるのだ。  
+Söhne, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif, Helvetica Neue, Arial, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji
 
 #### ✨ system/font_size（既定値 16）
 

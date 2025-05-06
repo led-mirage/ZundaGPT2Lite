@@ -28,7 +28,7 @@ class AppConfig:
             "window_height": 800,
             "chat_api_timeout": 30,
             "language": "ja",
-            "font_family": "Söhne, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif, Helvetica Neue, Arial, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji",
+            "font_family": "",
             "font_size": 16,
         }
         self.gemini = {
