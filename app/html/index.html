@@ -33,6 +33,7 @@ marked.setOptions(
 </script>
 <script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-mml-chtml.js"></script>
 <script src="js/textResources.js" defer></script>
+<script src="js/util.js" defer></script>
 </head>
 <body>
 <div class="chat-container">
@@ -252,26 +253,6 @@ function handleContextMenu(event) {
     }, { once: true });
 }
 
-// pywebviewの初期化完了
-window.addEventListener("pywebviewready", async function() {
-    try {
-        copyright = await pywebview.api.get_copyright();
-        footer = document.getElementById("copyright");
-        if (footer) {
-            footer.textContent = copyright;
-        }
-
-        await pywebview.api.page_loaded();
-
-        if (document.querySelectorAll(".chat-message").length === 0) {
-            addWelcome();
-        }
-    }
-    catch (error) {
-        console.error("Error: " + error)
-    }
-})
-
 // remをpxに変換
 function rem2px(rem) {
     var rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
@@ -286,9 +267,28 @@ window.onfocus = function() {
     document.getElementById("message").blur();
 }
 
+// pywebviewの初期化完了
+window.addEventListener("pywebviewready", async function() {
+    try {
+        const appConfig = await pywebview.api.get_app_config_js();
+        initUIComponents(appConfig);
+
+        await pywebview.api.page_loaded();
+
+        if (document.querySelectorAll(".chat-message").length === 0) {
+            addWelcome();
+        }
+    }
+    catch (error) {
+        console.error("Error: " + error)
+    }
+})
+
 // コンポーネントの初期化
-function initUIComponents(language) {
-    setCurrentLanguage(language);
+function initUIComponents(appConfig) {
+    setCurrentLanguage(appConfig.language);
+    util.setFontFamilyAndSize(appConfig.fontFamily, appConfig.fontSize);
+    util.setCopyright(appConfig.copyright);
 
     let button = document.getElementById("submit-button");
     if (button) {
@@ -355,6 +355,8 @@ function initUIComponents(language) {
     if (textarea) {
         textarea.placeholder = getTextResource("messagePlaceholder");
     }
+
+    util.showBody();
 }
 
 // 送信ボタン押下時イベントハンドラ

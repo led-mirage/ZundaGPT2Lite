@@ -6,7 +6,6 @@
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="js/textResources.js" defer></script>
 <style>
 table {
     width: 100%;
@@ -53,6 +52,7 @@ a {
 }
 </style>
 <script src="js/textResources.js" defer></script>
+<script src="js/util.js" defer></script>
 </head>
 <body>
 <div class="chat-container">
@@ -93,18 +93,13 @@ let g_searchResults = [];
 
 // 初期化
 document.addEventListener("DOMContentLoaded", function() {
-    initUIComponents();
 });
 
 // pywebviewの初期化完了
 window.addEventListener("pywebviewready", async function() {
-    // Python側に通知
     try {
-        copyright = await pywebview.api.get_copyright();
-        footer = document.getElementById("copyright");
-        if (footer) {
-            footer.textContent = copyright;
-        }
+        const appConfig = await pywebview.api.get_app_config_js();
+        initUIComponents(appConfig);
 
         response = await pywebview.api.get_cross_search_results();
         data = JSON.parse(response);
@@ -124,7 +119,11 @@ window.addEventListener("pywebviewready", async function() {
 })
 
 // UIコンポーネントの初期化
-function initUIComponents() {
+function initUIComponents(appConfig) {
+    setCurrentLanguage(appConfig.language);
+    util.setFontFamilyAndSize(appConfig.fontFamily, appConfig.fontSize);
+    util.setCopyright(appConfig.copyright);
+
     let elm = document.getElementById("title");
     if (elm) {
         elm.textContent = getTextResource("crossFileSearchTitle");
@@ -149,6 +148,8 @@ function initUIComponents() {
     if (elm) {
         elm.textContent = getTextResource("crossFileSearchColumnLogFile");
     }
+
+    util.showBody();
 }
 
 // Enterキーで検索開始
