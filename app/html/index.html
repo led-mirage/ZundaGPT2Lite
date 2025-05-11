@@ -62,7 +62,7 @@ marked.setOptions(
   </div>
   <div class="chat-input">
     <textarea id="message" placeholder="メッセージを入力..."></textarea>
-    <button id="submit-button" type="button" onclick="submit()">送信</button>
+    <button id="submit-button" type="button">送信</button>
   </div>
   <footer><span id="copyright">Copyright</span></footer>
 </div>
@@ -106,7 +106,8 @@ document.addEventListener("DOMContentLoaded", function() {
     textarea.addEventListener("input", autoResize, false);
 
     const button = document.getElementById("submit-button");
-    button.addEventListener("click", function(){
+    button.addEventListener("click", function() {
+        submit();
         autoResize.call(textarea);
     }, false);
 
