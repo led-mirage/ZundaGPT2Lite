@@ -41,9 +41,9 @@ ZundaGPT2(https://github.com/led-mirage/ZundaGPT2) のライト版なのだ。Zu
 
 ## スクリーンショット
 
-<img src="assets/ZundaGPT2_splash.png" width="200">
+<img src="assets/ZundaGPT2_splash.png" width="200"><br>
 
-<img src="doc/screenshot_1.10.0.png" width="600">
+<img src="doc/screenshot_1.10.0.png" width="600"><br>
 
 ## 動作確認環境
 
@@ -366,7 +366,7 @@ VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/1dbed00
 
 ## バージョン履歴
 
-### 1.16.0 (2025/05/xx)
+### 1.16.0 (2025/05/11)
 
 - アプリケーション設定ファイルにフォントファミリとフォントサイズの項目を追加
   - **font_family**: フォントの一覧（優先順）
