@@ -41,14 +41,14 @@ marked.setOptions(
     <span id="settings-name">ZundaGPT</span>
     <nav>
         <ul>
-          <li><button id="prev-button" onclick="prevChat()" class="tooltip"><i class="fa-solid fa-backward-step"></i><span class="tooltiptext">前の会話</span></button></li>
-          <li><button id="next-button" onclick="nextChat()" class="tooltip"><i class="fa-solid fa-forward-step"></i><span class="tooltiptext">次の会話</span></button></li>
-          <li><button id="new-button" onclick="newChat()" class="tooltip" style="width: 4rem;"><i class="fa-solid fa-plus"></i><span class="tooltiptext">新しい会話</span></button></li>
+          <li><button id="prev-button" class="tooltip"><i class="fa-solid fa-backward-step"></i><span class="tooltiptext">前の会話</span></button></li>
+          <li><button id="next-button" class="tooltip"><i class="fa-solid fa-forward-step"></i><span class="tooltiptext">次の会話</span></button></li>
+          <li><button id="new-button" class="tooltip" style="width: 4rem;"><i class="fa-solid fa-plus"></i><span class="tooltiptext">新しい会話</span></button></li>
           <li style="width: 1.25rem;"></li>
-          <li><button id="cross-search-button" onclick="crossFileSearch()" class="tooltip"><i class="fa fa-search"></i><span class="tooltiptext">ファイル横断検索</span></button></li>
-          <li><button id="delete-button" onclick="deleteChat()" class="tooltip"><i class="fa-regular fa-trash-can"></i><span class="tooltiptext">削除</span></button></li>
-          <li><button id="print-button" onclick="print()" class="tooltip"><i class="fa-solid fa-print"></i><span class="tooltiptext">印刷</span></button></li>
-          <li><button id="settings-button" onclick="settings()" class="tooltip"><i class="fa-solid fa-gear"></i><span class="tooltiptext">設定</span></button></li>
+          <li><button id="cross-search-button" class="tooltip"><i class="fa fa-search"></i><span class="tooltiptext">ファイル横断検索</span></button></li>
+          <li><button id="delete-button" class="tooltip"><i class="fa-regular fa-trash-can"></i><span class="tooltiptext">削除</span></button></li>
+          <li><button id="print-button" class="tooltip"><i class="fa-solid fa-print"></i><span class="tooltiptext">印刷</span></button></li>
+          <li><button id="settings-button" class="tooltip"><i class="fa-solid fa-gear"></i><span class="tooltiptext">設定</span></button></li>
         </ul>
     </nav>
   </div>
@@ -102,6 +102,15 @@ let g_aiAgentCreationError = "";
 
 // 初期化
 document.addEventListener("DOMContentLoaded", function() {
+    // ツールボタンのクリックイベントハンドラの登録
+    setSimpleClickEventHandler("prev-button", prevChat);
+    setSimpleClickEventHandler("next-button", nextChat);
+    setSimpleClickEventHandler("new-button", newChat);
+    setSimpleClickEventHandler("cross-search-button", crossFileSearch);
+    setSimpleClickEventHandler("delete-button", deleteChat);
+    setSimpleClickEventHandler("print-button", printDocument);
+    setSimpleClickEventHandler("settings-button", settings);
+
     const textarea = document.getElementById("message");
     textarea.addEventListener("input", autoResize, false);
 
@@ -138,6 +147,14 @@ document.addEventListener("DOMContentLoaded", function() {
         this.style.height = this.scrollHeight - rem2px(2) + "px";
     }
 });
+
+// クリックイベントハンドラを登録する
+function setSimpleClickEventHandler(id, handler) {
+    const element = document.getElementById(id);
+    if (element) {
+        element.addEventListener("click", handler);
+    }
+}
 
 // キーダウンイベントハンドラ
 function handleKeyDown(event) {
@@ -739,6 +756,11 @@ async function settings() {
     catch (error) {
         console.error("Error: " + error)
     }
+}
+
+// 印刷イベントハンドラ
+function printDocument() {
+    window.print();
 }
 
 // テキストを検索する
