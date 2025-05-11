@@ -166,7 +166,7 @@ Windowsの場合は、Windowsの検索窓で「環境変数を編集」で検索
 
 以下のリンクから ZundaGPT2Lite.ZIP をダウンロードして、作成したフォルダに展開するのだ。
 
-https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.15.1
+https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.16.0
 
 #### 3. 実行
 
@@ -284,10 +284,10 @@ OpenAIやGoogle Gemini、AnthropicのAPIキーはあなただけのものなの�
 
 これが嫌な人は（ボクも嫌だけど）、Python本体をインストールしてPythonから普通に実行して欲しいのだ。実行ファイルのほうが手軽だし、そのほうがPythonに詳しくない人にとっては簡単なんだけど、誤認問題がついて回ることは覚えておいて欲しいのだ。
 
-VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/c4d799dda67006746db6c076287258907826042937ea551c51b228b63864aa35?nocache=1)は以下の通りなのだ。  
-（72個中4個のアンチウィルスエンジンで検出 :2025/05/04 v1.15.1）
+VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/1dbed0087553fad817f72cd8f0cc0739f9cdd40ff54362aa3c8d9979bc6692d0?nocache=1)は以下の通りなのだ。  
+（71個中4個のアンチウィルスエンジンで検出 :2025/05/04 v1.16.0）
 
-<img src="doc/virustotal_1.15.1.png" width="600">
+<img src="doc/virustotal_1.16.0.png" width="600">
 
 ### ⚡ 免責事項
 
