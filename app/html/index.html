@@ -253,6 +253,20 @@ function handleContextMenu(event) {
     }, { once: true });
 }
 
+// remをpxに変換
+function rem2px(rem) {
+    var rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
+    return rem * rootFontSize;
+}
+
+// IME対策
+// IMEがONの状態かつフォーカスがテキストボックスにある状態で、
+// 別のアプリを見るなどしてウィンドウのフォーカスが失われ再度戻ってきたときに、
+// IMEの変換がテキストボックス内でできなくなる現象に対処
+window.onfocus = function() {
+    document.getElementById("message").blur();
+}
+
 // pywebviewの初期化完了
 window.addEventListener("pywebviewready", async function() {
     try {
@@ -270,22 +284,8 @@ window.addEventListener("pywebviewready", async function() {
     }
 })
 
-// remをpxに変換
-function rem2px(rem) {
-    var rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize);
-    return rem * rootFontSize;
-}
-
-// IME対策
-// IMEがONの状態かつフォーカスがテキストボックスにある状態で、
-// 別のアプリを見るなどしてウィンドウのフォーカスが失われ再度戻ってきたときに、
-// IMEの変換がテキストボックス内でできなくなる現象に対処
-window.onfocus = function() {
-    document.getElementById("message").blur();
-}
-
 // コンポーネントの初期化
-async function initUIComponents(appConfig) {
+function initUIComponents(appConfig) {
     setCurrentLanguage(appConfig.language);
     util.setFontFamilyAndSize(appConfig.fontFamily, appConfig.fontSize);
     util.setCopyright(appConfig.copyright);
