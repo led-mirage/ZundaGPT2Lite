@@ -1,6 +1,6 @@
 # ZundaGPT2 Lite
 #
-# 多言語対応文字リソース
+# 言語サポート
 #
 # Copyright (c) 2024-2025 led-mirage
 # このソースコードは MITライセンス の下でライセンスされています。
@@ -106,7 +106,7 @@ text_resources = {
             ---
             """),
     },
-    # スペイン語語
+    # スペイン語
     "es": {
         "ERROR_MISSING_OPENAI_API_KEY": "La variable de entorno OPENAI_API_KEY no está configurada.",
         "ERROR_MISSING_AZURE_OPENAI_ENDPOINT": "La variable de entorno AZURE_OPENAI_ENDPOINT no está configurada.",

@@ -48,7 +48,7 @@ class ChatLog:
         path = os.path.join(log_folder, filename)
         with open(path, "w", encoding="utf-8") as file:
             json.dump(data, file, ensure_ascii=False, indent=4)
-        
+
         ChatLog.cache[filename] = (settings, chat)
 
     # ログファイルの名前を取得する
@@ -77,7 +77,7 @@ class ChatLog:
                     "display_name": "ZundaGPT",
                     "description": ""
                 }
-            
+
             if data["file_ver"] <= 3:
                 data["user"]["icon"] = ""
                 data["assistant"]["icon"] = ""
@@ -88,6 +88,7 @@ class ChatLog:
                     "extended_thinking": False,
                     "budget_tokens": 2048,
                 }
+
             if data["file_ver"] <= 5:
                 data["chat"]["api_key_envvar"] = ""
                 data["chat"]["api_endpoint_envvar"] = ""

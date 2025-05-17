@@ -1,0 +1,68 @@
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+}
+th, td {
+    border: 1px solid black;
+    padding: 0.5rem;
+    text-align: left;
+    font-size: 0.9rem;
+}
+thead {
+    background-color: #f2f2f2;
+}
+th {
+    background-color: lightskyblue;
+}
+th:nth-child(1), th:nth-child(2), td:nth-child(1), td:nth-child(2) {
+    width: 1%;
+    white-space: nowrap;
+}
+td:nth-child(1) {
+    text-align: center;
+    background-color:#faf3e7;
+    cursor: pointer;
+}
+th:nth-child(3), td:nth-child(3) {
+    width: auto;
+}
+.remark {
+    color: gray;
+    font-size: 0.7rem;
+}
+a {
+    color: royalblue;
+    text-decoration: underline;
+}
+details {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    background-color: #fff;
+    padding: 10px;
+    transition: background-color 0.3s; /* 背景色の変化にアニメーション */
+}
+details:hover {
+    background-color: #e8f8f8; /* ホバー時の背景色 */
+}
+summary {
+    font-weight: bold;
+    cursor: pointer; /* カーソルをポインターに */
+    padding: 5px;
+    border-bottom: 1px solid #ccc; /* 下の枠線 */
+    outline: none; /* 枠線を消す */
+    display: block; /* デフォルトのマーカーを非表示 */
+}
+summary::-webkit-details-marker {
+    display: none; /* デフォルトのマーカーを非表示に */
+}
+summary::before {
+    content: '▶'; /* マーカーアイコン */
+    display: inline-block;
+    margin-right: 5px; /* マーカーとテキストの間隔 */
+    transition: transform 0.3s; /* 矢印のアニメーション */
+}
+details[open] summary::before {
+    transform: rotate(90deg); /* 開いているときにマーカーを回転 */
+}

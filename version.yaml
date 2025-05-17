@@ -1,0 +1,12 @@
+Version: 1.16.1.0
+CompanyName: led-mirage
+FileDescription: Lightweight AI chat client for GPT, Claude, and Gemini
+InternalName: ZundaGPT2Lite
+LegalCopyright: © 2024-2025 led-mirage
+OriginalFilename: ZundaGPT2Lite.exe
+ProductName: ZundaGPT2 Lite
+Translation:
+  - langID: 0
+    charsetID: 1200
+  - langID: 1041
+    charsetID: 1200

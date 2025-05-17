@@ -208,7 +208,7 @@ const textResources = {
 
 let currentLanguage = sessionStorage.getItem("currentLanguage") || "ja";
 
-function setCurrentLanguage(language) {
+export function setCurrentLanguage(language) {
     if (textResources.hasOwnProperty(language)) {
         currentLanguage = language;
         sessionStorage.setItem("currentLanguage", language);
@@ -219,7 +219,7 @@ function setCurrentLanguage(language) {
     }
 }
 
-function getTextResource(key) {
+export function getTextResource(key) {
     const resource = textResources[currentLanguage];
     return resource ? resource[key] || key : key;
 }

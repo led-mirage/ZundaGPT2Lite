@@ -27,7 +27,7 @@ if getattr(sys, "frozen", False):
     import pyi_splash # type: ignore
 
 APP_NAME = "ZundaGPT2 Lite"
-APP_VERSION = "1.16.0"
+APP_VERSION = "1.16.1"
 COPYRIGHT = "Copyright 2024-2025 led-mirage"
 
 # アプリケーションクラス
@@ -268,7 +268,7 @@ class Application:
 
     # ファイル横断検索画面遷移イベントハンドラ（UI）
     def move_to_cross_file_search(self):
-        self._window.load_url("html/cross_file_search.html")
+        self._window.load_url("html/cross-file-search.html")
 
     # ファイル横断検索画面クローズイベントハンドラ（UI）
     def close_cross_file_search(self):
