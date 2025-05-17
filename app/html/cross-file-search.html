@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>ZundaGPT2</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js"
+        integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="js/cross-file-search.js" type="module" defer></script>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/cross-file-search.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+
+<body>
+    <div class="chat-container">
+        <div class="header">
+            <div>
+                <span id="title">ファイル横断検索</span>
+                <input type="text" id="search-query" class="search-box" autofocus />
+                <button id="search-button"><i class="fa-solid fa-magnifying-glass"></i></button>
+            </div>
+            <nav>
+                <ul>
+                    <li><button id="close-button">Close</button></li>
+                </ul>
+            </nav>
+        </div>
+        <div id="chat-messages" class="chat-messages">
+            <span id="progress-text"></span>
+            <table id="resultTable">
+                <thead>
+                    <tr>
+                        <th id="column-result">検索結果</th>
+                        <th id="column-logfile">ログファイル</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- JavaScriptからテーブルの行がここに挿入される -->
+                </tbody>
+            </table>
+        </div>
+        <div style="height: 1em;"></div>
+    </div>
+    <footer><span id="copyright">Copyright</span></footer>
+</body>
+
+</html>

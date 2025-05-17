@@ -1,98 +1,17 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-<meta charset="UTF-8">
-<title>ZundaGPT2</title>
-<link rel="stylesheet" href="css/style.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<style>
-table {
-    width: 100%;
-    border-collapse: collapse;
-    background-color: white;
-}
-th, td {
-    border: 1px solid black;
-    padding: 0.5rem;
-    text-align: left;
-    font-size: 0.9rem;
-}
-thead {
-    background-color: #f2f2f2;
-}
-th {
-    background-color: lightskyblue;
-}
-th:nth-child(1), td:nth-child(1) {
-    width: auto;
-}
-th:nth-child(2), td:nth-child(2) {
-    width: 1%;
-    white-space: nowrap;
-}
-.match-context {
-    color: #444;
-    font-size: 0.8rem;
-}
-.log-filename {
-    color: gray;
-    font-size: 0.7rem;
-}
-a {
-    font-size: 0.9rem;
-    color: royalblue;
-    text-decoration: none;
-}
-.search-box {
-    width: 20rem;
-    margin-left: 2rem;
-    padding: 5px;
-    font-size:0.9rem;
-}
-</style>
-<script src="js/textResources.js" defer></script>
-<script src="js/util.js" defer></script>
-</head>
-<body>
-<div class="chat-container">
-  <div class="header">
-    <div>
-        <span id="title">ファイル横断検索</span>
-        <input type="text" id="search-query" class="search-box" onkeydown="handleEnterKey(event);" autofocus />
-        <button id="search-button" onclick="startSearch()"><i class="fa-solid fa-magnifying-glass"></i></button>
-    </div>
-    <nav>
-      <ul>
-        <li><button id="close-button" onclick="closeWindow()">Close</button></li>
-      </ul>
-    </nav>
-  </div>
-  <div id="chat-messages" class="chat-messages">
-    <span id="progress-text"></span>
-    <table id="resultTable">
-      <thead>
-        <tr>
-          <th id="column-result">検索結果</th>
-          <th id="column-logfile">ログファイル</th>
-        </tr>
-      </thead>
-      <tbody>
-      <!-- JavaScriptからテーブルの行がここに挿入される -->
-      </tbody>
-    </table>
-  </div>
-  <div style="height: 1em;"></div>
-</div>
-<footer><span id="copyright">Copyright</span></footer>
+import { setFontFamilyAndSize, setCopyright, showBody, setClickEventHandler } from "./util.js";
+import { setCurrentLanguage, getTextResource } from "./text-resources.js";
 
-<script>
 let g_searchText = "";
 let g_foundCount = 0;
 let g_searchResults = [];
 
 // 初期化
 document.addEventListener("DOMContentLoaded", function() {
+    setClickEventHandler("search-button", startSearch);
+    setClickEventHandler("close-button", closeWindow);
+
+    const input = document.getElementById("search-query");
+    input.addEventListener("keydown", handleEnterKey);
 });
 
 // pywebviewの初期化完了
@@ -101,10 +20,10 @@ window.addEventListener("pywebviewready", async function() {
         const appConfig = await pywebview.api.get_app_config_js();
         initUIComponents(appConfig);
 
-        response = await pywebview.api.get_cross_search_results();
-        data = JSON.parse(response);
+        const response = await pywebview.api.get_cross_search_results();
+        const data = JSON.parse(response);
         g_searchText = data.search_text;
-        searchResults = data.results;
+        const searchResults = data.results;
         searchResults.forEach(item => {
             const [logfile, messageIndex, matchContext] = item;
             appendSearchResult(g_searchText, logfile, messageIndex, matchContext);
@@ -121,8 +40,8 @@ window.addEventListener("pywebviewready", async function() {
 // UIコンポーネントの初期化
 function initUIComponents(appConfig) {
     setCurrentLanguage(appConfig.language);
-    util.setFontFamilyAndSize(appConfig.fontFamily, appConfig.fontSize);
-    util.setCopyright(appConfig.copyright);
+    setFontFamilyAndSize(appConfig.fontFamily, appConfig.fontSize);
+    setCopyright(appConfig.copyright);
 
     let elm = document.getElementById("title");
     if (elm) {
@@ -149,7 +68,7 @@ function initUIComponents(appConfig) {
         elm.textContent = getTextResource("crossFileSearchColumnLogFile");
     }
 
-    util.showBody();
+    showBody();
 }
 
 // Enterキーで検索開始
@@ -217,8 +136,29 @@ function appendResultRowToTable(searchText, logfile, messageIndex, matchContext)
     let cell1 = newRow.insertCell(0);
     let cell2 = newRow.insertCell(1);
 
-    cell1.innerHTML = `<a href="javascript:void(0);" onclick="goToSelectedChat(${g_foundCount});"><i class="fa-regular fa-comment"></i></a>　<span class="match-context">${escapeHtml(matchContext)}</span>`;
-    cell2.innerHTML = `<span class="log-filename">${escapeHtml(logfile)}</span>`;
+    // cell1: コメントアイコン＋テキスト
+    const link = document.createElement("a");
+    link.href = "javascript:void(0);";
+    const index = g_foundCount;
+    link.addEventListener("click", () => goToSelectedChat(index));
+
+    const icon = document.createElement("i");
+    icon.classList.add("fa-regular", "fa-comment");
+    link.appendChild(icon);
+
+    const matchSpan = document.createElement("span");
+    matchSpan.className = "match-context";
+    matchSpan.textContent = matchContext;
+
+    cell1.appendChild(link);
+    cell1.appendChild(document.createTextNode("　"));
+    cell1.appendChild(matchSpan);
+
+    // cell2: ファイル名
+    const logSpan = document.createElement("span");
+    logSpan.className = "log-filename";
+    logSpan.textContent = logfile;
+    cell2.appendChild(logSpan);
 
     var instance = new Mark(newRow);
     instance.mark(searchText);
@@ -249,19 +189,6 @@ async function closeWindow() {
     }
 }
 
-// 文字列をHTML用にエスケープする
-function escapeHtml(text) {
-    return text
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#x27;")
-        .replace(/\n/g, "<br>")
-        .replace(/ /g, "&nbsp;")
-        .replace(/\t/g, "&nbsp;&nbsp;&nbsp;&nbsp;");
-}
-</script>
-
-</body>
-</html>
+// Pythonから呼び出される関数（グローバルスコープに登録）
+window.updateProgress = updateProgress;
+window.appendSearchResult = appendSearchResult;

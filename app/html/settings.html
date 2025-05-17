@@ -1,310 +1,35 @@
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
-<meta charset="UTF-8">
-<title>ZundaGPT2</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-<link rel="stylesheet" href="css/style.css">
-<style>
-table {
-    width: 100%;
-    border-collapse: collapse;
-    background-color: white;
-}
-th, td {
-    border: 1px solid black;
-    padding: 0.5rem;
-    text-align: left;
-    font-size: 0.9rem;
-}
-thead {
-    background-color: #f2f2f2;
-}
-th {
-    background-color: lightskyblue;
-}
-th:nth-child(1), th:nth-child(2), td:nth-child(1), td:nth-child(2) {
-    width: 1%;
-    white-space: nowrap;
-}
-td:nth-child(1) {
-    text-align: center;
-    background-color:#faf3e7;
-    cursor: pointer;
-}
-th:nth-child(3), td:nth-child(3) {
-    width: auto;
-}
-.remark {
-    color: gray;
-    font-size: 0.7rem;
-}
-a {
-    color: royalblue;
-    text-decoration: underline;
-}
-details {
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    margin-bottom: 10px;
-    background-color: #fff;
-    padding: 10px;
-    transition: background-color 0.3s; /* 背景色の変化にアニメーション */
-}
-details:hover {
-    background-color: #e8f8f8; /* ホバー時の背景色 */
-}
-summary {
-    font-weight: bold;
-    cursor: pointer; /* カーソルをポインターに */
-    padding: 5px;
-    border-bottom: 1px solid #ccc; /* 下の枠線 */
-    outline: none; /* 枠線を消す */
-    display: block; /* デフォルトのマーカーを非表示 */
-}
-summary::-webkit-details-marker {
-    display: none; /* デフォルトのマーカーを非表示に */
-}
-summary::before {
-    content: '▶'; /* マーカーアイコン */
-    display: inline-block;
-    margin-right: 5px; /* マーカーとテキストの間隔 */
-    transition: transform 0.3s; /* 矢印のアニメーション */
-}
-details[open] summary::before {
-    transform: rotate(90deg); /* 開いているときにマーカーを回転 */
-}
-</style>
-<script src="js/textResources.js" defer></script>
-<script src="js/util.js" defer></script>
+  <meta charset="UTF-8">
+  <title>ZundaGPT2</title>
+  <script src="js/settings.js" type="module" defer></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/settings.css">
 </head>
+
 <body>
-<div class="chat-container">
-  <div class="header">
-    <span id="title">設定切替</span>
-    <nav>
-      <ul>
-        <li><button onclick="refresh()"><i class="fa-solid fa-rotate-right"></i></button></li>
-        <li><button id="cancel-button" onclick="cancel()">cancel</button></li>
-        <li><button id="submit-button" onclick="submit()">ok</button></li>
-      </ul>
-    </nav>
-  </div>
-  <div id="chat-messages" class="chat-messages">
-    <div id="group-container">
-        <!-- 設定のテーブルを表示する部分 -->
+  <div class="chat-container">
+    <div class="header">
+      <span id="title">設定切替</span>
+      <nav>
+        <ul>
+          <li><button id="refresh-button"><i class="fa-solid fa-rotate-right"></i></button></li>
+          <li><button id="cancel-button">cancel</button></li>
+          <li><button id="submit-button">ok</button></li>
+        </ul>
+      </nav>
     </div>
+    <div id="chat-messages" class="chat-messages">
+      <div id="group-container">
+        <!-- 設定のテーブルを表示する部分 -->
+      </div>
+    </div>
+    <div style="height: 1em;"></div>
   </div>
-  <div style="height: 1em;"></div>
-</div>
-<footer><span id="copyright">Copyright</span></footer>
-
-<script>
-let g_selectedFilename = "";
-
-// 初期化
-document.addEventListener("DOMContentLoaded", function() {
-});
-
-// pywebviewの初期化完了
-window.addEventListener("pywebviewready", async function() {
-    try {
-        const appConfig = await pywebview.api.get_app_config_js();
-        initUIComponents(appConfig);
-
-        const settingFiles = await pywebview.api.get_settings_files();
-        createSettingFilesUI(settingFiles);
-
-        elm = document.querySelector(`.selectable[filename="${g_selectedFilename}"]`);
-        elm.scrollIntoView({ behavior: 'smooth' });
-    }
-    catch (error) {
-        console.error("Error: " + error)
-    }
-})
-
-// コンポーネントの初期化
-function initUIComponents(appConfig) {
-    setCurrentLanguage(appConfig.language);
-    util.setFontFamilyAndSize(appConfig.fontFamily, appConfig.fontSize);
-    util.setCopyright(appConfig.copyright);
-
-    let elm = document.getElementById("title");
-    if (elm) {
-        elm.textContent = getTextResource("settingsTitle");
-    }
-
-    elm = document.getElementById("cancel-button");
-    if (elm) {
-        elm.textContent = getTextResource("cancelButton");
-    }
-
-    elm = document.getElementById("submit-button");
-    if (elm) {
-        elm.textContent = getTextResource("okButton");
-    }
-
-    util.showBody();
-}
-
-// 設定ファイル選択用のUIを構築する
-function createSettingFilesUI(settingFiles) {
-    const groupContainer = document.getElementById("group-container");
-    groupContainer.innerHTML = "";
-
-    createDetails(groupContainer, settingFiles);
-    setupSelectableEventHandler();
-}
-
-// 設定ファイル選択用のUIを構築する：details要素
-function createDetails(groupContainer, settingFiles) {
-    const groups = [... new Set(settingFiles.map(item => item.group))];
-    groups.forEach(group => {
-        const details = document.createElement("details");
-        const summary = document.createElement("summary");
-        summary.textContent = group;
-        details.appendChild(summary);
-
-        const settings = settingFiles.filter(item => item.group === group);
-        createTable(details, settings);
-
-        if (settings.some(item => item.current)) {
-            details.setAttribute("open", "");
-        }
-
-        groupContainer.appendChild(details);
-    });
-}
-
-// 設定ファイル選択用のUIを構築する：選択用のイベントハンドラの設定
-function setupSelectableEventHandler() {
-    document.querySelectorAll(".selectable").forEach(cell => {
-        cell.addEventListener("click", function() {
-            if (g_selectedFilename != "") {
-                elm = document.querySelector(`.selectable[filename="${g_selectedFilename}"]`)
-                elm.textContent = "";
-            }
-            this.textContent = "✅";
-            g_selectedFilename = this.getAttribute("filename");
-        });
-    });
-}
-
-// 設定ファイル選択用のUIを構築する：details毎のテーブル
-function createTable(parent, settings) {
-    const table = document.createElement("table");
-    createTableHead(table);
-    createTableBody(table, settings);
-    parent.appendChild(table);
-}
-
-// 設定ファイル選択用のUIを構築する：テーブルヘッダ
-function createTableHead(table) {
-    const thead = document.createElement("thead");
-    table.appendChild(thead);
-
-    const row = thead.insertRow();
-    const cell0 = document.createElement("th");
-    const cell1 = document.createElement("th");
-    const cell2 = document.createElement("th");
-    row.appendChild(cell0);
-    row.appendChild(cell1);
-    row.appendChild(cell2);
-
-    cell0.textContent = getTextResource("settingsColumnSelect");
-    cell1.textContent = getTextResource("settingsColumnDisplayName");
-    cell2.textContent = getTextResource("settingsColumnDescription");
-}
-
-// 設定ファイル選択用のUIを構築する：テーブルボディ
-function createTableBody(table, settings) {
-    const tbody = document.createElement("tbody");
-    table.appendChild(tbody);
-
-    settings.forEach(item => {
-        const row = tbody.insertRow();
-        const cell0 = row.insertCell(0);
-        const cell1 = row.insertCell(1);
-        const cell2 = row.insertCell(2);
-
-        const filename = escapeHtml(item.filename);
-        const displayName = escapeHtml(item.displayName);
-        const description = escapeHtml(item.description);
-        const userName = escapeHtml(item.userName);
-        const assistantName = escapeHtml(item.assistantName);
-        const api = escapeHtml(item.api);
-        const model = escapeHtml(item.model);
-
-        cell0.textContent = item.current ? "✅" : "";
-        cell1.innerHTML = `${displayName}<br><span class="remark">${assistantName} x ${userName}</span>`;
-        cell2.innerHTML = `${description}<br><span class="remark">${api}　${model}　<a href="javascript:void(0);" onclick="edit('${filename}');">${filename}</a></span>`;
-
-        cell0.classList.add("selectable");
-        cell0.setAttribute("filename", filename);
-
-        if (item.current) {
-            g_selectedFilename = item.filename;
-        }
-    });
-}
-
-// テーブルの更新
-async function refresh() {
-    // Python側に通知
-    try {
-        const settingFiles = await pywebview.api.get_settings_files();
-        createSettingFilesUI(settingFiles);
-    }
-    catch (error) {
-        console.error("Error: " + error)
-    }
-}
-
-// 編集リンク押下イベント
-async function edit(filename) {
-    // Python側に通知
-    try {
-        await pywebview.api.edit_settings(filename);
-    }
-    catch (error) {
-        console.error("Error: " + error)
-    }
-}
-
-// OKボタン押下イベント
-async function submit() {
-    // Python側に通知
-    try {
-        await pywebview.api.submit_settings(g_selectedFilename);
-    }
-    catch (error) {
-        console.error("Error: " + error)
-    }
-}
-
-// キャンセルボタン押下イベント
-async function cancel() {
-    // Python側に通知
-    try {
-        await pywebview.api.cancel_settings();
-    }
-    catch (error) {
-        console.error("Error: " + error)
-    }
-}
-
-// 文字列をHTML用にエスケープする
-function escapeHtml(text) {
-    return text
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#x27;")
-        .replace(/\n/g, "<br>")
-        .replace(/ /g, "&nbsp;")
-        .replace(/\t/g, "&nbsp;&nbsp;&nbsp;&nbsp;");
-}
-</script>
+  <footer><span id="copyright">Copyright</span></footer>
 </body>
+
 </html>

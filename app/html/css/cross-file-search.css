@@ -1,0 +1,43 @@
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+}
+th, td {
+    border: 1px solid black;
+    padding: 0.5rem;
+    text-align: left;
+    font-size: 0.9rem;
+}
+thead {
+    background-color: #f2f2f2;
+}
+th {
+    background-color: lightskyblue;
+}
+th:nth-child(1), td:nth-child(1) {
+    width: auto;
+}
+th:nth-child(2), td:nth-child(2) {
+    width: 1%;
+    white-space: nowrap;
+}
+.match-context {
+    color: #444;
+    font-size: 0.8rem;
+}
+.log-filename {
+    color: gray;
+    font-size: 0.7rem;
+}
+a {
+    font-size: 0.9rem;
+    color: royalblue;
+    text-decoration: none;
+}
+.search-box {
+    width: 20rem;
+    margin-left: 2rem;
+    padding: 5px;
+    font-size:0.9rem;
+}

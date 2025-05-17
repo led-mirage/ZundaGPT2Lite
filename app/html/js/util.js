@@ -1,7 +1,5 @@
-var util = util || {};  // namespace
-
 // フォントファミリとサイズを設定する
-util.setFontFamilyAndSize = function (fontFamily, fontSize) {
+export function setFontFamilyAndSize(fontFamily, fontSize) {
     if (fontFamily) {
         document.body.style.fontFamily = fontFamily;
     }
@@ -11,7 +9,7 @@ util.setFontFamilyAndSize = function (fontFamily, fontSize) {
 };
 
 // コピーライトを設定する
-util.setCopyright = function (copyright) {
+export function setCopyright(copyright) {
     const footer = document.getElementById("copyright");
     if (footer) {
         footer.textContent = copyright;
@@ -19,6 +17,14 @@ util.setCopyright = function (copyright) {
 };
 
 // ボディを表示する
-util.showBody = function () {
+export function showBody() {
     document.body.style.display = "block";
+}
+
+// クリックイベントハンドラを登録する
+export function setClickEventHandler(elementId, handler) {
+    const element = document.getElementById(elementId);
+    if (element) {
+        element.addEventListener("click", handler);
+    }
 }

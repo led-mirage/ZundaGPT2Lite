@@ -147,6 +147,7 @@ class ChatOpenAI(Chat):
 class ChatAzureOpenAI(Chat):
     def __init__(self, model: str, instruction: str, bad_response: str, history_size: int, api_timeout: float,
                  api_key_envvar: str=None, api_endpoint: str=None):
+
         if api_key_envvar:
             api_key = os.environ.get(api_key_envvar)
         else:
