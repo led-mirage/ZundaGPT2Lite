@@ -37,7 +37,7 @@ ZundaGPT2(https://github.com/led-mirage/ZundaGPT2) のライト版なのだ。Zu
 - Claude 3.7 SonnetのExtended Thinkingモードに対応したのだ✨
   - Extended Thinkingモードを有効にするには、settings.jsonファイルのextended_thinkingプロパティをtrueにするとよいのだよ。
 
-<div class="page" />
+<div class="page"></div>
 
 ## スクリーンショット
 
@@ -50,7 +50,7 @@ ZundaGPT2(https://github.com/led-mirage/ZundaGPT2) のライト版なのだ。Zu
 - Windows 11 Pro 23H2、24H2
 - Python 3.12.0
 
-<div class="page" />
+<div class="page"></div>
 
 ## 対応AIモデル（2025/04/27現在）
 
@@ -90,7 +90,7 @@ ZundaGPT2(https://github.com/led-mirage/ZundaGPT2) のライト版なのだ。Zu
 - Gemini 1.5 Flash 8B （モデル名：gemini-1.5-flash-8b） 無料枠あり
 - Gemini 1.5 Pro （モデル名：gemini-1.5-pro） 無料枠あり
 
-<div class="page" />
+<div class="page"></div>
 
 ## 言語サポート
 
@@ -110,7 +110,7 @@ ZundaGPT2(https://github.com/led-mirage/ZundaGPT2) のライト版なのだ。Zu
 | es | スペイン語 | settings.es.json | 1.10.0 |
 | de | ドイツ語 | settings.de.json | 1.15.0 |
 
-<div class="page" />
+<div class="page"></div>
 
 ## 必要なもの
 
@@ -136,7 +136,7 @@ APIを利用するには[Anthropic Console](https://console.anthropic.com/)の�
 
 2024年12月29日時点の最新のモデルは`Claude 3.5 Sonnet`なのだ。
 
-<div class="page" />
+<div class="page"></div>
 
 ## 実行方法
 
@@ -154,7 +154,7 @@ Windowsの場合は、Windowsの検索窓で「環境変数を編集」で検索
 
 <img src="doc/envvar.png" style="width:300px">
 
-<div class="page" />
+<div class="page"></div>
 
 ### 🛩️ 実行方法①：実行ファイル（EXEファイル）を使う方法
 
@@ -166,7 +166,7 @@ Windowsの場合は、Windowsの検索窓で「環境変数を編集」で検索
 
 以下のリンクから ZundaGPT2Lite.ZIP をダウンロードして、作成したフォルダに展開するのだ。
 
-https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.16.1
+https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.16.2
 
 #### 3. 実行
 
@@ -180,7 +180,7 @@ https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.16.1
 
 もちろん、このアプリに悪意のあるプログラムは入っていないのだけど、気になる人は下の「Pythonで実行する方法」で実行してほしいのだ。
 
-<div class="page" />
+<div class="page"></div>
 
 ### 🛩️ 実行方法②：Pythonで実行する方法
 
@@ -223,7 +223,7 @@ pip install -r requirements.txt
 python app\main.py
 ```
 
-<div class="page" />
+<div class="page"></div>
 
 #### 7. 起動用のバッチファイル（オプション）
 
@@ -250,7 +250,7 @@ start pythonw app\main.py
 
 詳しい設定方法は[こちら](Readme_detail.md)をみて欲しいのだ。
 
-<div class="page" />
+<div class="page"></div>
 
 ## 注意事項
 
@@ -276,7 +276,7 @@ OpenAIやGoogle Gemini、AnthropicのAPIキーはあなただけのものなの�
 
 なにはともあれ、APIキーと利用料金には注意を払って欲しいのだ。
 
-<div class="page" />
+<div class="page"></div>
 
 ### ⚡ ウィルス対策ソフトの誤認問題
 
@@ -284,16 +284,16 @@ OpenAIやGoogle Gemini、AnthropicのAPIキーはあなただけのものなの�
 
 これが嫌な人は（ボクも嫌だけど）、Python本体をインストールしてPythonから普通に実行して欲しいのだ。実行ファイルのほうが手軽だし、そのほうがPythonに詳しくない人にとっては簡単なんだけど、誤認問題がついて回ることは覚えておいて欲しいのだ。
 
-VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/83361abef94af24e1230397f7c1b8e32670531a318d784959d50c1d721805a28?nocache=1)は以下の通りなのだ。  
-（71個中4個のアンチウィルスエンジンで検出 :2025/05/17 v1.16.1）
+VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/96756540d6ba6b888f9518353881f54733a57612bf8a4b076dba5505a552c4b7?nocache=1)は以下の通りなのだ。  
+（72個中2個のアンチウィルスエンジンで検出 :2025/05/18 v1.16.2）
 
-<img src="doc/virustotal_1.16.1.png" width="600">
+<img src="doc/virustotal_1.16.2.png" width="600">
 
 ### ⚡ 免責事項
 
 いまのところ特に問題点は見つかっていないけど、バグなんてものは潜在的に必ずあるし、０になるなんてことはあり得ないのだ。また、もしバグがあってそのせいで貴方に損害を与えたとしても、著作権者はいかなる責任も負いかねるのでその点を理解して使って欲しいのだ。
 
-<div class="page" />
+<div class="page"></div>
 
 ## 使用しているライブラリ
 
@@ -342,7 +342,7 @@ VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/83361ab
 ホームページ：https://github.com/markedjs/marked  
 ライセンス：MIT license
 
-<div class="page" />
+<div class="page"></div>
 
 ### 🔖 mark.js 8.11.1
 
@@ -359,11 +359,11 @@ VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/83361ab
 ホームページ：https://github.com/DudeNr33/pyinstaller-versionfile  
 ライセンス：MIT license
 
-### 🔖 PyInstaller 6.12.0
+### 🔖 PyInstaller 6.13.0
 ホームページ： https://github.com/pyinstaller/pyinstaller  
 ライセンス： GPL 2.0 License / Apache License 2.0  
 
-<div class="page" />
+<div class="page"></div>
 
 ## ライセンス
 
@@ -371,9 +371,16 @@ VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/83361ab
 
 本アプリケーションは [MITライセンス](https://opensource.org/licenses/MIT) の下で公開されているのだ。詳細については、プロジェクトに含まれる LICENSE ファイルを参照して欲しいのだ。
 
-<div class="page" />
+<div class="page"></div>
 
 ## バージョン履歴
+
+### 1.16.2 (2025/05/18)
+
+- リファクタリングのみ（機能の追加、変更はありません）
+  - アプリケーション定数を別ファイルに分離
+  - ビルドバッチの変更
+  - PyInstallerのバージョンを6.13.0に更新
 
 ### 1.16.1 (2025/05/18)
 
