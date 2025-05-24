@@ -52,11 +52,11 @@ ZundaGPT2(https://github.com/led-mirage/ZundaGPT2) のライト版なのだ。Zu
 
 <div class="page"></div>
 
-## 対応AIモデル（2025/04/27現在）
+## 対応AIモデル
 
 動作確認済みのモデルは以下の通りなのだ。
 
-### OpenAI
+### OpenAI（2025/04/27現在）
 
 - GPT-4.1 （モデル名：gpt-4.1）
 - GPT-4.1 mini （モデル名：gpt-4.1-mini） 無料枠あり
@@ -72,15 +72,19 @@ ZundaGPT2(https://github.com/led-mirage/ZundaGPT2) のライト版なのだ。Zu
 - o1 （モデル名：o1）
 - o1-mini （モデル名：o1-mini）
 
-### Anthropic Claude
+### Anthropic Claude（2025/05/24現在）
 
-- Claude 3.7 Sonnet （モデル名：claude-3-7-sonnet-latest）
-- Claude 3.7 Sonnet Extended Thinking Mode （モデル名：claude-3-7-sonnet-latest）
-- Claude 3.5 Haiku （モデル名：claude-3-5-haiku-latest）
-- Claude 3.5 Sonnet V2 （モデル名：claude-3-5-sonnet-latest）
-- Claude 3 Opus （モデル名：claude-3-opus-latest）
+- Claude Opus 4 （モデル名：claude-opus-4-0）
+- Claude Sonnet 4 （モデル名：claude-sonnet-4-0）
+- Claude Sonnet 4 Extended Thinking Mode （モデル名：claude-sonnet-4-0）
+- Claude Sonnet 3.7 （モデル名：claude-3-7-sonnet-latest）
+- Claude Sonnet 3.7 Extended Thinking Mode （モデル名：claude-3-7-sonnet-latest）
+- Claude Haiku 3.5 （モデル名：claude-3-5-haiku-latest）
+- Claude Sonnet 3.5 V2 （モデル名：claude-3-5-sonnet-latest）
+- Claude Opus 3 （モデル名：claude-3-opus-latest）
+- Claude Haiku 3 （モデル名：claude-3-haiku-20240307）
 
-### Google Gemini
+### Google Gemini（2025/04/27現在）
 
 - Gemini 2.5 Flash Preview （モデル名：gemini-2.5-flash-preview-04-17） 無料枠あり
 - Gemini 2.5 Pro Preview （モデル名：gemini-2.5-pro-exp-03-25） 無料枠あり
@@ -134,7 +138,7 @@ OpenAIのAPIを使用する場合は、[OpenAI](https://platform.openai.com/)の
 
 APIを利用するには[Anthropic Console](https://console.anthropic.com/)のアカウントとAPIの利用登録（課金およびAPIキーの作成）が必要なのだ。
 
-2024年12月29日時点の最新のモデルは`Claude 3.5 Sonnet`なのだ。
+2025年5月24日時点の最新のモデルは`Claude Sonnet 4`、`Claude Opus 4`なのだ。
 
 <div class="page"></div>
 
@@ -166,7 +170,7 @@ Windowsの場合は、Windowsの検索窓で「環境変数を編集」で検索
 
 以下のリンクから ZundaGPT2Lite.ZIP をダウンロードして、作成したフォルダに展開するのだ。
 
-https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.16.2
+https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.16.3
 
 #### 3. 実行
 
@@ -284,10 +288,10 @@ OpenAIやGoogle Gemini、AnthropicのAPIキーはあなただけのものなの�
 
 これが嫌な人は（ボクも嫌だけど）、Python本体をインストールしてPythonから普通に実行して欲しいのだ。実行ファイルのほうが手軽だし、そのほうがPythonに詳しくない人にとっては簡単なんだけど、誤認問題がついて回ることは覚えておいて欲しいのだ。
 
-VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/96756540d6ba6b888f9518353881f54733a57612bf8a4b076dba5505a552c4b7?nocache=1)は以下の通りなのだ。  
-（72個中2個のアンチウィルスエンジンで検出 :2025/05/18 v1.16.2）
+VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/c01f4b2eb46bf62cdfee5112430e02db4ae968cf101755bc8d386c4b3477fe51?nocache=1)は以下の通りなのだ。  
+（72個中2個のアンチウィルスエンジンで検出 :2025/05/24 v1.16.3）
 
-<img src="doc/virustotal_1.16.2.png" width="600">
+<img src="doc/virustotal_1.16.3.png" width="600">
 
 ### ⚡ 免責事項
 
@@ -374,6 +378,17 @@ VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/9675654
 <div class="page"></div>
 
 ## バージョン履歴
+
+### 1.16.3 (2025/05/24)
+
+- リファクタリングのみ（機能の追加、変更はありません）
+  - バックエンド側の構造整理
+    - api/ … フロントとの橋渡しやルーティング処理
+    - services/ … 各画面・機能ごとのロジック（サービス層）
+    - config/ … 設定ファイル
+    - utility/ … 共通関数、多言語処理などの補助的な処理
+    - ステートクラスの導入、Windowクラスの導入
+  - タイポ修正
 
 ### 1.16.2 (2025/05/18)
 
