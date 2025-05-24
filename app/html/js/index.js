@@ -729,7 +729,7 @@ async function deleteChatMessage(event) {
     let messageIndex = parseInt(messageId.split("-")[1], 10);
 
     try {
-        await pywebview.api.trancate_messages(messageIndex);
+        await pywebview.api.truncate_messages(messageIndex);
         g_nextMessageIndex = messageIndex;
         while (messageDiv.nextSibling) {
             messageDiv.nextSibling.remove();

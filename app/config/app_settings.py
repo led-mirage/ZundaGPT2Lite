@@ -12,7 +12,7 @@ import os
 import glob
 import threading
 
-from app_config import AppConfig
+from config.app_config import AppConfig
 
 class Settings:
     FILE_VER = 8

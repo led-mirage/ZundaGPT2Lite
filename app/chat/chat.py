@@ -22,7 +22,7 @@ import google.api_core.exceptions as google_exceptions
 from google.generativeai.types import HarmCategory, HarmBlockThreshold
 import anthropic
 
-from multi_lang import get_text_resource
+from utility.multi_lang import get_text_resource
 
 # チャット基底クラス
 class Chat:

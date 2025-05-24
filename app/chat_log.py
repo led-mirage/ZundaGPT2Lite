@@ -10,8 +10,8 @@ import json
 import os
 from datetime import datetime
 
-from app_config import AppConfig
-from app_settings import Settings
+from config.app_config import AppConfig
+from config.app_settings import Settings
 from chat import Chat
 from chat import ChatFactory
 
