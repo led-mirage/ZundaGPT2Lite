@@ -12,7 +12,7 @@ import os
 import threading
 
 class AppConfig:
-    FILE_VER = 5
+    FILE_VER = 6
     FILE_CONFIG = "appConfig.json"
 
     def __init__(self, config_file_path=FILE_CONFIG):
@@ -32,10 +32,10 @@ class AppConfig:
             "font_size": 16,
         }
         self.gemini = {
-            "safty_filter_harassment": "BLOCK_MEDIUM_AND_ABOVE",
-            "safty_filter_hate_speech": "BLOCK_MEDIUM_AND_ABOVE",
-            "safty_filter_sexually_explicit": "BLOCK_MEDIUM_AND_ABOVE",
-            "safty_filter_dangerous_content": "BLOCK_MEDIUM_AND_ABOVE",
+            "safety_filter_harassment": "BLOCK_MEDIUM_AND_ABOVE",
+            "safety_filter_hate_speech": "BLOCK_MEDIUM_AND_ABOVE",
+            "safety_filter_sexually_explicit": "BLOCK_MEDIUM_AND_ABOVE",
+            "safety_filter_dangerous_content": "BLOCK_MEDIUM_AND_ABOVE",
         }
 
     # deepcopy

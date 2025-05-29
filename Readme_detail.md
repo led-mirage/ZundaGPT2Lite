@@ -74,19 +74,19 @@ Söhne, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Canta
 
 テキストが表示されるときに使用するフォントサイズを指定するのだ。
 
-#### ✨ gemini/safty_filter_harassment（既定値 BLOCK_MEDIUM_AND_ABOVE）
+#### ✨ gemini/safety_filter_harassment（既定値 BLOCK_MEDIUM_AND_ABOVE）
 
 Gemini用の安全性フィルタ設定なのだ。ハラスメントに関するしきい値を設定できるのだ。詳しくは[こちらの資料](Readme_gemini.md)を参照して欲しいのだ。
 
-#### ✨ gemini/safty_filter_hate_speech（既定値 BLOCK_MEDIUM_AND_ABOVE）
+#### ✨ gemini/safety_filter_hate_speech（既定値 BLOCK_MEDIUM_AND_ABOVE）
 
 Gemini用の安全性フィルタ設定なのだ。ヘイトスピーチに関するしきい値を設定できるのだ。詳しくは[こちらの資料](Readme_gemini.md)を参照して欲しいのだ。
 
-#### ✨ gemini/safty_filter_sexually_explicit（既定値 BLOCK_MEDIUM_AND_ABOVE）
+#### ✨ gemini/safety_filter_sexually_explicit（既定値 BLOCK_MEDIUM_AND_ABOVE）
 
 Gemini用の安全性フィルタ設定なのだ。性表現に関するしきい値を設定できるのだ。詳しくは[こちらの資料](Readme_gemini.md)を参照して欲しいのだ。
 
-#### ✨ gemini/safty_filter_dangerous_content（既定値 BLOCK_MEDIUM_AND_ABOVE）
+#### ✨ gemini/safety_filter_dangerous_content（既定値 BLOCK_MEDIUM_AND_ABOVE）
 
 Gemini用の安全性フィルタ設定なのだ。危険な内容に関するしきい値を設定できるのだ。詳しくは[こちらの資料](Readme_gemini.md)を参照して欲しいのだ。
 

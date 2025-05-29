@@ -17,9 +17,9 @@ from httpx import ReadTimeout
 from openai import OpenAI
 from openai import AzureOpenAI
 from openai import APITimeoutError, AuthenticationError, NotFoundError
-import google.generativeai as genai
-import google.api_core.exceptions as google_exceptions
-from google.generativeai.types import HarmCategory, HarmBlockThreshold
+from google import genai
+from google.genai.types import HarmCategory, HarmBlockThreshold, SafetySetting, GenerateContentConfig
+from google.genai import errors as GenaiErrors
 import anthropic
 
 from utility.multi_lang import get_text_resource
@@ -180,7 +180,7 @@ class ChatGemini(Chat):
     def __init__(self, model: str, instruction: str, bad_response: str, history_size: int,
                  api_key_envvar: str=None, gemini_option: dict=None):
 
-        self.gemini_option = gemini_option
+        self.gemini_option: dict = gemini_option
 
         if api_key_envvar:
             api_key = os.environ.get(api_key_envvar)
@@ -189,8 +189,7 @@ class ChatGemini(Chat):
 
         client = None
         if api_key:
-            genai.configure(api_key=api_key)
-            client = genai.GenerativeModel(model)
+            client = genai.Client(api_key=api_key)
 
         super().__init__(
             client = client,
@@ -222,10 +221,16 @@ class ChatGemini(Chat):
 
             self.messages.append({"role": "user", "content": text})
             messages = copy.deepcopy(self.messages[-self.history_size:])
-            messages[-1]["content"] += f"　（{self.instruction}）"
             messages = self.convert_messages(messages)
-            safety_settings = self.get_safety_settings()
-            stream = self.client.generate_content(messages, safety_settings=safety_settings, stream=True)
+
+            stream = self.client.models.generate_content_stream(
+                model=self.model,
+                contents=messages,
+                config=GenerateContentConfig(
+                    system_instruction=self.instruction,
+                    safety_settings=self.get_safety_settings()
+                )
+            )
 
             content = ""
             sentence = ""
@@ -256,20 +261,37 @@ class ChatGemini(Chat):
             else:
                 end_response(self.bad_response)
                 return self.bad_response
-        except (APITimeoutError, ReadTimeout, TimeoutError) as e:
-            on_error(e, "Timeout")
-        except google_exceptions.InvalidArgument as e:
-            if e.reason == "API_KEY_INVALID":
-                on_error(e, "Authentication")
-            else:
-                on_error(e, "InvalidArgument")
-        except ValueError as e:
-            on_error(e, "UnsafeContent")
+        except GenaiErrors.APIError as e:
+            """
+            https://ai.google.dev/gemini-api/docs/troubleshooting?hl=ja
+            400 INVALID_ARGUMENT
+            400 FAILED_PRECONDITION
+            403 PERMISSION_DENIED
+            404 NOT_FOUND
+            429 RESOURCE_EXHAUSTED
+            500 INTERNAL
+            503 UNAVAILABLE
+            504 DEADLINE_EXCEEDED
+            """
+            message = f"{e.code} {e.status} - {e.message}"
+            on_error(e, "APIError", message)
         except Exception as e:
             on_error(e, "Exception")
 
     # 安全性フィルタの設定値を取得する
     def get_safety_settings(self):
+        def convert_category(category: str):
+            value = HarmCategory.HARM_CATEGORY_UNSPECIFIED
+            if category == "safety_filter_harassment":
+                value = HarmCategory.HARM_CATEGORY_HARASSMENT
+            elif category == "safety_filter_hate_speech":
+                value = HarmCategory.HARM_CATEGORY_HATE_SPEECH
+            elif category == "safety_filter_sexually_explicit":
+                value = HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT
+            elif category == "safety_filter_dangerous_content":
+                value = HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT
+            return value
+
         def convert_block_level(block_level: str):
             value =  HarmBlockThreshold.HARM_BLOCK_THRESHOLD_UNSPECIFIED
             if block_level == "BLOCK_NONE":
@@ -282,17 +304,15 @@ class ChatGemini(Chat):
                 value = HarmBlockThreshold.BLOCK_LOW_AND_ABOVE
             return value
 
-        safty_settings = {}
-        if self.gemini_option:
-            if "safty_filter_harassment" in self.gemini_option:
-                safty_settings[HarmCategory.HARM_CATEGORY_HARASSMENT] = convert_block_level(self.gemini_option["safty_filter_harassment"])
-            if "safty_filter_hate_speech" in self.gemini_option:
-                safty_settings[HarmCategory.HARM_CATEGORY_HATE_SPEECH] = convert_block_level(self.gemini_option["safty_filter_hate_speech"])
-            if "safty_filter_sexually_explicit" in self.gemini_option:
-                safty_settings[HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT] = convert_block_level(self.gemini_option["safty_filter_sexually_explicit"])
-            if "safty_filter_dangerous_content" in self.gemini_option:
-                safty_settings[HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT] = convert_block_level(self.gemini_option["safty_filter_dangerous_content"])
-        return safty_settings
+        safety_settings = []
+        for key, value in self.gemini_option.items():
+            safety_settings.append(
+                SafetySetting(
+                    category=convert_category(key),
+                    threshold=convert_block_level(value)
+                )
+            )
+        return safety_settings
     
     # Geminiに送信する会話履歴をGeminiの形式に変換する
     def convert_messages(self, messages):
@@ -300,10 +320,11 @@ class ChatGemini(Chat):
         for message in messages:
             role = message["role"]
             if role == "user":
-                gemini_messages.append({"role": "user", "parts": [ message["content"] ]})
+                gemini_messages.append({"role": "user", "parts": [{"text": message["content"]}]})
             elif role == "assistant":
-                gemini_messages.append({"role": "model", "parts": [ message["content"] ]})
+                gemini_messages.append({"role": "model", "parts": [{"text": message["content"]}]})
         return gemini_messages
+
 
 # Anthropic Claude チャットクラス
 class ChatClaude(Chat):
