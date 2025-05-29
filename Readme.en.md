@@ -215,10 +215,10 @@ License: BSD-3-Clause license
 Homepage： https://github.com/openai/openai-python  
 License：Apache License 2.0
 
-### 🔖 google-generativeai 0.8.5
+### 🔖 google-genai 1.16.1
 
-Homepage： https://github.com/google-gemini/generative-ai-python  
-License：Apache License 2.0
+ホームページ： https://github.com/googleapis/python-genai  
+ライセンス：Apache License 2.0
 
 ### 🔖 anthropic 0.50.0
 

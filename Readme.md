@@ -170,7 +170,7 @@ Windowsの場合は、Windowsの検索窓で「環境変数を編集」で検索
 
 以下のリンクから ZundaGPT2Lite.ZIP をダウンロードして、作成したフォルダに展開するのだ。
 
-https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.16.3
+https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.16.4
 
 #### 3. 実行
 
@@ -288,10 +288,10 @@ OpenAIやGoogle Gemini、AnthropicのAPIキーはあなただけのものなの�
 
 これが嫌な人は（ボクも嫌だけど）、Python本体をインストールしてPythonから普通に実行して欲しいのだ。実行ファイルのほうが手軽だし、そのほうがPythonに詳しくない人にとっては簡単なんだけど、誤認問題がついて回ることは覚えておいて欲しいのだ。
 
-VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/c01f4b2eb46bf62cdfee5112430e02db4ae968cf101755bc8d386c4b3477fe51?nocache=1)は以下の通りなのだ。  
-（72個中2個のアンチウィルスエンジンで検出 :2025/05/24 v1.16.3）
+VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/7bb8e73b09da98dfb677cf4a012bf20df20a7a3d304cf8f0864891ade0364633?nocache=1)は以下の通りなのだ。  
+（72個中5個のアンチウィルスエンジンで検出 :2025/05/28 v1.16.4）
 
-<img src="doc/virustotal_1.16.3.png" width="600">
+<img src="doc/virustotal_1.16.4.png" width="600">
 
 ### ⚡ 免責事項
 
@@ -311,9 +311,9 @@ VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/c01f4b2
 ホームページ： https://github.com/openai/openai-python  
 ライセンス：Apache License 2.0
 
-### 🔖 google-generativeai 0.8.5
+### 🔖 google-genai 1.16.1
 
-ホームページ： https://github.com/google-gemini/generative-ai-python  
+ホームページ： https://github.com/googleapis/python-genai  
 ライセンス：Apache License 2.0
 
 ### 🔖 anthropic 0.50.0
@@ -378,6 +378,16 @@ VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/c01f4b2
 <div class="page"></div>
 
 ## バージョン履歴
+
+### 1.16.4 (2025/05/30)
+
+- リファクタリングのみ（機能の追加、変更はありません）
+  - google gemini用のライブラリを`google-genai`に変更
+    - `google-generativeai`ライブラリが Deprecated になったことによる措置
+  - タイポ修正
+    - appConfig.json中の`safty`を`safety`に修正
+      - これによりGeminiのコンテンツフィルタの設定が初期されます
+      - 設定を変更されていた方はお手数ですが再設定してください
 
 ### 1.16.3 (2025/05/24)
 
