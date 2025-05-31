@@ -1,7 +1,8 @@
 {
-    "file_ver": 6,
+    "file_ver": 7,
     "system": {
         "log_folder": "log",
+        "log_level": "ERROR",
         "settings_file": "settings.en.json",
         "window_width": 1000,
         "window_height": 800,

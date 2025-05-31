@@ -1,5 +1,12 @@
 # <img src="assets/ZundaGPT2.ico" width="48"> ZundaGPT2 Lite
 
+[![GitHub All Releases](https://img.shields.io/github/downloads/led-mirage/ZundaGPT2Lite/total?color=blue)](https://github.com/led-mirage/ZundaGPT2Lite/releases)
+[![GitHub release](https://img.shields.io/github/v/release/led-mirage/ZundaGPT2Lite)](https://github.com/led-mirage/ZundaGPT2Lite/releases)
+[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![OpenAI API](https://img.shields.io/badge/OpenAI-GPT-crimson?logo=openai)](https://platform.openai.com/)
+[![Anthropic Claude](https://img.shields.io/badge/Anthropic-Claude-crimson?logo=anthropic)](https://www.anthropic.com/)
+[![Google Gemini](https://img.shields.io/badge/Google-Gemini-crimson?logo=google)](https://ai.google.dev/)
+
 Copyright (c) 2024-2025 led-mirage
 
 [English](Readme.en.md)
@@ -18,6 +25,11 @@ ZundaGPT2(https://github.com/led-mirage/ZundaGPT2) のライト版なのだ。Zu
 - Anthropic Claude
 
 ## 最新情報
+
+### バージョン 1.17.0
+
+- アプリケーションログの出力機能を追加したのだ✨
+  - **appConfig.json**: log_level
 
 ### バージョン 1.16.0
 
@@ -84,15 +96,15 @@ ZundaGPT2(https://github.com/led-mirage/ZundaGPT2) のライト版なのだ。Zu
 - Claude Opus 3 （モデル名：claude-3-opus-latest）
 - Claude Haiku 3 （モデル名：claude-3-haiku-20240307）
 
-### Google Gemini（2025/04/27現在）
+### Google Gemini（2025/05/30現在）
 
 - Gemini 2.5 Flash Preview （モデル名：gemini-2.5-flash-preview-04-17） 無料枠あり
-- Gemini 2.5 Pro Preview （モデル名：gemini-2.5-pro-exp-03-25） 無料枠あり
+- Gemini 2.5 Pro Preview （モデル名：gemini-2.5-pro-exp-03-25） ~~無料枠あり~~
 - Gemini 2.0 Flash （モデル名：gemini-2.0-flash） 無料枠あり
 - Gemini 2.0 Flash Lite （モデル名：gemini-2.0-flash-lite） 無料枠あり
 - Gemini 1.5 Flash （モデル名：gemini-1.5-flash） 無料枠あり
 - Gemini 1.5 Flash 8B （モデル名：gemini-1.5-flash-8b） 無料枠あり
-- Gemini 1.5 Pro （モデル名：gemini-1.5-pro） 無料枠あり
+- Gemini 1.5 Pro （モデル名：gemini-1.5-pro） ~~無料枠あり~~
 
 <div class="page"></div>
 
@@ -170,7 +182,7 @@ Windowsの場合は、Windowsの検索窓で「環境変数を編集」で検索
 
 以下のリンクから ZundaGPT2Lite.ZIP をダウンロードして、作成したフォルダに展開するのだ。
 
-https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.16.4
+https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.17.0
 
 #### 3. 実行
 
@@ -288,10 +300,10 @@ OpenAIやGoogle Gemini、AnthropicのAPIキーはあなただけのものなの�
 
 これが嫌な人は（ボクも嫌だけど）、Python本体をインストールしてPythonから普通に実行して欲しいのだ。実行ファイルのほうが手軽だし、そのほうがPythonに詳しくない人にとっては簡単なんだけど、誤認問題がついて回ることは覚えておいて欲しいのだ。
 
-VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/7bb8e73b09da98dfb677cf4a012bf20df20a7a3d304cf8f0864891ade0364633?nocache=1)は以下の通りなのだ。  
-（72個中5個のアンチウィルスエンジンで検出 :2025/05/28 v1.16.4）
+VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/b170be09e82b4091d6850bc898c59deaff94e83f4d9513d54e832cac30905238?nocache=1)は以下の通りなのだ。  
+（72個中5個のアンチウィルスエンジンで検出 :2025/05/31 v1.17.0）
 
-<img src="doc/virustotal_1.16.4.png" width="600">
+<img src="doc/virustotal_1.17.0.png" width="600">
 
 ### ⚡ 免責事項
 
@@ -378,6 +390,12 @@ VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/7bb8e73
 <div class="page"></div>
 
 ## バージョン履歴
+
+### 1.17.0 (2025/05/31)
+
+- アプリケーションログ出力機能追加
+  - 設定ファイル（appConfig.json）に出力するログレベルの閾値を追加
+  - 現在出力されるのは一部エラーのみ
 
 ### 1.16.4 (2025/05/30)
 
