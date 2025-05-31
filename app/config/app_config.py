@@ -8,11 +8,12 @@
 
 import copy
 import json
+import logging
 import os
 import threading
 
 class AppConfig:
-    FILE_VER = 6
+    FILE_VER = 7
     FILE_CONFIG = "appConfig.json"
 
     def __init__(self, config_file_path=FILE_CONFIG):
@@ -23,6 +24,7 @@ class AppConfig:
     def _init_member(self):
         self.system = {
             "log_folder": "log",
+            "log_level": "ERROR",
             "settings_file": "settings.json",
             "window_width": 600,
             "window_height": 800,
@@ -85,3 +87,13 @@ class AppConfig:
         for key in target.keys():
             if key in src:
                 target[key] = src[key]
+
+
+# ログ関係の設定を取得する
+def get_log_settings() -> dict:
+    config = AppConfig()
+    config.load()
+    log_folder = config.system.get("log_folder", "log")
+    level_str = config.system.get("log_level", "INFO").upper()
+    log_level = getattr(logging, level_str, logging.INFO)
+    return { "log_folder": log_folder, "log_level": log_level }

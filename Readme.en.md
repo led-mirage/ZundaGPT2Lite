@@ -1,5 +1,12 @@
 # <img src="assets/ZundaGPT2.ico" width="48"> ZundaGPT2 Lite
 
+[![GitHub All Releases](https://img.shields.io/github/downloads/led-mirage/ZundaGPT2Lite/total?color=blue)](https://github.com/led-mirage/ZundaGPT2Lite/releases)
+[![GitHub release](https://img.shields.io/github/v/release/led-mirage/ZundaGPT2Lite)](https://github.com/led-mirage/ZundaGPT2Lite/releases)
+[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![OpenAI API](https://img.shields.io/badge/OpenAI-GPT-crimson?logo=openai)](https://platform.openai.com/)
+[![Anthropic Claude](https://img.shields.io/badge/Anthropic-Claude-crimson?logo=anthropic)](https://www.anthropic.com/)
+[![Google Gemini](https://img.shields.io/badge/Google-Gemini-crimson?logo=google)](https://ai.google.dev/)
+
 Copyright (c) 2024-2025 led-mirage
 
 [Japanese](Readme.md)
@@ -217,8 +224,8 @@ License：Apache License 2.0
 
 ### 🔖 google-genai 1.16.1
 
-ホームページ： https://github.com/googleapis/python-genai  
-ライセンス：Apache License 2.0
+Homepage： https://github.com/googleapis/python-genai  
+License：Apache License 2.0
 
 ### 🔖 anthropic 0.50.0
 

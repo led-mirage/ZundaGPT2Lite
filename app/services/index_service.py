@@ -11,14 +11,20 @@ import re
 
 import langdetect
 
-from config.app_config import AppConfig
+from config.app_config import AppConfig, get_log_settings
 from config.app_settings import Settings
+from app_logger import AppLogger
 from app_state import AppState
 from app_window import AppWindow
 from chat_log import ChatLog
 from const import APP_NAME, APP_VERSION
+from utility.utils import get_location, get_exception_name
 from utility.multi_lang import set_current_language, get_text_resource
 from chat.chat import ChatFactory, Chat
+
+
+log_settings = get_log_settings()
+AppLogger.init_logger(log_settings["log_folder"], log_settings["log_level"])
 
 
 class IndexService:
@@ -226,7 +232,7 @@ class IndexService:
             text += f"## {name}\n\n"
             text += f"{message['content']}\n\n"
         return text
-    
+
     # チャットの内容を要約する
     def summarize_chat(self):
         messages = self.get_all_message_text(add_header=False)
@@ -244,27 +250,34 @@ class IndexService:
 
             return summary
         except Exception as e:
+            location = get_location(self)
+            error_type = get_exception_name(e)
+            AppLogger.error(f"Failed to summarize chat")
+            AppLogger.error(f"  -> location : {location}")
+            AppLogger.error(f"  -> exception : {error_type}")
             print(e)
             return ""
 
     # チャンク受信イベントハンドラ（Chat）
-    def on_recieve_chunk(self, chunk):
+    def on_recieve_chunk(self, chunk: str):
         self.window.js.addChunk(chunk)
 
     # センテンス読み上げイベントハンドラ（Chat）
-    def on_recieve_sentence(self, sentence):
+    def on_recieve_sentence(self, sentence: str):
         self.window.js.parsedSentence(sentence)
     
     # レスポンス受信完了イベントハンドラ（Chat）
-    def on_end_response(self, content):
+    def on_end_response(self, content: str):
         ChatLog.save(self.state.settings, self.state.chat)
         self.window.js.endResponse(content)
 
     # チャット例外イベントハンドラ（Chat）
     def on_chat_error(self, e: Exception, cause: str, info: str=""):
-        module_name = type(e).__module__
-        class_name = type(e).__name__
-        print(f"{module_name}.{class_name}")
+        location = get_location(self)
+        error_type = get_exception_name(e)
+        AppLogger.error(f"{cause} : {info}")
+        AppLogger.error(f"  -> location : {location}")
+        AppLogger.error(f"  -> exception : {error_type}")
         print(e)
 
         if cause == "Timeout":
@@ -282,5 +295,5 @@ class IndexService:
             elif cause == "APIError":
                 message = get_text_resource("ERROR_API_ERROR_OCCURRED") + f"\n{info}"
             else:
-                message = get_text_resource("ERROR_UNKNOWN_OCCURRED") + f"（{class_name}）"
+                message = get_text_resource("ERROR_UNKNOWN_OCCURRED") + f"（{error_type}）"
             self.window.js.handleChatException(message)

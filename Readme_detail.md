@@ -74,6 +74,11 @@ Söhne, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Canta
 
 テキストが表示されるときに使用するフォントサイズを指定するのだ。
 
+#### ✨ system/log_level（既定値 INFO）
+
+アプリケーションログを出力する際の閾値を指定するのだ。
+指定できるのは、DEBUG、INFO、WARNING、ERROR、CRITICALの５種類なのだ。
+
 #### ✨ gemini/safety_filter_harassment（既定値 BLOCK_MEDIUM_AND_ABOVE）
 
 Gemini用の安全性フィルタ設定なのだ。ハラスメントに関するしきい値を設定できるのだ。詳しくは[こちらの資料](Readme_gemini.md)を参照して欲しいのだ。

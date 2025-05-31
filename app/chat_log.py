@@ -6,6 +6,7 @@
 # このソースコードは MITライセンス の下でライセンスされています。
 # ライセンスの詳細については、このプロジェクトのLICENSEファイルを参照してください。
 
+import glob
 import json
 import os
 from datetime import datetime
@@ -159,10 +160,12 @@ class ChatLog:
     # ログファイルの一覧を取得する
     @staticmethod
     def get_logfiles() -> list[str]:
-        files = os.listdir(ChatLog.LOG_FOLDER)
-        files_sorted = sorted(files, key=lambda x: os.path.getmtime(os.path.join(ChatLog.LOG_FOLDER, x)), reverse=False)
-        return files_sorted
-    
+        pattern = os.path.join(ChatLog.LOG_FOLDER, "chatlog*.json")
+        files = glob.glob(pattern)
+        files_sorted = sorted(files, key=os.path.getmtime, reverse=False)
+        filenames_only = [os.path.basename(f) for f in files_sorted]
+        return filenames_only
+
     # ログファイルが存在するかどうかを調べる
     @staticmethod
     def exists_log_file(chat: Chat) -> bool:
