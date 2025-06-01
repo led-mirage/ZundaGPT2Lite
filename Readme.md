@@ -74,7 +74,7 @@ ZundaGPT2(https://github.com/led-mirage/ZundaGPT2) のライト版なのだ。Zu
 - GPT-4.1 mini （モデル名：gpt-4.1-mini） 無料枠あり
 - GPT-4.1 nano （モデル名：gpt-4.1-nano） 無料枠あり
 - GPT-4o （モデル名：gpt-4o）
-- GPT-4o mini （モデル名：gpt-4.1-mini） 無料枠あり
+- GPT-4o mini （モデル名：gpt-4o-mini） 無料枠あり
 - GPT-3.5 Turbo （モデル名：gpt-3.5-turbo）
 - ChatGPT-4o （モデル名：chatgpt-4o-latest）
 - GPT-4o Search Preview （モデル名：gpt-4o-search-preview）
@@ -182,7 +182,7 @@ Windowsの場合は、Windowsの検索窓で「環境変数を編集」で検索
 
 以下のリンクから ZundaGPT2Lite.ZIP をダウンロードして、作成したフォルダに展開するのだ。
 
-https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.17.0
+https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.17.1
 
 #### 3. 実行
 
@@ -300,10 +300,10 @@ OpenAIやGoogle Gemini、AnthropicのAPIキーはあなただけのものなの�
 
 これが嫌な人は（ボクも嫌だけど）、Python本体をインストールしてPythonから普通に実行して欲しいのだ。実行ファイルのほうが手軽だし、そのほうがPythonに詳しくない人にとっては簡単なんだけど、誤認問題がついて回ることは覚えておいて欲しいのだ。
 
-VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/b170be09e82b4091d6850bc898c59deaff94e83f4d9513d54e832cac30905238?nocache=1)は以下の通りなのだ。  
-（72個中5個のアンチウィルスエンジンで検出 :2025/05/31 v1.17.0）
+VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/96f861179d19120911c1a185dd12b9b9b63193c0f48fb17df41e9e61c3cb10c3?nocache=1)は以下の通りなのだ。  
+（72個中5個のアンチウィルスエンジンで検出 :2025/06/01 v1.17.1）
 
-<img src="doc/virustotal_1.17.0.png" width="600">
+<img src="doc/virustotal_1.17.1.png" width="600">
 
 ### ⚡ 免責事項
 
@@ -390,6 +390,13 @@ VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/b170be0
 <div class="page"></div>
 
 ## バージョン履歴
+
+### 1.17.1 (2025/06/01)
+
+- リリースモジュールのみの更新（機能の追加、変更はありません）
+  - settingsフォルダ内の設定ファイルで設定されているAIモデルを最近のモデルに変更
+  - ウィルス対策ソフト誤認対策を実施（PyInstallerのモジュール変更）
+    - それに伴い各EXEも再ビルドし、バージョン番号は1.17.1に更新
 
 ### 1.17.0 (2025/05/31)
 
