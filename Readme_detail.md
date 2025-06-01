@@ -74,7 +74,7 @@ Söhne, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Canta
 
 テキストが表示されるときに使用するフォントサイズを指定するのだ。
 
-#### ✨ system/log_level（既定値 INFO）
+#### ✨ system/log_level（既定値 ERROR）
 
 アプリケーションログを出力する際の閾値を指定するのだ。
 指定できるのは、DEBUG、INFO、WARNING、ERROR、CRITICALの５種類なのだ。
