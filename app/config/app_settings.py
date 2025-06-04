@@ -52,7 +52,7 @@ class Settings:
             "api": "OpenAI",
             "api_key_envvar": "",
             "api_endpoint_envvar": "",
-            "model": "gpt-3.5-turbo-0125",
+            "model": "gpt-4.1-mini",
             "instruction": "君は優秀なアシスタント。ずんだもんの話し方で話す。具体的には語尾に「のだ」または「なのだ」をつけて自然に話す。回答は１００文字以内で簡潔に行う。",
             "bad_response": "答えられないのだ",
             "history_size": 6,

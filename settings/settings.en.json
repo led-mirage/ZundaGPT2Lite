@@ -21,10 +21,10 @@
         "api": "OpenAI",
         "api_key_envvar": "",
         "api_endpoint_envvar": "",
-        "model": "gpt-4o-mini",
+        "model": "gpt-4.1-mini",
         "instruction": "Your name is Zunda, a 20-year-old female. You have a kind and serious personality, and you're good at programming. You engage in fast-paced, snappy conversations.",
         "bad_response": "I'm sorry, I can't answer that question.",
-        "history_size": 10
+        "history_size": 20
     },
     "claude_options": {
         "max_tokens": 4096,

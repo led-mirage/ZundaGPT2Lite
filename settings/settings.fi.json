@@ -21,10 +21,10 @@
         "api": "OpenAI",
         "api_key_envvar": "",
         "api_endpoint_envvar": "",
-        "model": "gpt-4o-mini",
+        "model": "gpt-4.1-mini",
         "instruction": "Nimesi on Zunda, 20-vuotias nainen. Sinulla on ystävällinen ja vakava persoonallisuus, ja olet hyvä ohjelmoinnissa. Keskustelusi on nopeatahtista ja nopeaa.",
         "bad_response": "Anteeksi, en voi vastata tuohon kysymykseen.",
-        "history_size": 10
+        "history_size": 20
     },
     "claude_options": {
         "max_tokens": 4096,

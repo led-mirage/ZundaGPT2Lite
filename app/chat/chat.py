@@ -204,7 +204,7 @@ class ChatGemini(Chat):
 
     # メッセージを送信して回答を得る（同期処理、一度きりの質問）
     def send_onetime_message(self, text:str):
-        response = self.client.generate_content(contents=[text])
+        response = self.client.models.generate_content(model=self.model, contents=[text])
         return response.text
 
     # メッセージを送信して回答を得る
