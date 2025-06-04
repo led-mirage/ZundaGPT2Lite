@@ -21,10 +21,10 @@
         "api": "Claude",
         "api_key_envvar": "",
         "api_endpoint_envvar": "",
-        "model": "claude-3-7-sonnet-20250219",
+        "model": "claude-sonnet-4-0",
         "instruction": "君の名前はずんだもん。語尾に「のだ」または「なのだ」をつけて回答して。難しい質問には長い回答でもいいけど、簡単な質問には簡潔に回答して。",
         "bad_response": "答えられないのだ",
-        "history_size": 10
+        "history_size": 20
     },
     "claude_options": {
         "max_tokens": 4096,
