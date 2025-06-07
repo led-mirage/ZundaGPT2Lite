@@ -11,64 +11,47 @@ Copyright (c) 2024-2025 led-mirage
 
 [English](Readme.en.md)
 
-## 概要
+## 💎 アプリの紹介と導入方法
 
-ZundaGPT2(https://github.com/led-mirage/ZundaGPT2) のライト版なのだ。ZundaGPT2から音声読み上げ機能を省いたバージョンなのだよ。
+APIを使ってAIとチャットするアプリなのだ。   
+AIのキャラクターを自分好みにカスタマイズできることが特徴なのだよ。
 
-簡単に言うと、AIとチャットできるチャットクライアントソフトウェアなのだ。
+ZundaGPT2 Liteは[ZundaGPT2](https://github.com/led-mirage/ZundaGPT2)から音声読み上げ機能を省いたバージョンなのだよ。
 
-使用できるAIサービスは以下の4つなのだよ。
 
-- OpenAI
-- AzureOpenAI
-- Google Gemini
-- Anthropic Claude
+このアプリのアピールポイントは次のとおりなのだ✨
 
-## 最新情報
+- ３大AIサービス（OpenAI、Google Gemini、Anthropic Claude）に対応
+- キャラクターカスタマイズ機能
+- マークダウン表示、TeX形式の数式表示機能
+- 過去ログ管理機能
+- 印刷機能
 
-### バージョン 1.17.0
-
-- アプリケーションログの出力機能を追加したのだ✨
-  - **appConfig.json**: log_level
-
-### バージョン 1.16.0
-
-- アプリケーション設定ファイルにフォントファミリとフォントサイズの項目を追加したのだ✨
-  - **font_family**: フォントの一覧（優先順）
-  - **font_size**: フォントサイズ（px単位）
-
-### バージョン 1.15.0
-
-- キャラクター設定ファイル（settings_xxx.json）に以下の項目を追加したのだ✨
-  - **api_key_envvar**: APIキーを格納する環境変数名 
-  - **api_endpoint_envvar**: APIエンドポイントを格納する環境変数名（AzureOpenAI Serviceにのみ影響）
-- ドイツ語に対応したのだ✨
-
-### バージョン 1.14.0
-
-- Claude 3.7 SonnetのExtended Thinkingモードに対応したのだ✨
-  - Extended Thinkingモードを有効にするには、settings.jsonファイルのextended_thinkingプロパティをtrueにするとよいのだよ。
+アプリの紹介と、もっとも手軽な導入方法を[Zennの記事](https://zenn.dev/ledmirage/articles/7650f36d3a784a)にしたので、そちらも参考にしてほしいのだ✨  
+記事はZundaGPT2のものだけど、導入方法はほぼ同じなのだ。
 
 <div class="page"></div>
 
-## スクリーンショット
+## 💎 スクリーンショット
 
 <img src="assets/ZundaGPT2_splash.png" width="200"><br>
 
 <img src="doc/screenshot_1.10.0.png" width="600"><br>
 
-## 動作確認環境
+<div class="page"></div>
+
+## 💎 動作確認環境
 
 - Windows 11 Pro 23H2、24H2
 - Python 3.12.0
 
 <div class="page"></div>
 
-## 対応AIモデル
+## 💎 対応AIモデル
 
 動作確認済みのモデルは以下の通りなのだ。
 
-### OpenAI（2025/04/27現在）
+<details><summary>OpenAI（2025/04/27現在）</summary>
 
 - GPT-4.1 （モデル名：gpt-4.1）
 - GPT-4.1 mini （モデル名：gpt-4.1-mini） 無料枠あり
@@ -84,7 +67,9 @@ ZundaGPT2(https://github.com/led-mirage/ZundaGPT2) のライト版なのだ。Zu
 - o1 （モデル名：o1）
 - o1-mini （モデル名：o1-mini）
 
-### Anthropic Claude（2025/05/24現在）
+</details>
+
+<details><summary>Anthropic Claude（2025/05/24現在）</summary>
 
 - Claude Opus 4 （モデル名：claude-opus-4-0）
 - Claude Sonnet 4 （モデル名：claude-sonnet-4-0）
@@ -96,19 +81,23 @@ ZundaGPT2(https://github.com/led-mirage/ZundaGPT2) のライト版なのだ。Zu
 - Claude Opus 3 （モデル名：claude-3-opus-latest）
 - Claude Haiku 3 （モデル名：claude-3-haiku-20240307）
 
-### Google Gemini（2025/05/30現在）
+</details>
+
+<details><summary>Google Gemini（2025/05/30現在）</summary>
 
 - Gemini 2.5 Flash Preview （モデル名：gemini-2.5-flash-preview-04-17） 無料枠あり
-- Gemini 2.5 Pro Preview （モデル名：gemini-2.5-pro-exp-03-25） ~~無料枠あり~~
+- Gemini 2.5 Pro Preview （モデル名：gemini-2.5-pro-exp-03-25）
 - Gemini 2.0 Flash （モデル名：gemini-2.0-flash） 無料枠あり
 - Gemini 2.0 Flash Lite （モデル名：gemini-2.0-flash-lite） 無料枠あり
 - Gemini 1.5 Flash （モデル名：gemini-1.5-flash） 無料枠あり
 - Gemini 1.5 Flash 8B （モデル名：gemini-1.5-flash-8b） 無料枠あり
-- Gemini 1.5 Pro （モデル名：gemini-1.5-pro） ~~無料枠あり~~
+- Gemini 1.5 Pro （モデル名：gemini-1.5-pro）
+
+</details>
 
 <div class="page"></div>
 
-## 言語サポート
+## 💎 言語サポート
 
 使用する言語を変更するには`appConfig.json`ファイルの`language`設定を変更すればいいのだ。
 
@@ -128,33 +117,29 @@ ZundaGPT2(https://github.com/led-mirage/ZundaGPT2) のライト版なのだ。Zu
 
 <div class="page"></div>
 
-## 必要なもの
+## 💎 必要なもの
 
-このアプリ自体は無料だけど、このアプリを動作させるには以下のいずれかのAPIキーが必要になるのだ。
+### ✅ APIキー
 
-ここでは軽く触れておくだけにするけど、詳しいことは[こっち](Readme_detail.md)を見てほしいのだ。
+このアプリを動かすには以下のいずれかのAPIキーが必要なのだ。
 
-### ✅ OpenAIアカウントとAPIキー
+#### 🔑 OpenAIのAPIキー
 
-OpenAIのAPIを使用する場合は、[OpenAI](https://platform.openai.com/)のアカウントとAPIの利用登録（課金およびAPIキーの作成）が必要なのだ。
+[OpenAI Platform](https://platform.openai.com/)のアカウントとAPIの利用登録（課金およびAPIキーの作成）が必要なのだ。
 
-### ✅ Google Gemini APIのAPIキー
+#### 🔑 Google Gemini APIのAPIキー
 
-バージョン0.7.0からGoogle Gemini APIにも対応したのだ。
+[Google AI Studio](https://aistudio.google.com/)でAPIキーを作成する必要があるのだ。
 
-2024年5月19日時点でGoogle Gemini APIには無料プランが設定されているので、OpenAIのAPIよりも気軽に利用することができるのだ。Google Gemini APIを使用したい場合は、[専用の資料](Readme_gemini.md)を用意したので、それを参照して欲しいのだ。
+※2025年6月時点でGoogle Gemini APIには無料プランが設定されているので、他社のAPIよりも気軽に利用することができるのだ。このことは[Zennの記事](https://zenn.dev/ledmirage/articles/23c0240691b012)にも書いたので、そちらを参照して欲しいのだ。
 
-### ✅ Anthropic APIのAPIキー
+#### 🔑 Anthropic APIのAPIキー
 
-バージョン1.4.0からAnthropic API（Claudeシリーズ）にも対応したのだ。
-
-APIを利用するには[Anthropic Console](https://console.anthropic.com/)のアカウントとAPIの利用登録（課金およびAPIキーの作成）が必要なのだ。
-
-2025年5月24日時点の最新のモデルは`Claude Sonnet 4`、`Claude Opus 4`なのだ。
+[Anthropic Console](https://console.anthropic.com/login)のアカウントとAPIの利用登録（課金およびAPIキーの作成）が必要なのだ。
 
 <div class="page"></div>
 
-## 実行方法
+## 💎 実行方法
 
 ### 🛩️ 準備：OSの環境変数を追加
 
@@ -256,7 +241,7 @@ call venv\scripts\activate
 start pythonw app\main.py
 ```
 
-## キャラクターの設定
+## 💎 キャラクターの設定
 
 画面右上の⚙️ボタンを押すことで、使用するキャラクターを選択することができるのだ。
 
@@ -268,31 +253,15 @@ start pythonw app\main.py
 
 <div class="page"></div>
 
-## 注意事項
+## 💎 注意事項
 
-### ⚡ OpenAIの利用料金について
+### ⚡ APIの利用料金について
 
-このアプリは無料だけど、OpenAI APIを使うには別途料金が発生するのだ（お試し用の無料枠もあるけど）。なので、使い過ぎには注意するのだ。定期的にOpenAIのサイトで現在の利用状況を確認するなどして自己管理して欲しいのだ。
-
-そもそも自動チャージ設定を有効にしなければチャージされた分しか課金されないはずなので、そこまで心配する必要はないけれど、OpenAIのサイトでは月毎の利用上限なども設定できるのでそれらを活用して思わぬ出費を防ぐといいのだ。
-
-### ⚡ Google Gemini APIの利用料金について
-
-[この資料](Readme_gemini.md)にも書いたけど、現時点でGoogle Gemini APIには無料枠があるのだ。だから、基本的には無料枠を使ってアプリを利用すればいいと思うけど、もっとハードに使いたい場合は有料プランを考えてみるのもいいのだ。ただ、有料プランにした場合は、先に書いたOpenAIと同じように使い過ぎには注意して欲しいのだ。
-
-### ⚡ Anthropic APIの利用料金について
-
-Anthropic APIを利用するのにも別途料金（従量制）が発生するのだ。2024年12月29日時点で確認したところ、無料枠というものはなさそうなのだ。クレジットカードで好きな金額を課金するとAPIを利用できるようになるのだ。ただ、他のAPIと同じように使い過ぎには注意して欲しいのだ。
+このアプリは無料だけど、AI各社のAPIを使うには別途料金が発生するのだ（お試し用の無料枠もあるけど）。なので、使い過ぎには注意するのだ。定期的に各社の管理サイトで現在の利用状況を確認するなどして自己管理して欲しいのだ。
 
 ### ⚡ APIキーの重要性について
 
-OpenAIやGoogle Gemini、AnthropicのAPIキーはあなただけのものなので、人に教えたらダメなのだ。流出すると悪い人に勝手に使われてしまう可能性があるのだ。もし流出してしまったら、OpenAIやGoogle、Anthropicのサイトで現在使っているAPIキーを削除して、別のAPIキーを作ればいいのだ。
-
-ただOpenAIでは、APIキーをひとつしか持っていない場合、新しいAPIキーを作ってからじゃないと古いAPIキーを削除できないようなのだ。これはOpenAIの仕様のようなんだけど、ボク的にはちょっといただけない仕様だと思っているのだ。将来的に改善することを願っているけれど、最悪支払い情報（クレジットカード情報）を削除してしまえばいいような気もするのだ。
-
-なにはともあれ、APIキーと利用料金には注意を払って欲しいのだ。
-
-<div class="page"></div>
+各AIのAPIキーはあなただけのものなので、人に教えたらダメなのだ。流出すると悪い人に勝手に使われてしまう可能性があるのだ。もし流出してしまったら、各AIの管理サイトで現在使っているAPIキーを削除して、使えなくして欲しいのだ。
 
 ### ⚡ ウィルス対策ソフトの誤認問題
 
@@ -311,7 +280,9 @@ VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/33e4e9d
 
 <div class="page"></div>
 
-## 使用しているライブラリ
+## 💎 使用しているライブラリ
+
+<details><summary>このアプリがお世話になってるOSSは以下の通りなのだ✨</summary>
 
 ### 🔖 pywebview 5.3.2
 
@@ -379,9 +350,11 @@ VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/33e4e9d
 ホームページ： https://github.com/pyinstaller/pyinstaller  
 ライセンス： GPL 2.0 License / Apache License 2.0  
 
+</details>
+
 <div class="page"></div>
 
-## ライセンス
+## 💎 ライセンス
 
 © 2024-2025 led-mirage
 
@@ -389,7 +362,9 @@ VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/33e4e9d
 
 <div class="page"></div>
 
-## バージョン履歴
+## 💎 バージョン履歴
+
+<details><summary>過去のバージョンアップの軌跡はこちらなのだ</summary>
 
 ### 1.17.2 (2025/06/04)
 
@@ -625,3 +600,5 @@ VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/33e4e9d
  
 - ファーストリリース
 - ZundaGTP2 v0.5.0から分岐
+
+</details>
