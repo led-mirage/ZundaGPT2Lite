@@ -167,7 +167,7 @@ Windowsの場合は、Windowsの検索窓で「環境変数を編集」で検索
 
 以下のリンクから ZundaGPT2Lite.ZIP をダウンロードして、作成したフォルダに展開するのだ。
 
-https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.17.2
+https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.17.4
 
 #### 3. 実行
 
@@ -269,10 +269,10 @@ start pythonw app\main.py
 
 これが嫌な人は（ボクも嫌だけど）、Python本体をインストールしてPythonから普通に実行して欲しいのだ。実行ファイルのほうが手軽だし、そのほうがPythonに詳しくない人にとっては簡単なんだけど、誤認問題がついて回ることは覚えておいて欲しいのだ。
 
-VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/33e4e9d5da957fb33f53483483ec29efca39a9507a7d2244838036f8edbd56d1?nocache=1)は以下の通りなのだ。  
-（72個中5個のアンチウィルスエンジンで検出 :2025/06/04 v1.17.2）
+VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/29d4a407871ae435830c628702a55c875efc5d0849b2e67c32b3cf2648bfb074?nocache=1)は以下の通りなのだ。  
+（72個中6個のアンチウィルスエンジンで検出 :2025/06/15 v1.17.4）
 
-<img src="doc/virustotal_1.17.2.png" width="600">
+<img src="doc/virustotal_1.17.4.png" width="600">
 
 ### ⚡ 免責事項
 
@@ -365,6 +365,11 @@ VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/33e4e9d
 ## 💎 バージョン履歴
 
 <details><summary>過去のバージョンアップの軌跡はこちらなのだ</summary>
+
+### 1.17.4 (2025/06/15)
+
+- requestsライブラリを2.32.4に更新（CVE-2024-47081対応）
+- ZundaGPT2に合わせるために、バージョン1.17.3は欠番
 
 ### 1.17.2 (2025/06/04)
 
