@@ -304,7 +304,7 @@ VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/29d4a40
 ホームページ： https://github.com/anthropics/anthropic-sdk-python  
 ライセンス：MIT license
 
-### 🔖 requests 2.32.3
+### 🔖 requests 2.32.4
 
 ホームページ： https://requests.readthedocs.io/en/latest/  
 ライセンス：Apache License 2.0
