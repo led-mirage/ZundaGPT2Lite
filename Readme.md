@@ -167,7 +167,7 @@ Windowsの場合は、Windowsの検索窓で「環境変数を編集」で検索
 
 以下のリンクから ZundaGPT2Lite.ZIP をダウンロードして、作成したフォルダに展開するのだ。
 
-https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.17.4
+https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.18.0
 
 #### 3. 実行
 
@@ -269,10 +269,10 @@ start pythonw app\main.py
 
 これが嫌な人は（ボクも嫌だけど）、Python本体をインストールしてPythonから普通に実行して欲しいのだ。実行ファイルのほうが手軽だし、そのほうがPythonに詳しくない人にとっては簡単なんだけど、誤認問題がついて回ることは覚えておいて欲しいのだ。
 
-VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/29d4a407871ae435830c628702a55c875efc5d0849b2e67c32b3cf2648bfb074?nocache=1)は以下の通りなのだ。  
-（72個中6個のアンチウィルスエンジンで検出 :2025/06/15 v1.17.4）
+VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/155bc6c9bf8fbbbeb002a6c829eea5a5b8d685460e41967c8cc352b2f55c86ff?nocache=1)は以下の通りなのだ。  
+（72個中5個のアンチウィルスエンジンで検出 :2025/06/17 v1.18.0）
 
-<img src="doc/virustotal_1.17.4.png" width="600">
+<img src="doc/virustotal_1.18.0.png" width="600">
 
 ### ⚡ 免責事項
 
@@ -289,7 +289,7 @@ VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/29d4a40
 ホームページ： https://github.com/r0x0r/pywebview  
 ライセンス：BSD-3-Clause license
 
-### 🔖 openai 1.76.0
+### 🔖 openai 1.88.0
 
 ホームページ： https://github.com/openai/openai-python  
 ライセンス：Apache License 2.0
@@ -299,7 +299,7 @@ VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/29d4a40
 ホームページ： https://github.com/googleapis/python-genai  
 ライセンス：Apache License 2.0
 
-### 🔖 anthropic 0.50.0
+### 🔖 anthropic 0.54.0
 
 ホームページ： https://github.com/anthropics/anthropic-sdk-python  
 ライセンス：MIT license
