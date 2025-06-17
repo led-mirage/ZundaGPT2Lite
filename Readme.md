@@ -366,6 +366,13 @@ VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/29d4a40
 
 <details><summary>過去のバージョンアップの軌跡はこちらなのだ</summary>
 
+### 1.18.0 (2025/06/17)
+
+- AzureOpenAIで使用するAPIバージョンを`2025-04-01-preview`に更新
+  - o4-miniなどの推論系のモデルに対応
+- openaiライブラリを1.88.0に更新
+- anthropicライブラリを0.54.0に更新
+
 ### 1.17.4 (2025/06/15)
 
 - requestsライブラリを2.32.4に更新（CVE-2024-47081対応）

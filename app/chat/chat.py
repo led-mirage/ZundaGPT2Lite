@@ -84,10 +84,10 @@ class Chat:
                 if self.stop_send_event.is_set():
                     break
 
-                if chunk.choices[0].delta.role is not None:
+                if chunk.choices and chunk.choices[0].delta.role is not None:
                     role = chunk.choices[0].delta.role
 
-                if chunk.choices[0].delta.content is not None:
+                if chunk.choices and chunk.choices[0].delta.content is not None:
                     chunk_content = chunk.choices[0].delta.content
 
                     content += chunk_content
@@ -160,7 +160,8 @@ class ChatAzureOpenAI(Chat):
 
         client = None
         if endpoint and api_key:
-            client = AzureOpenAI(azure_endpoint=endpoint, api_key=api_key, api_version="2023-05-15", timeout=httpx.Timeout(api_timeout, connect=5.0))
+            client = AzureOpenAI(azure_endpoint=endpoint, api_key=api_key, api_version="2025-04-01-preview",
+                                 timeout=httpx.Timeout(api_timeout, connect=5.0))
 
         super().__init__(
             client = client,
