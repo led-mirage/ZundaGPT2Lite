@@ -289,17 +289,17 @@ VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/155bc6c
 ホームページ： https://github.com/r0x0r/pywebview  
 ライセンス：BSD-3-Clause license
 
-### 🔖 openai 1.88.0
+### 🔖 openai 1.91.0
 
 ホームページ： https://github.com/openai/openai-python  
 ライセンス：Apache License 2.0
 
-### 🔖 google-genai 1.16.1
+### 🔖 google-genai 1.21.1
 
 ホームページ： https://github.com/googleapis/python-genai  
 ライセンス：Apache License 2.0
 
-### 🔖 anthropic 0.54.0
+### 🔖 anthropic 0.55.0
 
 ホームページ： https://github.com/anthropics/anthropic-sdk-python  
 ライセンス：MIT license
@@ -365,6 +365,16 @@ VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/155bc6c
 ## 💎 バージョン履歴
 
 <details><summary>過去のバージョンアップの軌跡はこちらなのだ</summary>
+
+### 1.19.0 (2025/06/xx)
+
+- チャット画面のストリーミング表示を改善
+  - 受信中のメッセージもリアルタイムにマークダウンレンダリングするよう変更
+    - 読みやすさ・見た目を向上
+    - コードブロックは正しく閉じられるまでテキスト表示され、途中レンダリングによる崩れを防止
+  - openaiライブラリを1.91.0に更新
+  - anthropicライブラリを0.55.0に更新
+  - google-genaiのバージョンを1.21.1に更新
 
 ### 1.18.0 (2025/06/17)
 

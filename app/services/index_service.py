@@ -172,6 +172,7 @@ class IndexService:
             text,
             self.on_recieve_chunk,
             self.on_recieve_sentence,
+            self.on_recieve_paragraph,
             self.on_end_response,
             self.on_chat_error)
 
@@ -181,6 +182,7 @@ class IndexService:
             self.state.last_send_message,
             self.on_recieve_chunk,
             self.on_recieve_sentence,
+            self.on_recieve_paragraph,
             self.on_end_response,
             self.on_chat_error)
 
@@ -262,10 +264,14 @@ class IndexService:
     def on_recieve_chunk(self, chunk: str):
         self.window.js.addChunk(chunk)
 
-    # センテンス読み上げイベントハンドラ（Chat）
+    # センテンス受信イベントハンドラ（Chat）
     def on_recieve_sentence(self, sentence: str):
         self.window.js.parsedSentence(sentence)
-    
+
+    # 段落受信イベントハンドラ（Chat）
+    def on_recieve_paragraph(self, paragraph: str):
+        self.window.js.parsedParagraph(paragraph)
+
     # レスポンス受信完了イベントハンドラ（Chat）
     def on_end_response(self, content: str):
         ChatLog.save(self.state.settings, self.state.chat)

@@ -55,6 +55,9 @@ class JSCaller:
     def parsedSentence(self, sentence: str):
         self.window.evaluate_js(f"parsedSentence('{escape_js_string(sentence)}')")
     
+    def parsedParagraph(self, paragraph: str):
+        self.window.evaluate_js(f"parsedParagraph('{escape_js_string(paragraph)}')")
+
     def endResponse(self, content: str):
         self.window.evaluate_js(f"endResponse('{escape_js_string(content)}')")
 

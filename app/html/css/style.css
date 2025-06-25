@@ -103,11 +103,21 @@ body {
 }
 .message-text pre code {
     line-height: 125%;
+    background-color: #1c1b1b;
+    color: #fff;
+    font-family: "Fira Mono", "Menlo", "Consolas", monospace;
+    font-size: 1rem;
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    display: block;
 }
 .message-text code:not(pre > code) {
     background-color: lightblue;
     padding-left: 0.3rem;
     padding-right: 0.3rem;
+}
+.message-text em {
+    color: steelblue;
 }
 .chat-input {
     width: 100%;

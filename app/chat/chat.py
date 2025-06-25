@@ -65,6 +65,7 @@ class Chat:
         text: str,
         recieve_chunk: Callable[[str], None],
         recieve_sentence: Callable[[str], None],
+        recieve_paragraph: Callable[[str], None],
         end_response: Callable[[str], None],
         on_error: Callable[[Exception, str, str | None], None]) -> str:
 
@@ -79,7 +80,11 @@ class Chat:
 
             content = ""
             sentence = ""
+            paragraph = ""
             role = ""
+            code_block = 0
+            code_block_inside = False
+
             for chunk in stream:
                 if self.stop_send_event.is_set():
                     break
@@ -91,15 +96,33 @@ class Chat:
                     chunk_content = chunk.choices[0].delta.content
 
                     content += chunk_content
-                    sentence += chunk_content
-                    recieve_chunk(chunk_content)
 
-                    if sentence.endswith(("。", "\n", "？", "！")):
-                        recieve_sentence(sentence)
-                        sentence = ""
+                    for c in chunk_content:
+                        sentence += c
+                        paragraph += c
+                        recieve_chunk(c)
+
+                        if c == "`":
+                            code_block += 1
+                        else:
+                            code_block = 0
+                        
+                        if code_block == 3:
+                            code_block_inside = not code_block_inside
+
+                        if c in ["。", "？", "！"]:
+                            recieve_sentence(sentence)
+                            sentence = ""
+
+                        if not code_block_inside and c in ["\n"]:
+                            recieve_paragraph(paragraph)
+                            paragraph = ""
 
             if sentence != "":
                 recieve_sentence(sentence)
+            
+            if paragraph != "":
+                recieve_paragraph(paragraph)
 
             if content:
                 self.messages.append({"role": role, "content": content})
@@ -214,6 +237,7 @@ class ChatGemini(Chat):
         text: str,
         recieve_chunk: Callable[[str], None],
         recieve_sentence: Callable[[str], None],
+        recieve_paragraph: Callable[[str], None],
         end_response: Callable[[str], None],
         on_error: Callable[[Exception, str], None]) -> str:
 
@@ -235,6 +259,10 @@ class ChatGemini(Chat):
 
             content = ""
             sentence = ""
+            paragraph = ""
+            code_block = 0
+            code_block_inside = False
+
             for chunk in stream:
                 #print(chunk.candidates[0].safety_ratings)
                 if self.stop_send_event.is_set():
@@ -244,15 +272,33 @@ class ChatGemini(Chat):
                     chunk_content = chunk.text
 
                     content += chunk_content
-                    sentence += chunk_content
-                    recieve_chunk(chunk_content)
 
-                    if sentence.endswith(("。", "\n", "？", "！")):
-                        recieve_sentence(sentence)
-                        sentence = ""
+                    for c in chunk_content:
+                        sentence += c
+                        paragraph += c
+                        recieve_chunk(c)
+
+                        if c == "`":
+                            code_block += 1
+                        else:
+                            code_block = 0
+                        
+                        if code_block == 3:
+                            code_block_inside = not code_block_inside
+
+                        if c in ["。", "？", "！"]:
+                            recieve_sentence(sentence)
+                            sentence = ""
+
+                        if not code_block_inside and c in ["\n"]:
+                            recieve_paragraph(paragraph)
+                            paragraph = ""
 
             if sentence != "":
                 recieve_sentence(sentence)
+
+            if paragraph != "":
+                recieve_paragraph(paragraph)
 
             if content:
                 self.messages.append({"role": "assistant", "content": content})
@@ -371,6 +417,7 @@ class ChatClaude(Chat):
         text: str,
         recieve_chunk: Callable[[str], None],
         recieve_sentence: Callable[[str], None],
+        recieve_paragraph: Callable[[str], None],
         end_response: Callable[[str], None],
         on_error: Callable[[Exception, str], None]) -> str:
 
@@ -382,6 +429,7 @@ class ChatClaude(Chat):
 
             content = ""
             sentence = ""
+            paragraph = ""
 
             max_tokens = self.claude_options["max_tokens"]
             if self.claude_options["extended_thinking"]:
@@ -401,6 +449,9 @@ class ChatClaude(Chat):
                 messages=messages,
                 model=self.model,
             ) as stream:
+                code_block = 0
+                code_block_inside = False
+
                 for text in stream.text_stream:
                     if self.stop_send_event.is_set():
                         break
@@ -409,15 +460,33 @@ class ChatClaude(Chat):
                         chunk_content = text
 
                         content += chunk_content
-                        sentence += chunk_content
-                        recieve_chunk(chunk_content)
 
-                        if sentence.endswith(("。", "\n", "？", "！")):
-                            recieve_sentence(sentence)
-                            sentence = ""
+                        for c in chunk_content:
+                            sentence += c
+                            paragraph += c
+                            recieve_chunk(c)
+
+                            if c == "`":
+                                code_block += 1
+                            else:
+                                code_block = 0
+                            
+                            if code_block == 3:
+                                code_block_inside = not code_block_inside
+
+                            if c in ["。", "？", "！"]:
+                                recieve_sentence(sentence)
+                                sentence = ""
+
+                            if not code_block_inside and c in ["\n"]:
+                                recieve_paragraph(paragraph)
+                                paragraph = ""
 
                 if sentence != "":
                     recieve_sentence(sentence)
+
+                if paragraph != "":
+                    recieve_paragraph(paragraph)
 
                 if content:
                     self.messages.append({"role": "assistant", "content": content})

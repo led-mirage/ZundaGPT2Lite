@@ -894,21 +894,31 @@ function startResponse() {
     addChatMessage("assistant", g_assistantName, g_assistantColor, "");
     scrollToBottom();
 
+    // アシスタント名のテキストを点滅させる
     const nameTextElements = document.querySelectorAll("#chat-messages .speaker-name");
     const lastNameTextElements = nameTextElements[nameTextElements.length - 1];
     if(lastNameTextElements) {
         lastNameTextElements.classList.add("flowing-text");
+    }
+
+    // 出力途中のテキストを表示するエリアを作成する
+    const messageTextElements = document.querySelectorAll("#chat-messages .message-text");
+    const lastMessageTextElement = messageTextElements[messageTextElements.length - 1];
+    if(lastMessageTextElement) {
+        const chunkArea = document.createElement("span");
+        chunkArea.setAttribute("chunk-area", "true");
+        lastMessageTextElement.appendChild(chunkArea);
     }
 }
 
 // Pythonから呼び出される関数
 // AIからの応答（チャンク）を表示する
 function addChunk(text) {
-    const messageTextElements = document.querySelectorAll("#chat-messages .message-text");
-    const lastMessageTextElement = messageTextElements[messageTextElements.length - 1];
-    if(lastMessageTextElement) {
-        lastMessageTextElement.innerHTML += escapeHtml(text);
-        scrollToBottom();
+    const elms = document.querySelectorAll('[chunk-area="true"]');
+    const chunkArea = elms[elms.length - 1];
+    if (chunkArea) {
+        chunkArea.innerHTML += escapeHtml(text);
+        scrollToBottom();        
     }
 }
 
@@ -919,17 +929,41 @@ function parsedSentence(sentence) {
 }
 
 // Pythonから呼び出される関数
+// 段落を受信したときに呼び出される
+function parsedParagraph(paragraph) {
+    const messageTextElements = document.querySelectorAll("#chat-messages .message-text");
+    const lastMessageTextElement = messageTextElements[messageTextElements.length - 1];
+
+    // チャンク出力領域を削除
+    document.querySelectorAll('[chunk-area="true"]').forEach(e => e.remove());
+
+    // 仮レンダリングして表示
+    let html = marked.parse(paragraph);
+    lastMessageTextElement.innerHTML += html;
+
+    // チャンク出力領域を末尾に再作成
+    const chunkArea = document.createElement("span");
+    chunkArea.setAttribute("chunk-area", "true");
+    lastMessageTextElement.appendChild(chunkArea);
+}
+
+// Pythonから呼び出される関数
 // AIからのチャット応答が終了した
 function endResponse(content) {
     setSubmitButtonState(false);
     showChatRetryButton();
 
+    // アシスタント名の点滅を停止させる
     const nameTextElements = document.querySelectorAll("#chat-messages .speaker-name");
     const lastNameTextElements = nameTextElements[nameTextElements.length - 1];
     if(lastNameTextElements) {
         lastNameTextElements.classList.remove("flowing-text");
     }
 
+    // チャンク出力領域を削除
+    document.querySelectorAll('[chunk-area="true"]').forEach(e => e.remove());
+
+    // コンテンツの内容をレンダリングして確定する
     const messageTextElements = document.querySelectorAll("#chat-messages .message-text");
     const lastMessageTextElement = messageTextElements[messageTextElements.length - 1];
     if(lastMessageTextElement) {
@@ -1050,6 +1084,7 @@ window.setChatInfo = setChatInfo;
 window.startResponse = startResponse;
 window.addChunk = addChunk;
 window.parsedSentence = parsedSentence;
+window.parsedParagraph = parsedParagraph;
 window.endResponse = endResponse;
 window.handleChatException = handleChatException;
 window.handleChatTimeoutException = handleChatTimeoutException;
