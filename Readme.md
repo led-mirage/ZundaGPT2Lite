@@ -167,7 +167,7 @@ Windowsの場合は、Windowsの検索窓で「環境変数を編集」で検索
 
 以下のリンクから ZundaGPT2Lite.ZIP をダウンロードして、作成したフォルダに展開するのだ。
 
-https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.18.0
+https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.19.0
 
 #### 3. 実行
 
@@ -269,10 +269,10 @@ start pythonw app\main.py
 
 これが嫌な人は（ボクも嫌だけど）、Python本体をインストールしてPythonから普通に実行して欲しいのだ。実行ファイルのほうが手軽だし、そのほうがPythonに詳しくない人にとっては簡単なんだけど、誤認問題がついて回ることは覚えておいて欲しいのだ。
 
-VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/155bc6c9bf8fbbbeb002a6c829eea5a5b8d685460e41967c8cc352b2f55c86ff?nocache=1)は以下の通りなのだ。  
-（72個中5個のアンチウィルスエンジンで検出 :2025/06/17 v1.18.0）
+VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/36e30a2b43d92c6e8472d06cdafb533e9f15e5677e60288e60fd536efd7d5648?nocache=1)は以下の通りなのだ。  
+（72個中4個のアンチウィルスエンジンで検出 :2025/06/26 v1.19.0）
 
-<img src="doc/virustotal_1.18.0.png" width="600">
+<img src="doc/virustotal_1.19.0.png" width="600">
 
 ### ⚡ 免責事項
 
@@ -366,7 +366,7 @@ VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/155bc6c
 
 <details><summary>過去のバージョンアップの軌跡はこちらなのだ</summary>
 
-### 1.19.0 (2025/06/xx)
+### 1.19.0 (2025/06/26)
 
 - チャット画面のストリーミング表示を改善
   - 受信中のメッセージもリアルタイムにマークダウンレンダリングするよう変更
