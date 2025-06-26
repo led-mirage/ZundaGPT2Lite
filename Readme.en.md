@@ -217,22 +217,22 @@ So far, no particular issues have been found, but bugs are inherently potential 
 Homepage: https://github.com/r0x0r/pywebview  
 License: BSD-3-Clause license
 
-### 🔖 openai 1.76.0
+### 🔖 openai 1.91.0
 
 Homepage： https://github.com/openai/openai-python  
 License：Apache License 2.0
 
-### 🔖 google-genai 1.16.1
+### 🔖 google-genai 1.21.1
 
 Homepage： https://github.com/googleapis/python-genai  
 License：Apache License 2.0
 
-### 🔖 anthropic 0.50.0
+### 🔖 anthropic 0.55.0
 
 Homepage： https://github.com/anthropics/anthropic-sdk-python  
 License：MIT license
 
-### 🔖 requests 2.32.3
+### 🔖 requests 2.32.4
 
 Homepage： https://requests.readthedocs.io/en/latest/  
 License：Apache License 2.0
@@ -266,6 +266,15 @@ License：MIT license
 
 Homepage：https://fontawesome.com/
 License：Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License
+
+### 🔖 pyinstaller-versionfile
+
+Homepage：https://github.com/DudeNr33/pyinstaller-versionfile  
+License：MIT license
+
+### 🔖 PyInstaller 6.13.0
+Homepage： https://github.com/pyinstaller/pyinstaller  
+License： GPL 2.0 License / Apache License 2.0  
 
 <div class="page" />
 
