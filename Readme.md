@@ -167,7 +167,7 @@ Windowsの場合は、Windowsの検索窓で「環境変数を編集」で検索
 
 以下のリンクから ZundaGPT2Lite.ZIP をダウンロードして、作成したフォルダに展開するのだ。
 
-https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.19.0
+https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.20.0
 
 #### 3. 実行
 
@@ -269,10 +269,10 @@ start pythonw app\main.py
 
 これが嫌な人は（ボクも嫌だけど）、Python本体をインストールしてPythonから普通に実行して欲しいのだ。実行ファイルのほうが手軽だし、そのほうがPythonに詳しくない人にとっては簡単なんだけど、誤認問題がついて回ることは覚えておいて欲しいのだ。
 
-VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/36e30a2b43d92c6e8472d06cdafb533e9f15e5677e60288e60fd536efd7d5648?nocache=1)は以下の通りなのだ。  
-（72個中4個のアンチウィルスエンジンで検出 :2025/06/26 v1.19.0）
+VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/a6111f2a513bde3eaafc0005f46df946a001fae0f06550a93a4c20d472275df6?nocache=1)は以下の通りなのだ。  
+（72個中2個のアンチウィルスエンジンで検出 :2025/07/03 v1.20.0）
 
-<img src="doc/virustotal_1.19.0.png" width="600">
+<img src="doc/virustotal_1.20.0.png" width="600">
 
 ### ⚡ 免責事項
 
@@ -346,7 +346,7 @@ VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/36e30a2
 ホームページ：https://github.com/DudeNr33/pyinstaller-versionfile  
 ライセンス：MIT license
 
-### 🔖 PyInstaller 6.13.0
+### 🔖 PyInstaller 6.14.1
 ホームページ： https://github.com/pyinstaller/pyinstaller  
 ライセンス： GPL 2.0 License / Apache License 2.0  
 
@@ -366,10 +366,13 @@ VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/36e30a2
 
 <details><summary>過去のバージョンアップの軌跡はこちらなのだ</summary>
 
-### 1.20.0 (2025/07/01)
+### 1.20.0 (2025/07/06)
 
-- 会話の文字数制限を導入
-  - これまでは会話数での制限だったが、これに文字数制限を追加
+- 会話履歴送信時に文字数上限を指定できる`history_char_limit`オプションを追加
+  - `history_size`（履歴の最大件数）に加えて、合計文字数でも履歴送信を制御可能
+  - `history_char_limit`が 0 の場合、文字数制限はなし
+  - 文字数が上限を超えていても、過去3回分の会話は必ず送信される
+- PyInstallerのバージョンを6.14.1に更新
 
 ### 1.19.0 (2025/06/26)
 

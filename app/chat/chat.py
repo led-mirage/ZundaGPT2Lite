@@ -60,7 +60,7 @@ class Chat:
         completion = self.client.chat.completions.create(model=self.model, messages=messages)
         return completion.choices[0].message.content
 
-    # 送信する会話履歴を取得する
+    # 送信する会話履歴を取得するメッセージメッセージ
     def get_history(self):
         # まずhistory_size件だけ切り出す
         target_messages = self.messages[-self.history_size:]
@@ -69,21 +69,24 @@ class Chat:
         if self.history_char_limit <= 0:
             return target_messages
 
-        # 末尾（古い順）から合計文字数をカウントしつつ、history_char_limitで切る
+        # 末尾（新しい順）から合計文字数をカウントしつつ、history_char_limitで切る
         result = []
         total_chars = 0
 
-        # 新しい順から逆順で処理
+        # 新しい順から遡って処理
         for msg in reversed(target_messages):
-            result.append(msg)
-            total_chars += len(msg["content"])
-            # まだ最低3件残していない or 文字数制限未満なら次へ
-            if len(result) < 3 or total_chars <= self.history_char_limit:
-                continue
-            else:
+            msg_len = len(msg["content"])
+            # 3件以上あって、かつ文字数が上限を超えたらbreak
+            if len(result) >= 3 and total_chars + msg_len > self.history_char_limit:
                 break
+            result.append(msg)
+            total_chars += msg_len
+        
+        if len(result) % 2 == 0:
+            # 偶数件なら、一番古いメッセージを削除する（アシスタントのメッセージ）
+            result.pop()
 
-        # 再度、新しい順に直して返却
+        # 新しい順に並び替えて返却
         return list(reversed(result))
 
     # メッセージを送信して回答を得る
@@ -188,7 +191,7 @@ class ChatOpenAI(Chat):
             instruction = instruction,
             bad_response = bad_response,
             history_size = history_size,
-            history_char_limit= history_char_limit
+            history_char_limit = history_char_limit
         )
 
         if api_key is None:
