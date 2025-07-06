@@ -111,6 +111,7 @@ class ChatLog:
                 settings.chat["instruction"],
                 settings.chat["bad_response"],
                 settings.chat["history_size"],
+                settings.chat["history_char_limit"],
                 app_config.system["chat_api_timeout"],
                 settings.chat["api_key_envvar"],
                 settings.chat["api_endpoint_envvar"],

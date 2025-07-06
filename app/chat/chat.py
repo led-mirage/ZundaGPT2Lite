@@ -27,13 +27,14 @@ from utility.multi_lang import get_text_resource
 # チャット基底クラス
 class Chat:
     # コンストラクタ
-    def __init__(self, client, model: str, instruction: str, bad_response: str, history_size: int):
+    def __init__(self, client, model: str, instruction: str, bad_response: str, history_size: int, history_char_limit: int):
         self.messages = []
         self.client = client
         self.model = model
         self.instruction = instruction
         self.bad_response = bad_response
         self.history_size = history_size
+        self.history_char_limit = history_char_limit
         self.chat_start_time = datetime.now()
         self.chat_update_time = datetime.now()
         self.stop_send_event = threading.Event()
@@ -59,6 +60,35 @@ class Chat:
         completion = self.client.chat.completions.create(model=self.model, messages=messages)
         return completion.choices[0].message.content
 
+    # 送信する会話履歴を取得するメッセージメッセージ
+    def get_history(self):
+        # まずhistory_size件だけ切り出す
+        target_messages = self.messages[-self.history_size:]
+
+        # history_char_limitの指定がなければそのまま返す
+        if self.history_char_limit <= 0:
+            return target_messages
+
+        # 末尾（新しい順）から合計文字数をカウントしつつ、history_char_limitで切る
+        result = []
+        total_chars = 0
+
+        # 新しい順から遡って処理
+        for msg in reversed(target_messages):
+            msg_len = len(msg["content"])
+            # 3件以上あって、かつ文字数が上限を超えたらbreak
+            if len(result) >= 3 and total_chars + msg_len > self.history_char_limit:
+                break
+            result.append(msg)
+            total_chars += msg_len
+        
+        if len(result) % 2 == 0:
+            # 偶数件なら、一番古いメッセージを削除する（アシスタントのメッセージ）
+            result.pop()
+
+        # 新しい順に並び替えて返却
+        return list(reversed(result))
+
     # メッセージを送信して回答を得る
     def send_message(
         self,
@@ -73,7 +103,7 @@ class Chat:
             self.stop_send_event.clear()
 
             self.messages.append({"role": "user", "content": text})
-            messages = self.messages[-self.history_size:]
+            messages = self.get_history()
             if not self.model.startswith("o1") and not self.model.startswith("o3") and self.instruction:
                 messages.insert(0, {"role": "system", "content": self.instruction})
             stream = self.client.chat.completions.create(model=self.model, messages=messages, stream=True)
@@ -143,8 +173,8 @@ class Chat:
         
 # OpenAI チャットクラス
 class ChatOpenAI(Chat):
-    def __init__(self, model: str, instruction: str, bad_response: str, history_size: int, api_timeout: float,
-                 api_key_envvar: str=None):
+    def __init__(self, model: str, instruction: str, bad_response: str, history_size: int, history_char_limit: int,
+                 api_timeout: float, api_key_envvar: str=None):
 
         if api_key_envvar:
             api_key = os.environ.get(api_key_envvar)
@@ -160,7 +190,8 @@ class ChatOpenAI(Chat):
             model = model,
             instruction = instruction,
             bad_response = bad_response,
-            history_size = history_size
+            history_size = history_size,
+            history_char_limit = history_char_limit
         )
 
         if api_key is None:
@@ -168,8 +199,8 @@ class ChatOpenAI(Chat):
 
 # Azure OpenAI チャットクラス
 class ChatAzureOpenAI(Chat):
-    def __init__(self, model: str, instruction: str, bad_response: str, history_size: int, api_timeout: float,
-                 api_key_envvar: str=None, api_endpoint: str=None):
+    def __init__(self, model: str, instruction: str, bad_response: str, history_size: int, history_char_limit: int,
+                 api_timeout: float, api_key_envvar: str=None, api_endpoint: str=None):
 
         if api_key_envvar:
             api_key = os.environ.get(api_key_envvar)
@@ -191,7 +222,8 @@ class ChatAzureOpenAI(Chat):
             model = model,
             instruction = instruction,
             bad_response = bad_response,
-            history_size = history_size
+            history_size = history_size,
+            history_char_limit = history_char_limit
         )
 
         if endpoint is None:
@@ -201,7 +233,7 @@ class ChatAzureOpenAI(Chat):
 
 # Google Gemini チャットクラス
 class ChatGemini(Chat):
-    def __init__(self, model: str, instruction: str, bad_response: str, history_size: int,
+    def __init__(self, model: str, instruction: str, bad_response: str, history_size: int, history_char_limit: int,
                  api_key_envvar: str=None, gemini_option: dict=None):
 
         self.gemini_option: dict = gemini_option
@@ -220,7 +252,8 @@ class ChatGemini(Chat):
             model = model,
             instruction = instruction,
             bad_response = bad_response,
-            history_size = history_size
+            history_size = history_size,
+            history_char_limit = history_char_limit
         )
 
         if api_key is None:
@@ -245,7 +278,7 @@ class ChatGemini(Chat):
             self.stop_send_event.clear()
 
             self.messages.append({"role": "user", "content": text})
-            messages = copy.deepcopy(self.messages[-self.history_size:])
+            messages = copy.deepcopy(self.get_history())
             messages = self.convert_messages(messages)
 
             stream = self.client.models.generate_content_stream(
@@ -375,7 +408,7 @@ class ChatGemini(Chat):
 
 # Anthropic Claude チャットクラス
 class ChatClaude(Chat):
-    def __init__(self, model: str, instruction: str, bad_response: str, history_size: int,
+    def __init__(self, model: str, instruction: str, bad_response: str, history_size: int, history_char_limit: int,
                  api_key_envvar: str=None, claude_options: dict=None):
 
         self.claude_options = claude_options
@@ -394,7 +427,8 @@ class ChatClaude(Chat):
             model = model,
             instruction = instruction,
             bad_response = bad_response,
-            history_size = history_size
+            history_size = history_size,
+            history_char_limit = history_char_limit
         )
 
         if api_key is None:
@@ -425,7 +459,7 @@ class ChatClaude(Chat):
             self.stop_send_event.clear()
 
             self.messages.append({"role": "user", "content": text})
-            messages = self.messages[-self.history_size:]
+            messages = self.get_history()
 
             content = ""
             sentence = ""
@@ -528,15 +562,15 @@ class ChatClaude(Chat):
 class ChatFactory:
     # api_idに基づいてChatオブジェクトを作成する
     @staticmethod
-    def create(api_id: str, model: str, instruction: str, bad_response: str, history_size: int, api_timeout: float,
+    def create(api_id: str, model: str, instruction: str, bad_response: str, history_size: int, history_char_limit: int, api_timeout: float,
                api_key_envvar: str=None, api_key_endpoint: str=None, gemini_option: dict=None, claude_options: dict=None) -> Chat:
         if api_id == "OpenAI":
-            return ChatOpenAI(model, instruction, bad_response, history_size, api_timeout, api_key_envvar)
+            return ChatOpenAI(model, instruction, bad_response, history_size, history_char_limit, api_timeout, api_key_envvar)
         elif api_id == "AzureOpenAI":
-            return ChatAzureOpenAI(model, instruction, bad_response, history_size, api_timeout, api_key_envvar, api_key_endpoint)
+            return ChatAzureOpenAI(model, instruction, bad_response, history_size, history_char_limit, api_timeout, api_key_envvar, api_key_endpoint)
         elif api_id == "Gemini":
-            return ChatGemini(model, instruction, bad_response, history_size, api_key_envvar, gemini_option)
+            return ChatGemini(model, instruction, bad_response, history_size, history_char_limit, api_key_envvar, gemini_option)
         elif api_id == "Claude":
-            return ChatClaude(model, instruction, bad_response, history_size, api_key_envvar, claude_options)
+            return ChatClaude(model, instruction, bad_response, history_size, history_char_limit, api_key_envvar, claude_options)
         else:
             raise ValueError(get_text_resource("ERROR_API_ID_IS_INCORRECT"))

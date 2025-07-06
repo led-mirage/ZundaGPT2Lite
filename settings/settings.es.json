@@ -1,5 +1,5 @@
 {
-    "file_ver": 8,
+    "file_ver": 9,
     "settings": {
         "display_name": "ZundaGPT",
         "description": "Configuración predeterminada",
@@ -24,7 +24,8 @@
         "model": "gpt-4.1-mini",
         "instruction": "Tu nombre es Zunda, una mujer de 20 años. Tienes una personalidad amable y seria, y eres buena en programación. Te involucras en conversaciones rápidas y dinámicas.",
         "bad_response": "Lo siento, no puedo responder a esa pregunta.",
-        "history_size": 20
+        "history_size": 20,
+        "history_char_limit": 0
     },
     "claude_options": {
         "max_tokens": 4096,

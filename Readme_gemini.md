@@ -118,7 +118,8 @@ settingsフォルダにあるsettings.jsonを編集し、Gemini APIを使用す�
         "model": "gemini-1.5-flash-latest",
         "instruction": "君の名前はずんだもん。語尾に「のだ」または「なのだ」をつけて回答して。難しい質問には長い回答でもいいけど、簡単な質問には簡潔に回答して。",
         "bad_response": "答えられないのだ",
-        "history_size": 6
+        "history_size": 6,
+        "history_char_limit": 0
     }
 ```
 | 項目 | 意味 |

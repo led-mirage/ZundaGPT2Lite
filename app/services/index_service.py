@@ -62,6 +62,7 @@ class IndexService:
             self.state.settings.chat["instruction"],
             self.state.settings.chat["bad_response"],
             self.state.settings.chat["history_size"],
+            self.state.settings.chat["history_char_limit"],
             self.app_config.system["chat_api_timeout"],
             self.state.settings.chat["api_key_envvar"],
             self.state.settings.chat["api_endpoint_envvar"],

@@ -272,7 +272,7 @@ License：Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License
 Homepage：https://github.com/DudeNr33/pyinstaller-versionfile  
 License：MIT license
 
-### 🔖 PyInstaller 6.13.0
+### 🔖 PyInstaller 6.14.1
 Homepage： https://github.com/pyinstaller/pyinstaller  
 License： GPL 2.0 License / Apache License 2.0  
 
