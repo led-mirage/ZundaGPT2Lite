@@ -25,6 +25,7 @@ ZundaGPT2 Liteは[ZundaGPT2](https://github.com/led-mirage/ZundaGPT2)から音�
 - マークダウン表示、TeX形式の数式表示機能
 - 過去ログ管理機能
 - 印刷機能
+- Raspberry Pi対応✨（X11/LXDE、日本語入力はIBus限定、印刷機能は非対応）
 
 アプリの紹介と、もっとも手軽な導入方法を[Zennの記事](https://zenn.dev/ledmirage/articles/7650f36d3a784a)にしたので、そちらも参考にしてほしいのだ✨  
 記事はZundaGPT2のものだけど、導入方法はほぼ同じなのだ。
