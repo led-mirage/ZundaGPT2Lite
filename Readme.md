@@ -42,7 +42,7 @@ ZundaGPT2 Liteは[ZundaGPT2](https://github.com/led-mirage/ZundaGPT2)から音�
 ## 💎 動作確認環境
 
 - Windows 11 Pro 23H2、24H2
-- Raspberry Pi OS Bookworm 64bit
+- Raspberry Pi OS Bookworm 64bit (ZundaGPT2Lite v1.21.0)
 - Python 3.10-3.13（開発環境は 3.12.0）
 
 <div class="page"></div>
@@ -269,10 +269,12 @@ start pythonw app\main.py
 
 これが嫌な人は（ボクも嫌だけど）、Python本体をインストールしてPythonから普通に実行して欲しいのだ。実行ファイルのほうが手軽だし、そのほうがPythonに詳しくない人にとっては簡単なんだけど、誤認問題がついて回ることは覚えておいて欲しいのだ。
 
-VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/a6111f2a513bde3eaafc0005f46df946a001fae0f06550a93a4c20d472275df6?nocache=1)は以下の通りなのだ。  
-（72個中2個のアンチウィルスエンジンで検出 :2025/07/03 v1.20.0）
+VirusTotalでのチェック結果はこちらなのだ。
 
-<img src="doc/virustotal_1.20.0.png" width="600">
+- **Windows版:** [71個中2個のアンチウィルスエンジンで検出 :2025/07/12 v1.21.0](https://www.virustotal.com/gui/file/f7effc8ca93df88445c9a1b44d2003a78c75f69196ff37dc638330f05d7f23b3?nocache=1)
+- **Raspberry Pi版:** [62個中0個のアンチウィルスエンジンで検出 :2025/07/12 v1.21.0](https://www.virustotal.com/gui/file/4a85fce264e3dce1e298393bbfde79ac2d8f9a9caa983be6a99d77c9da3849b9?nocache=1)
+
+<img src="doc/virustotal_1.21.0.png" width="600">
 
 ### ⚡ 免責事項
 
@@ -368,7 +370,7 @@ VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/a6111f2
 
 ### 1.21.0 (2025/07/12)
 
-- Linux / Raspberry Pi に対応
+- Raspberry Pi OS Bookwork 64bit に対応
 - fix: 過去ログがロードできないバグを修正
 - fix: f-Stringの書式を修正（Python 3.10-3.11に対応）
 

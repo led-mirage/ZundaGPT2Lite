@@ -47,7 +47,8 @@ The following values can be configured:
 ## Tested Environments
 
 - Windows 11 Pro 23H2, 24H2
-- Python 3.12.0
+- Raspberry Pi OS Bookworm 64bit
+- Python 3.10–3.13 (development environment: 3.12.0)
 
 ## Requirements
 

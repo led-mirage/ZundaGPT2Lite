@@ -4,4 +4,3 @@ openai==1.91.0
 google-genai==v1.21.1
 anthropic==0.55.0
 langdetect==1.0.9
-pyinstaller_versionfile==3.0.1
