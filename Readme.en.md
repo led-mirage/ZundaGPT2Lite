@@ -13,14 +13,20 @@ Copyright (c) 2024-2025 led-mirage
 
 ## Overview
 
-ZundaGPT2 Lite is a streamlined version of ZundaGPT2 with the text-to-speech feature removed. In simple terms, it is a chat client software that allows you to chat with AI.
+This app lets you chat with AI using APIs.
 
-The AI services you can use are as follows:
+One of its key features is the ability to fully customize the AI characters to your liking.
 
-- OpenAI
-- Azure OpenAI
-- Google Gemini
-- Anthropic Claude
+**ZundaGPT2 Lite** is a version of **ZundaGPT2** with the text-to-speech feature removed.
+
+Main features: ✨
+
+- Supports the three major AI services: OpenAI, Google Gemini, and Anthropic Claude
+- Character customization
+- Markdown and TeX-style math formula support
+- Chat log management
+- Printing function
+- Raspberry Pi compatible ✨ (X11/LXDE only, only IBus is supported as the input method framework, printing function not supported)
 
 ## Screenshot
 
@@ -47,7 +53,8 @@ The following values can be configured:
 ## Tested Environments
 
 - Windows 11 Pro 23H2, 24H2
-- Python 3.12.0
+- Raspberry Pi OS Bookworm 64bit
+- Python 3.10–3.13 (development environment: 3.12.0)
 
 ## Requirements
 

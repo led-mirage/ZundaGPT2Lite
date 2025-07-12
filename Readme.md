@@ -18,7 +18,6 @@ AIのキャラクターを自分好みにカスタマイズできることが特
 
 ZundaGPT2 Liteは[ZundaGPT2](https://github.com/led-mirage/ZundaGPT2)から音声読み上げ機能を省いたバージョンなのだよ。
 
-
 このアプリのアピールポイントは次のとおりなのだ✨
 
 - ３大AIサービス（OpenAI、Google Gemini、Anthropic Claude）に対応
@@ -26,6 +25,7 @@ ZundaGPT2 Liteは[ZundaGPT2](https://github.com/led-mirage/ZundaGPT2)から音�
 - マークダウン表示、TeX形式の数式表示機能
 - 過去ログ管理機能
 - 印刷機能
+- Raspberry Pi対応✨（X11/LXDE、日本語入力はIBus限定、印刷機能は非対応）
 
 アプリの紹介と、もっとも手軽な導入方法を[Zennの記事](https://zenn.dev/ledmirage/articles/7650f36d3a784a)にしたので、そちらも参考にしてほしいのだ✨  
 記事はZundaGPT2のものだけど、導入方法はほぼ同じなのだ。
@@ -43,7 +43,8 @@ ZundaGPT2 Liteは[ZundaGPT2](https://github.com/led-mirage/ZundaGPT2)から音�
 ## 💎 動作確認環境
 
 - Windows 11 Pro 23H2、24H2
-- Python 3.12.0
+- Raspberry Pi OS Bookworm 64bit (ZundaGPT2Lite v1.21.0)
+- Python 3.10-3.13（開発環境は 3.12.0）
 
 <div class="page"></div>
 
@@ -167,7 +168,7 @@ Windowsの場合は、Windowsの検索窓で「環境変数を編集」で検索
 
 以下のリンクから ZundaGPT2Lite.ZIP をダウンロードして、作成したフォルダに展開するのだ。
 
-https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.20.0
+https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.21.0
 
 #### 3. 実行
 
@@ -269,10 +270,12 @@ start pythonw app\main.py
 
 これが嫌な人は（ボクも嫌だけど）、Python本体をインストールしてPythonから普通に実行して欲しいのだ。実行ファイルのほうが手軽だし、そのほうがPythonに詳しくない人にとっては簡単なんだけど、誤認問題がついて回ることは覚えておいて欲しいのだ。
 
-VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/a6111f2a513bde3eaafc0005f46df946a001fae0f06550a93a4c20d472275df6?nocache=1)は以下の通りなのだ。  
-（72個中2個のアンチウィルスエンジンで検出 :2025/07/03 v1.20.0）
+VirusTotalでのチェック結果はこちらなのだ。
 
-<img src="doc/virustotal_1.20.0.png" width="600">
+- **Windows版:** [71個中2個のアンチウィルスエンジンで検出 :2025/07/12 v1.21.0](https://www.virustotal.com/gui/file/f7effc8ca93df88445c9a1b44d2003a78c75f69196ff37dc638330f05d7f23b3?nocache=1)
+- **Raspberry Pi版:** [62個中0個のアンチウィルスエンジンで検出 :2025/07/12 v1.21.0](https://www.virustotal.com/gui/file/4a85fce264e3dce1e298393bbfde79ac2d8f9a9caa983be6a99d77c9da3849b9?nocache=1)
+
+<img src="doc/virustotal_1.21.0.png" width="600">
 
 ### ⚡ 免責事項
 
@@ -365,6 +368,12 @@ VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/a6111f2
 ## 💎 バージョン履歴
 
 <details><summary>過去のバージョンアップの軌跡はこちらなのだ</summary>
+
+### 1.21.0 (2025/07/12)
+
+- Raspberry Pi OS Bookwork 64bit に対応
+- fix: 過去ログがロードできないバグを修正
+- fix: f-Stringの書式を修正（Python 3.10-3.11に対応）
 
 ### 1.20.0 (2025/07/06)
 

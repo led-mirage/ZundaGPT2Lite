@@ -6,6 +6,7 @@
 # このソースコードは MITライセンス の下でライセンスされています。
 # ライセンスの詳細については、このプロジェクトのLICENSEファイルを参照してください。
 
+import platform
 import sys
 
 import webview
@@ -54,8 +55,13 @@ class Application:
         self._window = webview.create_window(window_title, url="html/index.html", width=width, height=height, js_api=api, text_select=True)
         window.set_raw_window(self._window)
 
-        webview.start()
-        #webview.start(debug=True) # 開発者ツールを表示する場合
+        gui = None
+        os_name = platform.system()
+        if os_name == "Linux":
+            gui = "qt"
+
+        webview.start(gui=gui)
+        #webview.start(gui=gui, debug=True) # 開発者ツールを表示する場合
 
 
 if __name__ == '__main__':
