@@ -27,6 +27,7 @@ Main features: ✨
 - Chat log management
 - Printing function
 - Raspberry Pi compatible ✨ (X11/LXDE only, only IBus is supported as the input method framework, printing function not supported)
+- Linux Mint compatible ✨ (Cinnamon/x64, only IBus is supported as the input method framework, printing function not supported)
 
 ## Screenshot
 
@@ -53,7 +54,8 @@ The following values can be configured:
 ## Tested Environments
 
 - Windows 11 Pro 23H2, 24H2
-- Raspberry Pi OS Bookworm 64bit
+- Raspberry Pi OS Bookworm 64bit (ZundaGPT2Lite v1.21.0)
+- Linux Mint 22.1 Cinnamon Edition (ZundaGPT2Lite v1.21.0)
 - Python 3.10–3.13 (development environment: 3.12.0)
 
 ## Requirements

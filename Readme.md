@@ -26,6 +26,7 @@ ZundaGPT2 Liteは[ZundaGPT2](https://github.com/led-mirage/ZundaGPT2)から音�
 - 過去ログ管理機能
 - 印刷機能
 - Raspberry Pi対応✨（X11/LXDE、日本語入力はIBus限定、印刷機能は非対応）
+- Linux Mint対応✨（Cinnamon/x64、日本語入力はIBus限定、印刷機能は非対応）
 
 アプリの紹介と、もっとも手軽な導入方法を[Zennの記事](https://zenn.dev/ledmirage/articles/7650f36d3a784a)にしたので、そちらも参考にしてほしいのだ✨  
 記事はZundaGPT2のものだけど、導入方法はほぼ同じなのだ。
@@ -44,6 +45,7 @@ ZundaGPT2 Liteは[ZundaGPT2](https://github.com/led-mirage/ZundaGPT2)から音�
 
 - Windows 11 Pro 23H2、24H2
 - Raspberry Pi OS Bookworm 64bit (ZundaGPT2Lite v1.21.0)
+- Linux Mint 22.1 Cinnamon Edition (ZundaGPT2Lite v1.21.0)
 - Python 3.10-3.13（開発環境は 3.12.0）
 
 <div class="page"></div>
@@ -274,6 +276,7 @@ VirusTotalでのチェック結果はこちらなのだ。
 
 - **Windows版:** [71個中2個のアンチウィルスエンジンで検出 :2025/07/12 v1.21.0](https://www.virustotal.com/gui/file/f7effc8ca93df88445c9a1b44d2003a78c75f69196ff37dc638330f05d7f23b3?nocache=1)
 - **Raspberry Pi版:** [62個中0個のアンチウィルスエンジンで検出 :2025/07/12 v1.21.0](https://www.virustotal.com/gui/file/4a85fce264e3dce1e298393bbfde79ac2d8f9a9caa983be6a99d77c9da3849b9?nocache=1)
+- **Linux版:** [63個中0個のアンチウィルスエンジンで検出 :2025/07/12 v1.21.0](https://www.virustotal.com/gui/file/ec3080161394acb8487d534c0d51f4c6e64499a178ffaafac762c7f3eff12d6d?nocache=1)
 
 <img src="doc/virustotal_1.21.0.png" width="600">
 
@@ -372,6 +375,7 @@ VirusTotalでのチェック結果はこちらなのだ。
 ### 1.21.0 (2025/07/12)
 
 - Raspberry Pi OS Bookwork 64bit に対応
+- Linux Mint 22.1 Cinnamon Edition に対応
 - fix: 過去ログがロードできないバグを修正
 - fix: f-Stringの書式を修正（Python 3.10-3.11に対応）
 
