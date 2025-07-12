@@ -214,12 +214,12 @@ class IndexService:
 
         if add_header:
             text += "---\n"
-            text += f"{self.state.settings.settings["display_name"]}\n"
-            text += f"チャット開始日時: {self.state.chat.chat_start_time.strftime("%Y-%m-%d %H:%M:%S")}\n"
-            text += f"チャット更新日時: {self.state.chat.chat_update_time.strftime("%Y-%m-%d %H:%M:%S")}\n"
+            text += f"{self.state.settings.settings['display_name']}\n"
+            text += f"チャット開始日時: {self.state.chat.chat_start_time.strftime('%Y-%m-%d %H:%M:%S')}\n"
+            text += f"チャット更新日時: {self.state.chat.chat_update_time.strftime('%Y-%m-%d %H:%M:%S')}\n"
             text += f"ログファイル: {ChatLog.get_logfile_name(self.state.chat)}\n"
-            text += f"API: {self.state.settings.chat["api"]}\n"
-            text += f"モデル: {self.state.settings.chat["model"]}\n"
+            text += f"API: {self.state.settings.chat['api']}\n"
+            text += f"モデル: {self.state.settings.chat['model']}\n"
             text += "---\n"
             text += "\n"
 

@@ -18,7 +18,6 @@ AIのキャラクターを自分好みにカスタマイズできることが特
 
 ZundaGPT2 Liteは[ZundaGPT2](https://github.com/led-mirage/ZundaGPT2)から音声読み上げ機能を省いたバージョンなのだよ。
 
-
 このアプリのアピールポイントは次のとおりなのだ✨
 
 - ３大AIサービス（OpenAI、Google Gemini、Anthropic Claude）に対応
@@ -43,7 +42,8 @@ ZundaGPT2 Liteは[ZundaGPT2](https://github.com/led-mirage/ZundaGPT2)から音�
 ## 💎 動作確認環境
 
 - Windows 11 Pro 23H2、24H2
-- Python 3.12.0
+- Raspberry Pi OS Bookworm 64bit
+- Python 3.10-3.13（開発環境は 3.12.0）
 
 <div class="page"></div>
 
@@ -365,6 +365,12 @@ VirusTotalでの[チェック結果](https://www.virustotal.com/gui/file/a6111f2
 ## 💎 バージョン履歴
 
 <details><summary>過去のバージョンアップの軌跡はこちらなのだ</summary>
+
+### 1.21.0 (2025/07/12)
+
+- Linux / Raspberry Pi に対応
+- fix: 過去ログがロードできないバグを修正
+- fix: f-Stringの書式を修正（Python 3.10-3.11に対応）
 
 ### 1.20.0 (2025/07/06)
 

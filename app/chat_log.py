@@ -18,7 +18,7 @@ from chat import ChatFactory
 
 # チャットログクラス
 class ChatLog:
-    FILE_VER = 6
+    FILE_VER = 7
     LOG_FOLDER = "log"
 
     cache = {}
@@ -93,6 +93,11 @@ class ChatLog:
             if data["file_ver"] <= 5:
                 data["chat"]["api_key_envvar"] = ""
                 data["chat"]["api_endpoint_envvar"] = ""
+
+            if data["file_ver"] <= 6:
+                # バグ修正 v1.21.0
+                if "history_char_limit" not in data["chat"]:
+                    data["chat"]["history_char_limit"] = 0
 
             app_config = AppConfig()
             app_config.load()
