@@ -6,6 +6,8 @@
 # このソースコードは MITライセンス の下でライセンスされています。
 # ライセンスの詳細については、このプロジェクトのLICENSEファイルを参照してください。
 
+import pyperclip
+
 from const import COPYRIGHT
 from config.app_config import AppConfig
 
@@ -22,3 +24,8 @@ class AppService:
             "language": self.app_config.system["language"],
             "copyright": COPYRIGHT,
         }
+
+    # クリップボードにテキストをコピーする
+    def copytext_to_clipboard(self, text):
+        pyperclip.copy(text)
+        return True

@@ -133,11 +133,12 @@ function handleContextMenu(event) {
 
     const copyButton = document.getElementById("copy");
     if (copyButton) {
-        copyButton.addEventListener("click", function(clickEvent) {
+        copyButton.addEventListener("click", async function(clickEvent) {
             const selectedText = window.getSelection().toString();
             if (selectedText) {
                 document.body.removeChild(menu);
-                navigator.clipboard.writeText(selectedText);
+                //navigator.clipboard.writeText(selectedText);
+                await pywebview.api.copytext_to_clipboard(selectedText);
                 showToast(clickEvent, getTextResource("textCopiedMessage"));
             }
             else {
@@ -536,7 +537,8 @@ function addCopyToClipboardButton(element) {
 
         button.addEventListener("click", async () => {
             const code = block.querySelector("code");
-            await navigator.clipboard.writeText(code.textContent);
+            //await navigator.clipboard.writeText(code.textContent);
+            await pywebview.api.copytext_to_clipboard(code.textContent);
             showCodeToast(toast);
         });
 
@@ -764,7 +766,8 @@ async function reAnswerChat(event) {
 async function copyChatAllMessages() {
     try {
         const chatText = await pywebview.api.get_all_message_text();
-        navigator.clipboard.writeText(chatText);
+        //navigator.clipboard.writeText(chatText);
+        await pywebview.api.copytext_to_clipboard(chatText);
     }
     catch (error) {
         console.error("Error: " + error)
@@ -781,7 +784,8 @@ async function copyChatMessage(event) {
 
     try {
         const messageText = await pywebview.api.get_message_text(messageIndex);
-        await navigator.clipboard.writeText(messageText);
+        //await navigator.clipboard.writeText(messageText);
+        await pywebview.api.copytext_to_clipboard(messageText);
         showToast(event, getTextResource("messageCopiedMessage"));
     }
     catch (error) {
@@ -797,7 +801,8 @@ async function summarizeChat(event) {
         hideProgressModal();
 
         if (summary) {
-            await navigator.clipboard.writeText(summary);
+            //await navigator.clipboard.writeText(summary);
+            await pywebview.api.copytext_to_clipboard(summary);
             showToast(event, getTextResource("summaryCopiedMessage"), ToastPosition.CenterScreen);
             showSummaryModal(summary);
         }

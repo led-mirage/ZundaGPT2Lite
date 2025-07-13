@@ -275,7 +275,7 @@ start pythonw app\main.py
 VirusTotalでのチェック結果はこちらなのだ。
 
 - **Windows版:** [71個中2個のアンチウィルスエンジンで検出 :2025/07/12 v1.21.0](https://www.virustotal.com/gui/file/f7effc8ca93df88445c9a1b44d2003a78c75f69196ff37dc638330f05d7f23b3?nocache=1)
-- **Raspberry Pi版:** [62個中0個のアンチウィルスエンジンで検出 :2025/07/12 v1.21.0](https://www.virustotal.com/gui/file/4a85fce264e3dce1e298393bbfde79ac2d8f9a9caa983be6a99d77c9da3849b9?nocache=1)
+- **Raspberry Pi版:** [62個中0個のアンチウィルスエンジンで検出 :2025/07/13 v1.21.1](https://www.virustotal.com/gui/file/6e197a7393ff5b448e7441d35337b4bd095ba555cb5e6b2d441b99c9406f5978?nocache=1)
 - **Linux版:** [63個中0個のアンチウィルスエンジンで検出 :2025/07/12 v1.21.0](https://www.virustotal.com/gui/file/ec3080161394acb8487d534c0d51f4c6e64499a178ffaafac762c7f3eff12d6d?nocache=1)
 
 <img src="doc/virustotal_1.21.0.png" width="600">
@@ -319,6 +319,11 @@ VirusTotalでのチェック結果はこちらなのだ。
 
 ホームページ： https://github.com/Mimino666/langdetect  
 ライセンス：Apache License 2.0
+
+### 🔖 pyperclip 1.9.0
+
+ホームページ： https://github.com/asweigart/pyperclip
+ライセンス：BSD 3-Clause "New" or "Revised" License
 
 ### 🔖 MathJax 3.2.2
 
@@ -371,6 +376,10 @@ VirusTotalでのチェック結果はこちらなのだ。
 ## 💎 バージョン履歴
 
 <details><summary>過去のバージョンアップの軌跡はこちらなのだ</summary>
+
+### 1.21.1 (2025/07/13)
+
+- ラズパイ・Linux版でクリップボードにテキストをコピーするコマンドが効かない問題を修正
 
 ### 1.21.0 (2025/07/12)
 
