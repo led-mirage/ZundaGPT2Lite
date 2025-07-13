@@ -251,6 +251,11 @@ License：Apache License 2.0
 Homepage： https://github.com/Mimino666/langdetect  
 License：Apache License 2.0
 
+### 🔖 pyperclip 1.9.0
+
+Homepage： https://github.com/asweigart/pyperclip
+License：BSD 3-Clause "New" or "Revised" License
+
 ### 🔖 MathJax 3.2.2
 
 Homepage： https://github.com/mathjax/MathJax  

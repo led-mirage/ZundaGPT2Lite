@@ -26,6 +26,10 @@ class ApiRouter:
     # アプリケーション設定取得（UI）
     def get_app_config_js(self):
         return self.app_service.get_app_config_js()
+    
+    # クリップボードにテキストをコピーする
+    def copytext_to_clipboard(self, text):
+        return self.app_service.copytext_to_clipboard(text)
 
     # --------------------------------------------------------------------------
     # メイン画面のサービス
