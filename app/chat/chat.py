@@ -183,7 +183,7 @@ class ChatOpenAI(Chat):
 
         client = None
         if api_key:
-            client = OpenAI(timeout=httpx.Timeout(api_timeout, connect=5.0))
+            client = OpenAI(api_key=api_key, timeout=httpx.Timeout(api_timeout, connect=5.0))
 
         super().__init__(
             client = client,
@@ -420,7 +420,7 @@ class ChatClaude(Chat):
 
         client = None
         if api_key:
-            client = anthropic.Anthropic()
+            client = anthropic.Anthropic(api_key=api_key)
 
         super().__init__(
             client = client,
