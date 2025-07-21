@@ -44,8 +44,8 @@ ZundaGPT2 Liteは[ZundaGPT2](https://github.com/led-mirage/ZundaGPT2)から音�
 ## 💎 動作確認環境
 
 - Windows 11 Pro 23H2、24H2
-- Raspberry Pi OS Bookworm 64bit (ZundaGPT2Lite v1.21.1)
-- Linux Mint 22.1 Cinnamon Edition (ZundaGPT2Lite v1.21.1)
+- Raspberry Pi OS Bookworm 64bit (ZundaGPT2Lite v1.21.2)
+- Linux Mint 22.1 Cinnamon Edition (ZundaGPT2Lite v1.21.2)
 - Python 3.10-3.13（開発環境は 3.12.0）
 
 <div class="page"></div>
@@ -170,7 +170,7 @@ Windowsの場合は、Windowsの検索窓で「環境変数を編集」で検索
 
 以下のリンクから ZundaGPT2Lite.ZIP をダウンロードして、作成したフォルダに展開するのだ。
 
-https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.21.1
+https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.21.2
 
 #### 3. 実行
 
@@ -274,11 +274,11 @@ start pythonw app\main.py
 
 VirusTotalでのチェック結果はこちらなのだ。
 
-- **Windows版:** [72個中2個のアンチウィルスエンジンで検出 :2025/07/13 v1.21.1](https://www.virustotal.com/gui/file/3799830ffc8a26123f1ebce45328bfc03defdde1e55551d68a650cf2fe38e300?nocache=1)
-- **Raspberry Pi版:** [62個中0個のアンチウィルスエンジンで検出 :2025/07/13 v1.21.1](https://www.virustotal.com/gui/file/6e197a7393ff5b448e7441d35337b4bd095ba555cb5e6b2d441b99c9406f5978?nocache=1)
-- **Linux版:** [63個中0個のアンチウィルスエンジンで検出 :2025/07/13 v1.21.1](https://www.virustotal.com/gui/file/8b1e81d9828f48606b31fa7dcc3d5c98cdf9ec035f903aa399ea9016db6c7d23?nocache=1)
+- **Windows版:** [72個中2個のアンチウィルスエンジンで検出 :2025/07/21 v1.21.2](https://www.virustotal.com/gui/file/24f28b2ca554b3d8a489282434c4581cab215a21073460617862005bcb0faacd?nocache=1)
+- **Raspberry Pi版:** [62個中0個のアンチウィルスエンジンで検出 :2025/07/21 v1.21.2](https://www.virustotal.com/gui/file/0da297bde72b711079f3f3bbecc6a646cc712a76bab33a22be5e38052b44ce47?nocache=1)
+- **Linux版:** [63個中0個のアンチウィルスエンジンで検出 :2025/07/21 v1.21.2](https://www.virustotal.com/gui/file/b7044f5882c7beed60f4b61058cbb80d95c6256ecd28600cc316b831e910b895?nocache=1)
 
-<img src="doc/virustotal_1.21.1.png" width="600">
+<img src="doc/virustotal_1.21.2.png" width="600">
 
 ### ⚡ 免責事項
 
@@ -376,6 +376,10 @@ VirusTotalでのチェック結果はこちらなのだ。
 ## 💎 バージョン履歴
 
 <details><summary>過去のバージョンアップの軌跡はこちらなのだ</summary>
+
+### 1.21.2 (2025/07/21)
+
+- fix: OpenAI、Claudeの場合に`api_key_envvar`オプションが効かないバグを修正
 
 ### 1.21.1 (2025/07/13)
 
