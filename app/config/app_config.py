@@ -32,7 +32,7 @@ class AppConfig:
             "language": "ja",
             "font_family": "",
             "font_size": 16,
-            "theme": "dark",
+            "theme": "light",
         }
         self.gemini = {
             "safety_filter_harassment": "BLOCK_MEDIUM_AND_ABOVE",
