@@ -27,9 +27,12 @@ ZundaGPT2 Liteは[ZundaGPT2](https://github.com/led-mirage/ZundaGPT2)から音�
 - 印刷機能
 - Raspberry Pi対応✨（X11/LXDE、日本語入力はIBus限定、印刷機能は非対応）
 - Linux Mint対応✨（Cinnamon/x64、日本語入力はIBus限定、印刷機能は非対応）
+- ダークモード対応✨
 
 アプリの紹介と、もっとも手軽な導入方法を[Zennの記事](https://zenn.dev/ledmirage/articles/7650f36d3a784a)にしたので、そちらも参考にしてほしいのだ✨  
 記事はZundaGPT2のものだけど、導入方法はほぼ同じなのだ。
+
+Raspberry Pi、Linuxへの導入に関しても[Zennの記事](https://zenn.dev/ledmirage/articles/aa64356242aefb)にしたので、そちらを参考にしてほしいのだ✨  
 
 <div class="page"></div>
 
@@ -376,6 +379,11 @@ VirusTotalでのチェック結果はこちらなのだ。
 ## 💎 バージョン履歴
 
 <details><summary>過去のバージョンアップの軌跡はこちらなのだ</summary>
+
+### 1.22.0 (2025/07/25)
+
+- ダークモードの実装
+  - appConfig.jsonファイルの "system"."theme" に `dark` または `light` を指定する
 
 ### 1.21.2 (2025/07/21)
 

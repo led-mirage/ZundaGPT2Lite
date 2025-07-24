@@ -37,11 +37,16 @@ OpenAI … https://platform.openai.com/
 
 設定ファイルは２つあるのだ。ひとつはシステムの設定が書かれているapp_config.json。もうひとつはチャットするキャラクターの情報が書かれているsettings.jsonなのだ。
 
-### ⚙️ app_config.json
+### ⚙️ appConfig.json
 
 #### ✨ system/log_folder（既定値 log）
 
 チャットのログファイルを保存するフォルダを指定するのだ。この値が空文字の場合はログは保存されないのだ。
+
+#### ✨ system/log_level（既定値 ERROR）
+
+アプリケーションログを出力する際の閾値を指定するのだ。
+指定できるのは、DEBUG、INFO、WARNING、ERROR、CRITICALの５種類なのだ。
 
 #### ✨ system/settings_file（既定値 settings.json）
 
@@ -74,10 +79,9 @@ Söhne, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Canta
 
 テキストが表示されるときに使用するフォントサイズを指定するのだ。
 
-#### ✨ system/log_level（既定値 ERROR）
+#### ✨ system/theme（既定値 light）
 
-アプリケーションログを出力する際の閾値を指定するのだ。
-指定できるのは、DEBUG、INFO、WARNING、ERROR、CRITICALの５種類なのだ。
+UIのテーマを指定するのだ。`light` または `dark` を指定できるのだ。
 
 #### ✨ gemini/safety_filter_harassment（既定値 BLOCK_MEDIUM_AND_ABOVE）
 
