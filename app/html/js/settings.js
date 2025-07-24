@@ -29,6 +29,10 @@ window.addEventListener("pywebviewready", async function() {
 
 // コンポーネントの初期化
 function initUIComponents(appConfig) {
+    if (appConfig.theme === "dark") {
+        document.body.classList.add("dark-mode");
+    }
+
     setCurrentLanguage(appConfig.language);
     setFontFamilyAndSize(appConfig.fontFamily, appConfig.fontSize);
     setCopyright(appConfig.copyright);

@@ -23,6 +23,7 @@ class AppService:
             "fontSize": self.app_config.system["font_size"],
             "language": self.app_config.system["language"],
             "copyright": COPYRIGHT,
+            "theme": self.app_config.system["theme"],
         }
 
     # クリップボードにテキストをコピーする
