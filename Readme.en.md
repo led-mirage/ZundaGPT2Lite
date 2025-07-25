@@ -28,6 +28,10 @@ Main features: ✨
 - Printing function
 - Raspberry Pi compatible ✨ (X11/LXDE only, only IBus is supported as the input method framework, printing function not supported)
 - Linux Mint compatible ✨ (Cinnamon/x64, only IBus is supported as the input method framework, printing function not supported)
+- Dark mode support ✨
+
+To use this app on Raspberry Pi or Linux, please refer to this article:  
+https://zenn.dev/ledmirage/articles/3a06a4b2ed8ae6
 
 ## Screenshot
 
@@ -286,7 +290,7 @@ License：Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License
 Homepage：https://github.com/DudeNr33/pyinstaller-versionfile  
 License：MIT license
 
-### 🔖 PyInstaller 6.14.1
+### 🔖 PyInstaller 6.14.2
 Homepage： https://github.com/pyinstaller/pyinstaller  
 License： GPL 2.0 License / Apache License 2.0  
 

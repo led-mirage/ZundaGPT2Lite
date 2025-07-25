@@ -47,8 +47,8 @@ Raspberry Pi、Linuxへの導入に関しても[Zennの記事](https://zenn.dev/
 ## 💎 動作確認環境
 
 - Windows 11 Pro 23H2、24H2
-- Raspberry Pi OS Bookworm 64bit (ZundaGPT2Lite v1.21.2)
-- Linux Mint 22.1 Cinnamon Edition (ZundaGPT2Lite v1.21.2)
+- Raspberry Pi OS Bookworm 64bit
+- Linux Mint 22.1 Cinnamon Edition
 - Python 3.10-3.13（開発環境は 3.12.0）
 
 <div class="page"></div>
@@ -173,7 +173,7 @@ Windowsの場合は、Windowsの検索窓で「環境変数を編集」で検索
 
 以下のリンクから ZundaGPT2Lite.ZIP をダウンロードして、作成したフォルダに展開するのだ。
 
-https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.21.2
+https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.22.0
 
 #### 3. 実行
 
@@ -277,11 +277,11 @@ start pythonw app\main.py
 
 VirusTotalでのチェック結果はこちらなのだ。
 
-- **Windows版:** [72個中2個のアンチウィルスエンジンで検出 :2025/07/21 v1.21.2](https://www.virustotal.com/gui/file/24f28b2ca554b3d8a489282434c4581cab215a21073460617862005bcb0faacd?nocache=1)
-- **Raspberry Pi版:** [62個中0個のアンチウィルスエンジンで検出 :2025/07/21 v1.21.2](https://www.virustotal.com/gui/file/0da297bde72b711079f3f3bbecc6a646cc712a76bab33a22be5e38052b44ce47?nocache=1)
-- **Linux版:** [63個中0個のアンチウィルスエンジンで検出 :2025/07/21 v1.21.2](https://www.virustotal.com/gui/file/b7044f5882c7beed60f4b61058cbb80d95c6256ecd28600cc316b831e910b895?nocache=1)
+- **Windows版:** [72個中3個のアンチウィルスエンジンで検出 :2025/07/25 v1.22.0](https://www.virustotal.com/gui/file/157e13af2e4e65bd0452514f9e2281b37d4052be2ab861166ff5a10f55826663?nocache=1)
+- **Raspberry Pi版:** [62個中0個のアンチウィルスエンジンで検出 :2025/07/25 v1.22.0](https://www.virustotal.com/gui/file/cd32d8f46c1c9610424fbecdb3d2ebeed89d3a3d5093e86e080454857b0f5945)
+- **Linux版:** [62個中0個のアンチウィルスエンジンで検出 :2025/07/25 v1.22.0](https://www.virustotal.com/gui/file/7f4168aaddcf3d2be90523df353a32f371065b0822d239ea4bda00fad6201b24?nocache=1)
 
-<img src="doc/virustotal_1.21.2.png" width="600">
+<img src="doc/virustotal_1.22.0.png" width="600">
 
 ### ⚡ 免責事項
 
@@ -360,7 +360,7 @@ VirusTotalでのチェック結果はこちらなのだ。
 ホームページ：https://github.com/DudeNr33/pyinstaller-versionfile  
 ライセンス：MIT license
 
-### 🔖 PyInstaller 6.14.1
+### 🔖 PyInstaller 6.14.2
 ホームページ： https://github.com/pyinstaller/pyinstaller  
 ライセンス： GPL 2.0 License / Apache License 2.0  
 
@@ -384,6 +384,7 @@ VirusTotalでのチェック結果はこちらなのだ。
 
 - ダークモードの実装
   - appConfig.jsonファイルの "system"."theme" に `dark` または `light` を指定する
+- PyInstallerのバージョンを6.14.2に更新
 
 ### 1.21.2 (2025/07/21)
 
