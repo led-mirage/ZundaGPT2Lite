@@ -13,7 +13,7 @@ import os
 import threading
 
 class AppConfig:
-    FILE_VER = 7
+    FILE_VER = 8
     FILE_CONFIG = "appConfig.json"
 
     def __init__(self, config_file_path=FILE_CONFIG):
@@ -32,6 +32,7 @@ class AppConfig:
             "language": "ja",
             "font_family": "",
             "font_size": 16,
+            "theme": "light",
         }
         self.gemini = {
             "safety_filter_harassment": "BLOCK_MEDIUM_AND_ABOVE",

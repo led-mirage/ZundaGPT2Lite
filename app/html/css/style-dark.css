@@ -1,0 +1,171 @@
+body.dark-mode,
+body.dark-mode .chat-container {
+    background-color: #181a1b !important;
+    color: #eaeaea !important;
+}
+
+body.dark-mode .header,
+body.dark-mode footer {
+    background-color: #202224 !important;
+    color: #c0c0c0 !important;
+}
+
+body.dark-mode .chat-messages {
+    background-color: #23262b !important;
+    color: #eaeaea !important;
+}
+
+body.dark-mode .header button,
+body.dark-mode .message-delete-btn,
+body.dark-mode .chat-reanswer-btn,
+body.dark-mode .message-copy-btn {
+    background-color: #25272c !important;
+    color: #eaeaea !important;
+    border: 1px solid #444 !important;
+}
+
+body.dark-mode .header button:hover {
+    background-color: #333 !important;
+    color: #fff !important;
+}
+
+body.dark-mode .chat-input {
+    background-color: #222 !important;
+    color: #eaeaea !important;
+}
+
+body.dark-mode .chat-input textarea {
+    background-color: #2a2c31 !important;
+    color: #eaeaea !important;
+    border: 1px solid #444 !important;
+}
+
+body.dark-mode .chat-input button {
+    background-image: linear-gradient(to bottom, #2c61b6, #114281) !important;
+    color: #fff !important;
+}
+
+body.dark-mode .chat-input button.submit-button-disabled {
+    background-image: linear-gradient(to bottom, #444, #222) !important;
+}
+
+body.dark-mode .speaker-name {
+    text-shadow:
+        0 0 2px #71d4f7,
+        0 0 10px #00eaff77,
+        0 0 18px #00ffd044,
+        0 0 26px #0092c633;
+ }
+
+body.dark-mode pre {
+    background-color: #232946 !important;
+    color: #f5f7ff !important;
+    border: 1.5px solid #4e5575 !important;
+    border-radius: 10px !important;
+    box-shadow: 0 0 10px 2px #14162b55 !important;
+    padding: 1.2rem 1.6rem !important;
+    font-size: 1rem !important;
+    overflow-x: auto !important;
+}
+
+body.dark-mode .message-text pre code {
+    background: none !important;
+    color: inherit !important;
+    border: none !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+}
+
+body.dark-mode .message-text code:not(pre > code) {
+    background-color: #1b2b44 !important;
+    color: #9de0ff !important;
+    border-radius: 0.5em !important;
+    padding: 0.1em 0.5em !important;
+}
+
+body.dark-mode .modal-content,
+body.dark-mode .summary-modal-content {
+    background-color: #444 !important;
+    color: #eee !important;
+    border: 1px solid #666 !important;
+}
+
+body.dark-mode .contextmenu {
+    background-color: #23262b !important;
+    color: #eaeaea !important;
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+}
+body.dark-mode .contextmenu button {
+    color: #eaeaea !important;
+}
+body.dark-mode .contextmenu button:hover {
+    background-color: #666
+}
+
+@keyframes glowing-dark {
+    0%, 100% { 
+        opacity: 0.2;
+        text-shadow: none;
+    }
+    50% { 
+        opacity: 1;
+        text-shadow: 0 0 4px #71d4f7, 0 0 10px #00eaff, 0 0 18px #00ffd0, 0 0 26px #0092c6;
+    }
+}
+
+body.dark-mode .flowing-text {
+    animation: glowing-dark 3s linear infinite !important;
+    mix-blend-mode: lighten;
+}
+
+body.dark-mode table {
+    background-color: #222 !important;
+    color: #eaeaea !important;
+}
+body.dark-mode th, 
+body.dark-mode td {
+    border: 1px solid #555 !important;
+    color: #eaeaea !important;
+    background-color: transparent !important;
+}
+body.dark-mode thead {
+    background-color: #333 !important;
+}
+body.dark-mode th {
+    background-color: #195675 !important;
+}
+body.dark-mode th:nth-child(1),
+body.dark-mode th:nth-child(2),
+body.dark-mode td:nth-child(1),
+body.dark-mode td:nth-child(2) {
+    background-color: #23303a !important;
+    color: #bde7ff !important;
+}
+body.dark-mode td:nth-child(1) {
+    background-color: #2c2222 !important;
+    color: #ffb380 !important;
+}
+
+body.dark-mode .remark {
+    color: #aaa !important;
+}
+body.dark-mode a {
+    color: #82b5ff !important;
+}
+body.dark-mode details {
+    background-color: #23272e !important;
+    border: 1px solid #444 !important;
+    color: #eaeaea !important;
+}
+body.dark-mode details:hover {
+    background-color: #283848 !important;
+}
+body.dark-mode summary {
+    border-bottom: 1px solid #444 !important;
+    color: #9cf !important;
+}
+
+body.dark-mode .match-context {
+    color: #ddd;
+    font-size: 0.8rem;
+}

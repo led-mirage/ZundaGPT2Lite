@@ -1,0 +1,54 @@
+/* 印刷用 */
+@media print {
+    @page {
+        margin-top: 1.5cm;
+        margin-bottom: 1.5cm;
+        margin-left: 2cm;
+        margin-right: 2cm;
+    }
+    html {
+        font-size: 80%;
+    }
+    code {
+        white-space: pre-wrap;
+        word-wrap: break-word;        
+    }
+    .header nav {
+        display: none;
+        visibility: hidden;
+    }
+    .chat-container {
+        display: block;
+        page-break-inside: avoid;
+    }
+    .message-delete-btn {
+        visibility: hidden;
+    }
+    .chat-reanswer-btn {
+        visibility: hidden;
+    }
+    .chat-input {
+        visibility: hidden;
+    }
+    footer {
+        visibility: hidden;
+    }
+
+    /* ダークモード用 */
+    body.dark-mode,
+    body.dark-mode .chat-container {
+        background-color: #ffffff !important;
+        color: #181a1b !important;
+    }
+
+    body.dark-mode .header,
+    body.dark-mode footer {
+        background-color: #eaeaea !important;
+        color: #202224 !important;
+    }
+
+    body.dark-mode .chat-messages {
+        background-color: #ffffff !important;
+        color: #23262b !important;
+    }
+}
