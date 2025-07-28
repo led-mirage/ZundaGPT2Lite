@@ -173,7 +173,7 @@ Windowsの場合は、Windowsの検索窓で「環境変数を編集」で検索
 
 以下のリンクから ZundaGPT2Lite.ZIP をダウンロードして、作成したフォルダに展開するのだ。
 
-https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.22.0
+https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.24.0
 
 #### 3. 実行
 
@@ -277,11 +277,11 @@ start pythonw app\main.py
 
 VirusTotalでのチェック結果はこちらなのだ。
 
-- **Windows版:** [72個中3個のアンチウィルスエンジンで検出 :2025/07/25 v1.22.0](https://www.virustotal.com/gui/file/157e13af2e4e65bd0452514f9e2281b37d4052be2ab861166ff5a10f55826663?nocache=1)
-- **Raspberry Pi版:** [62個中0個のアンチウィルスエンジンで検出 :2025/07/25 v1.22.0](https://www.virustotal.com/gui/file/cd32d8f46c1c9610424fbecdb3d2ebeed89d3a3d5093e86e080454857b0f5945)
-- **Linux版:** [62個中0個のアンチウィルスエンジンで検出 :2025/07/25 v1.22.0](https://www.virustotal.com/gui/file/7f4168aaddcf3d2be90523df353a32f371065b0822d239ea4bda00fad6201b24?nocache=1)
+- **Windows版:** [72個中2個のアンチウィルスエンジンで検出 :2025/07/28 v1.24.0](https://www.virustotal.com/gui/file/45b83606d94b6ffb5340b76967a216f1e6a99da6cfa162487f914d2a800e316e?nocache=1)
+- **Raspberry Pi版:** [62個中0個のアンチウィルスエンジンで検出 :2025/07/28 v1.24.0](https://www.virustotal.com/gui/file/524c8f15ca8721bc286d09257f01faf64a6612ff760fb2905ca0f12de0b6ef44?nocache=1)
+- **Linux版:** [63個中0個のアンチウィルスエンジンで検出 :2025/07/28 v1.24.0](https://www.virustotal.com/gui/file/4aceb7a1c8431b7e3f0722a78fe04dd0cca81ef4c443b7277648daf72f87b8eb?nocache=1)
 
-<img src="doc/virustotal_1.22.0.png" width="600">
+<img src="doc/virustotal_1.24.0.png" width="600">
 
 ### ⚡ 免責事項
 
@@ -379,6 +379,11 @@ VirusTotalでのチェック結果はこちらなのだ。
 ## 💎 バージョン履歴
 
 <details><summary>過去のバージョンアップの軌跡はこちらなのだ</summary>
+
+### 1.24.0 (2025/07/28)
+
+- AIのメッセージ応答完了時に、メッセージ先頭にスクロールする処理を追加
+- ZundaGPT2に合わせるために、バージョン1.23.0は欠番
 
 ### 1.22.0 (2025/07/25)
 

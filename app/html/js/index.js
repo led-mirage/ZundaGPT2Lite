@@ -990,6 +990,33 @@ function endResponse(content) {
     }
 
     MathJax.typesetPromise();
+
+    // メッセージの先頭にスクロールする
+    const lastUserMessageElement = messageTextElements[messageTextElements.length - 2];
+    if (lastUserMessageElement) {
+        const text = lastUserMessageElement.innerText;
+        if (typeof text === "string") {
+            const lineCount = text.split("\n").length;
+            if (lineCount > 10) {
+                scrollToMessage(1);
+            }
+            else {
+                scrollToMessage(2);
+            }
+        }     
+    }
+}
+
+// 任意位置のメッセージにスクロール（デフォ: 2番目から最後へ）
+function scrollToMessage(offset = 2) {
+    const messages = document.querySelectorAll(".chat-messages .chat-message");
+    if (messages.length < offset) return;
+    
+    const secondLastMessage = messages[messages.length - offset];
+    secondLastMessage.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+    });
 }
 
 // Pythonから呼び出される関数
