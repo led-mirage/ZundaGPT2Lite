@@ -137,6 +137,8 @@ body {
     border-radius: 1rem;
     resize: none; /* リサイズ無効 */
     height: 3rem; /* 高さの初期値、必要に応じて */
+    max-height: 30rem; /* 最大高さを設定 */
+    overflow-y: auto; /* 内容が多い場合にスクロールバーを表示 */
 }
 .chat-input button {
     width: 6rem;
