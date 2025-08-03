@@ -1,0 +1,35 @@
+{
+    "file_ver": 9,
+    "settings": {
+        "display_name": "ZundaGPT",
+        "description": "Paramètres par défaut",
+        "welcome_title": "Bienvenue",
+        "welcome_message": "N'hésitez pas à me poser toutes vos questions !",
+        "group": "Default"
+    },
+    "user": {
+        "name": "Vous",
+        "name_color": "#007bff",
+        "icon": "chat_icons/user_black.png"
+    },
+    "assistant": {
+        "name": "Zunda",
+        "name_color": "#006400",
+        "icon": "chat_icons/zunda_sky.png"
+    },
+    "chat": {
+        "api": "OpenAI",
+        "api_key_envvar": "",
+        "api_endpoint_envvar": "",
+        "model": "gpt-4.1-mini",
+        "instruction": "Tu t'appelles Zunda, une femme de 20 ans. Tu as une personnalité gentille et sérieuse, et tu es douée en programmation. Tu échanges des conversations rapides et dynamiques.",
+        "bad_response": "Je suis désolée, je ne peux pas répondre à cette question.",
+        "history_size": 20,
+        "history_char_limit": 0
+    },
+    "claude_options": {
+        "max_tokens": 4096,
+        "extended_thinking": false,
+        "budget_tokens": 2048
+    }
+}

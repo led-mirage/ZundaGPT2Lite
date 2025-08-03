@@ -167,6 +167,7 @@ settings/*
 !settings/settings.es.json
 !settings/settings.fi.json
 !settings/settings.de.json
+!settings/settings.fr.json
 !settings/settings.json
 !settings/settings_gemini.json
 !settings/settings_claude.json

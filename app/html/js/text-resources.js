@@ -203,7 +203,48 @@ const textResources = {
         crossFileSearchColumnLogFile: "Protokolldatei",
         searchPlaceHolder: "Suchbegriff eingeben",
         searchResultsFound: "Ergebnisse gefunden: ${count}",
-    }
+    },
+    // フランス語
+    fr: {
+        // Général (汎用)
+        okButton: "OK",
+        cancelButton: "Annuler",
+        closeButton: "Fermer",
+        // Écran principal (メイン画面)
+        submitButton: "Envoyer",
+        stopButton: "Arrêter",
+        prevButtonTooltip: "Conversation précédente",
+        nextButtonTooltip: "Conversation suivante", 
+        newButtonTooltip: "Nouvelle conversation",
+        crossSearchButtonTooltip: "Recherche inter-fichiers",
+        deleteButtonTooltip: "Supprimer",
+        printButtonTooltip: "Imprimer",
+        settingsButtonTooltip: "Paramètres",
+        messagePlaceholder: "Saisissez votre message...",
+        deleteConfirm: "Voulez-vous vraiment supprimer ?",
+        deleteFromHereConfirm: "Voulez-vous supprimer les messages à partir d'ici ?",
+        searchPrompt: "Veuillez saisir le texte à rechercher",
+        retryConfirm: "Voulez-vous réessayer ?",
+        copyContextMenu: "Copier",
+        textCopiedMessage: "Copié !",
+        messageCopiedMessage: "Message copié !",
+        allMessageCopiedMessage: "Tous les messages copiés !",
+        searchContextMenu: "Rechercher",
+        summaryContextMenu: "Résumé du chat",
+        summarizingProgressMessage: "Résumé du chat en cours...",
+        summaryCopiedMessage: "Résumé copié dans le presse-papiers",
+        // Écran des paramètres (設定画面)
+        settingsTitle: "Changer les paramètres",
+        settingsColumnSelect: "Sélection",
+        settingsColumnDisplayName: "Nom d'affichage",
+        settingsColumnDescription: "Description",
+        // Écran de recherche inter-fichiers (ファイル横断検索)
+        crossFileSearchTitle: "Recherche inter-fichiers",
+        crossFileSearchColumnResult: "Résultat de recherche",
+        crossFileSearchColumnLogFile: "Fichier journal",
+        searchPlaceHolder: "Saisissez le terme de recherche",
+        searchResultsFound: "Résultats trouvés : ${count}",
+    },
 };
 
 let currentLanguage = sessionStorage.getItem("currentLanguage") || "ja";
