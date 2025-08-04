@@ -169,7 +169,39 @@ text_resources = {
 
             ---
             """),
-    }
+    },
+    # フランス語
+    "fr": {
+        "ERROR_MISSING_OPENAI_API_KEY": "La variable d'environnement OPENAI_API_KEY n'est pas définie.",
+        "ERROR_MISSING_AZURE_OPENAI_ENDPOINT": "La variable d'environnement AZURE_OPENAI_ENDPOINT n'est pas définie.",
+        "ERROR_MISSING_AZURE_OPENAI_API_KEY": "La variable d'environnement AZURE_OPENAI_API_KEY n'est pas définie.",
+        "ERROR_MISSING_GEMINI_API_KEY": "La variable d'environnement GEMINI_API_KEY n'est pas définie.",
+        "ERROR_MISSING_ANTHROPIC_API_KEY": "La variable d'environnement ANTHROPIC_API_KEY n'est pas définie.",
+        "ERROR_API_ID_IS_INCORRECT": "L'ID de l'API est incorrect.",
+        "ERROR_API_TIMEOUT": "L'appel API a expiré.",
+        "ERROR_API_AUTHENTICATION_FAILED": "L'authentification de l'API a échoué.",
+        "ERROR_API_ENDPOINT_INCORRECT": "Le point de terminaison de l'API est incorrect.",
+        "ERROR_CONVERSATION_CONTENT_INAPPROPRIATE": "Le contenu de la conversation a été jugé inapproprié.",
+        "ERROR_RATE_LIMIT_REACHED": "Limite de débit atteinte.",
+        "ERROR_API_ERROR_OCCURRED": "Une erreur API s'est produite.",
+        "ERROR_UNKNOWN_OCCURRED": "Une erreur inconnue s'est produite.",
+        "SUMMARIZE_PROMPT": textwrap.dedent("""\
+            Veuillez résumer clairement et de manière concise la conversation de chat suivante.
+
+            [Format de sortie]
+            - Titre (h2) : Exprimer brièvement le sujet de la conversation
+            - Genre (h3) : Classifier la conversation en un mot
+            - Points clés (h3) : Puces
+            - Résumé (h3) : Une conclusion concise ou un point de décision de la conversation
+
+            [Contraintes]
+            - Sortie au format Markdown
+            - Mettre en évidence les mots-clés importants avec **
+            - Afficher les termes techniques en `style de code`
+
+            ---
+            """),
+    },
 }
 
 # 現在の言語を保存する変数

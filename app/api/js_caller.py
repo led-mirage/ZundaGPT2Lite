@@ -26,17 +26,17 @@ class JSCaller:
                     welcome_title, welcome_message, ai_agent_available, ai_agent_creation_error):
         self.window.evaluate_js(
             f"setChatInfo("
-            f"'{display_name}', "
-            f"'{user_name}', "
-            f"'{user_color}', "
+            f"'{escape_js_string(display_name)}', "
+            f"'{escape_js_string(user_name)}', "
+            f"'{escape_js_string(user_color)}', "
             f"'{user_icon}', "
-            f"'{assistant_name}', "
-            f"'{assistant_color}', "
+            f"'{escape_js_string(assistant_name)}', "
+            f"'{escape_js_string(assistant_color)}', "
             f"'{assistant_icon}', "
-            f"'{welcome_title}', "
-            f"'{welcome_message}', "
+            f"'{escape_js_string(welcome_title)}', "
+            f"'{escape_js_string(welcome_message)}', "
             f"{ai_agent_available}, "
-            f"'{ai_agent_creation_error}'"
+            f"'{escape_js_string(ai_agent_creation_error)}'"
             f")"
         )
 
