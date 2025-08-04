@@ -54,6 +54,7 @@ The following values can be configured:
 | fi      | Finnish  | settings.fi.json        | 1.10.0                  |
 | es      | Spanish  | settings.es.json        | 1.10.0                  |
 | de      | German   | settings.de.json        | 1.15.0                  |
+| fr      | French   | settings.fr.json        | 1.25.0                  |
 
 ## Tested Environments
 

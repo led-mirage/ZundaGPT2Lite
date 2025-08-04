@@ -120,6 +120,7 @@ Raspberry Pi、Linuxへの導入に関しても[Zennの記事](https://zenn.dev/
 | fi | フィンランド語 | settings.fi.json | 1.10.0 |
 | es | スペイン語 | settings.es.json | 1.10.0 |
 | de | ドイツ語 | settings.de.json | 1.15.0 |
+| fr | フランス語 | settings.fr.json | 1.25.0 |
 
 <div class="page"></div>
 
@@ -173,7 +174,7 @@ Windowsの場合は、Windowsの検索窓で「環境変数を編集」で検索
 
 以下のリンクから ZundaGPT2Lite.ZIP をダウンロードして、作成したフォルダに展開するのだ。
 
-https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.24.0
+https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.25.0
 
 #### 3. 実行
 
@@ -277,11 +278,11 @@ start pythonw app\main.py
 
 VirusTotalでのチェック結果はこちらなのだ。
 
-- **Windows版:** [72個中2個のアンチウィルスエンジンで検出 :2025/07/28 v1.24.0](https://www.virustotal.com/gui/file/45b83606d94b6ffb5340b76967a216f1e6a99da6cfa162487f914d2a800e316e?nocache=1)
-- **Raspberry Pi版:** [62個中0個のアンチウィルスエンジンで検出 :2025/07/28 v1.24.0](https://www.virustotal.com/gui/file/524c8f15ca8721bc286d09257f01faf64a6612ff760fb2905ca0f12de0b6ef44?nocache=1)
-- **Linux版:** [63個中0個のアンチウィルスエンジンで検出 :2025/07/28 v1.24.0](https://www.virustotal.com/gui/file/4aceb7a1c8431b7e3f0722a78fe04dd0cca81ef4c443b7277648daf72f87b8eb?nocache=1)
+- **Windows版:** [72個中2個のアンチウィルスエンジンで検出 :2025/08/04 v1.25.0](https://www.virustotal.com/gui/file/8570ed1c01b50bf44b38bcd536d78a26b6dc7884d77b0feeca634aa17e0c3e67?nocache=1)
+- **Raspberry Pi版:** [62個中0個のアンチウィルスエンジンで検出 :2025/08/04 v1.25.0](https://www.virustotal.com/gui/file/efed0e5769a6f09ab4cdb9b05eb0e809d66353a114f6fbb7222a1b8c0c7bc628?nocache=1)
+- **Linux版:** [63個中0個のアンチウィルスエンジンで検出 :2025/08/04 v1.25.0](https://www.virustotal.com/gui/file/ddca9a5fa3642b38116eee2c5a844e36319fd24339f399f3f031b30af77698e0?nocache=1)
 
-<img src="doc/virustotal_1.24.0.png" width="600">
+<img src="doc/virustotal_1.25.0.png" width="600">
 
 ### ⚡ 免責事項
 
@@ -379,6 +380,12 @@ VirusTotalでのチェック結果はこちらなのだ。
 ## 💎 バージョン履歴
 
 <details><summary>過去のバージョンアップの軌跡はこちらなのだ</summary>
+
+### 1.25.0 (2025/08/04)
+
+- メッセージ入力テキストボックスの最大高を設定（制限以上になるとスクロールバーが出る）
+- フランス語に対応
+- ビルドバッチ変更（毎回buildディレクトリを削除するように変更）
 
 ### 1.24.0 (2025/07/28)
 
