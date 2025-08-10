@@ -287,11 +287,11 @@ start pythonw app\main.py
 
 VirusTotalでのチェック結果はこちらなのだ。
 
-- **Windows版:** [72個中2個のアンチウィルスエンジンで検出 :2025/08/04 v1.25.0](https://www.virustotal.com/gui/file/8570ed1c01b50bf44b38bcd536d78a26b6dc7884d77b0feeca634aa17e0c3e67?nocache=1)
-- **Raspberry Pi版:** [62個中0個のアンチウィルスエンジンで検出 :2025/08/04 v1.25.0](https://www.virustotal.com/gui/file/efed0e5769a6f09ab4cdb9b05eb0e809d66353a114f6fbb7222a1b8c0c7bc628?nocache=1)
-- **Linux版:** [63個中0個のアンチウィルスエンジンで検出 :2025/08/04 v1.25.0](https://www.virustotal.com/gui/file/ddca9a5fa3642b38116eee2c5a844e36319fd24339f399f3f031b30af77698e0?nocache=1)
+- **Windows版:** [72個中2個のアンチウィルスエンジンで検出 :2025/08/10 v1.26.0](https://www.virustotal.com/gui/file/ce835a2071af25c7b2f9f4c955537699bcb803d709b5085b50e1b52e1623f73f?nocache=1)
+- **Raspberry Pi版:** [61個中0個のアンチウィルスエンジンで検出 :2025/08/10 v1.26.0](https://www.virustotal.com/gui/file/0e191763c5ce817f28301aa7a92c8ff23a8fb7ec12701c3e0ac164a3461ac9e2?nocache=1)
+- **Linux版:** [63個中0個のアンチウィルスエンジンで検出 :2025/08/10 v1.26.0](https://www.virustotal.com/gui/file/49e3b925a5009fbdd12d97808504611b4907659892dd8d77ba1f3d5c5ba316c2?nocache=1)
 
-<img src="doc/virustotal_1.25.0.png" width="600">
+<img src="doc/virustotal_1.26.0.png" width="600">
 
 ### ⚡ 免責事項
 
