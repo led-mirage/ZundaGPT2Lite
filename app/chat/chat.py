@@ -16,13 +16,45 @@ from typing import Callable
 from httpx import ReadTimeout
 from openai import OpenAI
 from openai import AzureOpenAI
-from openai import APITimeoutError, AuthenticationError, NotFoundError
+from openai import APITimeoutError, AuthenticationError, NotFoundError, BadRequestError
 from google import genai
 from google.genai.types import HarmCategory, HarmBlockThreshold, SafetySetting, GenerateContentConfig
 from google.genai import errors as GenaiErrors
 import anthropic
 
 from utility.multi_lang import get_text_resource
+from chat.error import StreamNotAllowedError
+
+
+# メッセージ送信時のイベントリスナー
+class SendMessageListener:
+    def __init__(
+        self,
+        on_recieve_chunk: Callable[[str], None] | None = None,
+        on_recieve_sentence: Callable[[str], None] | None = None,
+        on_recieve_paragraph: Callable[[str], None] | None = None,
+        on_non_streaming_start: Callable[[], None] | None = None,
+        on_non_streaming_end: Callable[[], None] | None = None,
+        on_end_response: Callable[[str], None] | None = None,
+        on_error: Callable[[Exception, str, str | None], None] | None = None,
+    ) -> None:
+        self._on_recieve_chunk = on_recieve_chunk or (lambda _t: None)
+        self._on_recieve_sentence = on_recieve_sentence or (lambda _t: None)
+        self._on_recieve_paragraph = on_recieve_paragraph or (lambda _t: None)
+        self._on_non_streaming_start = on_non_streaming_start or (lambda: None)
+        self._on_non_streaming_end = on_non_streaming_end or (lambda: None)
+        self._end_response = on_end_response or (lambda _t: None)
+        self._on_error = on_error or (lambda _e, _p, _m: None)
+
+    def on_recieve_chunk(self, text: str) -> None: self._on_recieve_chunk(text)
+    def on_recieve_sentence(self, text: str) -> None: self._on_recieve_sentence(text)
+    def on_recieve_paragraph(self, text: str) -> None: self._on_recieve_paragraph(text)
+    def on_non_streaming_start(self) -> None: self._on_non_streaming_start()
+    def on_non_streaming_end(self) -> None: self._on_non_streaming_end()
+    def on_end_response(self, text: str) -> None: self._end_response(text)
+    def on_error(self, exc: Exception, phase: str, meta: str | None=None) -> None:
+        self._on_error(exc, phase, meta)
+
 
 # チャット基底クラス
 class Chat:
@@ -93,11 +125,19 @@ class Chat:
     def send_message(
         self,
         text: str,
-        recieve_chunk: Callable[[str], None],
-        recieve_sentence: Callable[[str], None],
-        recieve_paragraph: Callable[[str], None],
-        end_response: Callable[[str], None],
-        on_error: Callable[[Exception, str, str | None], None]) -> str:
+        listener: SendMessageListener) -> str:
+
+        try:
+            return self.send_message_streaming(text, listener)
+        except StreamNotAllowedError as e:
+            self.messages = self.messages[:-1]
+            return self.send_message_not_streaming(text, listener)
+
+    # メッセージを送信して回答を得る（ストリーミング機能有効）
+    def send_message_streaming(
+        self,
+        text: str,
+        listener: SendMessageListener) -> str:
 
         try:
             self.stop_send_event.clear()
@@ -130,7 +170,7 @@ class Chat:
                     for c in chunk_content:
                         sentence += c
                         paragraph += c
-                        recieve_chunk(c)
+                        listener.on_recieve_chunk(c)
 
                         if c == "`":
                             code_block += 1
@@ -141,36 +181,106 @@ class Chat:
                             code_block_inside = not code_block_inside
 
                         if c in ["。", "？", "！"]:
-                            recieve_sentence(sentence)
+                            listener.on_recieve_sentence(sentence)
                             sentence = ""
 
                         if not code_block_inside and c in ["\n"]:
-                            recieve_paragraph(paragraph)
+                            listener.on_recieve_paragraph(paragraph)
                             paragraph = ""
 
             if sentence != "":
-                recieve_sentence(sentence)
+                listener.on_recieve_sentence(sentence)
             
             if paragraph != "":
-                recieve_paragraph(paragraph)
+                listener.on_recieve_paragraph(paragraph)
 
             if content:
                 self.messages.append({"role": role, "content": content})
                 self.chat_update_time = datetime.now()
-                end_response(content)
+                listener.on_end_response(content)
                 return content
             else:
-                end_response(self.bad_response)
+                listener.on_end_response(self.bad_response)
                 return self.bad_response
+        except BadRequestError as e:
+            if e.status_code == 400 and e.param == "stream":
+                raise StreamNotAllowedError(e, "This model/organization does not allow streaming.")
+            else:
+                listener.on_error(e, "BadRequestError")
         except AuthenticationError as e:
-            on_error(e, "Authentication")
+            listener.on_error(e, "Authentication")
         except (APITimeoutError, ReadTimeout, TimeoutError) as e:
-            on_error(e, "Timeout")
+            listener.on_error(e, "Timeout")
         except NotFoundError as e:
-            on_error(e, "EndPointNotFound")
+            listener.on_error(e, "EndPointNotFound")
         except Exception as e:
-            on_error(e, "Exception")
-        
+            listener.on_error(e, "Exception")
+
+    # メッセージを送信して回答を得る（ストリーミング機能無効）
+    def send_message_not_streaming(
+        self,
+        text: str,
+        listener: SendMessageListener) -> str:
+
+        try:
+            listener.on_non_streaming_start()
+
+            self.messages.append({"role": "user", "content": text})
+            messages = self.get_history()
+            if not self.model.startswith("o1") and not self.model.startswith("o3") and self.instruction:
+                messages.insert(0, {"role": "system", "content": self.instruction})
+
+            completion = self.client.chat.completions.create(model=self.model, messages=messages, timeout=httpx.Timeout(300.0, connect=5.0))
+            content = completion.choices[0].message.content
+            role = completion.choices[0].message.role
+
+            sentence = ""
+            paragraph = ""
+            code_block = 0
+            code_block_inside = False
+
+            for c in content:
+                sentence += c
+                paragraph += c
+                listener.on_recieve_chunk(c)
+
+                if c == "`":
+                    code_block += 1
+                else:
+                    code_block = 0
+                
+                if code_block == 3:
+                    code_block_inside = not code_block_inside
+
+                if c in ["。", "？", "！"]:
+                    listener.on_recieve_sentence(sentence)
+                    sentence = ""
+
+                if not code_block_inside and c in ["\n"]:
+                    listener.on_recieve_paragraph(paragraph)
+                    paragraph = ""
+
+            if content:
+                self.messages.append({"role": role, "content": content})
+                self.chat_update_time = datetime.now()
+                listener.on_end_response(content)
+                return content
+            else:
+                listener.on_end_response(self.bad_response)
+                return self.bad_response
+
+        except AuthenticationError as e:
+            listener.on_error(e, "Authentication")
+        except (APITimeoutError, ReadTimeout, TimeoutError) as e:
+            listener.on_error(e, "Timeout")
+        except NotFoundError as e:
+            listener.on_error(e, "EndPointNotFound")
+        except Exception as e:
+            listener.on_error(e, "Exception")
+        finally:
+            listener.on_non_streaming_end()
+
+
 # OpenAI チャットクラス
 class ChatOpenAI(Chat):
     def __init__(self, model: str, instruction: str, bad_response: str, history_size: int, history_char_limit: int,
@@ -196,6 +306,7 @@ class ChatOpenAI(Chat):
 
         if api_key is None:
             self.client_creation_error = get_text_resource("ERROR_MISSING_OPENAI_API_KEY")
+
 
 # Azure OpenAI チャットクラス
 class ChatAzureOpenAI(Chat):
@@ -230,6 +341,7 @@ class ChatAzureOpenAI(Chat):
             self.client_creation_error = get_text_resource("ERROR_MISSING_AZURE_OPENAI_ENDPOINT")
         if api_key is None:
             self.client_creation_error = get_text_resource("ERROR_MISSING_AZURE_OPENAI_API_KEY")
+
 
 # Google Gemini チャットクラス
 class ChatGemini(Chat):
@@ -268,11 +380,7 @@ class ChatGemini(Chat):
     def send_message(
         self,
         text: str,
-        recieve_chunk: Callable[[str], None],
-        recieve_sentence: Callable[[str], None],
-        recieve_paragraph: Callable[[str], None],
-        end_response: Callable[[str], None],
-        on_error: Callable[[Exception, str], None]) -> str:
+        listener: SendMessageListener) -> str:
 
         try:
             self.stop_send_event.clear()
@@ -309,7 +417,7 @@ class ChatGemini(Chat):
                     for c in chunk_content:
                         sentence += c
                         paragraph += c
-                        recieve_chunk(c)
+                        listener.on_recieve_chunk(c)
 
                         if c == "`":
                             code_block += 1
@@ -320,26 +428,26 @@ class ChatGemini(Chat):
                             code_block_inside = not code_block_inside
 
                         if c in ["。", "？", "！"]:
-                            recieve_sentence(sentence)
+                            listener.on_recieve_sentence(sentence)
                             sentence = ""
 
                         if not code_block_inside and c in ["\n"]:
-                            recieve_paragraph(paragraph)
+                            listener.on_recieve_paragraph(paragraph)
                             paragraph = ""
 
             if sentence != "":
-                recieve_sentence(sentence)
+                listener.on_recieve_sentence(sentence)
 
             if paragraph != "":
-                recieve_paragraph(paragraph)
+                listener.on_recieve_paragraph(paragraph)
 
             if content:
                 self.messages.append({"role": "assistant", "content": content})
                 self.chat_update_time = datetime.now()
-                end_response(content)
+                listener.on_end_response(content)
                 return content
             else:
-                end_response(self.bad_response)
+                listener.on_end_response(self.bad_response)
                 return self.bad_response
         except GenaiErrors.APIError as e:
             """
@@ -354,9 +462,9 @@ class ChatGemini(Chat):
             504 DEADLINE_EXCEEDED
             """
             message = f"{e.code} {e.status} - {e.message}"
-            on_error(e, "APIError", message)
+            listener.on_error(e, "APIError", message)
         except Exception as e:
-            on_error(e, "Exception")
+            listener.on_error(e, "Exception")
 
     # 安全性フィルタの設定値を取得する
     def get_safety_settings(self):
@@ -449,11 +557,7 @@ class ChatClaude(Chat):
     def send_message(
         self,
         text: str,
-        recieve_chunk: Callable[[str], None],
-        recieve_sentence: Callable[[str], None],
-        recieve_paragraph: Callable[[str], None],
-        end_response: Callable[[str], None],
-        on_error: Callable[[Exception, str], None]) -> str:
+        listener: SendMessageListener) -> str:
 
         try:
             self.stop_send_event.clear()
@@ -498,7 +602,7 @@ class ChatClaude(Chat):
                         for c in chunk_content:
                             sentence += c
                             paragraph += c
-                            recieve_chunk(c)
+                            listener.on_recieve_chunk(c)
 
                             if c == "`":
                                 code_block += 1
@@ -509,54 +613,55 @@ class ChatClaude(Chat):
                                 code_block_inside = not code_block_inside
 
                             if c in ["。", "？", "！"]:
-                                recieve_sentence(sentence)
+                                listener.on_recieve_sentence(sentence)
                                 sentence = ""
 
                             if not code_block_inside and c in ["\n"]:
-                                recieve_paragraph(paragraph)
+                                listener.on_recieve_paragraph(paragraph)
                                 paragraph = ""
 
                 if sentence != "":
-                    recieve_sentence(sentence)
+                    listener.on_recieve_sentence(sentence)
 
                 if paragraph != "":
-                    recieve_paragraph(paragraph)
+                    listener.on_recieve_paragraph(paragraph)
 
                 if content:
                     self.messages.append({"role": "assistant", "content": content})
                     self.chat_update_time = datetime.now()
-                    end_response(content)
+                    listener.on_end_response(content)
                     return content
                 else:
-                    end_response(self.bad_response)
+                    listener.on_end_response(self.bad_response)
                     return self.bad_response
         except anthropic.APITimeoutError as e:
-            on_error(e, "Timeout")
+            listener.on_error(e, "Timeout")
         except anthropic.APIConnectionError as e:
-            on_error(e, "APIConnectionError")
+            listener.on_error(e, "APIConnectionError")
         except anthropic.RateLimitError as e:
-            on_error(e, "RateLimit")
+            listener.on_error(e, "RateLimit")
         except anthropic.APIStatusError as e:
             if e.status_code == 400:
-                on_error(e, "APIError", "Invalid Request(400)")
+                listener.on_error(e, "APIError", "Invalid Request(400)")
             elif e.status_code == 401:
-                on_error(e, "Authentication")
+                listener.on_error(e, "Authentication")
             elif e.status_code == 403:
-                on_error(e, "APIError", "Permission Denied(403)")
+                listener.on_error(e, "APIError", "Permission Denied(403)")
             elif e.status_code == 404:
-                on_error(e, "APIError", "Not Found(404)")
+                listener.on_error(e, "APIError", "Not Found(404)")
             elif e.status_code == 413:
-                on_error(e, "APIError", "Request too large(413)")
+                listener.on_error(e, "APIError", "Request too large(413)")
             elif e.status_code == 422:
-                on_error(e, "APIError", "UnprocessableEntity(422)")
+                listener.on_error(e, "APIError", "UnprocessableEntity(422)")
             elif e.status_code == 429:
-                on_error(e, "APIError", "RateLimit")
+                listener.on_error(e, "APIError", "RateLimit")
             elif e.status_code == 529:
-                on_error(e, "APIError", "Overloaded(529)")
+                listener.on_error(e, "APIError", "Overloaded(529)")
             else:
-                on_error(e, "APIError", f"Internal Server Error({e.status_code})")
+                listener.on_error(e, "APIError", f"Internal Server Error({e.status_code})")
         except Exception as e:
-            on_error(e, "Exception")
+            listener.on_error(e, "Exception")
+
 
 # チャットファクトリー
 class ChatFactory:

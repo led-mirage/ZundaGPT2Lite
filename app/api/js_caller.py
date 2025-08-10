@@ -76,6 +76,12 @@ class JSCaller:
     def endReplayMessageBlock(self, content: str):
         self.window.evaluate_js(f"endReplayMessageBlock('{escape_js_string(content)}')")
 
+    def showProgressModal(self, message: str):
+        self.window.evaluate_js(f"showProgressModal('{escape_js_string(message)}')")
+    
+    def hideProgressModal(self):
+        self.window.evaluate_js("hideProgressModal()")
+
     # --------------------------------------------------------------------------
     # ファイル横断検索画面
     # --------------------------------------------------------------------------
