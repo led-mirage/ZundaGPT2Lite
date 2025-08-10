@@ -11,6 +11,10 @@ Copyright (c) 2024-2025 led-mirage
 
 [English](Readme.en.md)
 
+## 💎 最新情報
+
+**v1.26.0でOpenAI GPT-5ファミリに対応したのだ**✨
+
 ## 💎 アプリの紹介と導入方法
 
 APIを使ってAIとチャットするアプリなのだ。   
@@ -57,8 +61,12 @@ Raspberry Pi、Linuxへの導入に関しても[Zennの記事](https://zenn.dev/
 
 動作確認済みのモデルは以下の通りなのだ。
 
-<details><summary>OpenAI（2025/04/27現在）</summary>
+<details><summary>OpenAI（2025/08/10現在）</summary>
 
+- GPT-5 （モデル名：gpt-5）
+- GPT-5 mini （モデル名：gpt-5-mini）
+- GPT-5 nano （モデル名：gpt-5-nano）
+- GPT-5 Chat （モデル名：gpt-5-chat-latest）
 - GPT-4.1 （モデル名：gpt-4.1）
 - GPT-4.1 mini （モデル名：gpt-4.1-mini） 無料枠あり
 - GPT-4.1 nano （モデル名：gpt-4.1-nano） 無料枠あり
@@ -69,6 +77,7 @@ Raspberry Pi、Linuxへの導入に関しても[Zennの記事](https://zenn.dev/
 - GPT-4o Search Preview （モデル名：gpt-4o-search-preview）
 - GPT-4o mini Search Preview （モデル名：gpt-4o-mini-search-preview） 無料枠あり
 - o4-mini （モデル名：o4-mini）
+- o3 （モデル名：o3）
 - o3-mini （モデル名：o3-mini）
 - o1 （モデル名：o1）
 - o1-mini （モデル名：o1-mini）
@@ -174,7 +183,7 @@ Windowsの場合は、Windowsの検索窓で「環境変数を編集」で検索
 
 以下のリンクから ZundaGPT2Lite.ZIP をダウンロードして、作成したフォルダに展開するのだ。
 
-https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.25.0
+https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.26.0
 
 #### 3. 実行
 
@@ -278,11 +287,11 @@ start pythonw app\main.py
 
 VirusTotalでのチェック結果はこちらなのだ。
 
-- **Windows版:** [72個中2個のアンチウィルスエンジンで検出 :2025/08/04 v1.25.0](https://www.virustotal.com/gui/file/8570ed1c01b50bf44b38bcd536d78a26b6dc7884d77b0feeca634aa17e0c3e67?nocache=1)
-- **Raspberry Pi版:** [62個中0個のアンチウィルスエンジンで検出 :2025/08/04 v1.25.0](https://www.virustotal.com/gui/file/efed0e5769a6f09ab4cdb9b05eb0e809d66353a114f6fbb7222a1b8c0c7bc628?nocache=1)
-- **Linux版:** [63個中0個のアンチウィルスエンジンで検出 :2025/08/04 v1.25.0](https://www.virustotal.com/gui/file/ddca9a5fa3642b38116eee2c5a844e36319fd24339f399f3f031b30af77698e0?nocache=1)
+- **Windows版:** [72個中2個のアンチウィルスエンジンで検出 :2025/08/10 v1.26.0](https://www.virustotal.com/gui/file/ce835a2071af25c7b2f9f4c955537699bcb803d709b5085b50e1b52e1623f73f?nocache=1)
+- **Raspberry Pi版:** [61個中0個のアンチウィルスエンジンで検出 :2025/08/10 v1.26.0](https://www.virustotal.com/gui/file/0e191763c5ce817f28301aa7a92c8ff23a8fb7ec12701c3e0ac164a3461ac9e2?nocache=1)
+- **Linux版:** [63個中0個のアンチウィルスエンジンで検出 :2025/08/10 v1.26.0](https://www.virustotal.com/gui/file/49e3b925a5009fbdd12d97808504611b4907659892dd8d77ba1f3d5c5ba316c2?nocache=1)
 
-<img src="doc/virustotal_1.25.0.png" width="600">
+<img src="doc/virustotal_1.26.0.png" width="600">
 
 ### ⚡ 免責事項
 
@@ -299,7 +308,7 @@ VirusTotalでのチェック結果はこちらなのだ。
 ホームページ： https://github.com/r0x0r/pywebview  
 ライセンス：BSD-3-Clause license
 
-### 🔖 openai 1.91.0
+### 🔖 openai 1.99.6
 
 ホームページ： https://github.com/openai/openai-python  
 ライセンス：Apache License 2.0
@@ -380,6 +389,13 @@ VirusTotalでのチェック結果はこちらなのだ。
 ## 💎 バージョン履歴
 
 <details><summary>過去のバージョンアップの軌跡はこちらなのだ</summary>
+
+### 1.26.0 (2025/08/10)
+
+- GPT-5シリーズに対応
+  - gpt-5、gpt-5-miniモデルでストリーミング機能を使うにはOpenAIの`Verify Organization`必須となった。
+  - そのため、組織認証をしていない場合は、ストリーミング機能を使わずに通信するようフォールバック処理を追加。
+- openaiライブラリを1.99.6に更新
 
 ### 1.25.0 (2025/08/04)
 

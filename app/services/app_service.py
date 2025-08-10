@@ -22,7 +22,7 @@ class AppService:
             "fontFamily": self.app_config.system["font_family"],
             "fontSize": self.app_config.system["font_size"],
             "language": self.app_config.system["language"],
-            "copyright": COPYRIGHT,
+            "copyright": f"Unlimited Code Works / {COPYRIGHT}",
             "theme": self.app_config.system["theme"],
         }
 

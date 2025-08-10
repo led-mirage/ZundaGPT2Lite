@@ -20,7 +20,7 @@ from chat_log import ChatLog
 from const import APP_NAME, APP_VERSION
 from utility.utils import get_location, get_exception_name
 from utility.multi_lang import set_current_language, get_text_resource
-from chat.chat import ChatFactory, Chat
+from chat.chat import ChatFactory, Chat, SendMessageListener
 
 
 log_settings = get_log_settings()
@@ -171,21 +171,29 @@ class IndexService:
         self.state.last_send_message = text
         self.state.chat.send_message(
             text,
-            self.on_recieve_chunk,
-            self.on_recieve_sentence,
-            self.on_recieve_paragraph,
-            self.on_end_response,
-            self.on_chat_error)
+            listener=SendMessageListener(
+                self.on_recieve_chunk,
+                self.on_recieve_sentence,
+                self.on_recieve_paragraph,
+                self.on_non_streaming_start,
+                self.on_non_streaming_end,
+                self.on_end_response,
+                self.on_chat_error)
+        )
 
     # メッセージ再送信イベントハンドラ（UI）
     def retry_send_message_to_chatgpt(self):
         self.state.chat.send_message(
             self.state.last_send_message,
-            self.on_recieve_chunk,
-            self.on_recieve_sentence,
-            self.on_recieve_paragraph,
-            self.on_end_response,
-            self.on_chat_error)
+            listener=SendMessageListener(
+                self.on_recieve_chunk,
+                self.on_recieve_sentence,
+                self.on_recieve_paragraph,
+                self.on_non_streaming_start,
+                self.on_non_streaming_end,
+                self.on_end_response,
+                self.on_chat_error)
+        )
 
     # メッセージ送信中止イベントハンドラ（UI）
     def stop_send_message_to_chatgpt(self):
@@ -272,6 +280,14 @@ class IndexService:
     # 段落受信イベントハンドラ（Chat）
     def on_recieve_paragraph(self, paragraph: str):
         self.window.js.parsedParagraph(paragraph)
+
+    # 非ストリーミング開始イベントハンドラ（Chat）
+    def on_non_streaming_start(self):
+        self.window.js.showProgressModal(get_text_resource("GENERATING_RESPONSE"))
+
+    # 非ストリーミング終了イベントハンドラ（Chat）
+    def on_non_streaming_end(self):
+        self.window.js.hideProgressModal()
 
     # レスポンス受信完了イベントハンドラ（Chat）
     def on_end_response(self, content: str):

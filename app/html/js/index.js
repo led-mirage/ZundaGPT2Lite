@@ -1127,3 +1127,5 @@ window.handleChatTimeoutException = handleChatTimeoutException;
 window.setChatMessages = setChatMessages;
 window.moveToMessageAt = moveToMessageAt;
 window.newChat = newChat;
+window.showProgressModal = showProgressModal;
+window.hideProgressModal = hideProgressModal;
