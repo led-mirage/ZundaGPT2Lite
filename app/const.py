@@ -8,4 +8,4 @@
 
 APP_NAME = "ZundaGPT2 Lite"
 APP_VERSION = "1.26.0"
-COPYRIGHT = "Copyright 2024-2025 led-mirage"
+COPYRIGHT = "© 2024-2025 led-mirage"
