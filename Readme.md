@@ -390,6 +390,10 @@ VirusTotalでのチェック結果はこちらなのだ。
 
 <details><summary>過去のバージョンアップの軌跡はこちらなのだ</summary>
 
+### 1.26.1 (2025/08/11)
+
+- Chatクラスのsend_message_not_streaming関数をZundaGPT2と合わせるように修正
+
 ### 1.26.0 (2025/08/10)
 
 - GPT-5シリーズに対応
