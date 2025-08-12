@@ -223,6 +223,7 @@ class Chat:
         listener: SendMessageListener) -> str:
 
         try:
+            no_exception = False
             listener.on_non_streaming_start()
 
             self.messages.append({"role": "user", "content": text})
@@ -233,6 +234,9 @@ class Chat:
             completion = self.client.chat.completions.create(model=self.model, messages=messages, timeout=httpx.Timeout(300.0, connect=5.0))
             content = completion.choices[0].message.content
             role = completion.choices[0].message.role
+
+            listener.on_non_streaming_end()
+            no_exception = True
 
             sentence = ""
             paragraph = ""
@@ -268,7 +272,7 @@ class Chat:
             else:
                 listener.on_end_response(self.bad_response)
                 return self.bad_response
-
+            
         except AuthenticationError as e:
             listener.on_error(e, "Authentication")
         except (APITimeoutError, ReadTimeout, TimeoutError) as e:
@@ -278,7 +282,8 @@ class Chat:
         except Exception as e:
             listener.on_error(e, "Exception")
         finally:
-            listener.on_non_streaming_end()
+            if not no_exception:
+                listener.on_non_streaming_end()
 
 
 # OpenAI チャットクラス

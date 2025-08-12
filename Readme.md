@@ -183,7 +183,7 @@ Windowsの場合は、Windowsの検索窓で「環境変数を編集」で検索
 
 以下のリンクから ZundaGPT2Lite.ZIP をダウンロードして、作成したフォルダに展開するのだ。
 
-https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.26.0
+https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.26.1
 
 #### 3. 実行
 
@@ -287,11 +287,11 @@ start pythonw app\main.py
 
 VirusTotalでのチェック結果はこちらなのだ。
 
-- **Windows版:** [72個中2個のアンチウィルスエンジンで検出 :2025/08/10 v1.26.0](https://www.virustotal.com/gui/file/ce835a2071af25c7b2f9f4c955537699bcb803d709b5085b50e1b52e1623f73f?nocache=1)
-- **Raspberry Pi版:** [61個中0個のアンチウィルスエンジンで検出 :2025/08/10 v1.26.0](https://www.virustotal.com/gui/file/0e191763c5ce817f28301aa7a92c8ff23a8fb7ec12701c3e0ac164a3461ac9e2?nocache=1)
-- **Linux版:** [63個中0個のアンチウィルスエンジンで検出 :2025/08/10 v1.26.0](https://www.virustotal.com/gui/file/49e3b925a5009fbdd12d97808504611b4907659892dd8d77ba1f3d5c5ba316c2?nocache=1)
+- **Windows版:** [72個中2個のアンチウィルスエンジンで検出 :2025/08/12 v1.26.1](https://www.virustotal.com/gui/file/4794cce039b5bad3c84b26d5f606cd779fb2b2486d0f0d859ebf6eb47ef5bffc?nocache=1)
+- **Raspberry Pi版:** [61個中0個のアンチウィルスエンジンで検出 :2025/08/12 v1.26.1](https://www.virustotal.com/gui/file/9f0547605b3dbb91698de8b907c8e52a41909c9f7470f81c191ebb9663c0d565?nocache=1)
+- **Linux版:** [63個中0個のアンチウィルスエンジンで検出 :2025/08/12 v1.26.1](https://www.virustotal.com/gui/file/38337d0288f25be64818babefe0675dbddeabaf9a01fe7f174646618ef8b792d?nocache=1)
 
-<img src="doc/virustotal_1.26.0.png" width="600">
+<img src="doc/virustotal_1.26.1.png" width="600">
 
 ### ⚡ 免責事項
 
@@ -389,6 +389,10 @@ VirusTotalでのチェック結果はこちらなのだ。
 ## 💎 バージョン履歴
 
 <details><summary>過去のバージョンアップの軌跡はこちらなのだ</summary>
+
+### 1.26.1 (2025/08/11)
+
+- Chatクラスのsend_message_not_streaming関数をZundaGPT2と合わせるように修正
 
 ### 1.26.0 (2025/08/10)
 
