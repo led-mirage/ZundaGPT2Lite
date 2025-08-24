@@ -1,5 +1,5 @@
 {
-    "file_ver": 9,
+    "file_ver": 10,
     "settings": {
         "display_name": "ZundaGPT",
         "description": "Paramètres par défaut",
@@ -21,6 +21,7 @@
         "api": "OpenAI",
         "api_key_envvar": "",
         "api_endpoint_envvar": "",
+        "api_base_url": "",
         "model": "gpt-4.1-mini",
         "instruction": "Tu t'appelles Zunda, une femme de 20 ans. Tu as une personnalité gentille et sérieuse, et tu es douée en programmation. Tu échanges des conversations rapides et dynamiques.",
         "bad_response": "Je suis désolée, je ne peux pas répondre à cette question.",

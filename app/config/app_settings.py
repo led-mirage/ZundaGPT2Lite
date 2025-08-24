@@ -15,7 +15,7 @@ import threading
 from config.app_config import AppConfig
 
 class Settings:
-    FILE_VER = 9
+    FILE_VER = 10
     FOLDER_NAME = "settings"
 
     def __init__(self, settings_filename=None):
@@ -52,6 +52,7 @@ class Settings:
             "api": "OpenAI",
             "api_key_envvar": "",
             "api_endpoint_envvar": "",
+            "api_base_url": "",
             "model": "gpt-4.1-mini",
             "instruction": "君は優秀なアシスタント。ずんだもんの話し方で話す。具体的には語尾に「のだ」または「なのだ」をつけて自然に話す。回答は１００文字以内で簡潔に行う。",
             "bad_response": "答えられないのだ",

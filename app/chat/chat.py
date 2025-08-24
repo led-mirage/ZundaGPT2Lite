@@ -289,7 +289,7 @@ class Chat:
 # OpenAI チャットクラス
 class ChatOpenAI(Chat):
     def __init__(self, model: str, instruction: str, bad_response: str, history_size: int, history_char_limit: int,
-                 api_timeout: float, api_key_envvar: str=None):
+                 api_timeout: float, api_key_envvar: str=None, api_base_url: str=None):
 
         if api_key_envvar:
             api_key = os.environ.get(api_key_envvar)
@@ -298,7 +298,8 @@ class ChatOpenAI(Chat):
 
         client = None
         if api_key:
-            client = OpenAI(api_key=api_key, timeout=httpx.Timeout(api_timeout, connect=5.0))
+            base_url = api_base_url if api_base_url else None
+            client = OpenAI(base_url=base_url, api_key=api_key, timeout=httpx.Timeout(api_timeout, connect=5.0))
 
         super().__init__(
             client = client,
@@ -673,9 +674,9 @@ class ChatFactory:
     # api_idに基づいてChatオブジェクトを作成する
     @staticmethod
     def create(api_id: str, model: str, instruction: str, bad_response: str, history_size: int, history_char_limit: int, api_timeout: float,
-               api_key_envvar: str=None, api_key_endpoint: str=None, gemini_option: dict=None, claude_options: dict=None) -> Chat:
+               api_key_envvar: str=None, api_key_endpoint: str=None, api_base_url: str=None, gemini_option: dict=None, claude_options: dict=None) -> Chat:
         if api_id == "OpenAI":
-            return ChatOpenAI(model, instruction, bad_response, history_size, history_char_limit, api_timeout, api_key_envvar)
+            return ChatOpenAI(model, instruction, bad_response, history_size, history_char_limit, api_timeout, api_key_envvar, api_base_url)
         elif api_id == "AzureOpenAI":
             return ChatAzureOpenAI(model, instruction, bad_response, history_size, history_char_limit, api_timeout, api_key_envvar, api_key_endpoint)
         elif api_id == "Gemini":

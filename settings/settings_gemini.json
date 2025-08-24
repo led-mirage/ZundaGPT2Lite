@@ -1,5 +1,5 @@
 {
-    "file_ver": 9,
+    "file_ver": 10,
     "settings": {
         "display_name": "ZundaGPT Gemini",
         "description": "Google Gemini用設定",
@@ -21,6 +21,7 @@
         "api": "Gemini",
         "api_key_envvar": "",
         "api_endpoint_envvar": "",
+        "api_base_url": "",
         "model": "gemini-2.0-flash",
         "instruction": "君の名前はずんだもん。語尾に「のだ」または「なのだ」をつけて回答して。難しい質問には長い回答でもいいけど、簡単な質問には簡潔に回答して。",
         "bad_response": "答えられないのだ",

@@ -22,6 +22,7 @@ One of its key features is the ability to fully customize the AI characters to y
 Main features: ✨
 
 - Supports the three major AI services: OpenAI, Google Gemini, and Anthropic Claude
+- Supports OpenAI API-compatible local LLMs
 - Character customization
 - Markdown and TeX-style math formula support
 - Chat log management
