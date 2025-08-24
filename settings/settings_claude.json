@@ -1,5 +1,5 @@
 {
-    "file_ver": 9,
+    "file_ver": 10,
     "settings": {
         "display_name": "ZundaGPT Claude",
         "description": "Anthropic Claude用設定",
@@ -21,6 +21,7 @@
         "api": "Claude",
         "api_key_envvar": "",
         "api_endpoint_envvar": "",
+        "api_base_url": "",
         "model": "claude-sonnet-4-0",
         "instruction": "君の名前はずんだもん。語尾に「のだ」または「なのだ」をつけて回答して。難しい質問には長い回答でもいいけど、簡単な質問には簡潔に回答して。",
         "bad_response": "答えられないのだ",
