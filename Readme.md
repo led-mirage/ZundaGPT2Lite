@@ -13,7 +13,9 @@ Copyright (c) 2024-2025 led-mirage
 
 ## 💎 最新情報
 
-**v1.26.0でOpenAI GPT-5ファミリに対応したのだ**✨
+**v1.27.0でローカルLLMに対応したのだ**✨
+
+llama.cppのようなOpenAI互換APIで動作するローカルLLMに対応したのだよ！
 
 ## 💎 アプリの紹介と導入方法
 
@@ -25,12 +27,13 @@ ZundaGPT2 Liteは[ZundaGPT2](https://github.com/led-mirage/ZundaGPT2)から音�
 このアプリのアピールポイントは次のとおりなのだ✨
 
 - ３大AIサービス（OpenAI、Google Gemini、Anthropic Claude）に対応
-- キャラクターカスタマイズ機能
+- ローカルLLM（OpenAI API互換）に対応✨
+- 柔軟なキャラクターカスタマイズ機能
 - マークダウン表示、TeX形式の数式表示機能
 - 過去ログ管理機能
 - 印刷機能
-- Raspberry Pi対応✨（X11/LXDE、日本語入力はIBus限定、印刷機能は非対応）
-- Linux Mint対応✨（Cinnamon/x64、日本語入力はIBus限定、印刷機能は非対応）
+- Raspberry Pi対応（X11/LXDE、日本語入力はIBus限定、印刷機能は非対応）
+- Linux Mint対応（Cinnamon/x64、日本語入力はIBus限定、印刷機能は非対応）
 - ダークモード対応✨
 
 アプリの紹介と、もっとも手軽な導入方法を[Zennの記事](https://zenn.dev/ledmirage/articles/7650f36d3a784a)にしたので、そちらも参考にしてほしいのだ✨  
@@ -389,6 +392,11 @@ VirusTotalでのチェック結果はこちらなのだ。
 ## 💎 バージョン履歴
 
 <details><summary>過去のバージョンアップの軌跡はこちらなのだ</summary>
+
+### 1.27.0 (2025/08/23)
+
+- ローカルLLM（llama.cppなどのOpenAI互換API）に対応
+  - settings.jsonのapi_base_urlにローカルLLMのURLを指定することでローカルLLMを使用可能に。
 
 ### 1.26.1 (2025/08/11)
 

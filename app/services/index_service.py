@@ -66,6 +66,7 @@ class IndexService:
             self.app_config.system["chat_api_timeout"],
             self.state.settings.chat["api_key_envvar"],
             self.state.settings.chat["api_endpoint_envvar"],
+            self.state.settings.chat["api_base_url"],
             self.app_config.gemini,
             self.state.settings.claude_options
         )
