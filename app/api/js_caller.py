@@ -6,6 +6,10 @@
 # このソースコードは MITライセンス の下でライセンスされています。
 # ライセンスの詳細については、このプロジェクトのLICENSEファイルを参照してください。
 
+import sys
+import json
+from pathlib import Path
+
 from app_window import AppWindow
 from utility.utils import escape_js_string
 
@@ -13,6 +17,34 @@ from utility.utils import escape_js_string
 class JSCaller:
     def __init__(self, window: AppWindow):
         self.window = window
+
+    # --------------------------------------------------------------------------
+    # 共通
+    # --------------------------------------------------------------------------
+
+    def inject_custom_css(self):
+        def get_custom_css_path():
+            custom_css_path = Path.cwd()
+            if getattr(sys, "frozen", False):
+                base = Path(sys.executable).parent
+                custom_css_path = base.joinpath("css", "custom.css")
+            else:
+                base = Path.cwd()
+                custom_css_path = base.joinpath("app", "html", "css", "custom.css")
+            return custom_css_path
+        
+        custom_css_path = get_custom_css_path()
+        if custom_css_path.exists():
+            css = custom_css_path.read_text(encoding="utf-8")
+            # JSONエンコードしてJS文字列に安全に埋め込む
+            css_js = json.dumps(css)
+            self.window.evaluate_js(f"""
+                (function(){{
+                    var el = document.createElement('style');
+                    el.textContent = {css_js};
+                    document.head.appendChild(el);
+                }})();
+            """)
 
     # --------------------------------------------------------------------------
     # メイン画面

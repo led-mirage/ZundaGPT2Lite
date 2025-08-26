@@ -35,6 +35,8 @@ class IndexService:
 
     # ページロードイベントハンドラ（UI）
     def page_loaded(self):
+        self.window.js.inject_custom_css()
+
         lang = self.app_config.system["language"]
         set_current_language(lang)
 
