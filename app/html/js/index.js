@@ -510,6 +510,9 @@ function addChatMessage(role, speakerName, color, messageText) {
             hljs.highlightElement(block);
         });
         addTargetBlank(messageElement);
+        if (messageText === "") {
+            messageElement.style.display = "none";
+        }
     }
     else {
         messageElement.classList.add("mathjax_ignore");
@@ -923,6 +926,12 @@ function startResponse() {
 // Pythonから呼び出される関数
 // AIからの応答（チャンク）を表示する
 function addChunk(text) {
+    const messageTextElements = document.querySelectorAll("#chat-messages .message-text");
+    const lastMessageTextElement = messageTextElements[messageTextElements.length - 1];
+    if(lastMessageTextElement) {
+        lastMessageTextElement.style.display = "block";
+    }
+
     const elms = document.querySelectorAll('[chunk-area="true"]');
     const chunkArea = elms[elms.length - 1];
     if (chunkArea) {
@@ -976,6 +985,7 @@ function endResponse(content) {
     const messageTextElements = document.querySelectorAll("#chat-messages .message-text");
     const lastMessageTextElement = messageTextElements[messageTextElements.length - 1];
     if(lastMessageTextElement) {
+        lastMessageTextElement.style.display = "block";
         let html = convertTextToHtmlWithMarkdown(content);
         html = escapeTex(html);
         html = adjustURL(html);
