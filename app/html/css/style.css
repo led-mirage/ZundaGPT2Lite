@@ -58,6 +58,11 @@
     --modal-bgcolor: #fefefe;
     --modal-color: unset;
     --modal-border: 1px solid #888;
+    /* トースト */
+    --toast-bgcolor: rgba(0, 0, 0, 0.8);
+    --toast-color: white;
+    --code-toast-bgcolor: #333;
+    --code-toast-color: silver;
     /* フッタ部 */
     --footer-bgcolor: #fff;
     --footer-color: silver;
@@ -85,9 +90,9 @@
     --dark-message-text-bgcolor: unset; /*OK*/
     --dark-message-text-color: unset; /*OK*/
     --dark-message-text-border-radius: unset; /*OK*/
-    --dark-message-text-em-color: unset;
+    --dark-message-text-em-color: #64abe5;
     /* コードブロック */
-    --dark-code-bgcolor: #232946; /*OK*/
+    --dark-code-bgcolor: #497dc0; /*OK*/
     --dark-code-color: #f5f7ff; /*OK*/
     --dark-code-border: 1.5px solid #4e5575; /*OK*/
     --dark-code-border-radius: 10px; /*OK*/
@@ -121,6 +126,11 @@
     --dark-modal-bgcolor: #444; /*OK*/
     --dark-modal-color: #eee; /*OK*/
     --dark-modal-border: 1px solid #666; /*OK*/
+    /* トースト */
+    --dark-toast-bgcolor: rgba(255,255, 255, 0.8); /*OK*/
+    --dark-toast-color: black; /*OK*/
+    --drak-code-toast-bgcolor: silver; /*OK*/
+    --dark-code-toast-color: #333; /*OK*/
     /* フッタ部 */
     --dark-footer-bgcolor: #202224; /*OK*/
     --dark-footer-color: #c0c0c0; /*OK*/
@@ -418,6 +428,13 @@ mark {
     width: 2.5rem;
     height: 2.5rem;
 }
+pre {
+    position: relative;
+    padding: 0%;
+    background-color: #f6f8fa;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+}
 .copy-button {
     position: absolute;
     top: 8px;
@@ -436,8 +453,8 @@ mark {
 .code-toast {
     visibility: hidden;
     min-width: 100px;
-    background-color: #333;
-    color: silver;
+    background-color: var(--code-toast-bgcolor);
+    color: var(--code-toast-color);
     text-align: center;
     border-radius: 3px;
     padding: 5px;
@@ -482,9 +499,9 @@ mark {
 /* トースト */
 .toast {
     position: fixed;
-    background-color: rgba(0, 0, 0, 0.8);
-    color: white;
-    padding: 5px 10px;
+    background-color: var(--toast-bgcolor);
+    color: var(--toast-color);
+    padding: 10px 20px;
     border-radius: 4px;
     font-size: 14px;
     white-space: nowrap;

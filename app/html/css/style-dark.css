@@ -154,6 +154,16 @@ body.dark-mode .flowing-text {
     mix-blend-mode: lighten;
 }
 
+body.dark-mode .toast {
+    background-color: var(--dark-toast-bgcolor);
+    color: var(--dark-toast-color);
+}
+
+body.dark-mode .code-toast {
+    background-color: var(--drak-code-toast-bgcolor);
+    color: var(--dark-code-toast-color);
+}
+
 body.dark-mode table {
     background-color: #222 !important;
     color: #eaeaea !important;
