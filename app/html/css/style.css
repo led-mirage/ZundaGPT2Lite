@@ -1,3 +1,140 @@
+:root {
+    /****************************************
+     * light mode
+     ****************************************/
+    /* コンテナ */
+    --bgcolor: transparent;
+    --background-image: none;
+    --background-image-opacity: 1.0;
+    /* ヘッダ部 */
+    --header-bgcolor: transparent;
+    --header-color: unset;
+    /* コンテンツブロック */
+    --chat-messages-bgcolor: #f5f5f5;
+    --chat-messages-color: unset;
+    /* WelCome */
+    --welcome-title-color: unset;
+    --welcome-message-color: dimgray;
+    /* キャラ名 */
+    --speaker-name-text-shadow: none;
+    --speaker-name-glowing-text-shadow: 0 0 2px #fff, 0 0 4px #fff, 0 0 6px #ffa, 0 0 8px #ff6, 0 0 10px;
+    /* メッセージ表示ブロック */
+    --message-text-bgcolor: transparent;
+    --message-text-color: unset;
+    --message-text-border-radius: 0px;
+    --message-text-em-color: steelblue;
+    /* コードブロック */
+    --code-bgcolor: #1c1b1b;
+    --code-color: #fff;
+    --code-border: 1.5px solid #4e5575;
+    --code-border-radius: 10px;
+    --code-box-shadow: 0 0 10px 2px #14162b55;
+    --inline-code-bgcolor: lightblue;
+    --inline-code-color: unset;
+    /* プロンプト入力ブロック */
+    --chat-input-bgcolor: #fff;
+    --chat-input-textarea-bgcolor: white;
+    --chat-input-textarea-color: unset;
+    --chat-input-textarea-border: 1px solid #ccc;
+    --chat-input-textarea-border-radius: 1rem;
+    --chat-input-textarea-focus-outline: 2px solid #555;
+    --chat-input-button-bgimage: linear-gradient(to bottom, #007bff, #0056b3);
+    --chat-input-button-color: white;
+    --chat-input-button-disabled-bgimage: linear-gradient(to bottom, silver, gray);
+    /* 各種ボタン */
+    --tool-button-bgcolor: #f0f0f0;
+    --tool-button-color: #333;
+    --tool-button-border: 1px solid #ccc;
+    --tool-button-hover-bgcolor: #e0e0e0;
+    --tool-button-hover-color: #000;
+    /* コンテキストメニュー */
+    --contextmenu-bgcolor: whitesmoke;
+    --contextmenu-color: unset;
+    --contextmenu-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    --contextmenu-button-bgcolor: transparent;
+    --contextmenu-button-color: unset;
+    --contextmenu-button-hover-bgcolor: #cee;
+    /* モーダルダイアログ */
+    --modal-bgcolor: #fefefe;
+    --modal-color: unset;
+    --modal-border: 1px solid #888;
+    /* トースト */
+    --toast-bgcolor: rgba(0, 0, 0, 0.8);
+    --toast-color: white;
+    --code-toast-bgcolor: #333;
+    --code-toast-color: silver;
+    /* フッタ部 */
+    --footer-bgcolor: #fff;
+    --footer-color: silver;
+
+    /****************************************
+     * dark mode
+     ****************************************/
+    /* コンテナ */
+    --dark-bgcolor: #181a1b; /*OK*/
+    --dark-background-image: none;
+    --dark-background-image-opacity: 1.0;
+    /* ヘッダ部 */
+    --dark-header-bgcolor: #202224; /*OK*/
+    --dark-header-color: #c0c0c0; /*OK*/
+    /* コンテンツブロック */
+    --dark-chat-messages-bgcolor: #23262b; /*OK*/
+    --dark-chat-messages-color: #eaeaea; /*OK*/
+    /* WelCome */
+    --dark-welcome-title-color: unset; /*OK*/
+    --dark-welcome-message-color: dimgray; /*OK*/
+    /* キャラ名 */
+    --dark-speaker-name-text-shadow: 0 0 2px #71d4f7, 0 0 10px #00eaff77, 0 0 18px #00ffd044, 0 0 26px #0092c633; /*OK*/
+    --dark-speaker-name-glowing-text-shadow: 0 0 4px #71d4f7, 0 0 10px #00eaff, 0 0 18px #00ffd0, 0 0 26px #0092c6; /*OK*/
+    /* メッセージ表示ブロック */
+    --dark-message-text-bgcolor: unset; /*OK*/
+    --dark-message-text-color: unset; /*OK*/
+    --dark-message-text-border-radius: unset; /*OK*/
+    --dark-message-text-em-color: #64abe5;
+    /* コードブロック */
+    --dark-code-bgcolor: #497dc0; /*OK*/
+    --dark-code-color: #f5f7ff; /*OK*/
+    --dark-code-border: 1.5px solid #4e5575; /*OK*/
+    --dark-code-border-radius: 10px; /*OK*/
+    --dark-code-box-shadow: 0 0 10px 2px #14162b55; /*OK*/
+    --dark-inline-code-bgcolor: #1b2b44; /*OK*/
+    --dark-inline-code-color: #9de0ff; /*OK*/
+    /* プロンプト入力ブロック */
+    --dark-chat-input-bgcolor: #222; /*OK*/
+    --dark-chat-input-textarea-bgcolor: #2a2c31; /*OK*/
+    --dark-chat-input-textarea-color: #eaeaea; /*OK*/
+    --dark-chat-input-textarea-border: 1px solid #444; /*OK*/
+    --dark-chat-input-textarea-border-radius: 1rem; /*OK*/
+    --dark-chat-input-textarea-focus-outline: 2px solid #555; /*OK*/
+    --dark-chat-input-button-bgimage: linear-gradient(to bottom, #2c61b6, #114281); /*OK*/
+    --dark-chat-input-button-color: white; /*OK*/
+    --dark-chat-input-button-disabled-bgimage: linear-gradient(to bottom, #444, #222); /*OK*/
+    /* 各種ボタン */
+    --dark-tool-button-bgcolor: #25272c; /*OK*/
+    --dark-tool-button-color: #eaeaea; /*OK*/
+    --dark-tool-button-border: 1px solid #444; /*OK*/
+    --dark-tool-button-hover-bgcolor: #333; /*OK*/
+    --dark-tool-button-hover-color: #fff; /*OK*/
+    /* コンテキストメニュー */
+    --dark-contextmenu-bgcolor: #23262b; /*OK*/
+    --dark-contextmenu-color: #eaeaea; /*OK*/
+    --dark-contextmenu-box-shadow: 0 0 8px rgba(255, 255, 255, 0.5); /*OK*/
+    --dark-contextmenu-button-bgcolor: unset; /*OK*/
+    --dark-contextmenu-button-color: #eaeaea; /*OK*/
+    --dark-contextmenu-button-hover-bgcolor: #666; /*OK*/
+    /* モーダルダイアログ */
+    --dark-modal-bgcolor: #444; /*OK*/
+    --dark-modal-color: #eee; /*OK*/
+    --dark-modal-border: 1px solid #666; /*OK*/
+    /* トースト */
+    --dark-toast-bgcolor: rgba(255,255, 255, 0.8); /*OK*/
+    --dark-toast-color: black; /*OK*/
+    --drak-code-toast-bgcolor: silver; /*OK*/
+    --dark-code-toast-color: #333; /*OK*/
+    /* フッタ部 */
+    --dark-footer-bgcolor: #202224; /*OK*/
+    --dark-footer-color: #c0c0c0; /*OK*/
+}
 body, html {
     height: 100%;
     margin: 0;
@@ -15,6 +152,8 @@ body {
     font-size: 1.25rem;
     font-weight: bold;
     padding: 10px;
+    background-color: var(--header-bgcolor);
+    color: var(--header-color);
 }
 .header nav ul {
     list-style-type: none;
@@ -26,9 +165,9 @@ body {
     margin-right: 10px; /* コマンド間の隙間 */
 }
 .header button {
-    background-color: #f0f0f0; /* 背景色を薄い灰色にする */
-    color: #333; /* テキスト色を濃い灰色にする */
-    border: 1px solid #ccc; /* 枠線を薄い灰色にする */
+    background-color: var(--tool-button-bgcolor);
+    color: var(--tool-button-color);
+    border: var(--tool-button-border);
     padding: 5px 15px; /* パディングを少し小さくする */
     text-align: center;
     text-decoration: none;
@@ -42,13 +181,13 @@ body {
     font-size: 0.8rem;
 }
 .header button:hover {
-    background-color: #e0e0e0; /* ホバー時の背景色を少し濃くする */
-    color: #000; /* ホバー時のテキスト色を黒にする */
+    background-color: var(--tool-button-hover-bgcolor);
+    color: var(--tool-button-hover-color);
 }
 .message-delete-btn, .chat-reanswer-btn, .message-copy-btn {
-    background-color: #f0f0f0;
-    color: #333;
-    border: 1px solid #ccc;
+    background-color: var(--tool-button-bgcolor);
+    color: var(--tool-button-color);
+    border: var(--tool-button-border);
     padding: 5px 5px;
     margin-left: 10px;
     text-align: center;
@@ -71,13 +210,28 @@ body {
     display: flex;
     flex-direction: column;
     height: 100vh;
+    background-color: var(--bgcolor);
+}
+.chat-container::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: var(--background-image);
+    background-size: cover;
+    background-position: center;
+    opacity: var(--background-image-opacity);
+    z-index: -1;
 }
 .chat-messages {
     flex: 1;
     overflow-x: hidden;
     overflow-y: auto;
     padding: 1rem;
-    background-color: #f5f5f5;
+    background-color: var(--chat-messages-bgcolor);
+    color: var(--chat-messages-color);
 }
 .chat-message {
     margin-bottom: 0.25rem;
@@ -90,41 +244,62 @@ body {
     color: #007bff;
     display: flex;
     align-items: center;
+    text-shadow: var(--speaker-name-text-shadow);
 }
 .message-text {
+    margin-top: 0.25rem;
     padding: 0.5rem;
     line-height: 1.75rem;
     font-size: 1rem;
     overflow-wrap: break-word;
+    background-color: var(--message-text-bgcolor);
+    color: var(--message-text-color);
+    border-radius: var(--message-text-border-radius);
 }
 .message-text p {
     padding: 0;
     margin: 0 0 0.5rem 0;
 }
+.message-text pre {
+    background-color: var(--code-bgcolor);
+    color: var(--code-color);
+    border: var(--code-border);
+    border-radius: var(--code-border-radius);
+    box-shadow: var(--code-box-shadow);
+    padding: 1.2rem 1.6rem;
+    font-size: 1rem;
+    overflow-x: auto;
+}
 .message-text pre code {
     line-height: 125%;
-    background-color: #1c1b1b;
-    color: #fff;
     font-family: "Fira Mono", "Menlo", "Consolas", monospace;
     font-size: 1rem;
     padding: 1rem 1.5rem;
     border-radius: 8px;
     display: block;
+    background: none;
+    color: inherit;
+    border: none;
+    padding: 0;
+    box-shadow: none;
 }
 .message-text code:not(pre > code) {
-    background-color: lightblue;
+    background-color: var(--inline-code-bgcolor);
+    color: var(--inline-code-color);
     padding-left: 0.3rem;
     padding-right: 0.3rem;
+    margin-left: 0.3rem;
+    margin-right: 0.3rem;
 }
 .message-text em {
-    color: steelblue;
+    color: var(--message-text-em-color);
 }
 .chat-input {
     width: 100%;
     display: flex;
     padding: 10px;
     margin-bottom: 10px;
-    background-color: #fff;
+    background-color: var(--chat-input-bgcolor);
     box-sizing: border-box; /* パディングを含めた幅を100%に */
 }
 .chat-input textarea {
@@ -133,19 +308,24 @@ body {
     flex: 1;
     padding: 1rem;
     margin-right: 0.5rem;
-    border: 1px solid #ccc;
-    border-radius: 1rem;
+    border: var(--chat-input-textarea-border);
+    border-radius: var(--chat-input-textarea-border-radius);
     resize: none; /* リサイズ無効 */
     height: 3rem; /* 高さの初期値、必要に応じて */
     max-height: 30rem; /* 最大高さを設定 */
     overflow-y: auto; /* 内容が多い場合にスクロールバーを表示 */
+    background-color: var(--chat-input-textarea-bgcolor);
+    color: var(--chat-input-textarea-color);
+}
+.chat-input textarea:focus {
+    outline: var(--chat-input-textarea-focus-outline);
 }
 .chat-input button {
     width: 6rem;
     font-size: 1rem;
     padding: 10px 20px;
-    background-image: linear-gradient(to bottom, #007bff, #0056b3); /* グラデーション適用 */
-    color: white;
+    background-image: var(--chat-input-button-bgimage);
+    color: var(--chat-input-button-color);
     border: none;
     border-radius: 4px;
     cursor: pointer;
@@ -153,7 +333,7 @@ body {
     transition: all 0.3s ease;
 }
 .chat-input button.submit-button-disabled {
-    background-image: linear-gradient(to bottom, silver, gray);
+    background-image: var(--chat-input-button-disabled-bgimage);
 }
 .chat-input button:hover {
     box-shadow: 0 6px 12px rgba(0,0,0,0.2);
@@ -167,11 +347,11 @@ footer {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #fff;
+    background-color: var(--footer-bgcolor);
     box-sizing: border-box;
-    color: silver;
+    color: var(--footer-color);
     font-size: 12px;
-    margin-bottom: 2px;
+    padding-bottom: 2px;
 }
 @keyframes glowing {
     0%, 100% { 
@@ -180,7 +360,7 @@ footer {
     }
     50% { 
         opacity: 1;
-        text-shadow: 0 0 2px #fff, 0 0 4px #fff, 0 0 6px #ffa, 0 0 8px #ff6, 0 0 10px;
+        text-shadow: var(--speaker-name-glowing-text-shadow);
     }
 }
 .flowing-text {
@@ -203,6 +383,7 @@ mark {
     text-align: center;
     font-weight: bold;
     font-size: 1.5rem;
+    color: var(--welcome-title-color);
 }
 .welcome-message {
     display: block;
@@ -210,7 +391,7 @@ mark {
     margin-top: 1rem;
     text-align: center;
     font-size: 0.8rem;
-    color: dimgray;
+    color: var(--welcome-message-color);
 }
 .tooltip {
     position: relative;
@@ -272,8 +453,8 @@ pre {
 .code-toast {
     visibility: hidden;
     min-width: 100px;
-    background-color: #333;
-    color: silver;
+    background-color: var(--code-toast-bgcolor);
+    color: var(--code-toast-color);
     text-align: center;
     border-radius: 3px;
     padding: 5px;
@@ -293,16 +474,18 @@ pre {
 /* コンテキストメニュー */
 .contextmenu {
     position: absolute;
-    background-color: whitesmoke;
+    background-color: var(--contextmenu-bgcolor);
+    color: var(--contextmenu-color);
     padding: 0.5rem;
     border: none;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: var(--contextmenu-box-shadow);
     z-index: 1000;
 }
 .contextmenu button {
     border: none;
-    background-color: transparent;
+    background-color: var(--contextmenu-button-bgcolor);
+    color: var(--contextmenu-button-color);
     padding: 8px 16px;
     cursor: pointer;
     width: 100%;
@@ -310,15 +493,15 @@ pre {
     white-space: nowrap;
 }
 .contextmenu button:hover {
-    background-color: #cee
+    background-color: var(--contextmenu-button-hover-bgcolor);
 }
 
 /* トースト */
 .toast {
     position: fixed;
-    background-color: rgba(0, 0, 0, 0.8);
-    color: white;
-    padding: 5px 10px;
+    background-color: var(--toast-bgcolor);
+    color: var(--toast-color);
+    padding: 10px 20px;
     border-radius: 4px;
     font-size: 14px;
     white-space: nowrap;
@@ -348,10 +531,11 @@ pre {
 
 /* 進捗モーダル */
 .modal-content {
-    background-color: #fefefe;
+    background-color: var(--modal-bgcolor);
+    color: var(--modal-color);
     margin: 15% auto;
     padding: 20px;
-    border: 1px solid #888;
+    border: var(--modal-border);
     width: 80%;
     max-width: 300px;
     text-align: center;
@@ -379,11 +563,12 @@ pre {
 
 /* 要約モーダル */
 .summary-modal-content {
-    background-color: #fefefe;
+    background-color: var(--modal-bgcolor);
+    color: var(--modal-color);
     margin: 10% auto;
     padding: 0px;
     overflow-y: auto; /* 内容が大きいときにスクロールバーを表示 */
-    border: 1px solid #888;
+    border: var(--modal-border);
     width: 80%;
     max-height: 70vh; /* モーダルウィンドウの最大高さを指定 */
 }

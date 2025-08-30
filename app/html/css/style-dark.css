@@ -1,68 +1,101 @@
 body.dark-mode,
 body.dark-mode .chat-container {
-    background-color: #181a1b !important;
+    background-color: var(--dark-bgcolor) !important;
     color: #eaeaea !important;
 }
 
-body.dark-mode .header,
+body.dark-mode .chat-container::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: var(--dark-background-image);
+    background-size: cover;
+    background-position: center;
+    opacity: var(--dark-background-image-opacity);
+    z-index: -1;
+}
+
+body.dark-mode .header {
+    background-color: var(--dark-header-bgcolor) !important;
+    color: var(--dark-header-color) !important;
+}
+
 body.dark-mode footer {
-    background-color: #202224 !important;
-    color: #c0c0c0 !important;
+    background-color: var(--dark-footer-bgcolor) !important;
+    color: var(--dark-footer-color) !important;
+}
+
+body.dark-mode .welcome-title {
+    color: var(--dark-welcome-title-color);
+}
+
+body.dark-mode .welcome-message {
+    color: var(--dark-welcome-message-color);
 }
 
 body.dark-mode .chat-messages {
-    background-color: #23262b !important;
-    color: #eaeaea !important;
+    background-color: var(--dark-chat-messages-bgcolor) !important;
+    color: var(--dark-chat-messages-color) !important;
 }
 
 body.dark-mode .header button,
 body.dark-mode .message-delete-btn,
 body.dark-mode .chat-reanswer-btn,
 body.dark-mode .message-copy-btn {
-    background-color: #25272c !important;
-    color: #eaeaea !important;
-    border: 1px solid #444 !important;
+    background-color: var(--dark-tool-button-bgcolor) !important;
+    color: var(--dark-tool-button-color) !important;
+    border: var(--dark-tool-button-border);
 }
 
 body.dark-mode .header button:hover {
-    background-color: #333 !important;
-    color: #fff !important;
+    background-color: var(--dark-tool-button-hover-bgcolor) !important;
+    color: var(--dark-tool-button-hover-color) !important;
 }
 
 body.dark-mode .chat-input {
-    background-color: #222 !important;
+    background-color: var(--dark-chat-input-bgcolor) !important;
     color: #eaeaea !important;
 }
 
 body.dark-mode .chat-input textarea {
-    background-color: #2a2c31 !important;
-    color: #eaeaea !important;
-    border: 1px solid #444 !important;
+    background-color: var(--dark-chat-input-textarea-bgcolor) !important;
+    color: var(--dark-chat-input-textarea-color) !important;
+    border: var(--dark-chat-input-textarea-border) !important;
+    border-radius: var(--dark-chat-input-textarea-border-radius) !important;
+}
+
+body.dark-mode .chat-input textarea:focus {
+    outline: var(--dark-chat-input-textarea-focus-outline);
 }
 
 body.dark-mode .chat-input button {
-    background-image: linear-gradient(to bottom, #2c61b6, #114281) !important;
-    color: #fff !important;
+    background-image: var(--dark-chat-input-button-bgimage) !important;
+    color: var(--dark-chat-input-button-color) !important;
 }
 
 body.dark-mode .chat-input button.submit-button-disabled {
-    background-image: linear-gradient(to bottom, #444, #222) !important;
+    background-image: var(--dark-chat-input-button-disabled-bgimage) !important;
 }
 
 body.dark-mode .speaker-name {
-    text-shadow:
-        0 0 2px #71d4f7,
-        0 0 10px #00eaff77,
-        0 0 18px #00ffd044,
-        0 0 26px #0092c633;
- }
+    text-shadow: var(--dark-speaker-name-text-shadow);
+}
+
+body.dark-mode .message-text {
+    background-color: var(--dark-message-text-bgcolor);
+    color: var(--dark-message-text-color);
+    border-radius: var(--dark-message-text-border-radius);
+}
 
 body.dark-mode pre {
-    background-color: #232946 !important;
-    color: #f5f7ff !important;
-    border: 1.5px solid #4e5575 !important;
-    border-radius: 10px !important;
-    box-shadow: 0 0 10px 2px #14162b55 !important;
+    background-color: var(--dark-code-bgcolor) !important;
+    color: var(--dark-code-color) !important;
+    border: var(--dark-code-border) !important;
+    border-radius: var(--dark-code-border-radius) !important;
+    box-shadow: var(--dark-code-box-shadow) !important;
     padding: 1.2rem 1.6rem !important;
     font-size: 1rem !important;
     overflow-x: auto !important;
@@ -77,29 +110,32 @@ body.dark-mode .message-text pre code {
 }
 
 body.dark-mode .message-text code:not(pre > code) {
-    background-color: #1b2b44 !important;
-    color: #9de0ff !important;
-    border-radius: 0.5em !important;
-    padding: 0.1em 0.5em !important;
+    background-color: var(--dark-inline-code-bgcolor) !important;
+    color: var(--dark-inline-code-color) !important;
+}
+
+body.dark-mode .message-text em {
+    color: var(--dark-message-text-em-color);
 }
 
 body.dark-mode .modal-content,
 body.dark-mode .summary-modal-content {
-    background-color: #444 !important;
-    color: #eee !important;
-    border: 1px solid #666 !important;
+    background-color: var(--dark-modal-bgcolor) !important;
+    color: var(--dark-modal-color) !important;
+    border: var(--dark-modal-border) !important;
 }
 
 body.dark-mode .contextmenu {
-    background-color: #23262b !important;
-    color: #eaeaea !important;
-    box-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+    background-color: var(--dark-contextmenu-bgcolor) !important;
+    color: var(--dark-contextmenu-color) !important;
+    box-shadow: var(--dark-contextmenu-box-shadow);
 }
 body.dark-mode .contextmenu button {
-    color: #eaeaea !important;
+    background-color: var(--dark-contextmenu-button-bgcolor);
+    color: var(--dark-contextmenu-button-color) !important;
 }
 body.dark-mode .contextmenu button:hover {
-    background-color: #666
+    background-color: var(--dark-contextmenu-button-hover-bgcolor);
 }
 
 @keyframes glowing-dark {
@@ -109,13 +145,23 @@ body.dark-mode .contextmenu button:hover {
     }
     50% { 
         opacity: 1;
-        text-shadow: 0 0 4px #71d4f7, 0 0 10px #00eaff, 0 0 18px #00ffd0, 0 0 26px #0092c6;
+        text-shadow: var(--dark-speaker-name-glowing-text-shadow);
     }
 }
 
 body.dark-mode .flowing-text {
     animation: glowing-dark 3s linear infinite !important;
     mix-blend-mode: lighten;
+}
+
+body.dark-mode .toast {
+    background-color: var(--dark-toast-bgcolor);
+    color: var(--dark-toast-color);
+}
+
+body.dark-mode .code-toast {
+    background-color: var(--drak-code-toast-bgcolor);
+    color: var(--dark-code-toast-color);
 }
 
 body.dark-mode table {
