@@ -22,14 +22,15 @@ One of its key features is the ability to fully customize the AI characters to y
 Main features: ✨
 
 - Supports the three major AI services: OpenAI, Google Gemini, and Anthropic Claude
-- Supports OpenAI API-compatible local LLMs
+- Supports OpenAI API-compatible local LLMs ✨
 - Character customization
 - Markdown and TeX-style math formula support
 - Chat log management
 - Printing function
-- Raspberry Pi compatible ✨ (X11/LXDE only, only IBus is supported as the input method framework, printing function not supported)
-- Linux Mint compatible ✨ (Cinnamon/x64, only IBus is supported as the input method framework, printing function not supported)
-- Dark mode support ✨
+- Raspberry Pi compatible (X11/LXDE only, only IBus is supported as the input method framework, printing function not supported)
+- Linux Mint compatible (Cinnamon/x64, only IBus is supported as the input method framework, printing function not supported)
+- Dark mode support
+- Custom CSS support ✨
 
 To use this app on Raspberry Pi or Linux, please refer to this article:  
 https://zenn.dev/ledmirage/articles/3a06a4b2ed8ae6
@@ -37,6 +38,9 @@ https://zenn.dev/ledmirage/articles/3a06a4b2ed8ae6
 ## Screenshot
 
 <img src="doc/screenshot_1.10.0.en.png" width="600">
+
+↓ Example of using custom CSS to set a background image.
+<img src="doc/screenshot_1.28.0.en.png" width="600">
 
 ## Language Support
 
@@ -192,6 +196,45 @@ While there are several default character settings available, you can create you
 Character setting files (settings_xxx.json) are stored in the `settings` folder. Simply copy an existing file and modify it to create your own character.
 
 For detailed information about character configuration, please refer to [this guide](Readme_detail.md).
+
+<div class="page" />
+
+## 💎 Custom CSS Settings
+
+By creating and adjusting a custom CSS (stylesheet), you can change the app’s color scheme, background image, and other design aspects.
+You can easily customize the appearance by modifying predefined CSS variables.
+
+The stylesheet should be named `custom.css` and placed inside the `css` folder.
+※ If you are using the packaged executable, create a `css` folder in the same directory as the executable.
+
+Here is an example of how to write the stylesheet.
+This sample shows how to set a background image:
+
+```css
+/* custom.css */
+:root {
+    /* Background image */
+    --background-image: url("images/cloud.jpg"); /* Local file path or an online URL */
+    --background-image-opacity: 0.8;
+
+    /* Transparency settings for UI elements */
+    --header-bgcolor: transparent;
+    --chat-messages-bgcolor: transparent;
+    --header-color: ivory; /* Header text color */
+
+    /* Chat message bubble settings */
+    --message-text-bgcolor: rgba(255, 255, 255, 0.7);
+    --message-text-color: #222;
+    --message-text-border-radius: 10px;  
+}
+```
+
+You can specify either a local file path or an online URL for the background image.
+If you use a local file, please keep the image size under **1.5MB**, otherwise it will not be displayed.
+
+Even if you are not familiar with CSS, you can still change the background image simply by replacing the path in the sample with the image you want to display.
+
+A full list of available variables can be found at the beginning of `app/html/css/style.css`.
 
 <div class="page" />
 

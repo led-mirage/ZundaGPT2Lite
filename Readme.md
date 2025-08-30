@@ -13,9 +13,10 @@ Copyright (c) 2024-2025 led-mirage
 
 ## 💎 最新情報
 
-**v1.27.0でローカルLLMに対応したのだ**✨
+**v1.28.0でカスタムCSSに対応したのだ**✨
 
-llama.cppのようなOpenAI互換APIで動作するローカルLLMに対応したのだよ！
+スタイルシート（CSS）をカスタマイズすることで、  
+背景画像や、各種UI要素の色味などを簡単に変更できるようになったのだよ！
 
 ## 💎 アプリの紹介と導入方法
 
@@ -34,7 +35,8 @@ ZundaGPT2 Liteは[ZundaGPT2](https://github.com/led-mirage/ZundaGPT2)から音�
 - 印刷機能
 - Raspberry Pi対応（X11/LXDE、日本語入力はIBus限定、印刷機能は非対応）
 - Linux Mint対応（Cinnamon/x64、日本語入力はIBus限定、印刷機能は非対応）
-- ダークモード対応✨
+- ダークモード対応
+- スタイルシート（CSS）をカスタマイズ可能✨
 
 アプリの紹介と、もっとも手軽な導入方法を[Zennの記事](https://zenn.dev/ledmirage/articles/7650f36d3a784a)にしたので、そちらも参考にしてほしいのだ✨  
 記事はZundaGPT2のものだけど、導入方法はほぼ同じなのだ。
@@ -48,6 +50,9 @@ Raspberry Pi、Linuxへの導入に関しても[Zennの記事](https://zenn.dev/
 <img src="assets/ZundaGPT2_splash.png" width="200"><br>
 
 <img src="doc/screenshot_1.10.0.png" width="600"><br>
+
+↓ カスタムCSSを使って背景画像を設定した例なのだ。
+<img src="doc/screenshot_1.28.0.png" width="600"><br>
 
 <div class="page"></div>
 
@@ -186,7 +191,7 @@ Windowsの場合は、Windowsの検索窓で「環境変数を編集」で検索
 
 以下のリンクから ZundaGPT2Lite.ZIP をダウンロードして、作成したフォルダに展開するのだ。
 
-https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.27.0
+https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.28.0
 
 #### 3. 実行
 
@@ -272,6 +277,48 @@ start pythonw app\main.py
 
 <div class="page"></div>
 
+## 💎 カスタムCSSの設定
+
+カスタムCSS（スタイルシート）を作成して調整することで、アプリの色味や背景画像を変更することができるのだ。  
+あらかじめ決められた変数の値を変更することで、簡単にデザインを変更することができるのだよ。
+
+スタイルシートのはファイル名はcustom.cssとし、cssフォルダの中に入れるのだ。  
+※ アプリの実行ファイルを使っている場合は、実行ファイルと同じ場所にCSSフォルダを作ってね。
+
+以下にスタイルシートの書き方の例を示すよ。  
+この例は背景画像を設定する例なのだ。
+
+```css
+/* custom.css */
+:root {
+    /* 背景画像の設定 */
+    --background-image: url("images/cloud.jpg"); /* ローカルファイルのパス、または、ネット上のURL */
+    --background-image-opacity: 0.8;
+
+    /* 画面要素の透過設定 */
+    --header-bgcolor: transparent;
+    --chat-messages-bgcolor: transparent;
+    --header-color: ivory; /* タイトル文字色 */
+
+    /* チャットメッセージの吹き出しの設定 */
+    --message-text-bgcolor: rgba(255, 255, 255, 0.7);
+    --message-text-color: #222;
+    --message-text-border-radius: 10px;  
+}
+```
+
+背景画像のパスにはURLの他、ローカルファイルのパスも指定できるけど、
+ローカルファイルの場合は画像ファイルのサイズを1.5MBまでに抑えて欲しいのだ。
+それ以上になると表示されないので注意して欲しいのだよ。
+
+CSSを知らない人はなんのことかわからないかもしれないけど、  
+上のサンプルの画像のパスさえ自分が表示したい画像のパスに変更すれば、  
+とりあえず背景画像は変更できるようになるのだ。
+
+変更可能な変数の一覧は、`app/html/css/style.css`の先頭部分を見て欲しいのだ。
+
+<div class="page"></div>
+
 ## 💎 注意事項
 
 ### ⚡ APIの利用料金について
@@ -290,11 +337,11 @@ start pythonw app\main.py
 
 VirusTotalでのチェック結果はこちらなのだ。
 
-- **Windows版:** [72個中2個のアンチウィルスエンジンで検出 :2025/08/24 v1.27.0](https://www.virustotal.com/gui/file/ed00b56ef39abd9ac693bf561eaa738f2b169ea0e5e337b40f6956708fd48ecd?nocache=1)
-- **Raspberry Pi版:** [62個中0個のアンチウィルスエンジンで検出 :2025/08/24 v1.27.0](https://www.virustotal.com/gui/file/7ab73e03fe7f1cc6fa0e9222f16d304d15b51a9edc269cb4863e0b5e17311bf5?nocache=1)
-- **Linux版:** [63個中0個のアンチウィルスエンジンで検出 :2025/08/24 v1.27.0](https://www.virustotal.com/gui/file/69977584ac87a472189c3b8e06f817cd2c0c8c41d728521cade8f71897c5b7bf?nocache=1)
+- **Windows版:** [72個中2個のアンチウィルスエンジンで検出 :2025/08/31 v1.28.0](https://www.virustotal.com/gui/file/57f7b2b59a2780751a0b4243f1f4ebc1dbac79460fc850bc62e828c27ffd2ba1?nocache=1)
+- **Raspberry Pi版:** [62個中0個のアンチウィルスエンジンで検出 :2025/08/30 v1.28.0](https://www.virustotal.com/gui/file/16c4fd1fe32fb1961fc81cd3890900bf3394a45af1e6b47737e376b312787c20?nocache=1)
+- **Linux版:** [63個中0個のアンチウィルスエンジンで検出 :2025/08/30 v1.28.0](https://www.virustotal.com/gui/file/e32f8cb0f0d5c267d4978eb18992433cca6bf1f737baffd8296180a16c31df12?nocache=1)
 
-<img src="doc/virustotal_1.27.0.png" width="600">
+<img src="doc/virustotal_1.28.0.png" width="600">
 
 ### ⚡ 免責事項
 
@@ -392,6 +439,11 @@ VirusTotalでのチェック結果はこちらなのだ。
 ## 💎 バージョン履歴
 
 <details><summary>過去のバージョンアップの軌跡はこちらなのだ</summary>
+
+### 1.28.0 (2025/08/31)
+
+- カスタムCSSのサポート
+  - custom.cssを配置することでスタイルの変更が可能に。
 
 ### 1.27.0 (2025/08/24)
 

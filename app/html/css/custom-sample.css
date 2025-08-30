@@ -1,0 +1,21 @@
+/*
+  ユーザーカスタムスタイルシートのサンプル
+  チャット画面の背景画像を設定する
+*/
+
+:root {
+    /* 背景画像の設定 */
+    --background-image: url("https://github.com/led-mirage/ZundaGPT2Lite/blob/main/doc/wallpaper/cloud.jpg?raw=true");
+    --background-image-opacity: 0.8;
+
+    /* 画面要素の透過設定 */
+    --bgcolor: transparent;
+    --header-bgcolor: transparent;
+    --chat-messages-bgcolor: transparent;
+    --header-color: ivory; /* タイトル文字色 */
+
+    /* チャットメッセージの吹き出しの設定 */
+    --message-text-bgcolor: rgba(255, 255, 255, 0.7);
+    --message-text-color: #222;
+    --message-text-border-radius: 10px;  
+}
