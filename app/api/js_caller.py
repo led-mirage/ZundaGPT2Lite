@@ -9,12 +9,10 @@
 import sys
 import json
 import re
-import base64
-import mimetypes
 from pathlib import Path
 
 from app_window import AppWindow
-from utility.utils import escape_js_string
+from utility.utils import escape_js_string, to_data_url
 
 
 class JSCaller:
@@ -43,13 +41,7 @@ class JSCaller:
             css = self.replace_background_image(css, "--dark-background-image")
             # JSONエンコードしてJS文字列に安全に埋め込む
             css_js = json.dumps(css)
-            self.window.evaluate_js(f"""
-                (function(){{
-                    var el = document.createElement('style');
-                    el.textContent = {css_js};
-                    document.head.appendChild(el);
-                }})();
-            """)
+            self.window.evaluate_js(f"applyCustomCSS({css_js});")
 
     def replace_background_image(self, css_text: str, var_name: str) -> str:
         # CSSから値を抜き出す
@@ -59,7 +51,7 @@ class JSCaller:
 
         image_path = Path(image_path)
         if image_path.exists() and image_path.is_file():
-            data_url = self.to_data_url(image_path)
+            data_url = to_data_url(image_path, 1.5)
             # 元の値を data URL で置き換え
             pattern = rf'({re.escape(var_name)}\s*:\s*)([^;]+)(;)'
             return  re.sub(pattern, r'\1' + data_url + r'\3', css_text)
@@ -77,13 +69,6 @@ class JSCaller:
             raw = raw[4:-1].strip().strip('"').strip("'")
         return raw
 
-    def to_data_url(self, path: Path) -> str:
-        mime, _ = mimetypes.guess_type(path)
-        if not mime:
-            mime = "application/octet-stream"
-        b64 = base64.b64encode(path.read_bytes()).decode("ascii")
-        return f"url('data:{mime};base64,{b64}')"
-
     # --------------------------------------------------------------------------
     # メイン画面
     # --------------------------------------------------------------------------
@@ -91,24 +76,9 @@ class JSCaller:
     def moveToMessageAt(self, message_index: int, highlight_text: str):
         self.window.evaluate_js(f"moveToMessageAt({message_index}, '{escape_js_string(highlight_text)}')")
 
-    def setChatInfo(self, display_name, user_name, user_color, user_icon,
-                    assistant_name, assistant_color, assistant_icon,
-                    welcome_title, welcome_message, ai_agent_available, ai_agent_creation_error):
-        self.window.evaluate_js(
-            f"setChatInfo("
-            f"'{escape_js_string(display_name)}', "
-            f"'{escape_js_string(user_name)}', "
-            f"'{escape_js_string(user_color)}', "
-            f"'{user_icon}', "
-            f"'{escape_js_string(assistant_name)}', "
-            f"'{escape_js_string(assistant_color)}', "
-            f"'{assistant_icon}', "
-            f"'{escape_js_string(welcome_title)}', "
-            f"'{escape_js_string(welcome_message)}', "
-            f"{ai_agent_available}, "
-            f"'{escape_js_string(ai_agent_creation_error)}'"
-            f")"
-        )
+    def setChatInfo(self, info):
+        js_literal = json.dumps(info)
+        self.window.evaluate_js(f"setChatInfo({js_literal})")
 
     def setChatMessages(self, messages: list[dict]):
         self.window.evaluate_js(f"setChatMessages({messages})")
@@ -124,7 +94,7 @@ class JSCaller:
 
     def parsedSentence(self, sentence: str):
         self.window.evaluate_js(f"parsedSentence('{escape_js_string(sentence)}')")
-    
+
     def parsedParagraph(self, paragraph: str):
         self.window.evaluate_js(f"parsedParagraph('{escape_js_string(paragraph)}')")
 
@@ -148,7 +118,7 @@ class JSCaller:
 
     def showProgressModal(self, message: str):
         self.window.evaluate_js(f"showProgressModal('{escape_js_string(message)}')")
-    
+
     def hideProgressModal(self):
         self.window.evaluate_js("hideProgressModal()")
 

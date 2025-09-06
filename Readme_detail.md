@@ -39,63 +39,67 @@ OpenAI … https://platform.openai.com/
 
 ### ⚙️ appConfig.json
 
-#### ✨ system/log_folder（既定値 log）
+#### 📌 system カテゴリ
+
+##### ✨ log_folder（既定値 log）
 
 チャットのログファイルを保存するフォルダを指定するのだ。この値が空文字の場合はログは保存されないのだ。
 
-#### ✨ system/log_level（既定値 ERROR）
+##### ✨ log_level（既定値 ERROR）
 
 アプリケーションログを出力する際の閾値を指定するのだ。
 指定できるのは、DEBUG、INFO、WARNING、ERROR、CRITICALの５種類なのだ。
 
-#### ✨ system/settings_file（既定値 settings.json）
+##### ✨ settings_file（既定値 settings.json）
 
 新規チャットを開始したときに使われるキャラクター設定ファイルを指定するのだ。GUIから変更できるのだ。
 
-#### ✨ system/window_width（既定値 600）
+##### ✨ window_width（既定値 600）
 
 ウィンドウの幅の初期値なのだ。
 
-#### ✨ system/window_height（既定値 800）
+##### ✨ window_height（既定値 800）
 
 ウィンドウの高さの初期値なのだ。
 
-#### ✨ system/chat_api_timeout（既定値 30）
+##### ✨ chat_api_timeout（既定値 30）
 
 Chat APIのタイムアウト値を秒数で指定するのだ。
 
-#### ✨ system/language（既定値 ja）
+##### ✨ language（既定値 ja）
 
 表示用の言語を指定するのだ。
 
-#### ✨ system/font_family（既定値 空文字）
+##### ✨ font_family（既定値 空文字）
 
 テキストが表示されるときに使用するフォントの種類を指定するのだ。
 
 値が空文字の場合は以下のデフォルト値が使われるのだ。  
 Söhne, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif, Helvetica Neue, Arial, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji
 
-#### ✨ system/font_size（既定値 16）
+##### ✨ font_size（既定値 16）
 
 テキストが表示されるときに使用するフォントサイズを指定するのだ。
 
-#### ✨ system/theme（既定値 light）
+##### ✨ theme（既定値 light）
 
 UIのテーマを指定するのだ。`light` または `dark` を指定できるのだ。
 
-#### ✨ gemini/safety_filter_harassment（既定値 BLOCK_MEDIUM_AND_ABOVE）
+#### 📌 gemini カテゴリ
+
+##### ✨ safety_filter_harassment（既定値 BLOCK_MEDIUM_AND_ABOVE）
 
 Gemini用の安全性フィルタ設定なのだ。ハラスメントに関するしきい値を設定できるのだ。詳しくは[こちらの資料](Readme_gemini.md)を参照して欲しいのだ。
 
-#### ✨ gemini/safety_filter_hate_speech（既定値 BLOCK_MEDIUM_AND_ABOVE）
+##### ✨ safety_filter_hate_speech（既定値 BLOCK_MEDIUM_AND_ABOVE）
 
 Gemini用の安全性フィルタ設定なのだ。ヘイトスピーチに関するしきい値を設定できるのだ。詳しくは[こちらの資料](Readme_gemini.md)を参照して欲しいのだ。
 
-#### ✨ gemini/safety_filter_sexually_explicit（既定値 BLOCK_MEDIUM_AND_ABOVE）
+##### ✨ safety_filter_sexually_explicit（既定値 BLOCK_MEDIUM_AND_ABOVE）
 
 Gemini用の安全性フィルタ設定なのだ。性表現に関するしきい値を設定できるのだ。詳しくは[こちらの資料](Readme_gemini.md)を参照して欲しいのだ。
 
-#### ✨ gemini/safety_filter_dangerous_content（既定値 BLOCK_MEDIUM_AND_ABOVE）
+#### ✨ safety_filter_dangerous_content（既定値 BLOCK_MEDIUM_AND_ABOVE）
 
 Gemini用の安全性フィルタ設定なのだ。危険な内容に関するしきい値を設定できるのだ。詳しくは[こちらの資料](Readme_gemini.md)を参照して欲しいのだ。
 
@@ -103,35 +107,39 @@ Gemini用の安全性フィルタ設定なのだ。危険な内容に関する�
 
 settings.jsonはsettingsフォルダの中に格納されているのだ。声のキャラクターを変えたいときなどは、このファイルを編集するといいのだ。また、このファイルをコピーして別の名前を付けて保存することで、複数の設定を保存しておくことができるのだ。設定を切り替えるには、ウィンドウの設定ボタンを押すといいのだ。
 
-#### ✨ settings/display_name（既定値 ZundaGPT）
+#### 📌 settings カテゴリ
+
+##### ✨ display_name（既定値 ZundaGPT）
 
 ウィンドウの左上に表示されるタイトルなのだ。
 
-#### ✨ settings/description（既定値 既定値）
+##### ✨ description（既定値 既定値）
 
 設定切替画面で表示される説明文なのだ。どんな設定なのかを書いておくといいのだ。
 
-#### ✨ settings/welcome_title（既定値 Welcome）
+##### ✨ welcome_title（既定値 Welcome）
 
 新しくチャットを始めたときに画面に表示されるメッセージなのだ。
 
-#### ✨ settings/welcome_message（既定値 なんでも聞いてほしいのだ！）
+##### ✨ welcome_message（既定値 なんでも聞いてほしいのだ！）
 
 新しくチャットを始めたときに画面に表示されるメッセージなのだ。welcome_titleの下に表示されるのだ。
 
-#### ✨ settings/group（既定値 Default）
+##### ✨ group（既定値 Default）
 
 設定のグループ分けに使用するのだ。設定ファイルが多くなった時に便利なのだ。
 
-#### ✨ user/name（既定値 あなた）
+#### 📌 user カテゴリ
+
+##### ✨ name（既定値 あなた）
 
 あなたの名前の設定なのだ。
 
-#### ✨ user/name_color（既定値 #007bff）
+##### ✨ name_color（既定値 #007bff）
 
 あなたの名前の色の設定なのだ。
 
-#### ✨ user/icon（既定値 空文字）
+##### ✨ icon（既定値 空文字）
 
 発言者名の横に表示するアイコンの設定なのだ。PNG形式の画像ファイルを指定できるのだ。空文字にするとアイコンは表示されないのだ。
 
@@ -139,15 +147,17 @@ settings.jsonはsettingsフォルダの中に格納されているのだ。声�
 
 chat_iconsフォルダの中にいくつかアイコン用の画像を用意してあるのだ。
 
-#### ✨ assistant/name（既定値 ずんだ）
+#### 📌 assistant カテゴリ
+
+##### ✨ name（既定値 ずんだ）
 
 チャットアシスタントの名前の設定なのだ。
 
-#### ✨ assistant/name_color（既定値 #006400）
+##### ✨ name_color（既定値 #006400）
 
 チャットアシスタントの名前の色の設定なのだ。
 
-#### ✨ assistant/icon（既定値 空文字）
+##### ✨ icon（既定値 空文字）
 
 発言者名の横に表示するアイコンの設定なのだ。PNG形式の画像ファイルを指定できるのだ。空文字にするとアイコンは表示されないのだ。
 
@@ -155,7 +165,9 @@ chat_iconsフォルダの中にいくつかアイコン用の画像を用意し�
 
 chat_iconsフォルダの中にいくつかアイコン用の画像を用意してあるのだ。
 
-#### ✨ chat/api（既定値 OpenAI）
+#### 📌 chat カテゴリ
+
+##### ✨ api（既定値 OpenAI）
 
 使用するAPIの設定なのだ。設定できる値は`OpenAI`と`AzureOpenAI`と`Gemini`と`Claude`の４つなのだ。
 
@@ -186,87 +198,147 @@ chat_iconsフォルダの中にいくつかアイコン用の画像を用意し�
 |------|------|
 | ANTHROPIC_API_KEY  | Anthropicで取得したAPIキー |
 
-#### ✨ chat/api_key_envvar（既定値 ""）
+##### ✨ api_key_envvar（既定値 ""）
 
 APIキーを格納する環境変数名をカスタマイズできるのだ。
 
 デフォルトでは上記APIキーが使われるけど、ここで値を指定した場合それが使われるのだ。
 
-#### ✨ chat/api_endpoint_envvar（既定値 ""）
+##### ✨ api_endpoint_envvar（既定値 ""）
 
 APIエンドポイント格納する環境変数名をカスタマイズできるのだ（AzureOpenAIのみ）。
 
 デフォルトではAZURE_OPENAI_ENDPOINTが使われるけど、ここで値を指定した場合それが使われるのだ。
 
-#### ✨ chat/api_base_url（既定値 ""）
+##### ✨ api_base_url（既定値 ""）
 
 OpenAI互換APIを使用する場合に、APIのベースURLを指定するのだ。
 
 デフォルトでは空文字列になっていて、OpenAI互換APIを使用しない場合は何も設定しなくていいのだ。
 
-#### ✨ chat/model（既定値 gpt-3.5-turbo-0125）
+##### ✨ model（既定値 gpt-4.1-mini）
 
-使用するAIのモデル名を指定するのだ。使用するAPIによって指定できるモデル名が異なるので注意して欲しいのだ。
+使用するAIのモデル名を指定するのだ。  
+高性能なモデルほど賢いけれど、その分利用料も上がるので注意して欲しいのだ。
 
-**OpenAI**
+利用できるモデルの一覧と料金は以下のリンクで確認できるのだ。  
+※ ZundaGPT2で利用可能なモデルはReadme.mdに記載されているのだ。  
 
-既定はリーズナブルなGTP-4o miniを使用しているのだ。もっと賢くしたい場合はGPT-4o系も使えるけれど、その分利用量が上がるので注意するのだ。使用できるモデルの一覧と利用料金は以下のリンクで確認できるのだ。
+- **OpenAI**
+    - https://platform.openai.com/docs/pricing
+- **AzureOpenAI**
+    - Azureの場合は、デプロイする際につけたモデル名を指定するのだ。
+- **Gemini**
+    - https://ai.google.dev/gemini-api/docs/models?hl=ja
+- **Claude**
+    - https://docs.anthropic.com/ja/docs/about-claude/models/overview
 
-モデルの一覧 … https://platform.openai.com/docs/models  
-利用料金 … https://openai.com/pricing#language-models
-
-o1、o1-miniにも対応しているけれど、これらのモデルは`system`メッセージが使えないので、AIのキャラ付けができないので注意して欲しいのだ（settings.jsonの`instruction`は無効になるのだ）。
-
-**AzureOpenAI**
-
-Azure上でモデルをデプロイする際につけてモデル名を指定するのだ。
-
-**Gemini**
-
-Geminiでは以下のモデル名を指定できるのだ。詳しくは、[こちらの資料](Readme_gemini.md)を参照して欲しいのだ。
-
-- gemini-1.0-pro-latest
-- gemini-1.5-flash-latest
-- gemini-1.5-pro-latest
-
-**Claude**
-
-Anthropicの場合、2024年12月29日時点で、以下のモデルを指定できるのだ。
-
-- Claude 3.5 Sonnet 2024-10-22
-- Claude 3.5 Sonnet 2024-06-20
-- Claude 3.5 Haiku
-- Claude 3 Opus
-- Claude 3 Sonnet
-- Claude 3 Haiku
-
-#### ✨ chat/instraction（既定値 君は優秀なアシスタント…以下略）
+##### ✨ instraction（既定値 君は優秀なアシスタント…以下略）
 
 AIのキャラづけの設定なのだ。ここで、AIの台詞をずんだもんっぽくするようお願いしているのだ。ここを変更することで、ずんだもん以外のキャラクターっぽい回答を生成することも可能なのだ。
 
-#### ✨ chat/bad_response（既定値 答えられないのだ）
+##### ✨ bad_response（既定値 答えられないのだ）
 
 何らかの原因でAIが回答できなかった場合に表示するセリフを設定するのだ。無理なお願いをするとAIが答えてくれない場合があるから気を付けるといいのだ。
 
-#### ✨ chat/history_size（既定値 6）
+##### ✨ history_size（既定値 6）
 
 AIに送信する過去の会話の履歴数を設定するのだ。この値が大きいほど前の回答、質問を考慮した回答をAIが生成するようになって、会話のつながりがよくなるのだ。ただ、その分利用料金も増えるので注意が必要なのだ。
 
 この設定がある理由を考えればわかるけど、OpenAIのAIは過去の会話を覚えていないのだ。質問をするたびに、過去の会話もAIに送信することで、AIは会話のつながりを知ることができるのだ。ただ利用料金は送信するデータ量が増えるとその分加算されるので、バランスをとることが大事なのだ。
 
-#### ✨ chat/history_char_limit（既定値 0）
+##### ✨ history_char_limit（既定値 0）
 
 送信する会話の履歴を文字数で制限する設定なのだ。history_size以内でもこの制限値を超えた場合はその部分でカットされるのだ。この値が0の場合は制限はかからないのだ。
 
-#### ✨ claude_options/max_tokens（既定値 4096）
+#### 📌 custom_style カテゴリ
+
+##### ✨ enable（既定値 false）
+
+カスタムスタイルを有効にする場合は`true`にしてね。
+有効にするとキャラクター毎の背景画像などを設定できるようになるのだ。
+
+##### ✨ background_image（既定値 空文字）
+
+背景画像を設定する場合に指定するのだ。
+
+インターネットの画像を指定する場合は、こんな風にURLを書くのだ。
+```
+"https://github.com/led-mirage/ZundaGPT2Lite/blob/main/doc/wallpaper/cloud.jpg?raw=true"
+```
+
+ローカルPC内にある画像を指定する場合は、こんな風にそのパスを書くのだ。
+```
+"C:\\Users\\USERNAME\\Pictures\\cloud.jpg"
+```
+
+##### ✨ background_image_opacity（既定値 "0.8"）
+
+背景画像の透過度を指定するのだ。  
+1.0が透過なしで、0.0に近づくほど透過するようになるのだよ。
+
+##### ✨ body_bgcolor（既定値 空文字）
+
+アプリ全体の背景色。  
+背景画像の透過率を高くすると、この背景色が透けて見えるようになるのだ。  
+設定例："white"、"#fff"、"rgb(255, 255, 255)"
+
+##### ✨ header_color（既定値 空文字）
+
+ヘッダ部分の文字色。  
+設定例："black"、"#000"、"rgb(0, 0, 0)"
+
+##### ✨ welcome_title_color（既定値 空文字）
+
+Welcomeタイトルの文字色。  
+設定例："black"、"#000"、"rgb(0, 0, 0)"
+
+##### ✨ welcome_message_color（既定値 空文字）
+
+Welcomeメッセージの文字色。  
+設定例："black"、"#000"、"rgb(0, 0, 0)"
+
+##### ✨ speaker_name_text_shadow（既定値 空文字）
+
+キャラクター名テキストの影の色。  
+設定例："0 0 10px 3px rgba(0,0,0,0.2)"
+
+##### ✨ message_text_bgcolor（既定値 空文字）
+
+チャットメッセージ表示エリアの背景色。
+設定例："rgba(255,255,255,0.5)"
+
+##### ✨ message_text_color（既定値 空文字）
+
+チャットメッセージテキストの表示色。
+設定例："black"、"#000"、"rgb(0, 0, 0)"
+
+##### ✨ message_text_shadow（既定値 空文字）
+
+チャットメッセージテキストの影の色。  
+設定例："0 0 10px 3px rgba(0,0,0,0.2)"
+
+##### ✨ message_text_border_radius（既定値 空文字）
+
+チャットメッセージ表示エリアの角の丸みの半径。  
+設定例："10px"
+
+##### ✨ message_text_em_color（既定値 空文字）
+
+強調文字（斜体）のテキスト色。
+設定例："red"、"#f00"、"rgb(255, 0, 0)"
+
+#### 📌 claude_options カテゴリ
+
+##### ✨ max_tokens（既定値 4096）
 
 claudeの最大出力トークン数を指定するのだ。この値が大きいほどclaudeは長い回答を生成できるようになるのだよ。
 
-#### ✨ claude_options/extended_thinking（既定値 false）
+##### ✨ extended_thinking（既定値 false）
 
 claude 3.7 SonnetのExtended Thinkingモードの有効・無効を設定するのだ。この値をtrueにするとより深く考えるようになるけど、出力時間も長くなるから注意して欲しいのだよ。
 
-#### ✨ claude_options/budget_tokens（既定値 2048）
+##### ✨ budget_tokens（既定値 2048）
 
 claude 3.7 SonnetのExtended Thinkingモードが有効のときの予算トークン数を指定するのだ。この値が大きいほどClaudeは深く考えるようになるのだ。ただ大きくすると出費も増えるから注意して欲しいのだ。この値は1024以上で、max_tokensよりも小さい値を指定する必要があるのだ。
 

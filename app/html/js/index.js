@@ -14,6 +14,7 @@ let g_welcomeTitle = "";
 let g_welcomeMessage = "";
 let g_aiAgentAvailable = false;
 let g_aiAgentCreationError = "";
+let g_savedCSS = {};
 
 // 初期化
 document.addEventListener("DOMContentLoaded", function() {
@@ -212,6 +213,8 @@ window.addEventListener("pywebviewready", async function() {
 
 // コンポーネントの初期化
 function initUIComponents(appConfig) {
+    saveCSSValue();
+
     if (appConfig.theme === "dark") {
         document.body.classList.add("dark-mode");
     }
@@ -287,6 +290,89 @@ function initUIComponents(appConfig) {
     }
 
     showBody();
+}
+
+// CSSのカスタムプロパティ値を保存する
+function saveCSSValue() {
+    const style = getComputedStyle(document.documentElement);
+    g_savedCSS = {
+        bodyBgcolor: style.getPropertyValue("--body-bgcolor").trim(),
+        containerBgcolor: style.getPropertyValue("--container-bgcolor").trim(),
+        backgroundImage: style.getPropertyValue("--background-image").trim(),
+        backgroundImageOpacity: style.getPropertyValue("--background-image-opacity").trim(),
+        headerBgcolor: style.getPropertyValue("--header-bgcolor").trim(),
+        headerColor: style.getPropertyValue("--header-color").trim(),
+        welcomeTitleColor: style.getPropertyValue("--welcome-title-color").trim(),
+        welcomeMessageColor: style.getPropertyValue("--welcome-message-color").trim(),
+        speakerNameTextShadow: style.getPropertyValue("--speaker-name-text-shadow").trim(),
+        chatMessagesBgcolor: style.getPropertyValue("--chat-messages-bgcolor").trim(),
+        messageTextBgcolor: style.getPropertyValue("--message-text-bgcolor").trim(),
+        messageTextColor: style.getPropertyValue("--message-text-color").trim(),
+        messageTextShadow: style.getPropertyValue("--message-text-shadow").trim(),
+        messageTextBorderRadius: style.getPropertyValue("--message-text-border-radius").trim(),
+        messageTextEmColor: style.getPropertyValue("--message-text-em-color").trim(),
+
+        darkBodyBgcolor: style.getPropertyValue("--dark-body-bgcolor").trim(),
+        darkContainerBgcolor: style.getPropertyValue("--dark-container-bgcolor").trim(),
+        darkBackgroundImage: style.getPropertyValue("--dark-background-image").trim(),
+        darkBackgroundImageOpacity: style.getPropertyValue("--dark-background-image-opacity").trim(),
+        darkHeaderBgcolor: style.getPropertyValue("--dark-header-bgcolor").trim(),
+        darkHeaderColor: style.getPropertyValue("--dark-header-color").trim(),
+        darkWelcomeTitleColor: style.getPropertyValue("--dark-welcome-title-color").trim(),
+        darkWelcomeMessageColor: style.getPropertyValue("--dark-welcome-message-color").trim(),
+        darkSpeakerNameTextShadow: style.getPropertyValue("--dark-speaker-name-text-shadow").trim(),
+        darkChatMessagesBgcolor: style.getPropertyValue("--dark-chat-messages-bgcolor").trim(),
+        darkMessageTextBgcolor: style.getPropertyValue("--dark-message-text-bgcolor").trim(),
+        darkMessageTextColor: style.getPropertyValue("--dark-message-text-color").trim(),
+        darkMessageTextShadow: style.getPropertyValue("--dark-message-text-shadow").trim(),
+        darkMessageTextBorderRadius: style.getPropertyValue("--dark-message-text-border-radius").trim(),
+        darkMessageTextEmColor: style.getPropertyValue("--dark-message-text-em-color").trim(),
+    }
+}
+
+// CSSのカスタムプロパティ値を復元する
+function restoreCSSValue() {
+    document.documentElement.style.setProperty("--body-bgcolor", g_savedCSS.bodyBgcolor);
+    document.documentElement.style.setProperty("--container-bgcolor", g_savedCSS.containerBgcolor);
+    document.documentElement.style.setProperty("--background-image", g_savedCSS.backgroundImage);
+    document.documentElement.style.setProperty("--background-image-opacity", g_savedCSS.backgroundImageOpacity);
+    document.documentElement.style.setProperty("--header-bgcolor", g_savedCSS.headerBgcolor);
+    document.documentElement.style.setProperty("--header-color", g_savedCSS.headerColor);
+    document.documentElement.style.setProperty("--welcome-title-color", g_savedCSS.welcomeTitleColor);
+    document.documentElement.style.setProperty("--welcome-message-color", g_savedCSS.welcomeMessageColor);
+    document.documentElement.style.setProperty("--chat-messages-bgcolor", g_savedCSS.chatMessagesBgcolor);
+    document.documentElement.style.setProperty("--message-text-bgcolor", g_savedCSS.messageTextBgcolor);
+    document.documentElement.style.setProperty("--message-text-color", g_savedCSS.messageTextColor);
+    document.documentElement.style.setProperty("--message-text-shadow", g_savedCSS.messageTextShadow);
+    document.documentElement.style.setProperty("--message-text-border-radius", g_savedCSS.messageTextBorderRadius);
+    document.documentElement.style.setProperty("--message-text-em-color", g_savedCSS.messageTextEmColor);
+
+    document.documentElement.style.setProperty("--dark-body-bgcolor", g_savedCSS.darkBodyBgcolor);
+    document.documentElement.style.setProperty("--dark-container-bgcolor", g_savedCSS.darkContainerBgcolor);
+    document.documentElement.style.setProperty("--dark-background-image", g_savedCSS.darkBackgroundImage);
+    document.documentElement.style.setProperty("--dark-background-image-opacity", g_savedCSS.darkBackgroundImageOpacity);
+    document.documentElement.style.setProperty("--dark-header-bgcolor", g_savedCSS.darkHeaderBgcolor);
+    document.documentElement.style.setProperty("--dark-header-color", g_savedCSS.darkHeaderColor);
+    document.documentElement.style.setProperty("--dark-welcome-title-color", g_savedCSS.darkWelcomeTitleColor);
+    document.documentElement.style.setProperty("--dark-welcome-message-color", g_savedCSS.darkWelcomeMessageColor);
+    document.documentElement.style.setProperty("--dark-chat-messages-bgcolor", g_savedCSS.darkChatMessagesBgcolor);
+    document.documentElement.style.setProperty("--dark-message-text-bgcolor", g_savedCSS.darkMessageTextBgcolor);
+    document.documentElement.style.setProperty("--dark-message-text-color", g_savedCSS.darkMessageTextColor);
+    document.documentElement.style.setProperty("--dark-message-text-shadow", g_savedCSS.darkMessageTextShadow);
+    document.documentElement.style.setProperty("--dark-message-text-border-radius", g_savedCSS.darkMessageTextBorderRadius);
+    document.documentElement.style.setProperty("--dark-message-text-em-color", g_savedCSS.darkMessageTextEmColor);
+}
+
+// CSS変数名から保存済み値を取得する
+function getSavedCSSValue(varName) {
+    if (!g_savedCSS) return null;
+
+    // 例："--body-bgcolor" → "bodyBgcolor" に変換
+    const camelKey = varName
+        .replace(/^--/, "") // 先頭の "--" を削除
+        .replace(/-([a-z])/g, (_, c) => c.toUpperCase()); // -x を X に変換
+
+    return g_savedCSS[camelKey] ?? null;
 }
 
 // 送信ボタン押下時イベントハンドラ
@@ -403,17 +489,17 @@ function addWelcome() {
     const chatMessagesContainer = document.getElementById("chat-messages");
 
     // Welcomeコンテナを作成
-    const welcomeConainer = document.createElement("div");
-    welcomeConainer.id = "welcome";
-    welcomeConainer.classList.add("welcome");
-    chatMessagesContainer.appendChild(welcomeConainer);
+    const welcomeContainer = document.createElement("div");
+    welcomeContainer.id = "welcome";
+    welcomeContainer.classList.add("welcome");
+    chatMessagesContainer.appendChild(welcomeContainer);
 
     // アシスタントアイコンを作成
     if (g_assistantIcon != "") {
         const imgElement = document.createElement("img");
         imgElement.classList.add("welcome-chat-icon");
         imgElement.src = `data:image/png;base64,${g_assistantIcon}`;
-        welcomeConainer.appendChild(imgElement);
+        welcomeContainer.appendChild(imgElement);
     }
 
     // Welcomeタイトルを作成
@@ -421,14 +507,14 @@ function addWelcome() {
     welcomeTitle.id = "welcome-title";
     welcomeTitle.classList.add("welcome-title");
     welcomeTitle.textContent = g_welcomeTitle;
-    welcomeConainer.appendChild(welcomeTitle);
+    welcomeContainer.appendChild(welcomeTitle);
 
     // Welcomeメッセージを作成
     const welcomeMessage = document.createElement("div");
     welcomeMessage.id = "welcome-message";
     welcomeMessage.classList.add("welcome-message");
     welcomeMessage.textContent = g_welcomeMessage;
-    welcomeConainer.appendChild(welcomeMessage);
+    welcomeContainer.appendChild(welcomeMessage);
 }
 
 // チャットメッセージブロックを追加する
@@ -876,28 +962,80 @@ function showToast(event, message, position = ToastPosition.ClickPos, duration =
 }
 
 // Pythonから呼び出される関数
-// 情報をセットする
-function setChatInfo(
-    displayName, userName, userColor, userIcon,
-    assistantName, assistantColor, assistantIcon,
-    welcomeTitle, welcomeMessage, aiAgentAvailable, aiAgentCreationError
-) {
-    g_userName = userName;
-    g_userColor = userColor;
-    g_userIcon = userIcon;
-    g_assistantName = assistantName;
-    g_assistantColor = assistantColor;
-    g_assistantIcon = assistantIcon;
-    g_nextMessageIndex = 0;
-    g_welcomeTitle = welcomeTitle;
-    g_welcomeMessage = welcomeMessage;
-    g_aiAgentAvailable = aiAgentAvailable;
-    g_aiAgentCreationError = aiAgentCreationError;
+// カスタムCSSを設定する
+function applyCustomCSS(css_js) {
+    var el = document.createElement('style');
+    el.textContent = css_js;
+    document.head.appendChild(el);
 
+    saveCSSValue();
+}
+
+// Pythonから呼び出される関数
+// 情報をセットする
+function setChatInfo(info) {
+    g_userName = info.user.name;
+    g_userColor = info.user.color;
+    g_userIcon = info.user.icon;
+    g_assistantName = info.assistant.name;
+    g_assistantColor = info.assistant.color;
+    g_assistantIcon = info.assistant.icon;
+    g_nextMessageIndex = 0;
+    g_welcomeTitle = info.settings.welcome_title;
+    g_welcomeMessage = info.settings.welcome_message;
+    g_aiAgentAvailable = info.chat.ai_agent_available;
+    g_aiAgentCreationError = info.chat.ai_agent_creation_error;
+
+    let displayName = info.settings.display_name;
     if (displayName === "") {
-        displayName = assistantName;
+        displayName = info.assistant.name;
     }
     document.getElementById("settings-name").textContent = displayName;
+
+    if (info.custom_style.enable) {
+        setCustomStyleProperty("--background-image", info.custom_style.background_image);
+        setCustomStyleProperty("--background-image-opacity", info.custom_style.background_image_opacity);
+        setCustomStyleProperty("--body-bgcolor", info.custom_style.body_bgcolor);
+        setCustomStyleProperty("--header-color", info.custom_style.header_color);
+        setCustomStyleProperty("--welcome-title-color", info.custom_style.welcome_title_color);
+        setCustomStyleProperty("--welcome-message-color", info.custom_style.welcome_message_color);
+        setCustomStyleProperty("--speaker-name-text-shadow", info.custom_style.speaker_name_text_shadow);
+        setCustomStyleProperty("--message-text-bgcolor", info.custom_style.message_text_bgcolor);
+        setCustomStyleProperty("--message-text-color", info.custom_style.message_text_color);
+        setCustomStyleProperty("--message-text-shadow", info.custom_style.message_text_shadow);
+        setCustomStyleProperty("--message-text-border-radius", info.custom_style.message_text_border_radius);
+        setCustomStyleProperty("--message-text-em-color", info.custom_style.message_text_em_color);
+
+        if (info.custom_style.background_image) {
+            setCustomStyleProperty("--container-bgcolor", "transparent");
+            setCustomStyleProperty("--header-bgcolor", "transparent");
+            setCustomStyleProperty("--chat-messages-bgcolor", "transparent");
+        }
+    }
+    else {
+        restoreCSSValue();
+    }
+}
+
+function setCustomStyleProperty(prop, val) {
+    val = trimCSSValue(val);
+    const darkProp = "--dark-" + prop.slice(2);
+    if (val) {
+        document.documentElement.style.setProperty(prop, val);
+        document.documentElement.style.setProperty(darkProp, val);
+    }
+    else {
+        document.documentElement.style.setProperty(prop, getSavedCSSValue(prop));
+        document.documentElement.style.setProperty(darkProp, getSavedCSSValue(darkProp));
+    }
+}
+
+function trimCSSValue(str) {
+    let s = str.trim();
+    if (s.endsWith(';')) {
+        s = s.slice(0, -1);
+    }
+    return s;
 }
 
 // Pythonから呼び出される関数
@@ -1021,7 +1159,7 @@ function endResponse(content) {
 function scrollToMessage(offset = 2) {
     const messages = document.querySelectorAll(".chat-messages .chat-message");
     if (messages.length < offset) return;
-    
+
     const secondLastMessage = messages[messages.length - offset];
     secondLastMessage.scrollIntoView({
         behavior: 'smooth',
@@ -1126,6 +1264,7 @@ function hideProgressModal() {
 }
 
 // Pythonから呼び出される関数（グローバルスコープに登録）
+window.applyCustomCSS = applyCustomCSS;
 window.setChatInfo = setChatInfo;
 window.startResponse = startResponse;
 window.addChunk = addChunk;

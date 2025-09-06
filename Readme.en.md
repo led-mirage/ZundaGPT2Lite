@@ -266,6 +266,26 @@ Above all, please pay close attention to your API keys and usage fees.
 
 So far, no particular issues have been found, but bugs are inherently potential issues and can never be entirely eliminated. Additionally, please understand that the copyright holder cannot be held liable for any damages you may incur as a result of these bugs. Use the app with this understanding.
 
+### ⚡ Usage Restrictions & Age Requirement
+
+* This application is intended for use by individuals **13 years of age or older**.
+  If you are under 18, you must obtain permission from a parent or legal guardian.
+  If you are under 13, you may **not** use this application.
+
+* The following uses are strictly prohibited:
+
+  * Engaging in criminal or unlawful activities
+  * Harassment, discrimination, or defamation of others
+  * Requests for obscene, excessively violent, or otherwise offensive content
+
+* This application interacts with third-party AI service APIs (e.g., OpenAI, Anthropic, Google, etc.).
+  The **Terms of Service of those providers take precedence** over the use of this application.
+
+* The developer makes **no warranties** and assumes **no liability** for any damages, losses,
+  or legal issues resulting from the use of this application.
+
+**Use at your own risk.**
+
 <div class="page" />
 
 ## Libraries Used

@@ -6,8 +6,12 @@
 # このソースコードは MITライセンス の下でライセンスされています。
 # ライセンスの詳細については、このプロジェクトのLICENSEファイルを参照してください。
 
+import base64
 import inspect
+import mimetypes
 import os
+from pathlib import Path
+from urllib.parse import urlparse
 
 
 # 文字をエスケープする
@@ -35,3 +39,35 @@ def get_exception_name(e: Exception):
     module_name = type(e).__module__
     class_name = type(e).__name__
     return f"{module_name}.{class_name}"
+
+# 文字列がURLかどうかを調べる
+def is_url(text: str) -> bool:
+    try:
+        result = urlparse(text)
+        return all([result.scheme, result.netloc])
+    except ValueError:
+        return False
+
+# URLまたはPathをCSSのurl()フォーマットに変換する
+#   Pathの場合はBase64エンコードされる
+#   URLでもPathでもない場合はNoneを返す
+def to_css_url_format(url_or_path: str, filesize_limit_mb: float) -> str:
+    if is_url(url_or_path):
+        return f'url("{url_or_path}")'
+    
+    path = Path(url_or_path)
+    if path.is_file():
+        return to_data_url(path, filesize_limit_mb)
+    
+    return None
+
+# ファイルをBase64エンコードしてurl()形式にして返す
+def to_data_url(path: Path, filesize_limit_mb: float) -> str:
+    if path.stat().st_size <= filesize_limit_mb * 1024 * 1024:
+        mime, _ = mimetypes.guess_type(path)
+        if not mime:
+            mime = "application/octet-stream"
+        b64 = base64.b64encode(path.read_bytes()).decode("ascii")
+        return f'url("data:{mime};base64,{b64}")'
+    else:
+        return ""
