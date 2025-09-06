@@ -1026,7 +1026,7 @@ function setCustomStyleProperty(prop, val) {
     }
     else {
         document.documentElement.style.setProperty(prop, getSavedCSSValue(prop));
-        document.documentElement.style.setProperty(darkProp, getSavedCSSValue(prop));
+        document.documentElement.style.setProperty(darkProp, getSavedCSSValue(darkProp));
     }
 }
 
