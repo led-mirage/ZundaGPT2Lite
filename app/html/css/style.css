@@ -2,8 +2,10 @@
     /****************************************
      * light mode
      ****************************************/
+    /* ボディ */
+    --body-bgcolor: white;
     /* コンテナ */
-    --bgcolor: transparent;
+    --container-bgcolor: transparent;
     --background-image: none;
     --background-image-opacity: 1.0;
     /* ヘッダ部 */
@@ -21,6 +23,7 @@
     /* メッセージ表示ブロック */
     --message-text-bgcolor: transparent;
     --message-text-color: unset;
+    --message-text-shadow: none;
     --message-text-border-radius: 0px;
     --message-text-em-color: steelblue;
     /* コードブロック */
@@ -70,70 +73,73 @@
     /****************************************
      * dark mode
      ****************************************/
+    /* ボディ */
+    --dark-body-bgcolor: #181a1b;
     /* コンテナ */
-    --dark-bgcolor: #181a1b; /*OK*/
+    --dark-container-bgcolor: transparent;
     --dark-background-image: none;
     --dark-background-image-opacity: 1.0;
     /* ヘッダ部 */
-    --dark-header-bgcolor: #202224; /*OK*/
-    --dark-header-color: #c0c0c0; /*OK*/
+    --dark-header-bgcolor: #202224;
+    --dark-header-color: #c0c0c0;
     /* コンテンツブロック */
-    --dark-chat-messages-bgcolor: #23262b; /*OK*/
-    --dark-chat-messages-color: #eaeaea; /*OK*/
+    --dark-chat-messages-bgcolor: #23262b;
+    --dark-chat-messages-color: #eaeaea;
     /* WelCome */
-    --dark-welcome-title-color: unset; /*OK*/
-    --dark-welcome-message-color: dimgray; /*OK*/
+    --dark-welcome-title-color: unset;
+    --dark-welcome-message-color: dimgray;
     /* キャラ名 */
-    --dark-speaker-name-text-shadow: 0 0 2px #71d4f7, 0 0 10px #00eaff77, 0 0 18px #00ffd044, 0 0 26px #0092c633; /*OK*/
-    --dark-speaker-name-glowing-text-shadow: 0 0 4px #71d4f7, 0 0 10px #00eaff, 0 0 18px #00ffd0, 0 0 26px #0092c6; /*OK*/
+    --dark-speaker-name-text-shadow: 0 0 2px #71d4f7, 0 0 10px #00eaff77, 0 0 18px #00ffd044, 0 0 26px #0092c633;
+    --dark-speaker-name-glowing-text-shadow: 0 0 4px #71d4f7, 0 0 10px #00eaff, 0 0 18px #00ffd0, 0 0 26px #0092c6;
     /* メッセージ表示ブロック */
-    --dark-message-text-bgcolor: unset; /*OK*/
-    --dark-message-text-color: unset; /*OK*/
-    --dark-message-text-border-radius: unset; /*OK*/
+    --dark-message-text-bgcolor: unset;
+    --dark-message-text-color: unset;
+    --dark-message-text-shadow: none;
+    --dark-message-text-border-radius: unset;
     --dark-message-text-em-color: #64abe5;
     /* コードブロック */
-    --dark-code-bgcolor: #497dc0; /*OK*/
-    --dark-code-color: #f5f7ff; /*OK*/
-    --dark-code-border: 1.5px solid #4e5575; /*OK*/
-    --dark-code-border-radius: 10px; /*OK*/
-    --dark-code-box-shadow: 0 0 10px 2px #14162b55; /*OK*/
-    --dark-inline-code-bgcolor: #1b2b44; /*OK*/
-    --dark-inline-code-color: #9de0ff; /*OK*/
+    --dark-code-bgcolor: #232946;
+    --dark-code-color: #f5f7ff;
+    --dark-code-border: 1.5px solid #4e5575;
+    --dark-code-border-radius: 10px;
+    --dark-code-box-shadow: 0 0 10px 2px #14162b55;
+    --dark-inline-code-bgcolor: #1b2b44;
+    --dark-inline-code-color: #9de0ff;
     /* プロンプト入力ブロック */
-    --dark-chat-input-bgcolor: #222; /*OK*/
-    --dark-chat-input-textarea-bgcolor: #2a2c31; /*OK*/
-    --dark-chat-input-textarea-color: #eaeaea; /*OK*/
-    --dark-chat-input-textarea-border: 1px solid #444; /*OK*/
-    --dark-chat-input-textarea-border-radius: 1rem; /*OK*/
-    --dark-chat-input-textarea-focus-outline: 2px solid #555; /*OK*/
-    --dark-chat-input-button-bgimage: linear-gradient(to bottom, #2c61b6, #114281); /*OK*/
-    --dark-chat-input-button-color: white; /*OK*/
-    --dark-chat-input-button-disabled-bgimage: linear-gradient(to bottom, #444, #222); /*OK*/
+    --dark-chat-input-bgcolor: #222;
+    --dark-chat-input-textarea-bgcolor: #2a2c31;
+    --dark-chat-input-textarea-color: #eaeaea;
+    --dark-chat-input-textarea-border: 1px solid #444;
+    --dark-chat-input-textarea-border-radius: 1rem;
+    --dark-chat-input-textarea-focus-outline: 2px solid #555;
+    --dark-chat-input-button-bgimage: linear-gradient(to bottom, #2c61b6, #114281);
+    --dark-chat-input-button-color: white;
+    --dark-chat-input-button-disabled-bgimage: linear-gradient(to bottom, #444, #222);
     /* 各種ボタン */
-    --dark-tool-button-bgcolor: #25272c; /*OK*/
-    --dark-tool-button-color: #eaeaea; /*OK*/
-    --dark-tool-button-border: 1px solid #444; /*OK*/
-    --dark-tool-button-hover-bgcolor: #333; /*OK*/
-    --dark-tool-button-hover-color: #fff; /*OK*/
+    --dark-tool-button-bgcolor: #25272c;
+    --dark-tool-button-color: #eaeaea;
+    --dark-tool-button-border: 1px solid #444;
+    --dark-tool-button-hover-bgcolor: #333;
+    --dark-tool-button-hover-color: #fff;
     /* コンテキストメニュー */
-    --dark-contextmenu-bgcolor: #23262b; /*OK*/
-    --dark-contextmenu-color: #eaeaea; /*OK*/
-    --dark-contextmenu-box-shadow: 0 0 8px rgba(255, 255, 255, 0.5); /*OK*/
-    --dark-contextmenu-button-bgcolor: unset; /*OK*/
-    --dark-contextmenu-button-color: #eaeaea; /*OK*/
-    --dark-contextmenu-button-hover-bgcolor: #666; /*OK*/
+    --dark-contextmenu-bgcolor: #23262b;
+    --dark-contextmenu-color: #eaeaea;
+    --dark-contextmenu-box-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+    --dark-contextmenu-button-bgcolor: unset;
+    --dark-contextmenu-button-color: #eaeaea;
+    --dark-contextmenu-button-hover-bgcolor: #666;
     /* モーダルダイアログ */
-    --dark-modal-bgcolor: #444; /*OK*/
-    --dark-modal-color: #eee; /*OK*/
-    --dark-modal-border: 1px solid #666; /*OK*/
+    --dark-modal-bgcolor: #444;
+    --dark-modal-color: #eee;
+    --dark-modal-border: 1px solid #666;
     /* トースト */
-    --dark-toast-bgcolor: rgba(255,255, 255, 0.8); /*OK*/
-    --dark-toast-color: black; /*OK*/
-    --drak-code-toast-bgcolor: silver; /*OK*/
-    --dark-code-toast-color: #333; /*OK*/
+    --dark-toast-bgcolor: rgba(255,255, 255, 0.8);
+    --dark-toast-color: black;
+    --drak-code-toast-bgcolor: silver;
+    --dark-code-toast-color: #333;
     /* フッタ部 */
-    --dark-footer-bgcolor: #202224; /*OK*/
-    --dark-footer-color: #c0c0c0; /*OK*/
+    --dark-footer-bgcolor: #202224;
+    --dark-footer-color: #c0c0c0;
 }
 body, html {
     height: 100%;
@@ -144,6 +150,7 @@ body, html {
 }
 body {
     display: none;
+    background-color: var(--body-bgcolor);
 }
 .header {
     display: flex;
@@ -210,7 +217,7 @@ body {
     display: flex;
     flex-direction: column;
     height: 100vh;
-    background-color: var(--bgcolor);
+    background-color: var(--container-bgcolor);
 }
 .chat-container::before {
     content: "";
@@ -255,6 +262,7 @@ body {
     background-color: var(--message-text-bgcolor);
     color: var(--message-text-color);
     border-radius: var(--message-text-border-radius);
+    text-shadow: var(--message-text-shadow);
 }
 .message-text p {
     padding: 0;
@@ -282,14 +290,14 @@ body {
     border: none;
     padding: 0;
     box-shadow: none;
+    text-shadow: none;
 }
 .message-text code:not(pre > code) {
     background-color: var(--inline-code-bgcolor);
     color: var(--inline-code-color);
-    padding-left: 0.3rem;
-    padding-right: 0.3rem;
-    margin-left: 0.3rem;
-    margin-right: 0.3rem;
+    padding: 0.3rem;
+    margin: 0.3rem;
+    text-shadow: none;
 }
 .message-text em {
     color: var(--message-text-em-color);

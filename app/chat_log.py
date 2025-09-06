@@ -18,7 +18,7 @@ from chat import ChatFactory
 
 # チャットログクラス
 class ChatLog:
-    FILE_VER = 8
+    FILE_VER = 9
     LOG_FOLDER = "log"
 
     cache = {}
@@ -42,6 +42,7 @@ class ChatLog:
         data["user"] = settings.user
         data["assistant"] = settings.assistant
         data["chat"] = settings.chat
+        data["custom_style"] = settings.custom_style
         data["claude_options"] = settings.claude_options
         data["messages"] = chat.messages
 
@@ -103,6 +104,23 @@ class ChatLog:
                 if "api_base_url" not in data["chat"]:
                     data["chat"]["api_base_url"] = ""
 
+            if data["file_ver"] <= 8:
+                data["custom_style"] = {
+                    "enable": False,
+                    "background_image": "",
+                    "background_image_opacity": "0.8",
+                    "body_bgcolor": "",
+                    "header_color": "",
+                    "welcome_title_color": "",
+                    "welcome_message_color": "",
+                    "speaker_name_text_shadow": "",
+                    "message_text_bgcolor": "",
+                    "message_text_color": "",
+                    "message_text_shadow": "",
+                    "message_text_border_radius": "",
+                    "message_text_em_color": "",
+                }
+
             app_config = AppConfig()
             app_config.load()
 
@@ -112,6 +130,7 @@ class ChatLog:
             settings.user = data["user"]
             settings.assistant = data["assistant"]
             settings.chat = data["chat"]
+            settings.custom_style = data["custom_style"]
             settings.claude_options = data["claude_options"]
 
             chat = ChatFactory.create(

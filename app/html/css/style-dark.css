@@ -1,6 +1,9 @@
-body.dark-mode,
+body.dark-mode {
+    background-color: var(--dark-body-bgcolor);
+}
+
 body.dark-mode .chat-container {
-    background-color: var(--dark-bgcolor) !important;
+    background-color: var(--dark-container-bgcolor) !important;
     color: #eaeaea !important;
 }
 
@@ -88,6 +91,7 @@ body.dark-mode .message-text {
     background-color: var(--dark-message-text-bgcolor);
     color: var(--dark-message-text-color);
     border-radius: var(--dark-message-text-border-radius);
+    text-shadow: var(--dark-message-text-shadow) !important;
 }
 
 body.dark-mode pre {
@@ -107,11 +111,13 @@ body.dark-mode .message-text pre code {
     border: none !important;
     padding: 0 !important;
     box-shadow: none !important;
+    text-shadow: none !important;
 }
 
 body.dark-mode .message-text code:not(pre > code) {
     background-color: var(--dark-inline-code-bgcolor) !important;
     color: var(--dark-inline-code-color) !important;
+    text-shadow: none !important;
 }
 
 body.dark-mode .message-text em {
