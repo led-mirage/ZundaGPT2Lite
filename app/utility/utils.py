@@ -10,6 +10,7 @@ import base64
 import inspect
 import mimetypes
 import os
+import sys
 import tkinter as tk
 from pathlib import Path
 from urllib.parse import urlparse
@@ -74,14 +75,18 @@ def to_data_url(path: Path, filesize_limit_mb: float) -> str:
         return ""
 
 # プライマリディスプレイのサイズを取得する
-def get_screen_size() -> tuple[int, int]:
-    try:
-        root = tk.Tk()
-        root.withdraw()
-        screen_width = root.winfo_screenwidth()
-        screen_height = root.winfo_screenheight()
-        root.destroy()
-        return screen_width, screen_height
-    except Exception:
-        # 取得できない場合はデフォルトサイズを返す
-        return 800, 600
+def get_screen_size(window_handle=None) -> tuple[int, int]:
+    if sys.platform == "win32":
+        from utility.win32 import get_monitor_size_for_window
+        return get_monitor_size_for_window(window_handle, use_work_area=True)
+    else:
+        try:
+            root = tk.Tk()
+            root.withdraw()
+            screen_width = root.winfo_screenwidth()
+            screen_height = root.winfo_screenheight()
+            root.destroy()
+            return screen_width, screen_height
+        except Exception:
+            # 取得できない場合はデフォルトサイズを返す
+            return 800, 600

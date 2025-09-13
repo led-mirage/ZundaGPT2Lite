@@ -39,7 +39,7 @@ class Application:
     def start(self):
         self.app_config = AppConfig()
         self.app_config.load()
-        width, height = self.adjust_size(
+        width, height = self.adjust_window_size(
             self.app_config.system["window_width"],
             self.app_config.system["window_height"]
         )
@@ -66,12 +66,14 @@ class Application:
         webview.start(gui=gui)
         #webview.start(gui=gui, debug=True) # 開発者ツールを表示する場合
 
-    # 渡されたウィンドウサイズをスクリーンサイズに収めて返す
-    def adjust_size(self, width: int, height: int) -> tuple[int, int]:
-        screen_width, screen_height = get_screen_size()
-        adj_width = min(width, screen_width)
-        adj_height = min(height, screen_height)
-        return adj_width, adj_height
+    def adjust_window_size(self, width: int, height: int):
+        if sys.platform != "win32": # WindowsはAppWindowのon_shownで処理する
+            screen_width, screen_height = get_screen_size()
+            width = min(width, screen_width)
+            height = min(height, screen_height)
+            return width, height
+        else:
+            return width, height
 
 
 if __name__ == '__main__':
