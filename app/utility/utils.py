@@ -10,6 +10,7 @@ import base64
 import inspect
 import mimetypes
 import os
+import tkinter as tk
 from pathlib import Path
 from urllib.parse import urlparse
 
@@ -71,3 +72,16 @@ def to_data_url(path: Path, filesize_limit_mb: float) -> str:
         return f'url("data:{mime};base64,{b64}")'
     else:
         return ""
+
+# プライマリディスプレイのサイズを取得する
+def get_screen_size() -> tuple[int, int]:
+    try:
+        root = tk.Tk()
+        root.withdraw()
+        screen_width = root.winfo_screenwidth()
+        screen_height = root.winfo_screenheight()
+        root.destroy()
+        return screen_width, screen_height
+    except Exception:
+        # 取得できない場合はデフォルトサイズを返す
+        return 800, 600

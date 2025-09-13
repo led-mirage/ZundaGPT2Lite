@@ -21,6 +21,7 @@ from services.app_service import AppService
 from services.index_service import IndexService
 from services.settings_service import SettingsService
 from services.cross_file_search_service import CrossFileSearchService
+from utility.utils import get_screen_size
 
 if getattr(sys, "frozen", False):
     import pyi_splash # type: ignore
@@ -38,10 +39,12 @@ class Application:
     def start(self):
         self.app_config = AppConfig()
         self.app_config.load()
-        width = self.app_config.system["window_width"]
-        height = self.app_config.system["window_height"]
+        width, height = self.adjust_size(
+            self.app_config.system["window_width"],
+            self.app_config.system["window_height"]
+        )
 
-        window = AppWindow()
+        window = AppWindow(self.app_config)
         js_caller = JSCaller(window)
         window.set_js_caller(js_caller)
 
@@ -62,6 +65,13 @@ class Application:
 
         webview.start(gui=gui)
         #webview.start(gui=gui, debug=True) # 開発者ツールを表示する場合
+
+    # 渡されたウィンドウサイズをスクリーンサイズに収めて返す
+    def adjust_size(self, width: int, height: int) -> tuple[int, int]:
+        screen_width, screen_height = get_screen_size()
+        adj_width = min(width, screen_width)
+        adj_height = min(height, screen_height)
+        return adj_width, adj_height
 
 
 if __name__ == '__main__':
