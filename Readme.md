@@ -191,7 +191,7 @@ Windowsの場合は、Windowsの検索窓で「環境変数を編集」で検索
 
 以下のリンクから ZundaGPT2Lite.ZIP をダウンロードして、作成したフォルダに展開するのだ。
 
-https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.29.0
+https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.30.0
 
 #### 3. 実行
 
@@ -337,11 +337,11 @@ CSSを知らない人はなんのことかわからないかもしれないけ�
 
 VirusTotalでのチェック結果はこちらなのだ。
 
-- **Windows版:** [72個中2個のアンチウィルスエンジンで検出 :2025/09/06 v1.29.0](https://www.virustotal.com/gui/file/66ec59c969d3dc1c37f86787e197ec5f4f7d1d13d768c54fec36652f15626e0e?nocache=1)
-- **Raspberry Pi版:** [62個中0個のアンチウィルスエンジンで検出 :2025/09/06 v1.29.0](https://www.virustotal.com/gui/file/8b00f421fe6d51170df3e3fdcd36d53573c21d9d3acc90f0916ce1a0e1c1497f?nocache=1)
-- **Linux版:** [63個中0個のアンチウィルスエンジンで検出 :2025/09/06 v1.29.0](https://www.virustotal.com/gui/file/1726639deb807187fbf5ad8314b4b8a684c61f34963a684386590a6575b0e459?nocache=1)
+- **Windows版:** [72個中2個のアンチウィルスエンジンで検出 :2025/09/13 v1.30.0](https://www.virustotal.com/gui/file/7605fc84ff75d06968df4c2c17bf725eb5c3db235223652dbe5dda96e4f91088?nocache=1)
+- **Raspberry Pi版:** [62個中0個のアンチウィルスエンジンで検出 :2025/09/13 v1.30.0](https://www.virustotal.com/gui/file/e706bfcf8d29e12b9ba434f5ee87832da0200d52b6830c985a91b1f0729d8eeb?nocache=1)
+- **Linux版:** [64個中0個のアンチウィルスエンジンで検出 :2025/09/13 v1.30.0](https://www.virustotal.com/gui/file/39ad281bc66b61e94aa285945c473b9941dafe856a26721c0458a6b5b6da2dd9?nocache=1)
 
-<img src="doc/virustotal_1.29.0.png" width="600">
+<img src="doc/virustotal_1.30.0.png" width="600">
 
 ### ⚡ 免責事項
 
@@ -405,7 +405,7 @@ VirusTotalでのチェック結果はこちらなのだ。
 
 ### 🔖 pyperclip 1.9.0
 
-ホームページ： https://github.com/asweigart/pyperclip
+ホームページ： https://github.com/asweigart/pyperclip  
 ライセンス：BSD 3-Clause "New" or "Revised" License
 
 ### 🔖 MathJax 3.2.2
@@ -459,6 +459,13 @@ VirusTotalでのチェック結果はこちらなのだ。
 ## 💎 バージョン履歴
 
 <details><summary>過去のバージョンアップの軌跡はこちらなのだ</summary>
+
+### 1.30.0 (2025/09/13)
+
+- ウィンドウサイズの自動保存・復元機能を追加
+- Darkスタイルの修正
+- 言語ファイルの統一
+- コメント・書式の統一
 
 ### 1.29.0 (2025/09/06)
 
