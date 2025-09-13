@@ -322,7 +322,7 @@ License：Apache License 2.0
 
 ### 🔖 pyperclip 1.9.0
 
-Homepage： https://github.com/asweigart/pyperclip
+Homepage： https://github.com/asweigart/pyperclip  
 License：BSD 3-Clause "New" or "Revised" License
 
 ### 🔖 MathJax 3.2.2
@@ -347,7 +347,7 @@ License：MIT license
 
 ### 🔖 Font Awesome Free 6.7.2
 
-Homepage：https://fontawesome.com/
+Homepage：https://fontawesome.com/  
 License：Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License
 
 ### 🔖 pyinstaller-versionfile

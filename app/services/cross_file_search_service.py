@@ -1,4 +1,4 @@
-# ZundaGPT2 Lite
+# ZundaGPT2 / ZundaGPT2 Lite
 #
 # ファイル横断検索画面のサービス
 #

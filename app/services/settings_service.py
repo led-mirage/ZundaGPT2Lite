@@ -1,4 +1,4 @@
-# ZundaGPT2 Lite
+# ZundaGPT2 / ZundaGPT2 Lite
 #
 # 設定画面のサービス
 #
