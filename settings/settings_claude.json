@@ -1,5 +1,5 @@
 {
-    "file_ver": 10,
+    "file_ver": 11,
     "settings": {
         "display_name": "ZundaGPT Claude",
         "description": "Anthropic Claude用設定",
@@ -27,6 +27,21 @@
         "bad_response": "答えられないのだ",
         "history_size": 20,
         "history_char_limit": 0
+    },
+    "custom_style": {
+        "enable": false,
+        "background_image": "",
+        "background_image_opacity": "0.8",
+        "body_bgcolor": "",
+        "header_color": "",
+        "welcome_title_color": "",
+        "welcome_message_color": "",
+        "speaker_name_text_shadow": "",
+        "message_text_bgcolor": "",
+        "message_text_color": "",
+        "message_text_shadow": "",
+        "message_text_border_radius": "",
+        "message_text_em_color": ""
     },
     "claude_options": {
         "max_tokens": 4096,
