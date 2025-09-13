@@ -1,4 +1,4 @@
-# ZundaGPT2 Lite
+# ZundaGPT2 / ZundaGPT2 Lite
 #
 # ログ出力
 #
