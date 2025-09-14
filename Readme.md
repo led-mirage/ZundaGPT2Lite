@@ -191,7 +191,7 @@ Windowsの場合は、Windowsの検索窓で「環境変数を編集」で検索
 
 以下のリンクから ZundaGPT2Lite.ZIP をダウンロードして、作成したフォルダに展開するのだ。
 
-https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.30.0
+https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.30.1
 
 #### 3. 実行
 
@@ -337,11 +337,11 @@ CSSを知らない人はなんのことかわからないかもしれないけ�
 
 VirusTotalでのチェック結果はこちらなのだ。
 
-- **Windows版:** [72個中2個のアンチウィルスエンジンで検出 :2025/09/13 v1.30.0](https://www.virustotal.com/gui/file/7605fc84ff75d06968df4c2c17bf725eb5c3db235223652dbe5dda96e4f91088?nocache=1)
-- **Raspberry Pi版:** [62個中0個のアンチウィルスエンジンで検出 :2025/09/13 v1.30.0](https://www.virustotal.com/gui/file/e706bfcf8d29e12b9ba434f5ee87832da0200d52b6830c985a91b1f0729d8eeb?nocache=1)
-- **Linux版:** [64個中0個のアンチウィルスエンジンで検出 :2025/09/13 v1.30.0](https://www.virustotal.com/gui/file/39ad281bc66b61e94aa285945c473b9941dafe856a26721c0458a6b5b6da2dd9?nocache=1)
+- **Windows版:** [72個中2個のアンチウィルスエンジンで検出 :2025/09/14 v1.30.1](https://www.virustotal.com/gui/file/1522f0f3a66e38739b0904cc209a012aa454cfc4b4faa3d8df4d71eb4e5def17?nocache=1)
+- **Raspberry Pi版:** [62個中0個のアンチウィルスエンジンで検出 :2025/09/14 v1.30.1](https://www.virustotal.com/gui/file/0091949fe42ca316d349895f15a949b269c4eb7e2187ab3308c137bc6c8d11e5?nocache=1)
+- **Linux版:** [63個中0個のアンチウィルスエンジンで検出 :2025/09/14 v1.30.1](https://www.virustotal.com/gui/file/2c3dafa9bb0787127c95b668cea1e585c45ff177e4215733dc1e147031cfc7b4?nocache=1)
 
-<img src="doc/virustotal_1.30.0.png" width="600">
+<img src="doc/virustotal_1.30.1.png" width="600">
 
 ### ⚡ 免責事項
 
@@ -440,7 +440,7 @@ VirusTotalでのチェック結果はこちらなのだ。
 ホームページ：https://github.com/DudeNr33/pyinstaller-versionfile  
 ライセンス：MIT license
 
-### 🔖 PyInstaller 6.14.2
+### 🔖 PyInstaller 6.16.0
 ホームページ： https://github.com/pyinstaller/pyinstaller  
 ライセンス： GPL 2.0 License / Apache License 2.0  
 
@@ -459,6 +459,11 @@ VirusTotalでのチェック結果はこちらなのだ。
 ## 💎 バージョン履歴
 
 <details><summary>過去のバージョンアップの軌跡はこちらなのだ</summary>
+
+### 1.30.1 (2025/09/14)
+
+- fix: ウィンドウの最小化、最大化状態から元に戻す際にウィンドウサイズが固定化されるバグを修正
+- PyInstallerのバージョンを6.16.0に更新
 
 ### 1.30.0 (2025/09/13)
 
