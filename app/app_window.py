@@ -87,9 +87,6 @@ class AppWindow:
 
     def on_restored(self):
         self._is_minimized = self._is_maximized = False
-        self._window.resizable = True
-        self._window.resize(1000,800)
-        print(self._window.resizable)
 
     def on_resized(self, width: int, height: int):
         if self._is_minimized or self._is_maximized:
