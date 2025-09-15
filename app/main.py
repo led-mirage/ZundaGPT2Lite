@@ -6,6 +6,7 @@
 # このソースコードは MITライセンス の下でライセンスされています。
 # ライセンスの詳細については、このプロジェクトのLICENSEファイルを参照してください。
 
+import os
 import platform
 import sys
 
@@ -59,13 +60,16 @@ class Application:
         window.set_raw_window(self._window)
 
         gui = None
+        icon = None
         os_name = platform.system()
         if os_name == "Linux":
             gui = "qt"
+            icon = self.get_resource_path("assets/ZundaGPT2Lite-Icon64.png")
 
-        webview.start(gui=gui)
-        #webview.start(gui=gui, debug=True) # 開発者ツールを表示する場合
+        webview.start(gui=gui, icon=icon)
+        #webview.start(gui=gui, icon=icon, debug=True) # 開発者ツールを表示する場合
 
+    # ウィンドウサイズを調整する
     def adjust_window_size(self, width: int, height: int):
         if sys.platform != "win32": # WindowsはAppWindowのon_shownで処理する
             screen_width, screen_height = get_screen_size()
@@ -74,6 +78,11 @@ class Application:
             return width, height
         else:
             return width, height
+
+    # リソースのパスを取得する
+    def get_resource_path(self, rel):
+        base = getattr(sys, "_MEIPASS", os.path.abspath("."))
+        return os.path.join(base, rel)
 
 
 if __name__ == '__main__':
