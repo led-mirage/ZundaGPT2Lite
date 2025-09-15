@@ -64,7 +64,7 @@ class Application:
         os_name = platform.system()
         if os_name == "Linux":
             gui = "qt"
-            icon = self.get_resource_path("assets/ZundaGPT2Lite-Icon.png")
+            icon = self.get_resource_path("assets/ZundaGPT2Lite-Icon64.png")
 
         webview.start(gui=gui, icon=icon)
         #webview.start(gui=gui, icon=icon, debug=True) # 開発者ツールを表示する場合
