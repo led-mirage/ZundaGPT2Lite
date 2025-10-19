@@ -262,29 +262,18 @@ However, with OpenAI, if you only have one API key, it seems you can't delete it
 
 Above all, please pay close attention to your API keys and usage fees.
 
+### ⚡ Terms of Use
+
+- This application uses external AI service APIs such as **OpenAI**, **Anthropic**, and **Google**.  
+  **Usage conditions and age restrictions follow the terms of service provided by each API provider.**
+
+- The developer assumes **no responsibility** for any damages or issues arising from the use of this application.  
+  **Please use it at your own discretion and risk.**
+
 ### ⚡ Disclaimer
 
-So far, no particular issues have been found, but bugs are inherently potential issues and can never be entirely eliminated. Additionally, please understand that the copyright holder cannot be held liable for any damages you may incur as a result of these bugs. Use the app with this understanding.
-
-### ⚡ Usage Restrictions & Age Requirement
-
-* This application is intended for use by individuals **13 years of age or older**.
-  If you are under 18, you must obtain permission from a parent or legal guardian.
-  If you are under 13, you may **not** use this application.
-
-* The following uses are strictly prohibited:
-
-  * Engaging in criminal or unlawful activities
-  * Harassment, discrimination, or defamation of others
-  * Requests for obscene, excessively violent, or otherwise offensive content
-
-* This application interacts with third-party AI service APIs (e.g., OpenAI, Anthropic, Google, etc.).
-  The **Terms of Service of those providers take precedence** over the use of this application.
-
-* The developer makes **no warranties** and assumes **no liability** for any damages, losses,
-  or legal issues resulting from the use of this application.
-
-**Use at your own risk.**
+While no major issues have been found so far, bugs may still occur.  
+Please understand that the developer cannot be held responsible for any damages or losses caused by such issues.
 
 <div class="page" />
 
@@ -295,17 +284,17 @@ So far, no particular issues have been found, but bugs are inherently potential 
 Homepage: https://github.com/r0x0r/pywebview  
 License: BSD-3-Clause license
 
-### 🔖 openai 1.99.6
+### 🔖 openai 2.5.0
 
 Homepage： https://github.com/openai/openai-python  
 License：Apache License 2.0
 
-### 🔖 google-genai 1.21.1
+### 🔖 google-genai 1.45.0
 
 Homepage： https://github.com/googleapis/python-genai  
 License：Apache License 2.0
 
-### 🔖 anthropic 0.55.0
+### 🔖 anthropic 0.71.0
 
 Homepage： https://github.com/anthropics/anthropic-sdk-python  
 License：MIT license
