@@ -20,7 +20,7 @@ from chat_log import ChatLog
 from const import APP_NAME, APP_VERSION
 from utility.utils import get_location, get_exception_name, to_css_url_format
 from utility.multi_lang import set_current_language, get_text_resource
-from chat.chat import ChatFactory, Chat, SendMessageListener
+from chat import Chat, ChatFactory, SendMessageListener
 
 
 log_settings = get_log_settings()
