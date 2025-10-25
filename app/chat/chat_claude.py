@@ -104,7 +104,7 @@ class ChatClaude(Chat):
                         for c in chunk_content:
                             sentence += c
                             paragraph += c
-                            listener.on_recieve_chunk(c)
+                            listener.on_receive_chunk(c)
 
                             if c == "`":
                                 code_block += 1
@@ -115,18 +115,18 @@ class ChatClaude(Chat):
                                 code_block_inside = not code_block_inside
 
                             if c in ["。", "？", "！"]:
-                                listener.on_recieve_sentence(sentence)
+                                listener.on_receive_sentence(sentence)
                                 sentence = ""
 
                             if not code_block_inside and c in ["\n"]:
-                                listener.on_recieve_paragraph(paragraph)
+                                listener.on_receive_paragraph(paragraph)
                                 paragraph = ""
 
                 if sentence != "":
-                    listener.on_recieve_sentence(sentence)
+                    listener.on_receive_sentence(sentence)
 
                 if paragraph != "":
-                    listener.on_recieve_paragraph(paragraph)
+                    listener.on_receive_paragraph(paragraph)
 
                 if content:
                     self.messages.append({"role": "assistant", "content": content})
