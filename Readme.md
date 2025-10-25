@@ -11,12 +11,16 @@ Copyright (c) 2024-2025 led-mirage
 
 [English](Readme.en.md)
 
-## 💎 最新情報
+## 💎 スクリーンショット
 
-**v1.29.0でキャラクター毎のカスタムスタイルを設定可能になったのだ**✨
+<img src="assets/ZundaGPT2_splash.png" width="200"><br>
 
-キャラクター設定ファイルを編集することで、  
-キャラクター毎の背景画像、テキスト色などを設定できるようになったのだよ！
+<img src="doc/images/screenshot_1.10.0.png" width="600"><br>
+
+↓ カスタムCSSを使って背景画像を設定した例なのだ。
+<img src="doc/images/screenshot_1.28.0.png" width="600"><br>
+
+<div class="page"></div>
 
 ## 💎 アプリの紹介と導入方法
 
@@ -45,20 +49,9 @@ Raspberry Pi、Linuxへの導入に関しても[Zennの記事](https://zenn.dev/
 
 <div class="page"></div>
 
-## 💎 スクリーンショット
-
-<img src="assets/ZundaGPT2_splash.png" width="200"><br>
-
-<img src="doc/screenshot_1.10.0.png" width="600"><br>
-
-↓ カスタムCSSを使って背景画像を設定した例なのだ。
-<img src="doc/screenshot_1.28.0.png" width="600"><br>
-
-<div class="page"></div>
-
 ## 💎 動作確認環境
 
-- Windows 11 Pro 23H2、24H2
+- Windows 11 Pro 23H2、24H2、25H2
 - Raspberry Pi OS Bookworm 64bit
 - Linux Mint 22.1 Cinnamon Edition
 - Python 3.10-3.13（開発環境は 3.12.0）
@@ -72,9 +65,11 @@ Raspberry Pi、Linuxへの導入に関しても[Zennの記事](https://zenn.dev/
 <details><summary>OpenAI（2025/10/19現在）</summary>
 
 - GPT-5 （モデル名：gpt-5）
+- GPT-5 pro （モデル名：gpt-5-pro）
 - GPT-5 mini （モデル名：gpt-5-mini）
 - GPT-5 nano （モデル名：gpt-5-nano）
 - GPT-5 Chat （モデル名：gpt-5-chat-latest）
+- GPT-5-Codex （モデル名：gpt-5-codex）
 - GPT-4.1 （モデル名：gpt-4.1）
 - GPT-4.1 mini （モデル名：gpt-4.1-mini） 無料枠あり
 - GPT-4.1 nano （モデル名：gpt-4.1-nano） 無料枠あり
@@ -177,7 +172,7 @@ OpenAIのAPIキー、またはGoogle Gemini API、またはAnthropic APIのAPI�
 
 Windowsの場合は、Windowsの検索窓で「環境変数を編集」で検索すると設定画面が立ち上がるので、そこでユーザー環境変数を追加すればいいのだ。
 
-<img src="doc/envvar.png" style="width:300px">
+<img src="doc/images/envvar.png" style="width:300px">
 
 <div class="page"></div>
 
@@ -191,7 +186,7 @@ Windowsの場合は、Windowsの検索窓で「環境変数を編集」で検索
 
 以下のリンクから ZundaGPT2Lite.ZIP をダウンロードして、作成したフォルダに展開するのだ。
 
-https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.31.0
+https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.32.0
 
 #### 3. 実行
 
@@ -273,7 +268,7 @@ start pythonw app\main.py
 
 キャラクターの設定ファイル（settings_xxx.json）は`settings`フォルダの中に格納されているから、それをコピーして編集すればOKなのだ。
 
-詳しい設定方法は[こちら](Readme_detail.md)をみて欲しいのだ。
+詳しい設定方法は[こちら](doc/Readme_detail.md)をみて欲しいのだ。
 
 <div class="page"></div>
 
@@ -337,11 +332,11 @@ CSSを知らない人はなんのことかわからないかもしれないけ�
 
 VirusTotalでのチェック結果はこちらなのだ。
 
-- **Windows版:** [72個中2個のアンチウィルスエンジンで検出 :2025/10/19 v1.31.0](https://www.virustotal.com/gui/file/2e3348583a03d98552dab2fc42d14518828bd6bcf6f4d6e4e68185e89b9f90f1/detection)
-- **Raspberry Pi版:** [62個中0個のアンチウィルスエンジンで検出 :2025/10/19 v1.31.0](https://www.virustotal.com/gui/file/edb20ee80af3667766b09fbf17bfc08d036bc0344024efe21dd2660a192e0267/detection)
-- **Linux版:** [63個中0個のアンチウィルスエンジンで検出 :2025/10/19 v1.31.0](https://www.virustotal.com/gui/file/82acb723baf2e19a9e50ba018a3ebcccf3304d8f8c13ea0d992a6e08adb60100/detection)
+- **Windows版:** [72個中2個のアンチウィルスエンジンで検出 :2025/10/26 v1.32.0](https://www.virustotal.com/gui/file/192de4fc154cdc4bca0fc011de638c7fe1eadabd621f804ce4a4642eae2c6a58/detection)
+- **Raspberry Pi版:** [61個中0個のアンチウィルスエンジンで検出 :2025/10/26 v1.32.0](https://www.virustotal.com/gui/file/53d6fa6f16705c8b1b6e4c2c4480d2d2b07f8be17a1fe9597ad6507fbbcca39a/detection)
+- **Linux版:** [63個中0個のアンチウィルスエンジンで検出 :2025/10/26 v1.32.0](https://www.virustotal.com/gui/file/7f104164d82a5ff25aef868b7b0270a3988f0f28f8d01cf7f030b3574b4a284c/detection)
 
-<img src="doc/virustotal_1.31.0.png" width="600">
+<img src="doc/images/virustotal_1.32.0.png" width="600">
 
 ### ⚡ ご利用について
 
@@ -441,7 +436,11 @@ VirusTotalでのチェック結果はこちらなのだ。
 
 ## 💎 バージョン履歴
 
-<details><summary>過去のバージョンアップの軌跡はこちらなのだ</summary>
+### 1.32.0 (2025/10/26)
+
+- OpenAI GPT-5-Codex、GPT-5 proに対応
+- chatパッケージのリファクタリング
+- タイポ修正
 
 ### 1.31.0 (2025/10/19)
 
@@ -464,6 +463,8 @@ VirusTotalでのチェック結果はこちらなのだ。
 - Darkスタイルの修正
 - 言語ファイルの統一
 - コメント・書式の統一
+
+<details><summary>これ以前のバージョンアップの履歴はこちらなのだ</summary>
 
 ### 1.29.0 (2025/09/06)
 

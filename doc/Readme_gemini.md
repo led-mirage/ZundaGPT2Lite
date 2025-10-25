@@ -57,33 +57,33 @@ https://ai.google.dev/aistudio?hl=ja
 
 画面の「Google AI Studioにログイン」ボタンを押して、ログインします。使用しているブラウザでGoogleアカウントにログインしていない場合は、ここでログインを求められます。
 
-<img src="doc/gemini01.png" width="400">
+<img src="images/gemini01.png" width="400">
 
 ログインすると注意事項が表示されますので、よく読んで納得できるようであれば必要な項目をチェックして「続行」ボタンを押します。納得できないようであれば、「キャンセル」ボタンを押してください。Googleのサイトに戻されます。
 
-<img src="doc/gemini02.png" width="400">
+<img src="images/gemini02.png" width="400">
 
 ## 4. APIキーの取得
 
 画面左の「Get API key」を選択し、右側にある「APIキーを作成」ボタンを押します。
 
-<img src="doc/gemini03.png" width="500"><br>
+<img src="images/gemini03.png" width="500"><br>
 
 注意事項を確認したら「OK」ボタンを押します。
 
-<img src="doc/gemini04.png" width="300"><br>
+<img src="images/gemini04.png" width="300"><br>
 
 APIキーを作成するGCPプロジェクトを聞かれますので、新しいプロジェクトを作成するか、既存のプロジェクトを使うかを選択します。GCPって何じゃ？って人は、「新しいプロジェクトでAPIキーを作成」で問題ないと思います。
 
-<img src="doc/gemini05.png" width="300"><br>
+<img src="images/gemini05.png" width="300"><br>
 
 しばらく待つとAPIキーが作成され画面に表示されますので、必要に応じてローカルPC内の安全な場所、例えばパスワード管理ソフトなどに保管します。
 
-<img src="doc/gemini06.png" width="500"><br>
+<img src="images/gemini06.png" width="500"><br>
 
 ブラウザの画面をリフレッシュすると、いま作成したAPIキーの情報が表示されます。プランの欄に「無料」と記載されていれば無料枠での利用となるので安心です。
 
-<img src="doc/gemini07.png" width="500"><br>
+<img src="images/gemini07.png" width="500"><br>
 
 **【重要！】**
 
@@ -103,7 +103,7 @@ APIキーを取得出来たら、ZundaGPT2 LiteでGeminiを利用することが
 
 Windowsの検索窓で「環境変数を編集」で検索すると設定画面が立ち上がるので、そこで「ユーザー環境変数」を新規追加します。変数名を「GEMINI_API_KEY」とし、変数値の欄に取得したAPIキーを記載します。
 
-<img src="doc/gemini08.png" width="500"><br>
+<img src="images/gemini08.png" width="500"><br>
 
 ### 5-2. チャット設定ファイルの編集
 
