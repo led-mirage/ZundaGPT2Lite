@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="ZundaGPT2 Lite - キャラとの対話を楽しめる軽量AIチャットアプリ">
+    <meta property="og:title" content="ZundaGPT2 Lite ダウンロード">
+    <meta property="og:description" content="最新版のZundaGPT2 Liteをこちらからダウンロードできます。">
+    <meta property="og:image" content="./icon.png">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary">
+    <title>ZundaGPT2 Lite ダウンロード</title>
+    <link rel="icon" href="./icon.png" type="image/png">
+    <style>
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+        }
+
+        body {
+            font-family: "Segoe UI", sans-serif;
+            background: #f9fafb;
+            color: #222;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 40px;
+            box-sizing: border-box;
+        }
+
+        img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin-bottom: 0px;
+        }
+
+        h1 {
+            font-size: 1.9rem;
+            margin: 0px 0;
+        }
+
+        .tagline {
+            color: #555;
+            font-size: 1rem;
+            margin-top: 10px;
+            margin-bottom: 15px;
+        }
+
+        .version {
+            color: #666;
+            margin-top: 40px;
+            margin-bottom: 25px;
+        }
+
+        .downloads {
+            display: inline-block;
+            text-align: left;
+            background: #fff;
+            border-radius: 12px;
+            padding: 20px 30px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e5e7eb;
+            min-width: 340px;
+        }
+
+        .downloads a {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #0366d6;
+            text-decoration: none;
+            padding: 12px 10px;
+            border-bottom: 1px solid #e5e7eb;
+            transition: color 0.2s, background 0.2s;
+        }
+
+        .downloads a:hover {
+            background: #f3f4f6;
+            color: #0059c9;
+        }
+
+        .downloads a:last-child {
+            border-bottom: none;
+        }
+
+        .os-label {
+            font-weight: bold;
+        }
+
+        .size {
+            color: #777;
+            font-size: 0.9rem;
+        }
+
+        .footer {
+            color: #999;
+            font-size: 0.85rem;
+            position: fixed;
+            bottom: 10px;
+            width: 100%;
+            text-align: center;
+            background: #f9fafb;
+        }
+    </style>
+</head>
+
+<body>
+    <img src="./icon.png" alt="ZundaGPT2 Lite アイコン">
+    <h1>ZundaGPT2 Lite</h1>
+    <p class="tagline">キャラとの対話を楽しめる軽量AIチャットアプリ</p>
+    <div class="version" id="version">読み込み中...</div>
+    <div class="downloads" id="downloads">取得中...</div>
+
+    <script>
+        const owner = "led-mirage";
+        const repo = "ZundaGPT2Lite";
+
+        function detectOS(name) {
+            if (name.includes("windows")) return "🪟　Windows (x64)";
+            if (name.includes("linux")) return "🐧　Linux (x64)";
+            if (name.includes("raspberrypi")) return "🍓　Raspberry Pi (ARM64)";
+            return "📦 その他";
+        }
+
+        function osOrder(name) {
+            if (name.includes("windows")) return 1;
+            if (name.includes("linux")) return 2;
+            if (name.includes("raspberrypi")) return 3;
+            return 99;
+        }
+
+        async function fetchLatest(isJapanese) {
+            const res = await fetch(`https://api.github.com/repos/${owner}/${repo}/releases/latest`);
+            const data = await res.json();
+
+            const versionLabel = isJapanese ? "最新バージョン" : "Latest Version";
+            const assetsNotFoundText = isJapanese ? "アセットが見つかりませんでした。" : "No assets found.";
+
+            document.getElementById("version").textContent = `${versionLabel}: ${data.tag_name}`;
+            const box = document.getElementById("downloads");
+            box.innerHTML = "";
+
+            if (!data.assets?.length) {
+                box.textContent = assetsNotFoundText;
+                return;
+            }
+
+            const sorted = data.assets.sort((a, b) => osOrder(a.name) - osOrder(b.name));
+
+            for (const asset of sorted) {
+                const sizeMB = (asset.size / (1024 * 1024)).toFixed(1);
+                const osName = detectOS(asset.name);
+
+                const a = document.createElement("a");
+                a.href = asset.browser_download_url;
+                a.target = "_blank";
+                a.innerHTML = `
+          <span class="os-label">${osName}</span>
+          <span class="size">${sizeMB} MB</span>
+        `;
+                box.appendChild(a);
+            }
+        }
+
+        const lang = navigator.language || navigator.userLanguage;
+        const isJapanese = lang.startsWith("ja");
+
+        document.title = isJapanese ? "ZundaGPT2 Lite ダウンロード" : "ZundaGPT2 Lite Download";
+
+        document.querySelector(".tagline").textContent =
+            isJapanese ? "キャラとの対話を楽しめる軽量AIチャットアプリ"
+                : "Lightweight AI chat app for engaging character conversations.";
+
+        document.querySelector("#version").textContent =
+            isJapanese ? "読み込み中..."
+                : "Loading...";
+
+        document.querySelector("#downloads").textContent =
+            isJapanese ? "取得中..."
+                : "Loading...";
+
+        fetchLatest(isJapanese);
+    </script>
+
+    <div class="footer">Unlimited Code Works / © 2024-2025 led-mirage</div>
+</body>
+
+</html>
