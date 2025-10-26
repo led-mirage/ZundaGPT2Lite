@@ -20,7 +20,7 @@ from chat_log import ChatLog
 from const import APP_NAME, APP_VERSION
 from utility.utils import get_location, get_exception_name, to_css_url_format
 from utility.multi_lang import set_current_language, get_text_resource
-from chat.chat import ChatFactory, Chat, SendMessageListener
+from chat import Chat, ChatFactory, SendMessageListener
 
 
 log_settings = get_log_settings()
@@ -207,9 +207,9 @@ class IndexService:
         self.state.chat.send_message(
             text,
             listener=SendMessageListener(
-                self.on_recieve_chunk,
-                self.on_recieve_sentence,
-                self.on_recieve_paragraph,
+                self.on_receive_chunk,
+                self.on_receive_sentence,
+                self.on_receive_paragraph,
                 self.on_non_streaming_start,
                 self.on_non_streaming_end,
                 self.on_end_response,
@@ -222,9 +222,9 @@ class IndexService:
         self.state.chat.send_message(
             self.state.last_send_message,
             listener=SendMessageListener(
-                self.on_recieve_chunk,
-                self.on_recieve_sentence,
-                self.on_recieve_paragraph,
+                self.on_receive_chunk,
+                self.on_receive_sentence,
+                self.on_receive_paragraph,
                 self.on_non_streaming_start,
                 self.on_non_streaming_end,
                 self.on_end_response,
@@ -307,15 +307,15 @@ class IndexService:
             return ""
 
     # チャンク受信イベントハンドラ（Chat）
-    def on_recieve_chunk(self, chunk: str):
+    def on_receive_chunk(self, chunk: str):
         self.window.js.addChunk(chunk)
 
     # センテンス受信イベントハンドラ（Chat）
-    def on_recieve_sentence(self, sentence: str):
+    def on_receive_sentence(self, sentence: str):
         self.window.js.parsedSentence(sentence)
 
     # 段落受信イベントハンドラ（Chat）
-    def on_recieve_paragraph(self, paragraph: str):
+    def on_receive_paragraph(self, paragraph: str):
         self.window.js.parsedParagraph(paragraph)
 
     # 非ストリーミング開始イベントハンドラ（Chat）

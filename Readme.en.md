@@ -11,7 +11,14 @@ Copyright (c) 2024-2025 led-mirage
 
 [Japanese](Readme.md)
 
-## Overview
+## 💎 Screenshot
+
+<img src="doc/screenshot_1.10.0.en.png" width="600">
+
+↓ Example of using custom CSS to set a background image.
+<img src="doc/screenshot_1.28.0.en.png" width="600">
+
+## 💎 Overview
 
 This app lets you chat with AI using APIs.
 
@@ -35,13 +42,6 @@ Main features: ✨
 To use this app on Raspberry Pi or Linux, please refer to this article:  
 https://zenn.dev/ledmirage/articles/3a06a4b2ed8ae6
 
-## Screenshot
-
-<img src="doc/screenshot_1.10.0.en.png" width="600">
-
-↓ Example of using custom CSS to set a background image.
-<img src="doc/screenshot_1.28.0.en.png" width="600">
-
 ## Language Support
 
 To change the language, modify the `language` setting in the `appConfig.json` file:
@@ -61,14 +61,14 @@ The following values can be configured:
 | de      | German   | settings.de.json        | 1.15.0                  |
 | fr      | French   | settings.fr.json        | 1.25.0                  |
 
-## Tested Environments
+## 💎 Tested Environments
 
-- Windows 11 Pro 23H2, 24H2
+- Windows 11 Pro 23H2, 24H2, 25H2
 - Raspberry Pi OS Bookworm 64bit (ZundaGPT2Lite v1.21.0)
 - Linux Mint 22.1 Cinnamon Edition (ZundaGPT2Lite v1.21.0)
 - Python 3.10–3.13 (development environment: 3.12.0)
 
-## Requirements
+## 💎 Requirements
 
 While this app itself is free, one of the following API keys is required to operate it. 
 
@@ -90,7 +90,7 @@ To use this API, an account on [Anthropic Console](https://console.anthropic.com
 
 As of December 29, 2024, the latest model is Claude 3.5 Sonnet.
 
-## Execution Method
+## 💎 Execution Method
 
 ### 🛩️ Setup: Add OS Environment Variables
 
@@ -187,7 +187,7 @@ start pythonw app\main.py
 ```
 <div class="page" />
 
-## Character Settings
+## 💎 Character Settings
 
 You can select different AI personalities by clicking the ⚙️ button in the top-right corner of the screen.
 
@@ -238,7 +238,7 @@ A full list of available variables can be found at the beginning of `app/html/cs
 
 <div class="page" />
 
-## Important Notes
+## 💎 Important Notes
 
 ### ⚡ About OpenAI Usage Fees
 
@@ -277,7 +277,7 @@ Please understand that the developer cannot be held responsible for any damages 
 
 <div class="page" />
 
-## Libraries Used
+## 💎 Libraries Used
 
 ### 🔖 pywebview 5.3.2
 
@@ -350,8 +350,9 @@ License： GPL 2.0 License / Apache License 2.0
 
 <div class="page" />
 
-## License
+## 💎 License
 
 © 2024-2025 led-mirage
 
-This application is released under the [MIT License](https://opensource.org/licenses/MIT). For more details, please refer to the LICENSE file included in the project.
+This application is released under the [MIT License](https://opensource.org/licenses/MIT).   
+For more details, please refer to the LICENSE file included in the project.
