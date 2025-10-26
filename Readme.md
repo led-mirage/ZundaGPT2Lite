@@ -11,6 +11,10 @@ Copyright (c) 2024-2025 led-mirage
 
 [English](Readme.en.md)
 
+## 💎 ダウンロード
+
+🚀 [最新版のダウンロードはこちらなのだ](https://led-mirage.github.io/ZundaGPT2Lite/)
+
 ## 💎 スクリーンショット
 
 <img src="assets/ZundaGPT2_splash.png" width="200"><br>
