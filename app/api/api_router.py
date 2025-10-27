@@ -56,8 +56,8 @@ class ApiRouter:
         return self.index_service.delete_current_chat()
 
     # メッセージ送信イベントハンドラ（UI）
-    def send_message_to_chatgpt(self, text):
-        return self.index_service.send_message_to_chatgpt(text)
+    def send_message_to_chatgpt(self, text, images):
+        return self.index_service.send_message_to_chatgpt(text, images)
 
     # メッセージ再送信イベントハンドラ（UI）
     def retry_send_message_to_chatgpt(self):

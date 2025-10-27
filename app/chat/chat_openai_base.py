@@ -6,6 +6,7 @@
 # このソースコードは MITライセンス の下でライセンスされています。
 # ライセンスの詳細については、このプロジェクトのLICENSEファイルを参照してください。
 
+import copy
 import httpx
 from datetime import datetime
 from httpx import ReadTimeout
@@ -29,36 +30,53 @@ class ChatOpenAIBase(Chat):
     def send_message(
         self,
         text: str,
+        images: list[str],
         listener: SendMessageListener) -> str:
 
         try:
-            return self.send_message_completions_streaming(text, listener)
+            return self.send_message_completions_streaming(text, images, listener)
 
         except StreamNotAllowedError:
             self.messages = self.messages[:-1]
-            return self.send_message_completions_not_streaming(text, listener)
+            return self.send_message_completions_not_streaming(text, images, listener)
 
         except ResponsesApiRequiredError:
             self.messages = self.messages[:-1]
             try:
-                return self.send_message_responses_streaming(text, listener)
+                return self.send_message_responses_streaming(text, images, listener)
             except StreamNotAllowedError:
                 self.messages = self.messages[:-1]
-                return self.send_message_responses_not_streaming(text, listener)
+                return self.send_message_responses_not_streaming(text, images, listener)
 
     # メッセージを送信して回答を得る（Completions API・ストリーミング版）
     def send_message_completions_streaming(
         self,
         text: str,
+        images: list[str],
         listener: SendMessageListener) -> str:
 
         try:
             self.stop_send_event.clear()
 
             self.messages.append({"role": "user", "content": text})
-            messages = self.get_history()
+            messages = copy.deepcopy(self.get_history())
+
+            if len(images) > 0:
+                messages = messages[:-1]
+                content = []
+                if text:
+                    content.append({"type": "text", "text": text})
+
+                for b64 in images:
+                    if not b64.startswith("data:"):
+                        b64 = f"data:image/png;base64,{b64}"
+                    content.append({"type": "image_url", "image_url": {"url": b64}})
+
+                messages.append({"role": "user", "content": content})
+
             if not self.model.startswith("o1") and not self.model.startswith("o3") and self.instruction:
                 messages.insert(0, {"role": "system", "content": self.instruction})
+
             stream = self.client.chat.completions.create(model=self.model, messages=messages, stream=True)
 
             content = ""
@@ -135,6 +153,7 @@ class ChatOpenAIBase(Chat):
     def send_message_completions_not_streaming(
         self,
         text: str,
+        images: list[str],
         listener: SendMessageListener) -> str:
 
         try:
@@ -204,6 +223,7 @@ class ChatOpenAIBase(Chat):
     def send_message_responses_streaming(
         self,
         text: str,
+        images: list[str],
         listener: SendMessageListener) -> str:
 
         try:
@@ -328,6 +348,7 @@ class ChatOpenAIBase(Chat):
     def send_message_responses_not_streaming(
         self,
         text: str,
+        images: list[str],
         listener: SendMessageListener) -> str:
 
         try:

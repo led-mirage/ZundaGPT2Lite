@@ -201,11 +201,12 @@ class IndexService:
             self.window.js.newChat()
 
     # メッセージ送信イベントハンドラ（UI）
-    def send_message_to_chatgpt(self, text):
+    def send_message_to_chatgpt(self, text, images):
         self.window.js.startResponse()
         self.state.last_send_message = text
         self.state.chat.send_message(
             text,
+            images,
             listener=SendMessageListener(
                 self.on_receive_chunk,
                 self.on_receive_sentence,
@@ -221,6 +222,7 @@ class IndexService:
     def retry_send_message_to_chatgpt(self):
         self.state.chat.send_message(
             self.state.last_send_message,
+            None,
             listener=SendMessageListener(
                 self.on_receive_chunk,
                 self.on_receive_sentence,

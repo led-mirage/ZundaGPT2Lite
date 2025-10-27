@@ -75,5 +75,5 @@ class Chat:
         pass
 
     @abstractmethod
-    def send_message(self, text: str, listener: SendMessageListener) -> str:
+    def send_message(self, text: str, images: list[str], listener: SendMessageListener) -> str:
         pass

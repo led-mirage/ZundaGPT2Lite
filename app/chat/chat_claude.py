@@ -59,6 +59,7 @@ class ChatClaude(Chat):
     def send_message(
         self,
         text: str,
+        images: list[str],
         listener: SendMessageListener) -> str:
 
         try:
