@@ -1,6 +1,8 @@
 import { setFontFamilyAndSize, setCopyright, showBody, setClickEventHandler } from "./util.js";
 import { setCurrentLanguage, getTextResource } from "./text-resources.js";
 
+const MAX_PASTED_IMAGES = 10;
+
 let g_userName = "あなた";
 let g_userColor = "#007bff";
 let g_userIcon = "";
@@ -1276,12 +1278,9 @@ function hideProgressModal() {
     modal.style.display = "none";
 }
 
-
-
-
-
-
-
+//------------------------------------------------------------
+// 画像貼り付け処理
+//------------------------------------------------------------
 
 // 画像ペースト対応
 function handleImagePaste(e) {
@@ -1311,9 +1310,17 @@ function handleDragOver(e) {
 // 画像ファイルの読み込み処理を共通化
 function handleImageFile(file) {
     if (!file.type.startsWith('image/')) return;
-    const reader = new FileReader();
-    reader.onload = (event) => addImagePreview(event.target.result);
-    reader.readAsDataURL(file);
+
+    const unsentCount = g_pastedImages.filter(img => !img.sent).length;
+    if (unsentCount < MAX_PASTED_IMAGES) {
+        const reader = new FileReader();
+        reader.onload = (event) => addImagePreview(event.target.result);
+        reader.readAsDataURL(file);
+    }
+    else {
+        const msg = getTextResource("imageLimitAlert").replace("${max}", MAX_PASTED_IMAGES);
+        alert(msg);
+    }
 }
 
 // 画像のプレビューを追加する
@@ -1363,11 +1370,6 @@ function addImagePreview(src) {
 
     scrollToBottom();
 }
-
-
-
-
-
 
 // Pythonから呼び出される関数（グローバルスコープに登録）
 window.applyCustomCSS = applyCustomCSS;
