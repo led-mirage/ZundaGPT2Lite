@@ -161,7 +161,21 @@ class ChatOpenAIBase(Chat):
             listener.on_non_streaming_start()
 
             self.messages.append({"role": "user", "content": text})
-            messages = self.get_history()
+            messages = copy.deepcopy(self.get_history())
+
+            if len(images) > 0:
+                messages = messages[:-1]
+                content = []
+                if text:
+                    content.append({"type": "text", "text": text})
+
+                for b64 in images:
+                    if not b64.startswith("data:"):
+                        b64 = f"data:image/png;base64,{b64}"
+                    content.append({"type": "image_url", "image_url": {"url": b64}})
+
+                messages.append({"role": "user", "content": content})
+
             if not self.model.startswith("o1") and not self.model.startswith("o3") and self.instruction:
                 messages.insert(0, {"role": "system", "content": self.instruction})
 
@@ -251,6 +265,11 @@ class ChatOpenAIBase(Chat):
                 }
 
             responses_input = [convert_message(m) for m in messages]
+
+            if len(images) > 0:
+                last_message = responses_input[-1]
+                for image in images:
+                    last_message["content"].append({"type": "input_image", "image_url": image})
 
             content = ""
             sentence = ""
@@ -360,9 +379,32 @@ class ChatOpenAIBase(Chat):
             if not self.model.startswith("o1") and not self.model.startswith("o3") and self.instruction:
                 messages.insert(0, {"role": "system", "content": self.instruction})
 
+            def convert_message(m):
+                role = m["role"]
+                if role == "assistant":
+                    content_type = "output_text"
+                else:
+                    content_type = "input_text"
+                return {
+                    "role": role,
+                    "content": [
+                        {
+                            "type": content_type,
+                            "text": m["content"],
+                        }
+                    ],
+                }
+
+            responses_input = [convert_message(m) for m in messages]
+
+            if len(images) > 0:
+                last_message = responses_input[-1]
+                for image in images:
+                    last_message["content"].append({"type": "input_image", "image_url": image})
+
             response = self.client.responses.create(
                 model=self.model,
-                input=messages,
+                input=responses_input,
                 timeout=httpx.Timeout(300.0, connect=5.0)
             )
 
