@@ -415,10 +415,11 @@ async function sendMessage() {
     hideChatRetryButton();
     document.getElementById("message").value = "";
 
+    // 送信済み画像を少し薄くする
     const unsentImages = g_pastedImages.filter(i => !i.sent);
     for (const imgObj of unsentImages) {
         imgObj.sent = true;
-        imgObj.element.style.opacity = '0.6';
+        imgObj.element.style.opacity = '0.8';
     }
 
     // Python側に通知
