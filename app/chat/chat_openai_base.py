@@ -61,7 +61,7 @@ class ChatOpenAIBase(Chat):
             self.messages.append({"role": "user", "content": text})
             messages = copy.deepcopy(self.get_history())
 
-            if len(images) > 0:
+            if images and len(images) > 0:
                 messages = messages[:-1]
                 content = []
                 if text:
@@ -163,7 +163,7 @@ class ChatOpenAIBase(Chat):
             self.messages.append({"role": "user", "content": text})
             messages = copy.deepcopy(self.get_history())
 
-            if len(images) > 0:
+            if images and len(images) > 0:
                 messages = messages[:-1]
                 content = []
                 if text:
@@ -266,7 +266,7 @@ class ChatOpenAIBase(Chat):
 
             responses_input = [convert_message(m) for m in messages]
 
-            if len(images) > 0:
+            if images and len(images) > 0:
                 last_message = responses_input[-1]
                 for image in images:
                     last_message["content"].append({"type": "input_image", "image_url": image})
@@ -397,7 +397,7 @@ class ChatOpenAIBase(Chat):
 
             responses_input = [convert_message(m) for m in messages]
 
-            if len(images) > 0:
+            if images and len(images) > 0:
                 last_message = responses_input[-1]
                 for image in images:
                     last_message["content"].append({"type": "input_image", "image_url": image})
