@@ -1,6 +1,8 @@
 import { setFontFamilyAndSize, setCopyright, showBody, setClickEventHandler } from "./util.js";
 import { setCurrentLanguage, getTextResource } from "./text-resources.js";
 
+const MAX_PASTED_IMAGES = 10;
+
 let g_userName = "あなた";
 let g_userColor = "#007bff";
 let g_userIcon = "";
@@ -15,6 +17,7 @@ let g_welcomeMessage = "";
 let g_aiAgentAvailable = false;
 let g_aiAgentCreationError = "";
 let g_savedCSS = {};
+let g_pastedImages = [];    // 添付画像管理配列： { src, sent, element }
 
 // 初期化
 document.addEventListener("DOMContentLoaded", function() {
@@ -56,6 +59,12 @@ document.addEventListener("DOMContentLoaded", function() {
     // コンテキストメニューイベントハンドラの登録
     document.addEventListener("contextmenu", handleContextMenu);
 
+    // 画像貼り付けイベント登録
+    const messageBox = document.getElementById('message');
+    messageBox.addEventListener('paste', handleImagePaste);
+    messageBox.addEventListener('drop', handleImageDrop);
+    messageBox.addEventListener('dragover', handleDragOver);
+    
     autoResize.call(textarea);
 
     function autoResize() {
@@ -406,9 +415,16 @@ async function sendMessage() {
     hideChatRetryButton();
     document.getElementById("message").value = "";
 
+    // 送信済み画像を少し薄くする
+    const unsentImages = g_pastedImages.filter(i => !i.sent);
+    for (const imgObj of unsentImages) {
+        imgObj.sent = true;
+        imgObj.element.style.opacity = '0.8';
+    }
+
     // Python側に通知
     try {
-        await pywebview.api.send_message_to_chatgpt(text);
+        await pywebview.api.send_message_to_chatgpt(text, unsentImages.map(i => i.src));
     }
     catch (error) {
         console.error("Error: " + error)
@@ -1261,6 +1277,99 @@ function showProgressModal(message) {
 function hideProgressModal() {
     const modal = document.getElementById("progress-modal");
     modal.style.display = "none";
+}
+
+//------------------------------------------------------------
+// 画像貼り付け処理
+//------------------------------------------------------------
+
+// 画像ペースト対応
+function handleImagePaste(e) {
+    const items = e.clipboardData?.items;
+    if (!items) return;
+    for (const item of items) {
+        if (item.type.includes('image')) {
+            const file = item.getAsFile();
+            if (file) handleImageFile(file);
+        }
+    }
+}
+
+// 画像ドロップ対応
+function handleImageDrop(e) {
+    e.preventDefault();
+    for (const file of e.dataTransfer.files) {
+        handleImageFile(file);
+    }
+}
+
+// 画像ドロップ時のブラウザデフォルト処理の禁止
+function handleDragOver(e) {
+    e.preventDefault();
+}
+
+// 画像ファイルの読み込み処理を共通化
+function handleImageFile(file) {
+    if (!file.type.startsWith('image/')) return;
+
+    const unsentCount = g_pastedImages.filter(img => !img.sent).length;
+    if (unsentCount < MAX_PASTED_IMAGES) {
+        const reader = new FileReader();
+        reader.onload = (event) => addImagePreview(event.target.result);
+        reader.readAsDataURL(file);
+    }
+    else {
+        const msg = getTextResource("imageLimitAlert").replace("${max}", MAX_PASTED_IMAGES);
+        alert(msg);
+    }
+}
+
+// 画像のプレビューを追加する
+function addImagePreview(src) {
+    showWelcome(false);
+
+    const container = document.createElement('div');
+    container.className = 'image-preview-item';
+    container.style.display = 'inline-block';
+    container.style.position = 'relative';
+    container.style.margin = '6px';
+
+    const img = document.createElement('img');
+    img.src = src;
+    img.style.maxWidth = '160px';
+    img.style.borderRadius = '8px';
+    img.style.boxShadow = '0 0 4px rgba(0,0,0,0.3)';
+    img.style.display = 'block';
+
+    const delBtn = document.createElement('button');
+    delBtn.textContent = '×';
+    delBtn.className = 'delete-image-btn';
+    delBtn.style.position = 'absolute';
+    delBtn.style.top = '-6px';
+    delBtn.style.right = '-6px';
+    delBtn.style.background = '#e74c3c';
+    delBtn.style.color = 'white';
+    delBtn.style.border = 'none';
+    delBtn.style.borderRadius = '50%';
+    delBtn.style.width = '22px';
+    delBtn.style.height = '22px';
+    delBtn.style.cursor = 'pointer';
+    delBtn.style.fontWeight = 'bold';
+    delBtn.style.boxShadow = '0 1px 3px rgba(0,0,0,0.4)';
+
+    delBtn.addEventListener('click', () => {
+        g_pastedImages = g_pastedImages.filter(i => i.src !== src);
+        container.remove();
+    });
+
+    const chatMessages = document.getElementById('chat-messages');
+    container.appendChild(img);
+    container.appendChild(delBtn);
+    chatMessages.appendChild(container);
+
+    g_pastedImages.push({ src, sent: false, element: container });
+
+    scrollToBottom();
 }
 
 // Pythonから呼び出される関数（グローバルスコープに登録）

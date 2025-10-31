@@ -31,6 +31,7 @@ const textResources = {
         summaryContextMenu: "チャットの要約",
         summarizingProgressMessage: "チャットを要約しています...",
         summaryCopiedMessage: "要約をクリップボードにコピーしました",
+        imageLimitAlert: "送信可能な画像は最大 ${max} 枚までです",
         // 設定画面
         settingsTitle: "設定切替",
         settingsColumnSelect: "選択",
@@ -75,6 +76,7 @@ const textResources = {
         summaryContextMenu: "Chat Summary",
         summarizingProgressMessage: "Summarizing chat...",
         summaryCopiedMessage: "Summary copied to clipboard",
+        imageLimitAlert: "You can send up to ${max} images",
         // Settings Screen
         settingsTitle: "Switch Settings",
         settingsColumnSelect: "Select",
@@ -119,6 +121,7 @@ const textResources = {
         summaryContextMenu: "Keskustelun yhteenveto",
         summarizingProgressMessage: "Tiivistetään keskustelua...",
         summaryCopiedMessage: "Yhteenveto kopioitu leikepöydälle",
+        imageLimitAlert: "Voit lähettää enintään ${max} kuvaa",
         // Asetusnäyttö (設定画面)
         settingsTitle: "Vaihda asetuksia",
         settingsColumnSelect: "Valitse",
@@ -163,6 +166,7 @@ const textResources = {
         summaryContextMenu: "Resumen del chat",
         summarizingProgressMessage: "Resumiendo el chat...",
         summaryCopiedMessage: "Resumen copiado al portapapeles",
+        imageLimitAlert: "Puedes enviar hasta ${max} imágenes",
         // Pantalla de configuración (設定画面)
         settingsTitle: "Cambiar configuración",
         settingsColumnSelect: "Seleccionar",
@@ -207,6 +211,7 @@ const textResources = {
         summaryContextMenu: "Chat-Zusammenfassung",
         summarizingProgressMessage: "Chat wird zusammengefasst...",
         summaryCopiedMessage: "Zusammenfassung in die Zwischenablage kopiert",
+        imageLimitAlert: "Du kannst bis zu ${max} Bilder senden",
         // Einstellungsbildschirm (設定画面)
         settingsTitle: "Einstellungen ändern",
         settingsColumnSelect: "Auswählen",
@@ -251,6 +256,7 @@ const textResources = {
         summaryContextMenu: "Résumé du chat",
         summarizingProgressMessage: "Résumé du chat en cours...",
         summaryCopiedMessage: "Résumé copié dans le presse-papiers",
+        imageLimitAlert: "Vous pouvez envoyer jusqu’à ${max} images",
         // Écran des paramètres (設定画面)
         settingsTitle: "Changer les paramètres",
         settingsColumnSelect: "Sélection",

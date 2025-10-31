@@ -33,7 +33,7 @@ One of its key features is the ability to fully customize the AI characters to y
 Main features: ✨
 
 - Supports the three major AI services: OpenAI, Google Gemini, and Anthropic Claude
-- Supports OpenAI API-compatible local LLMs ✨
+- Supports OpenAI API-compatible local LLMs
 - Character customization
 - Markdown and TeX-style math formula support
 - Chat log management
@@ -41,7 +41,8 @@ Main features: ✨
 - Raspberry Pi compatible (X11/LXDE only, only IBus is supported as the input method framework, printing function not supported)
 - Linux Mint compatible (Cinnamon/x64, only IBus is supported as the input method framework, printing function not supported)
 - Dark mode support
-- Custom CSS support ✨
+- Custom CSS support
+- Image-based questions are now supported (experimental, OpenAI only) ✨
 
 To use this app on Raspberry Pi or Linux, please refer to this article:  
 https://zenn.dev/ledmirage/articles/3a06a4b2ed8ae6
