@@ -36,7 +36,7 @@ ZundaGPT2 Liteは[ZundaGPT2](https://github.com/led-mirage/ZundaGPT2)から音�
 このアプリのアピールポイントは次のとおりなのだ✨
 
 - ３大AIサービス（OpenAI、Google Gemini、Anthropic Claude）に対応
-- ローカルLLM（OpenAI API互換）に対応✨
+- ローカルLLM（OpenAI API互換）に対応
 - 柔軟なキャラクターカスタマイズ機能
 - マークダウン表示、TeX形式の数式表示機能
 - 過去ログ管理機能
@@ -44,7 +44,8 @@ ZundaGPT2 Liteは[ZundaGPT2](https://github.com/led-mirage/ZundaGPT2)から音�
 - Raspberry Pi対応（X11/LXDE、日本語入力はIBus限定、印刷機能は非対応）
 - Linux Mint対応（Cinnamon/x64、日本語入力はIBus限定、印刷機能は非対応）
 - ダークモード対応
-- スタイルシート（CSS）をカスタマイズ可能✨
+- スタイルシート（CSS）をカスタマイズ可能
+- 画像を使った質問が可能（実験的機能、OpenAIのみ）✨
 
 アプリの紹介と、もっとも手軽な導入方法を[Zennの記事](https://zenn.dev/ledmirage/articles/7650f36d3a784a)にしたので、そちらも参考にしてほしいのだ✨  
 記事はZundaGPT2のものだけど、導入方法はほぼ同じなのだ。
@@ -190,7 +191,7 @@ Windowsの場合は、Windowsの検索窓で「環境変数を編集」で検索
 
 以下のリンクから ZundaGPT2Lite.ZIP をダウンロードして、作成したフォルダに展開するのだ。
 
-https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.32.0
+https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.33.0
 
 #### 3. 実行
 
@@ -336,11 +337,11 @@ CSSを知らない人はなんのことかわからないかもしれないけ�
 
 VirusTotalでのチェック結果はこちらなのだ。
 
-- **Windows版:** [72個中2個のアンチウィルスエンジンで検出 :2025/10/26 v1.32.0](https://www.virustotal.com/gui/file/192de4fc154cdc4bca0fc011de638c7fe1eadabd621f804ce4a4642eae2c6a58/detection)
-- **Raspberry Pi版:** [61個中0個のアンチウィルスエンジンで検出 :2025/10/26 v1.32.0](https://www.virustotal.com/gui/file/53d6fa6f16705c8b1b6e4c2c4480d2d2b07f8be17a1fe9597ad6507fbbcca39a/detection)
-- **Linux版:** [63個中0個のアンチウィルスエンジンで検出 :2025/10/26 v1.32.0](https://www.virustotal.com/gui/file/7f104164d82a5ff25aef868b7b0270a3988f0f28f8d01cf7f030b3574b4a284c/detection)
+- **Windows版:** [71個中1個のアンチウィルスエンジンで検出 :2025/10/30 v1.33.0](https://www.virustotal.com/gui/file/8d13df43a1a17e6329024830268e8b36d38588040ebeb695aa3f0c636249823f/detection)
+- **Raspberry Pi版:** [62個中0個のアンチウィルスエンジンで検出 :2025/10/31 v1.33.0](https://www.virustotal.com/gui/file/7b5b05ac856661bde8ffa8e87144ef96a910a80d44f12a648170f7b1b6f43b48/detection)
+- **Linux版:** [62個中0個のアンチウィルスエンジンで検出 :2025/10/31 v1.33.0](https://www.virustotal.com/gui/file/b40c248525648a49825c2b21e63b6a70b93f708c01bc77a06647897cd203a60b/detection)
 
-<img src="doc/images/virustotal_1.32.0.png" width="600">
+<img src="doc/images/virustotal_1.33.0.png" width="600">
 
 ### ⚡ ご利用について
 
@@ -440,6 +441,13 @@ VirusTotalでのチェック結果はこちらなのだ。
 
 ## 💎 バージョン履歴
 
+### 1.33.0 (2025/10/31)
+
+- 画像送信機能の追加（実験的機能）
+  - OpenAIのみ、最大送信枚数：10枚
+  - テキストボックス内にドラッグ＆ドロップするか、クリップボードから貼り付けてください
+  - 貼り付けた画像は１回につき１度だけ送信され、チャットログには保存されません
+
 ### 1.32.0 (2025/10/26)
 
 - OpenAI GPT-5-Codex、GPT-5 proに対応
@@ -461,14 +469,14 @@ VirusTotalでのチェック結果はこちらなのだ。
 - fix: ウィンドウの最小化、最大化状態から元に戻す際にウィンドウサイズが固定化されるバグを修正
 - PyInstallerのバージョンを6.16.0に更新
 
+<details><summary>これ以前のバージョンアップの履歴はこちらなのだ</summary>
+
 ### 1.30.0 (2025/09/13)
 
 - ウィンドウサイズの自動保存・復元機能を追加
 - Darkスタイルの修正
 - 言語ファイルの統一
 - コメント・書式の統一
-
-<details><summary>これ以前のバージョンアップの履歴はこちらなのだ</summary>
 
 ### 1.29.0 (2025/09/06)
 
