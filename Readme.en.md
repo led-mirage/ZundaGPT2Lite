@@ -17,10 +17,10 @@ Copyright (c) 2024-2025 led-mirage
 
 ## 💎 Screenshot
 
-<img src="doc/screenshot_1.10.0.en.png" width="600">
+<img src="doc/images/screenshot_1.10.0.en.png" width="600">
 
 ↓ Example of using custom CSS to set a background image.
-<img src="doc/screenshot_1.28.0.en.png" width="600">
+<img src="doc/images/screenshot_1.28.0.en.png" width="600">
 
 ## 💎 Overview
 
