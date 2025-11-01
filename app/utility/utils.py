@@ -8,12 +8,16 @@
 
 import base64
 import inspect
+import io
 import mimetypes
 import os
+import re
 import sys
 import tkinter as tk
 from pathlib import Path
 from urllib.parse import urlparse
+
+from PIL import Image
 
 
 # 文字をエスケープする
@@ -90,3 +94,60 @@ def get_screen_size(window_handle=None) -> tuple[int, int]:
         except Exception:
             # 取得できない場合はデフォルトサイズを返す
             return 800, 600
+
+# data URL 形式の文字列を解析して (media_type, subtype, base64_data) を返す
+# 想定外の形式の場合は ('image/png', 'png', data_url) を返す
+def parse_data_url(data_url: str) -> tuple[str, str, str]:
+    if not isinstance(data_url, str):
+        return "image/png", "png", ""
+
+    match = re.match(r"^data:(.*?);base64,(.*)$", data_url)
+    if match:
+        media_type = match.group(1).strip() or "image/png"
+        b64_data = match.group(2).strip()
+
+        # 画像タイプ部分だけ抽出する
+        subtype_match = re.match(r"^image/(\w+)$", media_type)
+        subtype = subtype_match.group(1) if subtype_match else "png"
+
+        return media_type, subtype, b64_data
+    else:
+        # 想定外の場合はPNG扱い
+        return "image/png", "png", data_url.strip()
+
+# Base64エンコードされた画像データを指定サイズ以下に圧縮する
+def resize_base64_image(b64_data: str, max_size_mb: float, output_format="JPEG", quality_step=5) -> str:
+    img_bytes = base64.b64decode(b64_data)
+    image = Image.open(io.BytesIO(img_bytes))
+    size_mb = len(img_bytes) / (1024 * 1024)
+    if size_mb <= max_size_mb:
+        return b64_data
+
+    buffer = io.BytesIO()
+    if output_format.upper() == "JPEG":
+        # JPEGは画質を下げながら圧縮
+        quality = 95
+        while True:
+            buffer = io.BytesIO()
+            image.save(buffer, format="JPEG", quality=quality)
+            new_data = buffer.getvalue()
+            new_size = len(new_data) / (1024 * 1024)
+            if new_size <= max_size_mb or quality <= 10:
+                break
+            quality -= quality_step
+
+    else:
+        # PNGなどはリサイズ主体で対応
+        width, height = image.size
+        while True:
+            buffer = io.BytesIO()
+            image.save(buffer, format=output_format, optimize=True, compress_level=9)
+            new_data = buffer.getvalue()
+            new_size = len(new_data) / (1024 * 1024)
+            if new_size <= max_size_mb or (width < 100 or height < 100):
+                break
+            # サイズがまだ大きいなら10%ずつ縮小
+            width, height = int(width * 0.9), int(height * 0.9)
+            image = image.resize((width, height), Image.LANCZOS)
+
+    return base64.b64encode(buffer.getvalue()).decode("utf-8")
