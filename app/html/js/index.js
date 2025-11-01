@@ -1366,10 +1366,40 @@ function addImagePreview(src) {
     container.appendChild(img);
     container.appendChild(delBtn);
     chatMessages.appendChild(container);
+    enlargeImage(img);
 
     g_pastedImages.push({ src, sent: false, element: container });
 
     scrollToBottom();
+}
+
+// 貼り付けた画像の拡大処理
+function enlargeImage(img) {
+    img.addEventListener('click', () => {
+        const modal = document.createElement('div');
+        modal.style.position = 'fixed';
+        modal.style.top = 0;
+        modal.style.left = 0;
+        modal.style.width = '100vw';
+        modal.style.height = '100vh';
+        modal.style.background = 'rgba(0,0,0,0.7)';
+        modal.style.display = 'flex';
+        modal.style.alignItems = 'center';
+        modal.style.justifyContent = 'center';
+        modal.style.zIndex = 99999;
+
+        const bigImg = document.createElement('img');
+        bigImg.src = img.src;
+        bigImg.style.maxWidth = '90%';
+        bigImg.style.maxHeight = '90%';
+        bigImg.style.borderRadius = '8px';
+        bigImg.style.boxShadow = '0 0 10px rgba(0,0,0,0.5)';
+
+        modal.appendChild(bigImg);
+        document.body.appendChild(modal);
+
+        modal.addEventListener('click', () => modal.remove());
+    });
 }
 
 // Pythonから呼び出される関数（グローバルスコープに登録）
