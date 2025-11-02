@@ -42,7 +42,7 @@ Main features: ✨
 - Linux Mint compatible (Cinnamon/x64, only IBus is supported as the input method framework, printing function not supported)
 - Dark mode support
 - Custom CSS support
-- Image-based questions are now supported (experimental, OpenAI only) ✨
+- Image-based questions are now supported (experimental) ✨
 
 To use this app on Raspberry Pi or Linux, please refer to this article:  
 https://zenn.dev/ledmirage/articles/3a06a4b2ed8ae6
@@ -318,6 +318,11 @@ License：Apache License 2.0
 
 Homepage： https://github.com/asweigart/pyperclip  
 License：BSD 3-Clause "New" or "Revised" License
+
+### 🔖 Pillow 12.0.0
+
+Homepage： https://github.com/python-pillow/Pillow  
+License：MIT-CMU license
 
 ### 🔖 MathJax 3.2.2
 
