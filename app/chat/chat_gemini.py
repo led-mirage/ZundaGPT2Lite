@@ -16,6 +16,7 @@ from google.genai import errors as GenaiErrors
 
 from .chat import Chat
 from .listener import SendMessageListener
+from utility.utils import parse_data_url, resize_base64_image
 from utility.multi_lang import get_text_resource
 
 
@@ -62,9 +63,25 @@ class ChatGemini(Chat):
         try:
             self.stop_send_event.clear()
 
-            self.messages.append({"role": "user", "content": text})
+            user_parts = [{"text": text}]
+            for img_dataurl in images or []:
+                media_type, image_format, b64 = parse_data_url(img_dataurl)
+                b64 = resize_base64_image(b64, max_size_mb=15.0, output_format=image_format)
+                user_parts.append({
+                    "inline_data": {
+                        "mime_type": media_type,
+                        "data": b64
+                    }
+                })
+
             messages = copy.deepcopy(self.get_history())
             messages = self.convert_messages(messages)
+            messages.append({"role": "user", "parts": user_parts})
+            self.messages.append({"role": "user", "content": text})
+
+            #self.messages.append({"role": "user", "content": text})
+            #messages = copy.deepcopy(self.get_history())
+            #messages = self.convert_messages(messages)
 
             stream = self.client.models.generate_content_stream(
                 model=self.model,

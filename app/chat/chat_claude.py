@@ -6,6 +6,7 @@
 # このソースコードは MITライセンス の下でライセンスされています。
 # ライセンスの詳細については、このプロジェクトのLICENSEファイルを参照してください。
 
+import copy
 import os
 from datetime import datetime
 
@@ -13,6 +14,7 @@ import anthropic
 
 from .chat import Chat
 from .listener import SendMessageListener
+from utility.utils import parse_data_url, resize_base64_image
 from utility.multi_lang import get_text_resource
 
 
@@ -66,7 +68,22 @@ class ChatClaude(Chat):
             self.stop_send_event.clear()
 
             self.messages.append({"role": "user", "content": text})
-            messages = self.get_history()
+            messages = copy.deepcopy(self.get_history())
+
+            if images and len(images) > 0:
+                messages = messages[:-1]
+                content = []
+                if text:
+                    content.append({"type": "text", "text": text})
+
+                for image in images:
+                    media_type, image_format, b64 = parse_data_url(image)
+                    b64 = resize_base64_image(b64, max_size_mb=3.0, output_format=image_format)
+                    content.append(
+                        {"type": "image", "source": {"type": "base64", "media_type": media_type, "data": b64}}
+                    )
+
+                messages.append({"role": "user", "content": content})
 
             content = ""
             sentence = ""
