@@ -20,6 +20,8 @@ from utility.multi_lang import get_text_resource
 
 # Anthropic Claude チャットクラス
 class ChatClaude(Chat):
+    MAX_IMAGE_SIZE_MB = 4.0
+
     def __init__(self, model: str, instruction: str, bad_response: str, history_size: int, history_char_limit: int,
                  api_key_envvar: str=None, claude_options: dict=None):
 
@@ -78,7 +80,7 @@ class ChatClaude(Chat):
 
                 for image in images:
                     media_type, image_format, b64 = parse_data_url(image)
-                    b64 = resize_base64_image(b64, max_size_mb=3.0, output_format=image_format)
+                    b64 = resize_base64_image(b64, max_size_mb=self.MAX_IMAGE_SIZE_MB, output_format=image_format)
                     content.append(
                         {"type": "image", "source": {"type": "base64", "media_type": media_type, "data": b64}}
                     )

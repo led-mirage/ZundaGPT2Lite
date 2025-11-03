@@ -13,11 +13,15 @@ from httpx import ReadTimeout
 
 from openai import APITimeoutError, AuthenticationError, NotFoundError, BadRequestError
 
+from utility.utils import parse_data_url, resize_base64_image
 from .chat import Chat
 from .listener import SendMessageListener
 from .error import StreamNotAllowedError, ResponsesApiRequiredError
 
+
 class ChatOpenAIBase(Chat):
+    MAX_IMAGE_SIZE_MB = 10.0
+
     # メッセージを送信して回答を得る（同期処理、一度きりの質問）
     def send_onetime_message(self, text:str):
         messages = []
@@ -67,10 +71,11 @@ class ChatOpenAIBase(Chat):
                 if text:
                     content.append({"type": "text", "text": text})
 
-                for b64 in images:
-                    if not b64.startswith("data:"):
-                        b64 = f"data:image/png;base64,{b64}"
-                    content.append({"type": "image_url", "image_url": {"url": b64}})
+                for image in images:
+                    media_type, subtype, b64 = parse_data_url(image)
+                    b64 = resize_base64_image(b64, max_size_mb=self.MAX_IMAGE_SIZE_MB, output_format=subtype)
+                    data_url = f"data:{media_type};base64,{b64}"
+                    content.append({"type": "image_url", "image_url": {"url": data_url}})
 
                 messages.append({"role": "user", "content": content})
 
@@ -169,10 +174,11 @@ class ChatOpenAIBase(Chat):
                 if text:
                     content.append({"type": "text", "text": text})
 
-                for b64 in images:
-                    if not b64.startswith("data:"):
-                        b64 = f"data:image/png;base64,{b64}"
-                    content.append({"type": "image_url", "image_url": {"url": b64}})
+                for image in images:
+                    media_type, subtype, b64 = parse_data_url(image)
+                    b64 = resize_base64_image(b64, max_size_mb=self.MAX_IMAGE_SIZE_MB, output_format=subtype)
+                    data_url = f"data:{media_type};base64,{b64}"
+                    content.append({"type": "image_url", "image_url": {"url": data_url}})
 
                 messages.append({"role": "user", "content": content})
 
@@ -269,7 +275,10 @@ class ChatOpenAIBase(Chat):
             if images and len(images) > 0:
                 last_message = responses_input[-1]
                 for image in images:
-                    last_message["content"].append({"type": "input_image", "image_url": image})
+                    media_type, subtype, b64 = parse_data_url(image)
+                    b64 = resize_base64_image(b64, max_size_mb=self.MAX_IMAGE_SIZE_MB, output_format=subtype)
+                    data_url = f"data:{media_type};base64,{b64}"
+                    last_message["content"].append({"type": "input_image", "image_url": data_url})
 
             content = ""
             sentence = ""
@@ -400,7 +409,10 @@ class ChatOpenAIBase(Chat):
             if images and len(images) > 0:
                 last_message = responses_input[-1]
                 for image in images:
-                    last_message["content"].append({"type": "input_image", "image_url": image})
+                    media_type, subtype, b64 = parse_data_url(image)
+                    b64 = resize_base64_image(b64, max_size_mb=self.MAX_IMAGE_SIZE_MB, output_format=subtype)
+                    data_url = f"data:{media_type};base64,{b64}"
+                    last_message["content"].append({"type": "input_image", "image_url": data_url})
 
             response = self.client.responses.create(
                 model=self.model,

@@ -22,6 +22,8 @@ from utility.multi_lang import get_text_resource
 
 # Google Gemini チャットクラス
 class ChatGemini(Chat):
+    MAX_IMAGE_SIZE_MB = 10.0
+
     def __init__(self, model: str, instruction: str, bad_response: str, history_size: int, history_char_limit: int,
                  api_key_envvar: str=None, gemini_option: dict=None):
 
@@ -66,7 +68,7 @@ class ChatGemini(Chat):
             user_parts = [{"text": text}]
             for img_dataurl in images or []:
                 media_type, image_format, b64 = parse_data_url(img_dataurl)
-                b64 = resize_base64_image(b64, max_size_mb=15.0, output_format=image_format)
+                b64 = resize_base64_image(b64, max_size_mb=self.MAX_IMAGE_SIZE_MB, output_format=image_format)
                 user_parts.append({
                     "inline_data": {
                         "mime_type": media_type,
