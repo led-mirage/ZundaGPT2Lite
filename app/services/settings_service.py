@@ -53,10 +53,16 @@ class SettingsService:
             })
         return view_model
 
-    # 設定画面編集イベントハンドラ（UI）
+    # 設定画面・設定編集イベントハンドラ（UI）
     def edit_settings(self, settings_file):
         path = Settings(settings_file).get_path()
         self.open_file(path)
+
+    # 設定画面・設定削除イベントハンドラ（UI）
+    def delete_settings(self, settings_file):
+        path = Settings(settings_file).get_path()
+        if os.path.exists(path):
+            os.remove(path)
 
     # ファイルを開く
     def open_file(self, path):

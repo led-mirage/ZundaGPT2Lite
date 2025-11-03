@@ -99,9 +99,13 @@ class ApiRouter:
     def get_settings_files(self):
         return self.settings_service.get_settings_files()
 
-    # 設定画面編集イベントハンドラ（UI）
+    # 設定画面・設定編集イベントハンドラ（UI）
     def edit_settings(self, settings_file):
         return self.settings_service.edit_settings(settings_file)
+    
+    # 設定画面・設定削除イベントハンドラ（UI）
+    def delete_settings(self, settings_file):
+        return self.settings_service.delete_settings(settings_file)
 
     # 設定画面確定イベントハンドラ（UI）
     def submit_settings(self, settings_file):
