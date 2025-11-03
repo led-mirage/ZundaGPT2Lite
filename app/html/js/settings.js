@@ -204,7 +204,7 @@ function createDetailCell(item) {
     // 右側：ゴミ箱ボタン
     const deleteBtn = document.createElement("button");
     deleteBtn.textContent = "🗑️";
-    deleteBtn.title = "削除";
+    deleteBtn.title = getTextResource("deleteButtonTooltip");
     deleteBtn.style.cursor = "pointer";
     deleteBtn.style.background = "transparent";
     deleteBtn.style.border = "none";
@@ -213,13 +213,15 @@ function createDetailCell(item) {
 
     deleteBtn.addEventListener("click", async (event) => {
         event.stopPropagation();
-        if (confirm(`${item.filename} を削除しますか？`)) {
+        const confirmMessage = getTextResource("settingsDeleteConfirm")
+            .replace("${filename}", item.filename);
+        if (confirm(confirmMessage)) {
             try {
                 await pywebview.api.delete_settings(item.filename);
                 await refresh();
             } catch (error) {
                 console.error("Error deleting settings: " + error);
-                alert("削除に失敗しました。");
+                alert(getTextResource("settingsDeleteFailureMessage"));
             }
         }
     });
