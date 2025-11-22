@@ -479,6 +479,7 @@ function escapeHtml(text) {
 // Markdown用のエスケープ処理
 function escapeMarkdown(text) {
     return text
+        .replace(/\\/g, "\\\\")
         .replace(/`/g, "\\`")
         .replace(/</g, "&lt;")
         .replace(/>/g, "&gt;");
