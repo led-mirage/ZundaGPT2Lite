@@ -204,7 +204,7 @@ function createDetailCell(item) {
     // 右側：ゴミ箱ボタン
     const deleteBtn = document.createElement("button");
     deleteBtn.textContent = "🗑️";
-    deleteBtn.title = getTextResource("deleteButtonTooltip");
+    deleteBtn.title = getTextResource("settingsDeleteButtonTooltip");
     deleteBtn.style.cursor = "pointer";
     deleteBtn.style.background = "transparent";
     deleteBtn.style.border = "none";
