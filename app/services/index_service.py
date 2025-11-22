@@ -222,6 +222,7 @@ class IndexService:
 
     # メッセージ再送信イベントハンドラ（UI）
     def retry_send_message_to_chatgpt(self):
+        self.state.chat.messages.pop()  # 最後のメッセージを削除（削除しないと重複する）
         self.state.chat.send_message(
             self.state.last_send_message,
             self.last_sent_images,

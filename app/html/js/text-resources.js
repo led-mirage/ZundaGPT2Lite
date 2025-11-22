@@ -37,6 +37,9 @@ const textResources = {
         settingsColumnSelect: "選択",
         settingsColumnDisplayName: "表示名",
         settingsColumnDescription: "説明",
+        settingsDeleteButtonTooltip: "設定削除",
+        settingsDeleteConfirm: "\"${filename}\" を削除しますか？",
+        settingsDeleteFailureMessage: "削除に失敗しました",
         // ファイル横断検索画面
         crossFileSearchTitle: "ファイル横断検索",
         crossFileSearchColumnResult: "検索結果",
@@ -82,6 +85,9 @@ const textResources = {
         settingsColumnSelect: "Select",
         settingsColumnDisplayName: "Display Name",
         settingsColumnDescription: "Description",
+        settingsDeleteButtonTooltip: "Delete settings",
+        settingsDeleteConfirm: "Are you sure you want to delete \"${filename}\"?",
+        settingsDeleteFailureMessage: "Failed to delete",
         // Cross-File Search Screen
         crossFileSearchTitle: "Cross-File Search",
         crossFileSearchColumnResult: "Search Result",
@@ -127,6 +133,9 @@ const textResources = {
         settingsColumnSelect: "Valitse",
         settingsColumnDisplayName: "Näytettävä nimi",
         settingsColumnDescription: "Kuvaus",
+        settingsDeleteButtonTooltip: "Poista asetukset",
+        settingsDeleteConfirm: "Haluatko varmasti poistaa \"${filename}\"?",
+        settingsDeleteFailureMessage: "Poistaminen epäonnistui",
         // Tiedostojen välinen haku (ファイル横断検索)
         crossFileSearchTitle: "Tiedostojen välinen haku",
         crossFileSearchColumnResult: "Hakutulos",
@@ -172,6 +181,9 @@ const textResources = {
         settingsColumnSelect: "Seleccionar",
         settingsColumnDisplayName: "Nombre visible",
         settingsColumnDescription: "Descripción",
+        settingsDeleteButtonTooltip: "Eliminar configuración",
+        settingsDeleteConfirm: "¿Estás seguro de que deseas eliminar \"${filename}\"?",
+        settingsDeleteFailureMessage: "Error al eliminar",
         // Pantalla de búsqueda entre archivos (ファイル横断検索画面)
         crossFileSearchTitle: "Búsqueda entre archivos",
         crossFileSearchColumnResult: "Resultado de la búsqueda",
@@ -217,6 +229,9 @@ const textResources = {
         settingsColumnSelect: "Auswählen",
         settingsColumnDisplayName: "Anzeigename",
         settingsColumnDescription: "Beschreibung",
+        settingsDeleteButtonTooltip: "Einstellungen löschen",
+        settingsDeleteConfirm: "Möchten Sie \"${filename}\" wirklich löschen?",
+        settingsDeleteFailureMessage: "Löschen fehlgeschlagen",
         // Dateiübergreifende Suche (ファイル横断検索)
         crossFileSearchTitle: "Dateiübergreifende Suche",
         crossFileSearchColumnResult: "Suchergebnis",
@@ -262,6 +277,9 @@ const textResources = {
         settingsColumnSelect: "Sélection",
         settingsColumnDisplayName: "Nom d'affichage",
         settingsColumnDescription: "Description",
+        settingsDeleteButtonTooltip: "Supprimer les paramètres",
+        settingsDeleteConfirm: "Voulez-vous vraiment supprimer \"${filename}\" ?",
+        settingsDeleteFailureMessage: "Échec de la suppression",
         // Écran de recherche inter-fichiers (ファイル横断検索)
         crossFileSearchTitle: "Recherche inter-fichiers",
         crossFileSearchColumnResult: "Résultat de recherche",

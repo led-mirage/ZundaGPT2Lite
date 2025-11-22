@@ -67,8 +67,12 @@ Raspberry Pi、Linuxへの導入に関しても[Zennの記事](https://zenn.dev/
 
 動作確認済みのモデルは以下の通りなのだ。
 
-<details><summary>OpenAI（2025/10/19現在）</summary>
+<details><summary>OpenAI（2025/11/22現在）</summary>
 
+- GPT-5.1 （モデル名：gpt-5.1）
+- GPT-5.1 Chat （モデル名：gpt-5.1-chat-latest）
+- GPT-5.1 Codex （モデル名：gpt-5.1-codex）
+- GPT-5.1 Codex mini（モデル名：gpt-5.1-codex-mini）
 - GPT-5 （モデル名：gpt-5）
 - GPT-5 pro （モデル名：gpt-5-pro）
 - GPT-5 mini （モデル名：gpt-5-mini）
@@ -191,7 +195,7 @@ Windowsの場合は、Windowsの検索窓で「環境変数を編集」で検索
 
 以下のリンクから ZundaGPT2Lite.ZIP をダウンロードして、作成したフォルダに展開するのだ。
 
-https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.34.0
+https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.35.0
 
 #### 3. 実行
 
@@ -337,11 +341,11 @@ CSSを知らない人はなんのことかわからないかもしれないけ�
 
 VirusTotalでのチェック結果はこちらなのだ。
 
-- **Windows版:** [72個中2個のアンチウィルスエンジンで検出 :2025/11/02 v1.34.0](https://www.virustotal.com/gui/file/299d2a2c705c3995cb7f38f2cadb71a717d33f346b7204a691dc8debe4220de9/detection)
-- **Raspberry Pi版:** [59個中0個のアンチウィルスエンジンで検出 :2025/11/02 v1.34.0](https://www.virustotal.com/gui/file/0d341bb5490b6697618a7676c8e1f968089a1f00be71ae3ad83043ae6457c18f/detection)
-- **Linux版:** [62個中0個のアンチウィルスエンジンで検出 :2025/11/02 v1.34.0](https://www.virustotal.com/gui/file/7e79c3c0759d7371e7482da3986b6573c147895a47ff8e89b843d24d68a1e8e5/detection)
+- **Windows版:** [72個中2個のアンチウィルスエンジンで検出 :2025/11/22 v1.35.0](https://www.virustotal.com/gui/file/60306ff9ce1e8994a540223e187a934130abd778474bc2a86044f2d0a9156d38/detection)
+- **Raspberry Pi版:** [62個中0個のアンチウィルスエンジンで検出 :2025/11/22 v1.35.0](https://www.virustotal.com/gui/file/ff7f166fded33f400ebe6b7ce784756be0b670a6900fa7dcd69f7a2596040599/detection)
+- **Linux版:** [63個中0個のアンチウィルスエンジンで検出 :2025/11/22 v1.35.0](https://www.virustotal.com/gui/file/ec957817d1e6be0a8eb4c0d41ad209d99bd7dfcdb4d8e1ba6de4ffbc5ac39155/detection)
 
-<img src="doc/images/virustotal_1.34.0.png" width="600">
+<img src="doc/images/virustotal_1.35.0.png" width="600">
 
 ### ⚡ ご利用について
 
@@ -446,6 +450,15 @@ VirusTotalでのチェック結果はこちらなのだ。
 
 ## 💎 バージョン履歴
 
+### 1.35.0 (2025/11/22)
+
+- キャラ設定の削除機能を追加
+- 送信画像のサイズ調整機能を追加または調整
+- AI応答メッセージ表示ロジックの改善
+- Fix: GTP-5 Codex系のモデルを使用した際にレスポンスを処理できない問題を修正
+- Fix: タイムアウト時などにメッセージを再送した際、ユーザーの発言が重複して残ってしまう問題を修正
+- Fix: カスタムCSSが有効なとき、background_imageが設定されていないとエラーになる問題を修正
+
 ### 1.34.0 (2025/11/02)
 
 - 画像送信機能の追加（実験的機能）
@@ -471,6 +484,8 @@ VirusTotalでのチェック結果はこちらなのだ。
 - google-genaiライブラリを1.45.0に更新
 - anthropicライブラリを0.71.0に更新
 
+<details><summary>これ以前のバージョンアップの履歴はこちらなのだ</summary>
+
 ### 1.30.2 (2025/09/15)
 
 - タスクバーに表示されるアイコンをアプリのアイコンに変更（Linux、ラズパイ向け）
@@ -479,8 +494,6 @@ VirusTotalでのチェック結果はこちらなのだ。
 
 - fix: ウィンドウの最小化、最大化状態から元に戻す際にウィンドウサイズが固定化されるバグを修正
 - PyInstallerのバージョンを6.16.0に更新
-
-<details><summary>これ以前のバージョンアップの履歴はこちらなのだ</summary>
 
 ### 1.30.0 (2025/09/13)
 

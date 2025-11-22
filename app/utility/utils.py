@@ -56,7 +56,7 @@ def is_url(text: str) -> bool:
 
 # URLまたはPathをCSSのurl()フォーマットに変換する
 #   Pathの場合はBase64エンコードされる
-#   URLでもPathでもない場合はNoneを返す
+#   URLでもPathでもない場合は空文字を返す
 def to_css_url_format(url_or_path: str, filesize_limit_mb: float) -> str:
     if is_url(url_or_path):
         return f'url("{url_or_path}")'
@@ -65,7 +65,7 @@ def to_css_url_format(url_or_path: str, filesize_limit_mb: float) -> str:
     if path.is_file():
         return to_data_url(path, filesize_limit_mb)
     
-    return None
+    return ""
 
 # ファイルをBase64エンコードしてurl()形式にして返す
 def to_data_url(path: Path, filesize_limit_mb: float) -> str:

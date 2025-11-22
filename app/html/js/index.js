@@ -476,14 +476,77 @@ function escapeHtml(text) {
         .replace(/\t/g, "&nbsp;&nbsp;&nbsp;&nbsp;");
 }
 
-// TeX用の文字列をエスケープする
-function escapeTex(text) {
-    return text.replace(/\\/g, "@@@@");
+// Markdown用のエスケープ処理
+function escapeMarkdown(text) {
+    return text
+        .replace(/\\/g, "\\\\")
+        .replace(/`/g, "\\`")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;");
 }
 
-// TeX用にエスケープした文字列を元に戻す
-function unescapeTex(text) {
-    return text.replace(/@@@@/g, "\\");
+// コードブロックを一時退避する
+function stashCodeBlock(text) {
+    let codeBlocks = [];
+
+    // コードブロック
+    text = text.replace(/```[\s\S]*?```/g, (match) => {
+        let id = `%%%CODE_BLOCK_${codeBlocks.length}%%%`;
+        codeBlocks.push({ id, content: match });
+        return id;
+    });
+
+    // インラインコード
+    text = text.replace(/`([^\n`]+)`/g, (match, p1) => {
+        let id = `%%%CODE_BLOCK_${codeBlocks.length}%%%`;
+        codeBlocks.push({ id, content: match });
+        return id;
+    });
+
+    return { text, codeBlocks };
+}
+
+// TeXブロックを一時退避させる
+function stashTexBlock(text) {
+    let texBlocks = [];
+
+    // 1. \[ ... \]  ブロック
+    text = text.replace(/\\\[((?:.|\n)*?)\\\]/g, (match) => {
+        let id = `%%%TEX_BLOCK_${texBlocks.length}%%%`;
+        texBlocks.push({ id, content: match });
+        return id;
+    });
+
+    // 2. $$ ... $$  ブロック
+    text = text.replace(/\$\$([\s\S]*?)\$\$/g, (match) => {
+        let id = `%%%TEX_BLOCK_${texBlocks.length}%%%`;
+        texBlocks.push({ id, content: match });
+        return id;
+    });
+
+    // 3. \( ... \)  インライン数式
+    text = text.replace(/\\\((.*?)\\\)/g, (match) => {
+        let id = `%%%TEX_INLINE_${texBlocks.length}%%%`;
+        texBlocks.push({ id, content: match });
+        return id;
+    });
+
+    // 4. $ ... $  インライン数式
+    text = text.replace(/\$([^\$]+)\$/g, (match) => {
+        let id = `%%%TEX_INLINE_${texBlocks.length}%%%`;
+        texBlocks.push({ id, content: match });
+        return id;
+    });
+
+    return { text, texBlocks };
+}
+
+// 退避させたブロックを復元する
+function restoreBlock(text, blocks) {
+    blocks.forEach(item => {
+        text = text.replaceAll(item.id, item.content);
+    });
+    return text;
 }
 
 // Welcomeメッセージの表示をON/OFFする
@@ -602,11 +665,13 @@ function addChatMessage(role, speakerName, color, messageText) {
     const messageElement = document.createElement("div");
     messageElement.classList.add("message-text");
     if (role === "assistant") {
-        let html = convertTextToHtmlWithMarkdown(messageText);
-        html = escapeTex(html);
-        html = adjustURL(html);
-        html = marked.parse(html);
-        html = unescapeTex(html);
+        const stashCodeResult = stashCodeBlock(messageText);
+        const stashTexResult = stashTexBlock(stashCodeResult.text);
+        let text = escapeMarkdown(stashTexResult.text);
+        text = restoreBlock(text, stashCodeResult.codeBlocks);
+        text = adjustURL(text);
+        let html = marked.parse(text);
+        html = restoreBlock(html, stashTexResult.texBlocks);
         messageElement.innerHTML = html;
         messageElement.querySelectorAll("pre code").forEach((block) => {
             hljs.highlightElement(block);
@@ -661,26 +726,6 @@ function showCodeToast(toast) {
     setTimeout(() => {
         toast.classList.remove('show');
     }, 2000);
-}
-
-// マークダウンテキスト内のコードブロックを保護しながらHTML変換する関数
-function convertTextToHtmlWithMarkdown(text) {
-    // コードブロックを一時保存
-    let codeBlocks = [];
-    text = text.replace(/```[\s\S]*?```/g, match => {
-        codeBlocks.push(match);
-        return `__CODE_BLOCK_${codeBlocks.length-1}__`;
-    });
-
-    // バッククォート文字を変換
-    text = text.replace(/\\`/g, '\\\''); 
-
-    // コードブロックを戻す
-    codeBlocks.forEach((block, i) => {
-        text = text.replace(`__CODE_BLOCK_${i}__`, block);
-    });
-
-    return text;
 }
 
 // markedがリンクに連続する文字列全体をリンクに変換してしまう問題に対処
@@ -1140,11 +1185,13 @@ function endResponse(content) {
     const lastMessageTextElement = messageTextElements[messageTextElements.length - 1];
     if(lastMessageTextElement) {
         lastMessageTextElement.style.display = "block";
-        let html = convertTextToHtmlWithMarkdown(content);
-        html = escapeTex(html);
-        html = adjustURL(html);
-        html = marked.parse(html);
-        html = unescapeTex(html);
+        const stashCodeResult = stashCodeBlock(content);
+        const stashTexResult = stashTexBlock(stashCodeResult.text);
+        let text = escapeMarkdown(stashTexResult.text);
+        text = restoreBlock(text, stashCodeResult.codeBlocks);
+        text = adjustURL(text);
+        let html = marked.parse(text);
+        html = restoreBlock(html, stashTexResult.texBlocks);
         lastMessageTextElement.innerHTML = html;
         lastMessageTextElement.querySelectorAll("pre code").forEach((block) => {
             hljs.highlightElement(block);
