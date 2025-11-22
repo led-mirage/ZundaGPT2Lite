@@ -336,10 +336,14 @@ class ChatOpenAIBase(Chat):
                     listener.on_end_response(self.bad_response)
                     return self.bad_response
 
-                final_response = stream.get_final_response()
-                if final_response and final_response.output:
-                    # Responses API は output 内に role が入っている
-                    role = final_response.output[0].role or "assistant"
+                # final_response.output配列には複数のタイプのコンテンツが含まれる可能性があるため、
+                # エラーになる場合があるためコメントアウト
+                # roleはassistantで固定で問題ないが、参考のために残しておく
+                #
+                #final_response = stream.get_final_response()
+                #if final_response and final_response.output:
+                #    # Responses API は output 内に role が入っている
+                #    role = final_response.output[0].role or "assistant"
 
             if sentence:
                 listener.on_receive_sentence(sentence)
