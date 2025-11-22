@@ -67,8 +67,12 @@ Raspberry Pi、Linuxへの導入に関しても[Zennの記事](https://zenn.dev/
 
 動作確認済みのモデルは以下の通りなのだ。
 
-<details><summary>OpenAI（2025/10/19現在）</summary>
+<details><summary>OpenAI（2025/11/22現在）</summary>
 
+- GPT-5.1 （モデル名：gpt-5.1）
+- GPT-5.1 Chat （モデル名：gpt-5.1-chat-latest）
+- GPT-5.1 Codex （モデル名：gpt-5.1-codex）
+- GPT-5.1 Codex mini（モデル名：gpt-5.1-codex-mini）
 - GPT-5 （モデル名：gpt-5）
 - GPT-5 pro （モデル名：gpt-5-pro）
 - GPT-5 mini （モデル名：gpt-5-mini）
@@ -191,7 +195,7 @@ Windowsの場合は、Windowsの検索窓で「環境変数を編集」で検索
 
 以下のリンクから ZundaGPT2Lite.ZIP をダウンロードして、作成したフォルダに展開するのだ。
 
-https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.34.0
+https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.35.0
 
 #### 3. 実行
 
@@ -337,11 +341,11 @@ CSSを知らない人はなんのことかわからないかもしれないけ�
 
 VirusTotalでのチェック結果はこちらなのだ。
 
-- **Windows版:** [72個中2個のアンチウィルスエンジンで検出 :2025/11/02 v1.34.0](https://www.virustotal.com/gui/file/299d2a2c705c3995cb7f38f2cadb71a717d33f346b7204a691dc8debe4220de9/detection)
-- **Raspberry Pi版:** [59個中0個のアンチウィルスエンジンで検出 :2025/11/02 v1.34.0](https://www.virustotal.com/gui/file/0d341bb5490b6697618a7676c8e1f968089a1f00be71ae3ad83043ae6457c18f/detection)
-- **Linux版:** [62個中0個のアンチウィルスエンジンで検出 :2025/11/02 v1.34.0](https://www.virustotal.com/gui/file/7e79c3c0759d7371e7482da3986b6573c147895a47ff8e89b843d24d68a1e8e5/detection)
+- **Windows版:** [72個中2個のアンチウィルスエンジンで検出 :2025/11/22 v1.35.0](https://www.virustotal.com/gui/file/29114eb213eda9170791828b6b259a553f152557c654d2e74707df805909975c/detection)
+- **Raspberry Pi版:** [59個中0個のアンチウィルスエンジンで検出 :2025/11/22 v1.35.0](https://www.virustotal.com/gui/file/e1adb660d3b06e9c8db8c10d8e432c67d982a8b1d40456b76a0e5d5d944dec4e/detection)
+- **Linux版:** [63個中0個のアンチウィルスエンジンで検出 :2025/11/22 v1.35.0](https://www.virustotal.com/gui/file/970ac216d2d8780ccff2d5743d7b9de5e0962c764b896cc2e9de73e4d8375b9f/detection)
 
-<img src="doc/images/virustotal_1.34.0.png" width="600">
+<img src="doc/images/virustotal_1.35.0.png" width="600">
 
 ### ⚡ ご利用について
 
@@ -446,10 +450,13 @@ VirusTotalでのチェック結果はこちらなのだ。
 
 ## 💎 バージョン履歴
 
-### 1.35.0 (2025/11/xx)
+### 1.35.0 (2025/11/22)
 
 - キャラ設定の削除機能を追加
 - 送信画像のサイズ調整機能を追加または調整
+- AI応答メッセージ表示ロジックの改善
+- Fix: GTP-5 Codex系のモデルを使用した際にレスポンスを処理できない問題を修正
+- Fix: タイムアウト時などにメッセージを再送した際、ユーザーの発言が重複して残ってしまう問題を修正
 
 ### 1.34.0 (2025/11/02)
 
