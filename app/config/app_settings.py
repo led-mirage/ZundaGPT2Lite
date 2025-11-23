@@ -146,10 +146,12 @@ class Settings:
 
     @classmethod
     def get_settings_files(cls):
-        json_paths = glob.glob(cls.FOLDER_NAME + "/*.json")
+        json_paths = glob.glob(os.path.join(cls.FOLDER_NAME, "**", "*.json"), recursive=True)
 
         json_files = []
         for file_path in json_paths:
-            file_name = os.path.basename(file_path)
-            json_files.append(file_name)
+            # cls.FOLDER_NAME からの相対パスにする
+            relative_path = os.path.relpath(file_path, cls.FOLDER_NAME)
+            json_files.append(relative_path)
+
         return json_files
