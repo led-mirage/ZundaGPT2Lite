@@ -551,7 +551,9 @@ function stashTexBlock(text) {
 // 退避させたブロックを復元する
 function restoreBlock(text, blocks) {
     blocks.forEach(item => {
+        // replaceAllを使うと、第二引数中の$記号が特殊文字として扱われてしまうためsplit/joinで代用
         text = text.split(item.id).join(item.content);
+        //text = text.replaceAll(item.id, item.content);
     });
     return text;
 }
