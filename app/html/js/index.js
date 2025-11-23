@@ -493,7 +493,7 @@ function stashCodeBlock(text) {
 
     // コードブロック
     let codeIndex = 0;
-    text = text.replace(/```[\s\S]*?```/g, (match) => {
+    text = text.replace(/^\s*```[\s\S]*?^\s*```/gm, (match) => {        
         let id = `%%%CODE_BLOCK_${codeIndex++}%%%`;
         codeBlocks.push({ id, content: match });
         return id;
@@ -677,8 +677,8 @@ function addChatMessage(role, speakerName, color, messageText) {
         const stashCodeResult = stashCodeBlock(messageText);
         const stashTexResult = stashTexBlock(stashCodeResult.text);
         let text = escapeMarkdown(stashTexResult.text);
-        text = restoreBlock(text, stashCodeResult.codeBlocks);
         text = adjustURL(text);
+        text = restoreBlock(text, stashCodeResult.codeBlocks);
         let html = marked.parse(text);
         html = restoreBlock(html, stashTexResult.texBlocks);
         messageElement.innerHTML = html;
@@ -739,23 +739,10 @@ function showCodeToast(toast) {
 
 // markedがリンクに連続する文字列全体をリンクに変換してしまう問題に対処
 function adjustURL(text) {
-    // コードブロックを一時保存
-    let codeBlocks = [];
-    text = text.replace(/```[\s\S]*?```/g, match => {
-        codeBlocks.push(match);
-        return `__CODE_BLOCK_${codeBlocks.length-1}__`;
-    });
-
     // https://またはhttp://では始まらない、www.で始まるドメイン名の前後にバッククォートを入れる
     text = text.replace(/(?<!https?:\/\/)(www\.[\w.]+)/g, " `$1` ");
     // https://またはhttp://で始まるURLの前後に半角スペースをいれる
     text = text.replace(/(https?:\/\/[\w.?=&%+#\/\-]+)/g, ' $1 ');
-
-    // コードブロックを戻す
-    codeBlocks.forEach((block, i) => {
-        text = text.replace(`__CODE_BLOCK_${i}__`, block);
-    });
-
     return text;
 }
 
@@ -1197,8 +1184,8 @@ function endResponse(content) {
         const stashCodeResult = stashCodeBlock(content);
         const stashTexResult = stashTexBlock(stashCodeResult.text);
         let text = escapeMarkdown(stashTexResult.text);
-        text = restoreBlock(text, stashCodeResult.codeBlocks);
         text = adjustURL(text);
+        text = restoreBlock(text, stashCodeResult.codeBlocks);
         let html = marked.parse(text);
         html = restoreBlock(html, stashTexResult.texBlocks);
         lastMessageTextElement.innerHTML = html;
