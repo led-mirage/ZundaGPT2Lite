@@ -23,7 +23,9 @@
     <script>
         MathJax = {
             tex: {
-                inlineMath: [["$", "$"], ["\\(", "\\)"]]
+                inlineMath: [["\\(", "\\)"]]
+                // $ ... $ 形式のインライン数式は無効化
+                //inlineMath: [["$", "$"], ["\\(", "\\)"]]
             },
             svg: {
                 fontCache: "global"
@@ -79,7 +81,7 @@
             -->
         </div>
         <div class="chat-input">
-            <textarea id="message" placeholder="メッセージを入力..."></textarea>
+            <textarea id="message" rows="2" placeholder="メッセージを入力..."></textarea>
             <button id="submit-button" type="button">送信</button>
         </div>
         <footer><span id="copyright">Copyright</span></footer>

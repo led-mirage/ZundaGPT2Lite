@@ -19,7 +19,8 @@ window.addEventListener("pywebviewready", async function() {
         const settingFiles = await pywebview.api.get_settings_files();
         createSettingFilesUI(settingFiles);
 
-        const elm = document.querySelector(`.selectable[filename="${g_selectedFilename}"]`);
+        const safeFilename = CSS.escape(g_selectedFilename);
+        const elm = document.querySelector(`.selectable[filename="${safeFilename}"]`);
         elm.scrollIntoView({ behavior: 'smooth' });
     }
     catch (error) {
@@ -78,6 +79,7 @@ function createDetails(groupContainer, settingFiles) {
         details.appendChild(summary);
 
         const settings = settingFiles.filter(item => item.group === group);
+        settings.sort((a, b) => a.filename.localeCompare(b.filename, undefined, { sensitivity: "base" }));
         createTable(details, settings);
 
         if (settings.some(item => item.current)) {
@@ -93,7 +95,8 @@ function setupSelectableEventHandler() {
     document.querySelectorAll(".selectable").forEach(cell => {
         cell.addEventListener("click", function() {
             if (g_selectedFilename != "") {
-                const elm = document.querySelector(`.selectable[filename="${g_selectedFilename}"]`)
+                const safeFilename = CSS.escape(g_selectedFilename);
+                const elm = document.querySelector(`.selectable[filename="${safeFilename}"]`);
                 elm.textContent = "";
             }
             this.textContent = "✅";
