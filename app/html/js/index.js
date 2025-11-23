@@ -69,6 +69,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
     function autoResize() {
         this.style.height = "auto";
+        // 以下の rem2px(rem) の rem には
+        // CSS で指定している .chat-input textarea の 縦方向のpaddingの2倍の値を指定する
         this.style.height = this.scrollHeight - rem2px(2) + "px";
     }
 });
@@ -490,15 +492,17 @@ function stashCodeBlock(text) {
     let codeBlocks = [];
 
     // コードブロック
+    let codeIndex = 0;
     text = text.replace(/```[\s\S]*?```/g, (match) => {
-        let id = `%%%CODE_BLOCK_${codeBlocks.length}%%%`;
+        let id = `%%%CODE_BLOCK_${codeIndex++}%%%`;
         codeBlocks.push({ id, content: match });
         return id;
     });
 
     // インラインコード
-    text = text.replace(/`([^\n`]+)`/g, (match, p1) => {
-        let id = `%%%CODE_BLOCK_${codeBlocks.length}%%%`;
+    let inlineIndex = 0;
+    text = text.replace(/`([^\n`]+)`/g, (match) => {
+        let id = `%%%INLINE_CODE_${inlineIndex++}%%%`;
         codeBlocks.push({ id, content: match });
         return id;
     });
@@ -532,11 +536,14 @@ function stashTexBlock(text) {
     });
 
     // 4. $ ... $  インライン数式
+    // $ ... $ 形式のTeX数式は、文章中に頻出するため非対応とする
+    /*
     text = text.replace(/\$([^\$]+)\$/g, (match) => {
         let id = `%%%TEX_INLINE_${texBlocks.length}%%%`;
         texBlocks.push({ id, content: match });
         return id;
     });
+    */
 
     return { text, texBlocks };
 }
@@ -544,7 +551,7 @@ function stashTexBlock(text) {
 // 退避させたブロックを復元する
 function restoreBlock(text, blocks) {
     blocks.forEach(item => {
-        text = text.replaceAll(item.id, item.content);
+        text = text.split(item.id).join(item.content);
     });
     return text;
 }
