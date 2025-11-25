@@ -314,7 +314,7 @@ body {
     font-size: inherit;
     font-family: inherit;
     flex: 1;
-    padding: 1rem;
+    padding: 0.5rem 1.5rem;
     margin-right: 0.5rem;
     border: var(--chat-input-textarea-border);
     border-radius: var(--chat-input-textarea-border-radius);

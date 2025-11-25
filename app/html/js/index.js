@@ -71,7 +71,7 @@ document.addEventListener("DOMContentLoaded", function() {
         this.style.height = "auto";
         // 以下の rem2px(rem) の rem には
         // CSS で指定している .chat-input textarea の 縦方向のpaddingの2倍の値を指定する
-        this.style.height = this.scrollHeight - rem2px(2) + "px";
+        this.style.height = this.scrollHeight - rem2px(1) + "px";
     }
 });
 
