@@ -9,10 +9,18 @@ let g_searchResults = [];
 document.addEventListener("DOMContentLoaded", function() {
     setClickEventHandler("search-button", startSearch);
     setClickEventHandler("close-button", closeWindow);
+    document.addEventListener("keydown", handleKeyDown);
 
     const input = document.getElementById("search-query");
     input.addEventListener("keydown", handleEnterKey);
 });
+
+// キーダウンイベントハンドラ
+function handleKeyDown(event) {
+    if (event.keyCode == 122) { // F11
+        pywebview.api.toggle_fullscreen();
+    }
+}
 
 // pywebviewの初期化完了
 window.addEventListener("pywebviewready", async function() {

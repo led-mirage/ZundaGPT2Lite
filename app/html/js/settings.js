@@ -8,7 +8,15 @@ document.addEventListener("DOMContentLoaded", function() {
     setClickEventHandler("refresh-button", refresh);
     setClickEventHandler("cancel-button", cancel);
     setClickEventHandler("submit-button", submit);
+    document.addEventListener("keydown", handleKeyDown);
 });
+
+// キーダウンイベントハンドラ
+function handleKeyDown(event) {
+    if (event.keyCode == 122) { // F11
+        pywebview.api.toggle_fullscreen();
+    }
+}
 
 // pywebviewの初期化完了
 window.addEventListener("pywebviewready", async function() {

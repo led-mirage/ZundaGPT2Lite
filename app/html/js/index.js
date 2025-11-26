@@ -71,7 +71,7 @@ document.addEventListener("DOMContentLoaded", function() {
         this.style.height = "auto";
         // 以下の rem2px(rem) の rem には
         // CSS で指定している .chat-input textarea の 縦方向のpaddingの2倍の値を指定する
-        this.style.height = this.scrollHeight - rem2px(1) + "px";
+        this.style.height = this.scrollHeight - rem2px(2) + "px";
     }
 });
 
@@ -104,6 +104,29 @@ function handleKeyDown(event) {
             }
             highlightSearchResult();
         }
+    }
+    else if (event.keyCode == 122) { // F11
+        toggle_fullscreen();
+    }
+}
+
+// フルスクリーン切替
+async function toggle_fullscreen() {
+    const isFullscreen = await pywebview.api.toggle_fullscreen();
+    setFooterVisibility(!isFullscreen);
+    return isFullscreen;
+}
+
+// フッターの表示/非表示設定
+function setFooterVisibility(visible) {
+   const footer = document.querySelector("footer");
+    footer.style.display = visible ? "flex" : "none";
+    const inputArea = document.querySelector(".chat-input");
+    if (visible) {
+        inputArea.style.margin = "0 auto 10px auto";
+    }
+    else {
+        inputArea.style.margin = "0 auto 5px auto";
     }
 }
 
@@ -210,6 +233,9 @@ window.addEventListener("pywebviewready", async function() {
     try {
         const appConfig = await pywebview.api.get_app_config_js();
         initUIComponents(appConfig);
+
+        const isFullscreen = await pywebview.api.is_fullscreen();
+        setFooterVisibility(!isFullscreen);
 
         await pywebview.api.page_loaded();
 
