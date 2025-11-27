@@ -14,6 +14,7 @@ let g_searchTextIndex = 0;
 let g_searchTextTotal = 0;
 let g_welcomeTitle = "";
 let g_welcomeMessage = "";
+let g_welcomeIconVisible = true;
 let g_aiAgentAvailable = false;
 let g_aiAgentCreationError = "";
 let g_savedCSS = {};
@@ -614,7 +615,7 @@ function addWelcome() {
     chatMessagesContainer.appendChild(welcomeContainer);
 
     // アシスタントアイコンを作成
-    if (g_assistantIcon != "") {
+    if (g_welcomeIconVisible && g_assistantIcon != "") {
         const imgElement = document.createElement("img");
         imgElement.classList.add("welcome-chat-icon");
         imgElement.src = `data:image/png;base64,${g_assistantIcon}`;
@@ -1071,6 +1072,7 @@ function setChatInfo(info) {
     g_nextMessageIndex = 0;
     g_welcomeTitle = info.settings.welcome_title;
     g_welcomeMessage = info.settings.welcome_message;
+    g_welcomeIconVisible = info.custom_style.welcome_icon_visible;
     g_aiAgentAvailable = info.chat.ai_agent_available;
     g_aiAgentCreationError = info.chat.ai_agent_creation_error;
 

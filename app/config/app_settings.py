@@ -15,7 +15,7 @@ import threading
 from config.app_config import AppConfig
 
 class Settings:
-    FILE_VER = 11
+    FILE_VER = 12
     FOLDER_NAME = "settings"
 
     def __init__(self, settings_filename=None):
@@ -67,6 +67,7 @@ class Settings:
             "header_color": "",
             "welcome_title_color": "",
             "welcome_message_color": "",
+            "welcome_icon_visible": True,
             "speaker_name_text_shadow": "",
             "message_text_bgcolor": "",
             "message_text_color": "",
