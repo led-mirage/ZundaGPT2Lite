@@ -5,6 +5,7 @@ const textResources = {
         okButton: "OK",
         cancelButton: "Cancel",
         closeButton: "閉じる",
+        fullscreenMessage: "フルスクリーンを終了するにはF11キーを押してください",
         // メイン画面
         submitButton: "送信",
         stopButton: "停止",
@@ -53,6 +54,7 @@ const textResources = {
         okButton: "OK",
         cancelButton: "Cancel",
         closeButton: "Close",
+        fullscreenMessage: "Press F11 to exit full screen.",
         // Main Screen
         submitButton: "Send",
         stopButton: "Stop",
@@ -101,6 +103,7 @@ const textResources = {
         okButton: "OK",
         cancelButton: "Peruuta",
         closeButton: "Sulje",
+        fullscreenMessage: "Paina F11 poistuaksesi koko näytöstä.",
         // Päänäyttö (メイン画面)
         submitButton: "Lähetä",
         stopButton: "Pysäytä",
@@ -149,6 +152,7 @@ const textResources = {
         okButton: "OK",
         cancelButton: "Cancelar",
         closeButton: "Cerrar",
+        fullscreenMessage: "Pulsa F11 para salir de pantalla completa.",
         // Pantalla principal (メイン画面)
         submitButton: "Enviar",
         stopButton: "Detener",
@@ -197,6 +201,7 @@ const textResources = {
         okButton: "OK",
         cancelButton: "Abbrechen",
         closeButton: "Schließen",
+        fullscreenMessage: "Drücken Sie F11, um den Vollbildmodus zu beenden.",
         // Hauptbildschirm (メイン画面)
         submitButton: "Senden",
         stopButton: "Stopp",
@@ -245,6 +250,7 @@ const textResources = {
         okButton: "OK",
         cancelButton: "Annuler",
         closeButton: "Fermer",
+        fullscreenMessage: "Appuyez sur F11 pour quitter le mode plein écran.",
         // Écran principal (メイン画面)
         submitButton: "Envoyer",
         stopButton: "Arrêter",

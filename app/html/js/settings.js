@@ -1,4 +1,4 @@
-import { setFontFamilyAndSize, setCopyright, showBody, setClickEventHandler } from "./util.js";
+import { setFontFamilyAndSize, setCopyright, showBody, setClickEventHandler, showFullscreenMessage } from "./util.js";
 import { setCurrentLanguage, getTextResource } from "./text-resources.js";
 
 let g_selectedFilename = "";
@@ -12,9 +12,14 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 // キーダウンイベントハンドラ
-function handleKeyDown(event) {
+async function handleKeyDown(event) {
     if (event.keyCode == 122) { // F11
-        pywebview.api.toggle_fullscreen();
+        const isFullscreen = await pywebview.api.toggle_fullscreen();
+        if (isFullscreen) {
+            const elementId = "fullscreen-message";
+            const message = getTextResource("fullscreenMessage");
+            showFullscreenMessage(elementId, message);
+        }
     }
 }
 

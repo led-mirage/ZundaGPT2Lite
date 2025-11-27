@@ -1,4 +1,4 @@
-import { setFontFamilyAndSize, setCopyright, showBody, setClickEventHandler } from "./util.js";
+import { setFontFamilyAndSize, setCopyright, showBody, setClickEventHandler, showFullscreenMessage } from "./util.js";
 import { setCurrentLanguage, getTextResource } from "./text-resources.js";
 
 const MAX_PASTED_IMAGES = 10;
@@ -114,6 +114,11 @@ function handleKeyDown(event) {
 async function toggle_fullscreen() {
     const isFullscreen = await pywebview.api.toggle_fullscreen();
     setFooterVisibility(!isFullscreen);
+    if (isFullscreen) {
+        const elementId = "fullscreen-message";
+        const message = getTextResource("fullscreenMessage");
+        showFullscreenMessage(elementId, message)
+    }
     return isFullscreen;
 }
 
