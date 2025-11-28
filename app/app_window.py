@@ -98,7 +98,7 @@ class AppWindow:
         self._is_minimized = self._is_maximized = False
 
     def on_resized(self, width: int, height: int):
-        if self._is_minimized or self._is_maximized:
+        if self._is_minimized or self._is_maximized or self._is_fullscreen:
             return
 
         # 既存タイマーをキャンセル
