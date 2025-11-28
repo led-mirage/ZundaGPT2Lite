@@ -36,6 +36,7 @@ class Settings:
             "description": "既定値",
             "welcome_title": "Welcome",
             "welcome_message": "なんでも聞いてほしいのだ！",
+            "welcome_icon_visible": True,
             "group": "Default"
         }
         self.user = {
@@ -67,7 +68,6 @@ class Settings:
             "header_color": "",
             "welcome_title_color": "",
             "welcome_message_color": "",
-            "welcome_icon_visible": True,
             "speaker_name_text_shadow": "",
             "message_text_bgcolor": "",
             "message_text_color": "",

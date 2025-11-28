@@ -1072,7 +1072,7 @@ function setChatInfo(info) {
     g_nextMessageIndex = 0;
     g_welcomeTitle = info.settings.welcome_title;
     g_welcomeMessage = info.settings.welcome_message;
-    g_welcomeIconVisible = info.custom_style.welcome_icon_visible;
+    g_welcomeIconVisible = info.settings.welcome_icon_visible;
     g_aiAgentAvailable = info.chat.ai_agent_available;
     g_aiAgentCreationError = info.chat.ai_agent_creation_error;
 

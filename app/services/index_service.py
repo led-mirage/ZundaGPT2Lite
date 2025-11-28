@@ -99,7 +99,8 @@ class IndexService:
         settings = {
             "display_name": self.state.settings.settings.get("display_name", ""),
             "welcome_title": self.state.settings.settings.get("welcome_title", ""),
-            "welcome_message": self.state.settings.settings.get("welcome_message", "")
+            "welcome_message": self.state.settings.settings.get("welcome_message", ""),
+            "welcome_icon_visible": self.state.settings.settings.get("welcome_icon_visible", True),
         }
 
         user = {
@@ -122,7 +123,6 @@ class IndexService:
             "header_color": self.state.settings.custom_style.get("header_color", ""),
             "welcome_title_color": self.state.settings.custom_style.get("welcome_title_color", ""),
             "welcome_message_color": self.state.settings.custom_style.get("welcome_message_color", ""),
-            "welcome_icon_visible": self.state.settings.custom_style.get("welcome_icon_visible", True),
             "speaker_name_text_shadow": self.state.settings.custom_style.get("speaker_name_text_shadow", ""),
             "message_text_bgcolor": self.state.settings.custom_style.get("message_text_bgcolor", ""),
             "message_text_color": self.state.settings.custom_style.get("message_text_color", ""),
