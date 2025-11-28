@@ -31,6 +31,7 @@ class ApiRouter:
     def copytext_to_clipboard(self, text):
         return self.app_service.copytext_to_clipboard(text)
 
+    # フルスクリーン状態取得
     def is_fullscreen(self):
         return self.app_service.is_fullscreen()
 
