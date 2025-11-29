@@ -26,6 +26,7 @@ class AppWindow:
         self._resize_timer = None
         self._is_minimized = False
         self._is_maximized = False
+        self._is_fullscreen = False
 
     def set_raw_window(self, window: webview.Window):
         self._window = window
@@ -36,6 +37,14 @@ class AppWindow:
 
     def set_window_title(self, title: str):
         self._window.set_title(title)
+
+    def is_fullscreen(self):
+        return self._is_fullscreen
+
+    def toggle_fullscreen(self):
+        self._is_fullscreen = not self._is_fullscreen
+        self._window.toggle_fullscreen()
+        return self._is_fullscreen
 
     def evaluate_js(self, js: str):
         return self._window.evaluate_js(js)
@@ -89,7 +98,7 @@ class AppWindow:
         self._is_minimized = self._is_maximized = False
 
     def on_resized(self, width: int, height: int):
-        if self._is_minimized or self._is_maximized:
+        if self._is_minimized or self._is_maximized or self._is_fullscreen:
             return
 
         # 既存タイマーをキャンセル

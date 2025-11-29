@@ -49,7 +49,7 @@ class Application:
         js_caller = JSCaller(window)
         window.set_js_caller(js_caller)
 
-        app_service = AppService(self.app_config)
+        app_service = AppService(self.app_config, window)
         index_service = IndexService(self.app_config, self.state, window)
         settings_service = SettingsService(self.app_config, self.state, window)
         cross_file_search_service = CrossFileSearchService(self.state, window)

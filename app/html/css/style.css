@@ -243,6 +243,8 @@ body {
 .chat-message {
     margin-bottom: 0.25rem;
     padding-bottom: 0.25rem;
+    max-width: 950px;
+    margin: 0 auto;
 }
 .speaker-name {
     font-size: 1rem;
@@ -255,7 +257,7 @@ body {
 }
 .message-text {
     margin-top: 0.25rem;
-    padding: 0.5rem;
+    padding: 0.5rem 1.0rem;
     line-height: 1.75rem;
     font-size: 1rem;
     overflow-wrap: break-word;
@@ -306,15 +308,17 @@ body {
     width: 100%;
     display: flex;
     padding: 10px;
-    margin-bottom: 10px;
     background-color: var(--chat-input-bgcolor);
     box-sizing: border-box; /* パディングを含めた幅を100%に */
+    max-width: 1000px;
+    margin: 0 auto 10px auto;
+    border-radius: 8px;
 }
 .chat-input textarea {
     font-size: inherit;
     font-family: inherit;
     flex: 1;
-    padding: 1rem;
+    padding: 1rem 1.5rem;
     margin-right: 0.5rem;
     border: var(--chat-input-textarea-border);
     border-radius: var(--chat-input-textarea-border-radius);
@@ -614,4 +618,20 @@ pre {
     color: black;
     text-decoration: none;
     cursor: pointer;
+}
+
+#fullscreen-message {
+    display: block;
+    opacity: 0;
+    transition: opacity 1s;
+    position: fixed;
+    top: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    z-index: 1000;
 }

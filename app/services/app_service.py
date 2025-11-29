@@ -10,11 +10,13 @@ import pyperclip
 
 from const import COPYRIGHT
 from config.app_config import AppConfig
+from app_window import AppWindow
 
 
 class AppService:
-    def __init__(self, app_config: AppConfig):
+    def __init__(self, app_config: AppConfig, window: AppWindow):
         self.app_config = app_config
+        self.window = window
 
     # アプリケーション設定取得（UI）
     def get_app_config_js(self):
@@ -30,3 +32,11 @@ class AppService:
     def copytext_to_clipboard(self, text):
         pyperclip.copy(text)
         return True
+
+    def is_fullscreen(self):
+        return self.window.is_fullscreen()
+
+    # フルスクリーン切替
+    def toggle_fullscreen(self):
+        self.window.toggle_fullscreen()
+        return self.is_fullscreen()

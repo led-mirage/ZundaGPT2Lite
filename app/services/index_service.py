@@ -99,7 +99,8 @@ class IndexService:
         settings = {
             "display_name": self.state.settings.settings.get("display_name", ""),
             "welcome_title": self.state.settings.settings.get("welcome_title", ""),
-            "welcome_message": self.state.settings.settings.get("welcome_message", "")
+            "welcome_message": self.state.settings.settings.get("welcome_message", ""),
+            "welcome_icon_visible": self.state.settings.settings.get("welcome_icon_visible", True),
         }
 
         user = {

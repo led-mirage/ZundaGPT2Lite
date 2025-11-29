@@ -1,4 +1,4 @@
-import { setFontFamilyAndSize, setCopyright, showBody, setClickEventHandler } from "./util.js";
+import { setFontFamilyAndSize, setCopyright, showBody, setClickEventHandler, showFullscreenMessage } from "./util.js";
 import { setCurrentLanguage, getTextResource } from "./text-resources.js";
 
 const MAX_PASTED_IMAGES = 10;
@@ -14,6 +14,7 @@ let g_searchTextIndex = 0;
 let g_searchTextTotal = 0;
 let g_welcomeTitle = "";
 let g_welcomeMessage = "";
+let g_welcomeIconVisible = true;
 let g_aiAgentAvailable = false;
 let g_aiAgentCreationError = "";
 let g_savedCSS = {};
@@ -104,6 +105,34 @@ function handleKeyDown(event) {
             }
             highlightSearchResult();
         }
+    }
+    else if (event.keyCode == 122) { // F11
+        toggle_fullscreen();
+    }
+}
+
+// フルスクリーン切替
+async function toggle_fullscreen() {
+    const isFullscreen = await pywebview.api.toggle_fullscreen();
+    setFooterVisibility(!isFullscreen);
+    if (isFullscreen) {
+        const elementId = "fullscreen-message";
+        const message = getTextResource("fullscreenMessage");
+        showFullscreenMessage(elementId, message)
+    }
+    return isFullscreen;
+}
+
+// フッターの表示/非表示設定
+function setFooterVisibility(visible) {
+   const footer = document.querySelector("footer");
+    footer.style.display = visible ? "flex" : "none";
+    const inputArea = document.querySelector(".chat-input");
+    if (visible) {
+        inputArea.style.margin = "0 auto 10px auto";
+    }
+    else {
+        inputArea.style.margin = "0 auto 5px auto";
     }
 }
 
@@ -210,6 +239,9 @@ window.addEventListener("pywebviewready", async function() {
     try {
         const appConfig = await pywebview.api.get_app_config_js();
         initUIComponents(appConfig);
+
+        const isFullscreen = await pywebview.api.is_fullscreen();
+        setFooterVisibility(!isFullscreen);
 
         await pywebview.api.page_loaded();
 
@@ -583,7 +615,7 @@ function addWelcome() {
     chatMessagesContainer.appendChild(welcomeContainer);
 
     // アシスタントアイコンを作成
-    if (g_assistantIcon != "") {
+    if (g_welcomeIconVisible && g_assistantIcon != "") {
         const imgElement = document.createElement("img");
         imgElement.classList.add("welcome-chat-icon");
         imgElement.src = `data:image/png;base64,${g_assistantIcon}`;
@@ -1040,6 +1072,7 @@ function setChatInfo(info) {
     g_nextMessageIndex = 0;
     g_welcomeTitle = info.settings.welcome_title;
     g_welcomeMessage = info.settings.welcome_message;
+    g_welcomeIconVisible = info.settings.welcome_icon_visible;
     g_aiAgentAvailable = info.chat.ai_agent_available;
     g_aiAgentCreationError = info.chat.ai_agent_creation_error;
 

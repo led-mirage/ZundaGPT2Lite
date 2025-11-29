@@ -1,4 +1,4 @@
-import { setFontFamilyAndSize, setCopyright, showBody, setClickEventHandler } from "./util.js";
+import { setFontFamilyAndSize, setCopyright, showBody, setClickEventHandler, showFullscreenMessage } from "./util.js";
 import { setCurrentLanguage, getTextResource } from "./text-resources.js";
 
 let g_searchText = "";
@@ -9,10 +9,23 @@ let g_searchResults = [];
 document.addEventListener("DOMContentLoaded", function() {
     setClickEventHandler("search-button", startSearch);
     setClickEventHandler("close-button", closeWindow);
+    document.addEventListener("keydown", handleKeyDown);
 
     const input = document.getElementById("search-query");
     input.addEventListener("keydown", handleEnterKey);
 });
+
+// キーダウンイベントハンドラ
+async function handleKeyDown(event) {
+    if (event.keyCode == 122) { // F11
+        const isFullscreen = await pywebview.api.toggle_fullscreen();
+        if (isFullscreen) {
+            const elementId = "fullscreen-message";
+            const message = getTextResource("fullscreenMessage");
+            showFullscreenMessage(elementId, message);
+        }
+    }
+}
 
 // pywebviewの初期化完了
 window.addEventListener("pywebviewready", async function() {

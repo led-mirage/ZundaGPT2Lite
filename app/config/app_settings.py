@@ -15,7 +15,7 @@ import threading
 from config.app_config import AppConfig
 
 class Settings:
-    FILE_VER = 11
+    FILE_VER = 12
     FOLDER_NAME = "settings"
 
     def __init__(self, settings_filename=None):
@@ -36,6 +36,7 @@ class Settings:
             "description": "既定値",
             "welcome_title": "Welcome",
             "welcome_message": "なんでも聞いてほしいのだ！",
+            "welcome_icon_visible": True,
             "group": "Default"
         }
         self.user = {

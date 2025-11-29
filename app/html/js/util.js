@@ -28,3 +28,21 @@ export function setClickEventHandler(elementId, handler) {
         element.addEventListener("click", handler);
     }
 }
+
+// フルスクリーンになったときにポップアップメッセージを表示する
+export function showFullscreenMessage(elementId, message) {
+    const div = document.getElementById(elementId);
+    div.textContent = message;
+    div.style.display = "block";
+    div.style.opacity = 1;
+    setTimeout(() => {
+        div.style.opacity = 1;
+    }, 10);
+
+    setTimeout(() => {
+        div.style.opacity = 0;
+        setTimeout(() => {
+            div.style.display = "none";
+        }, 1000);
+    }, 2000);
+}
