@@ -125,6 +125,11 @@ settings.jsonはsettingsフォルダの中に格納されているのだ。声�
 
 新しくチャットを始めたときに画面に表示されるメッセージなのだ。welcome_titleの下に表示されるのだ。
 
+##### ✨ welcome_icon_visible（既定値 true）
+
+Welcome画面にアイコンを表示するかどうかの設定。  
+設定例：true or false
+
 ##### ✨ group（既定値 Default）
 
 設定のグループ分けに使用するのだ。設定ファイルが多くなった時に便利なのだ。

@@ -46,6 +46,7 @@ ZundaGPT2 Liteは[ZundaGPT2](https://github.com/led-mirage/ZundaGPT2)から音�
 - ダークモード対応
 - スタイルシート（CSS）をカスタマイズ可能
 - 画像を使った質問が可能（実験的機能）✨
+- フルスクリーンモード対応 ✨
 
 アプリの紹介と、もっとも手軽な導入方法を[Zennの記事](https://zenn.dev/ledmirage/articles/7650f36d3a784a)にしたので、そちらも参考にしてほしいのだ✨  
 記事はZundaGPT2のものだけど、導入方法はほぼ同じなのだ。
@@ -96,8 +97,9 @@ Raspberry Pi、Linuxへの導入に関しても[Zennの記事](https://zenn.dev/
 
 </details>
 
-<details><summary>Anthropic Claude（2025/10/19現在）</summary>
+<details><summary>Anthropic Claude（2025/11/28現在）</summary>
 
+- Claude Opus 4.5 （モデル名：claude-opus-4-5）
 - Claude Opus 4.1 （モデル名：claude-opus-4-1）
 - Claude Opus 4 （モデル名：claude-opus-4-0）
 - Claude Opus 3 （モデル名：claude-3-opus-latest）
@@ -195,7 +197,7 @@ Windowsの場合は、Windowsの検索窓で「環境変数を編集」で検索
 
 以下のリンクから ZundaGPT2Lite.ZIP をダウンロードして、作成したフォルダに展開するのだ。
 
-https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.36.1
+https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.37.0
 
 #### 3. 実行
 
@@ -269,6 +271,8 @@ call venv\scripts\activate
 start pythonw app\main.py
 ```
 
+<div class="page"></div>
+
 ## 💎 キャラクターの設定
 
 画面右上の⚙️ボタンを押すことで、使用するキャラクターを選択することができるのだ。
@@ -341,11 +345,11 @@ CSSを知らない人はなんのことかわからないかもしれないけ�
 
 VirusTotalでのチェック結果はこちらなのだ。
 
-- **Windows版:** [70個中2個のアンチウィルスエンジンで検出 :2025/11/24 v1.36.1](https://www.virustotal.com/gui/file/99c9879041cdc7e5e69777397e2f3f8392dbae3a5d32af4d0febe1e4f44f4418/detection)
-- **Raspberry Pi版:** [60個中0個のアンチウィルスエンジンで検出 :2025/11/24 v1.36.1](https://www.virustotal.com/gui/file/21c3d43c5f387aeeacc7e006448129098844c49e42260ab5419834d0cbe04330/detection)
-- **Linux版:** [61個中0個のアンチウィルスエンジンで検出 :2025/11/24 v1.36.1](https://www.virustotal.com/gui/file/adf6a91ee49b471ae933241794096ea44606d53d8ace35ef5161ab9d1d050507/detection)
+- **Windows版:** [72個中2個のアンチウィルスエンジンで検出 :2025/11/29 v1.37.0](https://www.virustotal.com/gui/file/2c017d1adc429245332bbcdc555a70e6df5fdcd8892361718dc9213e922006f4/detection)
+- **Raspberry Pi版:** [62個中0個のアンチウィルスエンジンで検出 :2025/11/29 v1.37.0](https://www.virustotal.com/gui/file/6bbdcb119139f91cbf6b7ef79c1acc55bae91ed0d17090c677ea98c875557084/detection)
+- **Linux版:** [60個中0個のアンチウィルスエンジンで検出 :2025/11/29 v1.37.0](https://www.virustotal.com/gui/file/f19797589f78416e757ac82d80211860aac2f254d7735f6b407e99f057fb0916/detection)
 
-<img src="doc/images/virustotal_1.36.1.png" width="600">
+<img src="doc/images/virustotal_1.37.0.png" width="600">
 
 ### ⚡ ご利用について
 
@@ -365,17 +369,17 @@ VirusTotalでのチェック結果はこちらなのだ。
 ホームページ： https://github.com/r0x0r/pywebview  
 ライセンス：BSD-3-Clause license
 
-### 🔖 openai 2.5.0
+### 🔖 openai 2.8.1
 
 ホームページ： https://github.com/openai/openai-python  
 ライセンス：Apache License 2.0
 
-### 🔖 google-genai 1.45.0
+### 🔖 google-genai 1.52.0
 
 ホームページ： https://github.com/googleapis/python-genai  
 ライセンス：Apache License 2.0
 
-### 🔖 anthropic 0.71.0
+### 🔖 anthropic 0.75.0
 
 ホームページ： https://github.com/anthropics/anthropic-sdk-python  
 ライセンス：MIT license
@@ -415,8 +419,6 @@ VirusTotalでのチェック結果はこちらなのだ。
 ホームページ：https://github.com/markedjs/marked  
 ライセンス：MIT license
 
-<div class="page"></div>
-
 ### 🔖 mark.js 8.11.1
 
 ホームページ：https://github.com/julkue/mark.js  
@@ -449,6 +451,14 @@ VirusTotalでのチェック結果はこちらなのだ。
 <div class="page"></div>
 
 ## 💎 バージョン履歴
+
+### 1.37.0 (2025/11/29)
+
+- フルスクリーンモードに対応
+- Welcome画面にキャラアイコンを表示するかどうかの設定を追加
+- openai ライブラリを 2.8.1 に更新
+- google-genai ライブラリを 1.52.0 に更新
+- anthropic ライブラリを 0.75.0 に更新
 
 ### 1.36.1 (2025/11/24)
 

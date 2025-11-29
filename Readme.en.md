@@ -43,6 +43,7 @@ Main features: ✨
 - Dark mode support
 - Custom CSS support
 - Image-based questions are now supported (experimental) ✨
+- Supports fullscreen mode ✨
 
 To use this app on Raspberry Pi or Linux, please refer to this article:  
 https://zenn.dev/ledmirage/articles/3a06a4b2ed8ae6
@@ -289,17 +290,17 @@ Please understand that the developer cannot be held responsible for any damages 
 Homepage: https://github.com/r0x0r/pywebview  
 License: BSD-3-Clause license
 
-### 🔖 openai 2.5.0
+### 🔖 openai 2.8.1
 
 Homepage： https://github.com/openai/openai-python  
 License：Apache License 2.0
 
-### 🔖 google-genai 1.45.0
+### 🔖 google-genai 1.52.0
 
 Homepage： https://github.com/googleapis/python-genai  
 License：Apache License 2.0
 
-### 🔖 anthropic 0.71.0
+### 🔖 anthropic 0.75.0
 
 Homepage： https://github.com/anthropics/anthropic-sdk-python  
 License：MIT license
