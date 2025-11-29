@@ -17,10 +17,10 @@ ZundaGPT2 Lite はキャラクターや画面を自分好みにカスタマイ�
 
 ## 💎 スクリーンショット
 
-↓ カスタマイズ例（背景画像はAI生成画像）
+↓ カスタマイズ例（背景画像はAI生成画像）  
 <img src="doc/images/screenshot_1.37.0.png" width="600"><br>
 
-↓ 会話例
+↓ 会話例  
 <img src="doc/images/screenshot_1.28.0.png" width="600"><br>
 
 <div class="page"></div>
