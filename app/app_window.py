@@ -42,8 +42,8 @@ class AppWindow:
         return self._is_fullscreen
 
     def toggle_fullscreen(self):
-        self._window.toggle_fullscreen()
         self._is_fullscreen = not self._is_fullscreen
+        self._window.toggle_fullscreen()
         return self._is_fullscreen
 
     def evaluate_js(self, js: str):
