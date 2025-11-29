@@ -11,42 +11,41 @@ Copyright (c) 2024-2025 led-mirage
 
 [English](Readme.en.md)
 
-## 💎 ダウンロード
+## 💎 What's ZundaGPT2 Lite
 
-🚀 [最新版のダウンロードはこちらなのだ](https://led-mirage.github.io/ZundaGPT2Lite/)
+ZundaGPT2 Lite はキャラクターや画面を自分好みにカスタマイズできるAIチャットクライアントなのだ。
 
 ## 💎 スクリーンショット
 
-<img src="assets/ZundaGPT2_splash.png" width="200"><br>
+↓ カスタマイズ例（背景画像はAI生成画像）
+<img src="doc/images/screenshot_1.37.0.png" width="600"><br>
 
-<img src="doc/images/screenshot_1.10.0.png" width="600"><br>
-
-↓ カスタムCSSを使って背景画像を設定した例なのだ。
+↓ 会話例
 <img src="doc/images/screenshot_1.28.0.png" width="600"><br>
 
 <div class="page"></div>
 
-## 💎 アプリの紹介と導入方法
+## 💎 ダウンロード
 
-APIを使ってAIとチャットするアプリなのだ。   
-AIのキャラクターを自分好みにカスタマイズできることが特徴なのだよ。
+🚀 [最新版のダウンロードはこちらなのだ](https://led-mirage.github.io/ZundaGPT2Lite/)
+
+## 💎 アプリの紹介と導入方法
 
 ZundaGPT2 Liteは[ZundaGPT2](https://github.com/led-mirage/ZundaGPT2)から音声読み上げ機能を省いたバージョンなのだよ。
 
 このアプリのアピールポイントは次のとおりなのだ✨
 
-- ３大AIサービス（OpenAI、Google Gemini、Anthropic Claude）に対応
-- ローカルLLM（OpenAI API互換）に対応
-- 柔軟なキャラクターカスタマイズ機能
+- ３大AIサービス（OpenAI、Gemini、Claude）およびローカルLLMに対応
 - マークダウン表示、TeX形式の数式表示機能
+- キャラクターカスタマイズ機能
+- 画面デザインのカスタマイズ機能
 - 過去ログ管理機能
 - 印刷機能
-- Raspberry Pi対応（X11/LXDE、日本語入力はIBus限定、印刷機能は非対応）
-- Linux Mint対応（Cinnamon/x64、日本語入力はIBus限定、印刷機能は非対応）
-- ダークモード対応
-- スタイルシート（CSS）をカスタマイズ可能
-- 画像を使った質問が可能（実験的機能）✨
-- フルスクリーンモード対応 ✨
+- マルチプラットフォーム対応（Windows / Linux / Raspberry Pi）
+
+※ ローカルLLMはOpenAI API互換のものに対応  
+※ Linux Mint対応（Cinnamon/x64、日本語入力はIBus限定、印刷機能は非対応）  
+※ Raspberry Pi対応（X11/LXDE、日本語入力はIBus限定、印刷機能は非対応）
 
 アプリの紹介と、もっとも手軽な導入方法を[Zennの記事](https://zenn.dev/ledmirage/articles/7650f36d3a784a)にしたので、そちらも参考にしてほしいのだ✨  
 記事はZundaGPT2のものだけど、導入方法はほぼ同じなのだ。
