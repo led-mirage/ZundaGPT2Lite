@@ -62,6 +62,7 @@ class IndexService:
         options = ChatFactoryOptions(
             api_id = self.state.settings.chat["api"],
             model = self.state.settings.chat["model"],
+            temperature = self.state.settings.chat["temperature"],
             instruction = self.state.settings.chat["instruction"],
             bad_response = self.state.settings.chat["bad_response"],
             history_size = self.state.settings.chat["history_size"],

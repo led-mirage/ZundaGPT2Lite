@@ -11,7 +11,7 @@ import httpx
 from datetime import datetime
 from httpx import ReadTimeout
 
-from openai import APITimeoutError, AuthenticationError, NotFoundError, BadRequestError
+from openai import APITimeoutError, AuthenticationError, NotFoundError, BadRequestError, omit
 
 from utility.utils import parse_data_url, resize_base64_image
 from .chat import Chat
@@ -82,7 +82,12 @@ class ChatOpenAIBase(Chat):
             if not self._model.startswith("o1") and not self._model.startswith("o3") and self._instruction:
                 messages.insert(0, {"role": "system", "content": self._instruction})
 
-            stream = self._client.chat.completions.create(model=self._model, messages=messages, stream=True)
+            temperature = omit
+            if self._temperature:
+                temperature = self._temperature
+
+            stream = self._client.chat.completions.create(
+                model=self._model, temperature=temperature, messages=messages, stream=True)
 
             content = ""
             sentence = ""
@@ -142,7 +147,7 @@ class ChatOpenAIBase(Chat):
             if e.status_code == 400 and e.param == "stream":
                 raise StreamNotAllowedError(e, "This model/organization does not allow streaming.")
             else:
-                listener.on_error(e, "BadRequestError")
+                listener.on_error(e, "APIError", e.body["message"])
         except AuthenticationError as e:
             listener.on_error(e, "Authentication")
         except (APITimeoutError, ReadTimeout, TimeoutError) as e:
@@ -185,7 +190,12 @@ class ChatOpenAIBase(Chat):
             if not self._model.startswith("o1") and not self._model.startswith("o3") and self._instruction:
                 messages.insert(0, {"role": "system", "content": self._instruction})
 
-            completion = self._client.chat.completions.create(model=self._model, messages=messages, timeout=httpx.Timeout(300.0, connect=5.0))
+            temperature = omit
+            if self._temperature:
+                temperature = self._temperature
+
+            completion = self._client.chat.completions.create(
+                model=self._model, temperature=temperature, messages=messages, timeout=httpx.Timeout(300.0, connect=5.0))
             content = completion.choices[0].message.content
             role = completion.choices[0].message.role
 
@@ -227,6 +237,8 @@ class ChatOpenAIBase(Chat):
                 listener.on_end_response(self._bad_response)
                 return self._bad_response
             
+        except BadRequestError as e:
+            listener.on_error(e, "APIError", e.body["message"])
         except AuthenticationError as e:
             listener.on_error(e, "Authentication")
         except (APITimeoutError, ReadTimeout, TimeoutError) as e:
@@ -286,10 +298,14 @@ class ChatOpenAIBase(Chat):
             role = "assistant"
             code_block = 0
             code_block_inside = False
+            temperature = omit
+            if self._temperature:
+                temperature = self._temperature
 
             with self._client.responses.stream(
                 model=self._model,
                 input=responses_input,
+                temperature=temperature
             ) as stream:
 
                 for event in stream:
@@ -364,7 +380,7 @@ class ChatOpenAIBase(Chat):
             if e.status_code == 400 and e.param == "stream":
                 raise StreamNotAllowedError(e, "This model/organization does not allow streaming.")
             else:
-                listener.on_error(e, "BadRequestError")
+                listener.on_error(e, "APIError", e.body["message"])
         except AuthenticationError as e:
             listener.on_error(e, "Authentication")
         except (APITimeoutError, ReadTimeout, TimeoutError) as e:
@@ -408,6 +424,10 @@ class ChatOpenAIBase(Chat):
                     ],
                 }
 
+            temperature = omit
+            if self._temperature:
+                temperature = self._temperature
+
             responses_input = [convert_message(m) for m in messages]
 
             if images and len(images) > 0:
@@ -420,6 +440,7 @@ class ChatOpenAIBase(Chat):
 
             response = self._client.responses.create(
                 model=self._model,
+                temperature=temperature,
                 input=responses_input,
                 timeout=httpx.Timeout(300.0, connect=5.0)
             )
@@ -470,6 +491,8 @@ class ChatOpenAIBase(Chat):
                 listener.on_end_response(self._bad_response)
                 return self._bad_response
 
+        except BadRequestError as e:
+            listener.on_error(e, "APIError", e.body["message"])
         except AuthenticationError as e:
             listener.on_error(e, "Authentication")
         except (APITimeoutError, ReadTimeout, TimeoutError) as e:

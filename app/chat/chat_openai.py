@@ -17,11 +17,12 @@ from utility.multi_lang import get_text_resource
 
 # OpenAI チャットクラス
 class ChatOpenAI(ChatOpenAIBase):
-    def __init__(self, model: str, instruction: str, bad_response: str, history_size: int, history_char_limit: int,
+    def __init__(self, model: str, temperature: float, instruction: str, bad_response: str, history_size: int, history_char_limit: int,
                  api_timeout: float, api_key_envvar: str=None, api_base_url: str=None):
 
         super().__init__(
             model = model,
+            temperature = temperature,
             instruction = instruction,
             bad_response = bad_response,
             history_size = history_size,

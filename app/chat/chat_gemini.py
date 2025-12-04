@@ -24,11 +24,12 @@ from utility.multi_lang import get_text_resource
 class ChatGemini(Chat):
     MAX_IMAGE_SIZE_MB = 10.0
 
-    def __init__(self, model: str, instruction: str, bad_response: str, history_size: int, history_char_limit: int,
+    def __init__(self, model: str, temperature: float, instruction: str, bad_response: str, history_size: int, history_char_limit: int,
                  api_key_envvar: str=None, gemini_option: dict=None):
 
         super().__init__(
             model = model,
+            temperature = temperature,
             instruction = instruction,
             bad_response = bad_response,
             history_size = history_size,
@@ -89,7 +90,8 @@ class ChatGemini(Chat):
                 contents=messages,
                 config=GenerateContentConfig(
                     system_instruction=self._instruction,
-                    safety_settings=self.get_safety_settings()
+                    safety_settings=self.get_safety_settings(),
+                    temperature=self._temperature
                 )
             )
 

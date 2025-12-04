@@ -1209,6 +1209,9 @@ function endResponse(content) {
     // チャンク出力領域を削除
     document.querySelectorAll('[chunk-area="true"]').forEach(e => e.remove());
 
+    // コンテンツがない場合（エラーの時など）はここで終了
+    if (!content) return;
+
     // コンテンツの内容をレンダリングして確定する
     const messageTextElements = document.querySelectorAll("#chat-messages .message-text");
     const lastMessageTextElement = messageTextElements[messageTextElements.length - 1];

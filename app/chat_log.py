@@ -18,7 +18,7 @@ from chat import ChatFactory, ChatFactoryOptions
 
 # チャットログクラス
 class ChatLog:
-    FILE_VER = 9
+    FILE_VER = 10
     LOG_FOLDER = "log"
 
     cache = {}
@@ -121,6 +121,12 @@ class ChatLog:
                     "message_text_em_color": "",
                 }
 
+            if data["file_ver"] <= 9:
+                data["chat"]["temperature"] = None
+                # バグ修正 v1.38.0
+                if "welcome_icon_visible" not in data["settings"]:
+                    data["settings"]["welcome_icon_visible"] = True
+
             app_config = AppConfig()
             app_config.load()
 
@@ -136,6 +142,7 @@ class ChatLog:
             options = ChatFactoryOptions(
                 api_id = settings.chat["api"],
                 model = settings.chat["model"],
+                temperature = settings.chat["temperature"],
                 instruction = settings.chat["instruction"],
                 bad_response = settings.chat["bad_response"],
                 history_size = settings.chat["history_size"],

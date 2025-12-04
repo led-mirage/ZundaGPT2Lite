@@ -22,6 +22,7 @@ class Chat:
     client_creation_error: str
     _client: object
     _model: str
+    _temperature: float
     _instruction: str
     _bad_response: str
     _history_size: int
@@ -29,13 +30,14 @@ class Chat:
     _stop_send_event: threading.Event
 
     # コンストラクタ
-    def __init__(self, model: str, instruction: str, bad_response: str, history_size: int, history_char_limit: int):
+    def __init__(self, model: str, temperature: float, instruction: str, bad_response: str, history_size: int, history_char_limit: int):
         self.messages = []
         self.chat_start_time = datetime.now()
         self.chat_update_time = datetime.now()
         self.client_creation_error = ""
         self._client = None
         self._model = model
+        self._temperature = temperature
         self._instruction = instruction
         self._bad_response = bad_response
         self._history_size = history_size

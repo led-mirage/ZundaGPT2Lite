@@ -22,11 +22,12 @@ from utility.multi_lang import get_text_resource
 class ChatClaude(Chat):
     MAX_IMAGE_SIZE_MB = 4.0
 
-    def __init__(self, model: str, instruction: str, bad_response: str, history_size: int, history_char_limit: int,
+    def __init__(self, model: str, temperature: float, instruction: str, bad_response: str, history_size: int, history_char_limit: int,
                  api_key_envvar: str=None, claude_options: dict=None):
 
         super().__init__(
             model = model,
+            temperature = temperature,
             instruction = instruction,
             bad_response = bad_response,
             history_size = history_size,
@@ -51,11 +52,13 @@ class ChatClaude(Chat):
     def send_onetime_message(self, text:str):
         messages = []
         messages.append({"role": "user", "content": text})
+
         response = self._client.messages.create(
             max_tokens=4096,
             system=self._instruction,
             messages=messages,
-            model=self._model)
+            model=self._model
+            )
         return response.content[0].text
 
     # メッセージを送信して回答を得る
@@ -101,12 +104,17 @@ class ChatClaude(Chat):
                     "type": "disabled"
                 }
 
+            temperature = anthropic.omit
+            if self._temperature:
+                temperature = self._temperature
+
             with self._client.messages.stream(
                 max_tokens=max_tokens,
                 thinking=thinking,
                 system=self._instruction,
                 messages=messages,
                 model=self._model,
+                temperature=temperature
             ) as stream:
                 code_block = 0
                 code_block_inside = False

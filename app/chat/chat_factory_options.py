@@ -13,6 +13,7 @@ from dataclasses import dataclass
 class ChatFactoryOptions:
     api_id: str
     model: str
+    temperature: float
     instruction: str
     bad_response: str
     history_size: int

@@ -22,19 +22,19 @@ class ChatFactory:
     def create(options: ChatFactoryOptions) -> Chat:
         if options.api_id == "OpenAI":
             return ChatOpenAI(
-                options.model, options.instruction, options.bad_response, options.history_size, options.history_char_limit,
+                options.model, options.temperature, options.instruction, options.bad_response, options.history_size, options.history_char_limit,
                 options.api_timeout, options.api_key_envvar, options.api_base_url)
         elif options.api_id == "AzureOpenAI":
             return ChatAzureOpenAI(
-                options.model, options.instruction, options.bad_response, options.history_size, options.history_char_limit,
+                options.model, options.temperature, options.instruction, options.bad_response, options.history_size, options.history_char_limit,
                 options.api_timeout, options.api_key_envvar, options.api_endpoint_envvar)
         elif options.api_id == "Gemini":
             return ChatGemini(
-                options.model, options.instruction, options.bad_response, options.history_size, options.history_char_limit,
+                options.model, options.temperature, options.instruction, options.bad_response, options.history_size, options.history_char_limit,
                 options.api_key_envvar, options.gemini_option)
         elif options.api_id == "Claude":
             return ChatClaude(
-                options.model, options.instruction, options.bad_response, options.history_size, options.history_char_limit,
+                options.model, options.temperature, options.instruction, options.bad_response, options.history_size, options.history_char_limit,
                 options.api_key_envvar, options.claude_options)
         else:
             raise ValueError(get_text_resource("ERROR_API_ID_IS_INCORRECT"))
