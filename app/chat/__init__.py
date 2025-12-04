@@ -4,4 +4,5 @@ from .chat_azureopenai import ChatAzureOpenAI
 from .chat_gemini import ChatGemini
 from .chat_claude import ChatClaude
 from .chat_factory import ChatFactory
+from .chat_factory_options import ChatFactoryOptions
 from .listener import SendMessageListener
