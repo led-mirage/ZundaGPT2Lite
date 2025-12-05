@@ -24,8 +24,17 @@ from utility.multi_lang import get_text_resource
 class ChatGemini(Chat):
     MAX_IMAGE_SIZE_MB = 10.0
 
-    def __init__(self, model: str, instruction: str, bad_response: str, history_size: int, history_char_limit: int,
+    def __init__(self, model: str, temperature: float, instruction: str, bad_response: str, history_size: int, history_char_limit: int,
                  api_key_envvar: str=None, gemini_option: dict=None):
+
+        super().__init__(
+            model = model,
+            temperature = temperature,
+            instruction = instruction,
+            bad_response = bad_response,
+            history_size = history_size,
+            history_char_limit = history_char_limit
+        )
 
         self.gemini_option: dict = gemini_option
 
@@ -34,25 +43,16 @@ class ChatGemini(Chat):
         else:
             api_key = os.environ.get("GEMINI_API_KEY")
 
-        client = None
+        self._client = None
         if api_key:
-            client = genai.Client(api_key=api_key)
-
-        super().__init__(
-            client = client,
-            model = model,
-            instruction = instruction,
-            bad_response = bad_response,
-            history_size = history_size,
-            history_char_limit = history_char_limit
-        )
+            self._client = genai.Client(api_key=api_key)
 
         if api_key is None:
             self.client_creation_error = get_text_resource("ERROR_MISSING_GEMINI_API_KEY")
 
     # メッセージを送信して回答を得る（同期処理、一度きりの質問）
     def send_onetime_message(self, text:str) -> str:
-        response = self.client.models.generate_content(model=self.model, contents=[text])
+        response = self._client.models.generate_content(model=self._model, contents=[text])
         return response.text
 
     # メッセージを送信して回答を得る
@@ -63,7 +63,7 @@ class ChatGemini(Chat):
         listener: SendMessageListener) -> str:
 
         try:
-            self.stop_send_event.clear()
+            self._stop_send_event.clear()
 
             user_parts = [{"text": text}]
             for img_dataurl in images or []:
@@ -76,7 +76,7 @@ class ChatGemini(Chat):
                     }
                 })
 
-            messages = copy.deepcopy(self.get_history())
+            messages = copy.deepcopy(self._get_history())
             messages = self.convert_messages(messages)
             messages.append({"role": "user", "parts": user_parts})
             self.messages.append({"role": "user", "content": text})
@@ -85,12 +85,13 @@ class ChatGemini(Chat):
             #messages = copy.deepcopy(self.get_history())
             #messages = self.convert_messages(messages)
 
-            stream = self.client.models.generate_content_stream(
-                model=self.model,
+            stream = self._client.models.generate_content_stream(
+                model=self._model,
                 contents=messages,
                 config=GenerateContentConfig(
-                    system_instruction=self.instruction,
-                    safety_settings=self.get_safety_settings()
+                    system_instruction=self._instruction,
+                    safety_settings=self.get_safety_settings(),
+                    temperature=self._temperature
                 )
             )
 
@@ -102,7 +103,7 @@ class ChatGemini(Chat):
 
             for chunk in stream:
                 #print(chunk.candidates[0].safety_ratings)
-                if self.stop_send_event.is_set():
+                if self._stop_send_event.is_set():
                     break
 
                 if chunk.text is not None:
@@ -143,8 +144,8 @@ class ChatGemini(Chat):
                 listener.on_end_response(content)
                 return content
             else:
-                listener.on_end_response(self.bad_response)
-                return self.bad_response
+                listener.on_end_response(self._bad_response)
+                return self._bad_response
         except GenaiErrors.APIError as e:
             """
             https://ai.google.dev/gemini-api/docs/troubleshooting?hl=ja

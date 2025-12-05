@@ -14,11 +14,11 @@ from datetime import datetime
 from config.app_config import AppConfig
 from config.app_settings import Settings
 from chat import Chat
-from chat import ChatFactory
+from chat import ChatFactory, ChatFactoryOptions
 
 # チャットログクラス
 class ChatLog:
-    FILE_VER = 9
+    FILE_VER = 10
     LOG_FOLDER = "log"
 
     cache = {}
@@ -121,6 +121,12 @@ class ChatLog:
                     "message_text_em_color": "",
                 }
 
+            if data["file_ver"] <= 9:
+                data["chat"]["temperature"] = None
+                # バグ修正 v1.38.0
+                if "welcome_icon_visible" not in data["settings"]:
+                    data["settings"]["welcome_icon_visible"] = True
+
             app_config = AppConfig()
             app_config.load()
 
@@ -133,20 +139,23 @@ class ChatLog:
             settings.custom_style = data["custom_style"]
             settings.claude_options = data["claude_options"]
 
-            chat = ChatFactory.create(
-                settings.chat["api"],
-                settings.chat["model"],
-                settings.chat["instruction"],
-                settings.chat["bad_response"],
-                settings.chat["history_size"],
-                settings.chat["history_char_limit"],
-                app_config.system["chat_api_timeout"],
-                settings.chat["api_key_envvar"],
-                settings.chat["api_endpoint_envvar"],
-                settings.chat["api_base_url"],
-                app_config.gemini,
-                settings.claude_options
+            options = ChatFactoryOptions(
+                api_id = settings.chat["api"],
+                model = settings.chat["model"],
+                temperature = settings.chat["temperature"],
+                instruction = settings.chat["instruction"],
+                bad_response = settings.chat["bad_response"],
+                history_size = settings.chat["history_size"],
+                history_char_limit = settings.chat["history_char_limit"],
+                api_timeout = app_config.system["chat_api_timeout"],
+                api_key_envvar = settings.chat["api_key_envvar"],
+                api_endpoint_envvar = settings.chat["api_endpoint_envvar"],
+                api_base_url = settings.chat["api_base_url"],
+                gemini_option = app_config.gemini,
+                claude_options = settings.claude_options
             )
+
+            chat = ChatFactory.create(options)
             chat.messages = data["messages"]
             chat.chat_start_time = datetime.fromisoformat(data["chat_start_time"])
             chat.chat_update_time = datetime.fromisoformat(data["chat_update_time"])

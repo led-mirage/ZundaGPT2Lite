@@ -22,8 +22,17 @@ from utility.multi_lang import get_text_resource
 class ChatClaude(Chat):
     MAX_IMAGE_SIZE_MB = 4.0
 
-    def __init__(self, model: str, instruction: str, bad_response: str, history_size: int, history_char_limit: int,
+    def __init__(self, model: str, temperature: float, instruction: str, bad_response: str, history_size: int, history_char_limit: int,
                  api_key_envvar: str=None, claude_options: dict=None):
+
+        super().__init__(
+            model = model,
+            temperature = temperature,
+            instruction = instruction,
+            bad_response = bad_response,
+            history_size = history_size,
+            history_char_limit = history_char_limit
+        )
 
         self.claude_options = claude_options
 
@@ -32,18 +41,9 @@ class ChatClaude(Chat):
         else:
             api_key = os.environ.get("ANTHROPIC_API_KEY")
 
-        client = None
+        self._client = None
         if api_key:
-            client = anthropic.Anthropic(api_key=api_key)
-
-        super().__init__(
-            client = client,
-            model = model,
-            instruction = instruction,
-            bad_response = bad_response,
-            history_size = history_size,
-            history_char_limit = history_char_limit
-        )
+            self._client = anthropic.Anthropic(api_key=api_key)
 
         if api_key is None:
             self.client_creation_error = get_text_resource("ERROR_MISSING_ANTHROPIC_API_KEY")
@@ -52,11 +52,13 @@ class ChatClaude(Chat):
     def send_onetime_message(self, text:str):
         messages = []
         messages.append({"role": "user", "content": text})
-        response = self.client.messages.create(
+
+        response = self._client.messages.create(
             max_tokens=4096,
-            system=self.instruction,
+            system=self._instruction,
             messages=messages,
-            model=self.model)
+            model=self._model
+            )
         return response.content[0].text
 
     # メッセージを送信して回答を得る
@@ -67,10 +69,10 @@ class ChatClaude(Chat):
         listener: SendMessageListener) -> str:
 
         try:
-            self.stop_send_event.clear()
+            self._stop_send_event.clear()
 
             self.messages.append({"role": "user", "content": text})
-            messages = copy.deepcopy(self.get_history())
+            messages = copy.deepcopy(self._get_history())
 
             if images and len(images) > 0:
                 messages = messages[:-1]
@@ -102,18 +104,23 @@ class ChatClaude(Chat):
                     "type": "disabled"
                 }
 
-            with self.client.messages.stream(
+            temperature = anthropic.omit
+            if self._temperature:
+                temperature = self._temperature
+
+            with self._client.messages.stream(
                 max_tokens=max_tokens,
                 thinking=thinking,
-                system=self.instruction,
+                system=self._instruction,
                 messages=messages,
-                model=self.model,
+                model=self._model,
+                temperature=temperature
             ) as stream:
                 code_block = 0
                 code_block_inside = False
 
                 for text in stream.text_stream:
-                    if self.stop_send_event.is_set():
+                    if self._stop_send_event.is_set():
                         break
 
                     if text is not None:
@@ -154,8 +161,8 @@ class ChatClaude(Chat):
                     listener.on_end_response(content)
                     return content
                 else:
-                    listener.on_end_response(self.bad_response)
-                    return self.bad_response
+                    listener.on_end_response(self._bad_response)
+                    return self._bad_response
         except anthropic.APITimeoutError as e:
             listener.on_error(e, "Timeout")
         except anthropic.APIConnectionError as e:

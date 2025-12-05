@@ -17,8 +17,17 @@ from utility.multi_lang import get_text_resource
 
 # Azure OpenAI チャットクラス
 class ChatAzureOpenAI(ChatOpenAIBase):
-    def __init__(self, model: str, instruction: str, bad_response: str, history_size: int, history_char_limit: int,
+    def __init__(self, model: str, temperature: float, instruction: str, bad_response: str, history_size: int, history_char_limit: int,
                  api_timeout: float, api_key_envvar: str=None, api_endpoint: str=None):
+
+        super().__init__(
+            model = model,
+            temperature = temperature,
+            instruction = instruction,
+            bad_response = bad_response,
+            history_size = history_size,
+            history_char_limit = history_char_limit
+        )
 
         if api_key_envvar:
             api_key = os.environ.get(api_key_envvar)
@@ -30,19 +39,10 @@ class ChatAzureOpenAI(ChatOpenAIBase):
         else:
             endpoint = os.environ.get("AZURE_OPENAI_ENDPOINT")
 
-        client = None
+        self._client = None
         if endpoint and api_key:
-            client = AzureOpenAI(azure_endpoint=endpoint, api_key=api_key, api_version="2025-04-01-preview",
+            self._client = AzureOpenAI(azure_endpoint=endpoint, api_key=api_key, api_version="2025-04-01-preview",
                                  timeout=httpx.Timeout(api_timeout, connect=5.0))
-
-        super().__init__(
-            client = client,
-            model = model,
-            instruction = instruction,
-            bad_response = bad_response,
-            history_size = history_size,
-            history_char_limit = history_char_limit
-        )
 
         if endpoint is None:
             self.client_creation_error = get_text_resource("ERROR_MISSING_AZURE_OPENAI_ENDPOINT")

@@ -20,7 +20,7 @@ from chat_log import ChatLog
 from const import APP_NAME, APP_VERSION
 from utility.utils import get_location, get_exception_name, to_css_url_format
 from utility.multi_lang import set_current_language, get_text_resource
-from chat import Chat, ChatFactory, SendMessageListener
+from chat import Chat, ChatFactory, ChatFactoryOptions, SendMessageListener
 
 
 log_settings = get_log_settings()
@@ -59,20 +59,23 @@ class IndexService:
         
         ChatLog.LOG_FOLDER = self.app_config.system["log_folder"]
 
-        self.state.chat = ChatFactory.create(
-            self.state.settings.chat["api"],
-            self.state.settings.chat["model"],
-            self.state.settings.chat["instruction"],
-            self.state.settings.chat["bad_response"],
-            self.state.settings.chat["history_size"],
-            self.state.settings.chat["history_char_limit"],
-            self.app_config.system["chat_api_timeout"],
-            self.state.settings.chat["api_key_envvar"],
-            self.state.settings.chat["api_endpoint_envvar"],
-            self.state.settings.chat["api_base_url"],
-            self.app_config.gemini,
-            self.state.settings.claude_options
+        options = ChatFactoryOptions(
+            api_id = self.state.settings.chat["api"],
+            model = self.state.settings.chat["model"],
+            temperature = self.state.settings.chat["temperature"],
+            instruction = self.state.settings.chat["instruction"],
+            bad_response = self.state.settings.chat["bad_response"],
+            history_size = self.state.settings.chat["history_size"],
+            history_char_limit = self.state.settings.chat["history_char_limit"],
+            api_timeout = self.app_config.system["chat_api_timeout"],
+            api_key_envvar = self.state.settings.chat["api_key_envvar"],
+            api_endpoint_envvar = self.state.settings.chat["api_endpoint_envvar"],
+            api_base_url = self.state.settings.chat["api_base_url"],
+            gemini_option = self.app_config.gemini,
+            claude_options = self.state.settings.claude_options
         )
+
+        self.state.chat = ChatFactory.create(options)
 
         self.set_chatinfo_to_ui()
         self.set_window_title()
