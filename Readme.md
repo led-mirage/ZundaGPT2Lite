@@ -196,7 +196,7 @@ Windowsの場合は、Windowsの検索窓で「環境変数を編集」で検索
 
 以下のリンクから ZundaGPT2Lite.ZIP をダウンロードして、作成したフォルダに展開するのだ。
 
-https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.37.0
+https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.38.0
 
 #### 3. 実行
 
@@ -344,11 +344,11 @@ CSSを知らない人はなんのことかわからないかもしれないけ�
 
 VirusTotalでのチェック結果はこちらなのだ。
 
-- **Windows版:** [72個中2個のアンチウィルスエンジンで検出 :2025/11/29 v1.37.0](https://www.virustotal.com/gui/file/8cf806ae86263a4066f4e104beb1f61e34702f4a20bc42e5fbdf8fb7fb3a3d1c/detection)
-- **Raspberry Pi版:** [62個中0個のアンチウィルスエンジンで検出 :2025/11/29 v1.37.0](https://www.virustotal.com/gui/file/c81c32c036133c236330e703190929cdf6a5afe9a15b8e5b22138d28d560bcdb/detection)
-- **Linux版:** [63個中0個のアンチウィルスエンジンで検出 :2025/11/29 v1.37.0](https://www.virustotal.com/gui/file/ff0b0e160f6a27929460d1346c206104a5d25de8bfac94e4e67798281a15944f/detection)
+- **Windows版:** [72個中2個のアンチウィルスエンジンで検出 :2025/12/04 v1.38.0](https://www.virustotal.com/gui/file/a356ac42fc798eb0e29a6061596ef8a17a4345a36b42b88d063beac33b9ef0ec/detection)
+- **Raspberry Pi版:** [62個中0個のアンチウィルスエンジンで検出 :2025/12/04 v1.38.0](https://www.virustotal.com/gui/file/e2c24f5cb22c9b36423ddf5ae900d80d79b54d733035831c48f99ed5d9be7692/detection)
+- **Linux版:** [63個中0個のアンチウィルスエンジンで検出 :2025/12/05 v1.38.0](https://www.virustotal.com/gui/file/2e54664e67252aa7fc966ca3a77907f52894445d417b3e44fc945e3d4ed810aa/detection)
 
-<img src="doc/images/virustotal_1.37.0.png" width="600">
+<img src="doc/images/virustotal_1.38.0.png" width="600">
 
 ### ⚡ ご利用について
 
@@ -451,6 +451,12 @@ VirusTotalでのチェック結果はこちらなのだ。
 
 ## 💎 バージョン履歴
 
+### 1.38.0 (2025/12/05)
+
+- キャラ設定に`temperature`パラメータを追加
+- Chat系クラスのリファクタリング
+- 軽微バグ修正
+
 ### 1.37.0 (2025/11/29)
 
 - フルスクリーンモードに対応
@@ -484,6 +490,8 @@ VirusTotalでのチェック結果はこちらなのだ。
   - Claude、Geminiにも対応
   - 画像をクリックすることで拡大表示する機能を追加
 
+<details><summary>これ以前のバージョンアップの履歴はこちらなのだ</summary>
+
 ### 1.33.0 (2025/10/31)
 
 - 画像送信機能の追加（実験的機能）
@@ -496,8 +504,6 @@ VirusTotalでのチェック結果はこちらなのだ。
 - OpenAI GPT-5-Codex、GPT-5 proに対応
 - chatパッケージのリファクタリング
 - タイポ修正
-
-<details><summary>これ以前のバージョンアップの履歴はこちらなのだ</summary>
 
 ### 1.31.0 (2025/10/19)
 
