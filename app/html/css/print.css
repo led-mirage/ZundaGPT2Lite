@@ -24,6 +24,9 @@
     .message-delete-btn {
         visibility: hidden;
     }
+    .message-copy-btn {
+        visibility: hidden;
+    }
     .chat-reanswer-btn {
         visibility: hidden;
     }
@@ -35,19 +38,19 @@
     }
 
     /* ダークモード用 */
-    body.dark-mode,
-    body.dark-mode .chat-container {
+    body.dark-mode:not(.custom-style-enabled),
+    body.dark-mode:not(.custom-style-enabled) .chat-container {
         background-color: #ffffff !important;
         color: #181a1b !important;
     }
 
-    body.dark-mode .header,
-    body.dark-mode footer {
+    body.dark-mode:not(.custom-style-enabled) .header,
+    body.dark-mode:not(.custom-style-enabled) footer {
         background-color: #eaeaea !important;
         color: #202224 !important;
     }
 
-    body.dark-mode .chat-messages {
+    body.dark-mode:not(.custom-style-enabled) .chat-messages {
         background-color: #ffffff !important;
         color: #23262b !important;
     }
