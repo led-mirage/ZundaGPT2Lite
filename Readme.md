@@ -196,7 +196,7 @@ Windowsの場合は、Windowsの検索窓で「環境変数を編集」で検索
 
 以下のリンクから ZundaGPT2Lite.ZIP をダウンロードして、作成したフォルダに展開するのだ。
 
-https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.38.0
+https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.38.1
 
 #### 3. 実行
 
@@ -344,11 +344,11 @@ CSSを知らない人はなんのことかわからないかもしれないけ�
 
 VirusTotalでのチェック結果はこちらなのだ。
 
-- **Windows版:** [72個中2個のアンチウィルスエンジンで検出 :2025/12/04 v1.38.0](https://www.virustotal.com/gui/file/a356ac42fc798eb0e29a6061596ef8a17a4345a36b42b88d063beac33b9ef0ec/detection)
-- **Raspberry Pi版:** [62個中0個のアンチウィルスエンジンで検出 :2025/12/04 v1.38.0](https://www.virustotal.com/gui/file/e2c24f5cb22c9b36423ddf5ae900d80d79b54d733035831c48f99ed5d9be7692/detection)
-- **Linux版:** [63個中0個のアンチウィルスエンジンで検出 :2025/12/05 v1.38.0](https://www.virustotal.com/gui/file/2e54664e67252aa7fc966ca3a77907f52894445d417b3e44fc945e3d4ed810aa/detection)
+- **Windows版:** [72個中2個のアンチウィルスエンジンで検出 :2025/12/07 v1.38.1](https://www.virustotal.com/gui/file/b1c2f57bf6eaac0ac3c0d95e5057c42315a8b79b0e805953e9f4cec478a07ffe/detection)
+- **Raspberry Pi版:** [60個中0個のアンチウィルスエンジンで検出 :2025/12/07 v1.38.1](https://www.virustotal.com/gui/file/e169b7c9b44d2e2ef1eb4f6fe0b28551585ef2ec1f1b5f86ac8b5c9ffe032380/detection)
+- **Linux版:** [62個中0個のアンチウィルスエンジンで検出 :2025/12/07 v1.38.1](https://www.virustotal.com/gui/file/f33a1adf5ea80a1685d5cd3782f15a2e9671e74b149853d0f3b4a3718caac596/detection)
 
-<img src="doc/images/virustotal_1.38.0.png" width="600">
+<img src="doc/images/virustotal_1.38.1.png" width="600">
 
 ### ⚡ ご利用について
 
@@ -450,6 +450,13 @@ VirusTotalでのチェック結果はこちらなのだ。
 <div class="page"></div>
 
 ## 💎 バージョン履歴
+
+バージョンアップの詳しい内容については [Zennの記事](https://zenn.dev/ledmirage/books/8ec854ef6b8e12) を見て欲しいのだ。
+
+### 1.38.1 (2025/12/07)
+
+- Fix: 印刷時、メッセージコピーボタンを非表示にするよう修正
+- Fix: ダークモード時、印刷時にキャラの背景画像が印刷されない問題を修正
 
 ### 1.38.0 (2025/12/05)
 
