@@ -1083,6 +1083,8 @@ function setChatInfo(info) {
     document.getElementById("settings-name").textContent = displayName;
 
     if (info.custom_style.enable) {
+        document.body.classList.add("custom-style-enabled");    // 印刷制御用
+
         setCustomStyleProperty("--background-image", info.custom_style.background_image);
         setCustomStyleProperty("--background-image-opacity", info.custom_style.background_image_opacity);
         setCustomStyleProperty("--body-bgcolor", info.custom_style.body_bgcolor);
@@ -1103,6 +1105,7 @@ function setChatInfo(info) {
         }
     }
     else {
+        document.body.classList.remove("custom-style-enabled");
         restoreCSSValue();
     }
 }
