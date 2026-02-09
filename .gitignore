@@ -162,6 +162,7 @@ cython_debug/
 # Zunda
 ZundaGPT2Lite.exe
 log
+!build_tools/app.manifest
 settings/*
 !settings/settings.en.json
 !settings/settings.es.json
