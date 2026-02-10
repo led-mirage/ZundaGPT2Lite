@@ -7,7 +7,7 @@
 [![Anthropic Claude](https://img.shields.io/badge/Anthropic-Claude-crimson?logo=anthropic)](https://www.anthropic.com/)
 [![Google Gemini](https://img.shields.io/badge/Google-Gemini-crimson?logo=google)](https://ai.google.dev/)
 
-Copyright (c) 2024-2025 led-mirage
+Copyright (c) 2024-2026 led-mirage
 
 [Japanese](Readme.md)
 
@@ -290,17 +290,17 @@ Please understand that the developer cannot be held responsible for any damages 
 Homepage: https://github.com/r0x0r/pywebview  
 License: BSD-3-Clause license
 
-### 🔖 openai 2.8.1
+### 🔖 openai 2.17.0
 
 Homepage： https://github.com/openai/openai-python  
 License：Apache License 2.0
 
-### 🔖 google-genai 1.52.0
+### 🔖 google-genai 1.62.0
 
 Homepage： https://github.com/googleapis/python-genai  
 License：Apache License 2.0
 
-### 🔖 anthropic 0.75.0
+### 🔖 anthropic 0.79.0
 
 Homepage： https://github.com/anthropics/anthropic-sdk-python  
 License：MIT license
@@ -355,7 +355,7 @@ License：Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License
 Homepage：https://github.com/DudeNr33/pyinstaller-versionfile  
 License：MIT license
 
-### 🔖 PyInstaller 6.16.0
+### 🔖 PyInstaller 6.18.0
 Homepage： https://github.com/pyinstaller/pyinstaller  
 License： GPL 2.0 License / Apache License 2.0  
 
@@ -363,7 +363,7 @@ License： GPL 2.0 License / Apache License 2.0
 
 ## 💎 License
 
-© 2024-2025 led-mirage
+© 2024-2026 led-mirage
 
 This application is released under the [MIT License](https://opensource.org/licenses/MIT).   
 For more details, please refer to the LICENSE file included in the project.
