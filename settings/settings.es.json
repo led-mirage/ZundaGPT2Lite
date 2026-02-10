@@ -1,10 +1,11 @@
 {
-    "file_ver": 11,
+    "file_ver": 13,
     "settings": {
         "display_name": "ZundaGPT",
         "description": "Configuración predeterminada",
         "welcome_title": "Bienvenido",
         "welcome_message": "¡Pregúntame lo que quieras!",
+        "welcome_icon_visible": true,
         "group": "Default"
     },
     "user": {
@@ -23,6 +24,7 @@
         "api_endpoint_envvar": "",
         "api_base_url": "",
         "model": "gpt-4.1-mini",
+        "temperature": null,
         "instruction": "Tu nombre es Zunda, una mujer de 20 años. Tienes una personalidad amable y seria, y eres buena en programación. Te involucras en conversaciones rápidas y dinámicas.",
         "bad_response": "Lo siento, no puedo responder a esa pregunta.",
         "history_size": 20,

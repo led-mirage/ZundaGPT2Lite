@@ -1,8 +1,14 @@
-import yaml
+import os, sys, yaml
+
+# project_root を sys.path に追加
+CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
+PROJECT_ROOT = os.path.dirname(CURRENT_DIR)
+sys.path.append(PROJECT_ROOT)
+
 from app.const import APP_NAME, APP_VERSION, COPYRIGHT
 
 # バージョン情報ファイル
-input_path = "version.yaml"
+input_path = "build_tools/version.yaml"
 
 # 書き換える内容
 new_version = APP_VERSION + ".0"

@@ -189,21 +189,19 @@ class IndexService:
     def delete_current_chat(self):
         if not ChatLog.exists_log_file(self.state.chat):
             return
-          
-        next_logfile = ChatLog.get_prev_logfile(self.state.chat)
-        if next_logfile is None:
-            next_logfile = ChatLog.get_next_logfile(self.state.chat)
-        
-        ChatLog.delete_log_file(self.state.chat)
 
-        if next_logfile is not None:
-            loaded_settings, loaded_chat = ChatLog.load(next_logfile)
+        prev_logfile = ChatLog.get_prev_logfile(self.state.chat)
+        next_logfile = ChatLog.get_next_logfile(self.state.chat)
+
+        is_empty = (prev_logfile is None) and (next_logfile is None)
+        is_tail = (next_logfile is None)
+        if is_empty or is_tail:
+            self.window.js.newChat()
+        else:
+            loaded_settings, loaded_chat = ChatLog.load(prev_logfile)
             if loaded_settings is None:
                 return
-
             self.change_current_chat(loaded_settings, loaded_chat)
-        else:
-            self.window.js.newChat()
 
     # メッセージ送信イベントハンドラ（UI）
     def send_message_to_chatgpt(self, text, images):

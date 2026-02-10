@@ -65,25 +65,20 @@ class ChatGemini(Chat):
         try:
             self._stop_send_event.clear()
 
-            user_parts = [{"text": text}]
-            for img_dataurl in images or []:
-                media_type, image_format, b64 = parse_data_url(img_dataurl)
-                b64 = resize_base64_image(b64, max_size_mb=self.MAX_IMAGE_SIZE_MB, output_format=image_format)
-                user_parts.append({
-                    "inline_data": {
-                        "mime_type": media_type,
-                        "data": b64
-                    }
-                })
-
+            self.messages.append({"role": "user", "content": text})
             messages = copy.deepcopy(self._get_history())
             messages = self.convert_messages(messages)
-            messages.append({"role": "user", "parts": user_parts})
-            self.messages.append({"role": "user", "content": text})
-
-            #self.messages.append({"role": "user", "content": text})
-            #messages = copy.deepcopy(self.get_history())
-            #messages = self.convert_messages(messages)
+            if images:
+                last_message = messages[-1]
+                for img_dataurl in images:
+                    media_type, image_format, b64 = parse_data_url(img_dataurl)
+                    b64 = resize_base64_image(b64, max_size_mb=self.MAX_IMAGE_SIZE_MB, output_format=image_format)
+                    last_message["parts"].append({
+                        "inline_data": {
+                            "mime_type": media_type,
+                            "data": b64
+                        }
+                    })
 
             stream = self._client.models.generate_content_stream(
                 model=self._model,

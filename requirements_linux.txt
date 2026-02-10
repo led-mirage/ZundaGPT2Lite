@@ -1,8 +1,17 @@
-pywebview[pyside6]==5.3.2
+pywebview[pyside6]===5.3.2
+# For Linux Mint
+# pywebview[pyside6]===5.3.2 だと pyside6 のバージョンを固定できず、
+# PyInstallerで固めて実行したとき起動せずに落ちるので、動作する6.9.1で固定（6.10.2で落ちる）
+# ↓ここから
+PySide6==6.9.1
+PySide6_Addons==6.9.1
+PySide6_Essentials==6.9.1
+shiboken6==6.9.1
+# ↑↑↑ここまで
 requests==2.32.4
-openai==2.8.1
-google-genai==1.52.0
-anthropic==0.75.0
+openai==2.17.0
+google-genai==1.62.0
+anthropic==0.79.0
 langdetect==1.0.9
 pyperclip==1.9.0
 Pillow==12.0.0
