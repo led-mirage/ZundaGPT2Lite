@@ -320,7 +320,7 @@ License：Apache License 2.0
 Homepage： https://github.com/asweigart/pyperclip  
 License：BSD 3-Clause "New" or "Revised" License
 
-### 🔖 Pillow 12.0.0
+### 🔖 Pillow 12.1.1
 
 Homepage： https://github.com/python-pillow/Pillow  
 License：MIT-CMU license
