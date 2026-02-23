@@ -1,5 +1,5 @@
 {
-    "file_ver": 8,
+    "file_ver": 9,
     "system": {
         "log_folder": "log",
         "log_level": "ERROR",
@@ -10,7 +10,8 @@
         "language": "en",
         "font_family": "",
         "font_size": 16,
-        "theme": "light"
+        "theme": "light",
+        "display_clock": true
     },
     "gemini": {
         "safety_filter_harassment": "BLOCK_MEDIUM_AND_ABOVE",
