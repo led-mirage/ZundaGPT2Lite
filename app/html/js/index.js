@@ -19,6 +19,8 @@ let g_aiAgentAvailable = false;
 let g_aiAgentCreationError = "";
 let g_savedCSS = {};
 let g_pastedImages = [];    // 添付画像管理配列： { src, sent, element }
+let g_clockIntervalId = null;
+let g_displayClock = true;
 
 // 初期化
 document.addEventListener("DOMContentLoaded", function() {
@@ -120,7 +122,41 @@ async function toggle_fullscreen() {
         const message = getTextResource("fullscreenMessage");
         showFullscreenMessage(elementId, message)
     }
+    setClockVisibility(isFullscreen);
     return isFullscreen;
+}
+
+// フルスクリーン時時計表示制御
+function setClockVisibility(visible) {
+    const clockElement = document.getElementById("fullscreen-clock");
+    if (!clockElement) return;
+
+    // display_clockが有効で、かつフルスクリーンの場合に表示
+    const shouldDisplay = visible && g_displayClock;
+
+    if (shouldDisplay) {
+        clockElement.style.display = "block";
+        updateClock(); // 表示直後に1回更新
+        g_clockIntervalId = setInterval(updateClock, 1000);
+    } else {
+        clockElement.style.display = "none";
+        if (g_clockIntervalId) {
+            clearInterval(g_clockIntervalId);
+            g_clockIntervalId = null;
+        }
+    }
+}
+
+// 時計を更新する
+function updateClock() {
+    const clockElement = document.getElementById("fullscreen-clock");
+    if (!clockElement) return;
+
+    const now = new Date();
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    
+    clockElement.textContent = `${hours}:${minutes}`;
 }
 
 // フッターの表示/非表示設定
@@ -242,6 +278,7 @@ window.addEventListener("pywebviewready", async function() {
 
         const isFullscreen = await pywebview.api.is_fullscreen();
         setFooterVisibility(!isFullscreen);
+        setClockVisibility(isFullscreen);
 
         await pywebview.api.page_loaded();
 
@@ -265,6 +302,7 @@ function initUIComponents(appConfig) {
     setCurrentLanguage(appConfig.language);
     setFontFamilyAndSize(appConfig.fontFamily, appConfig.fontSize);
     setCopyright(appConfig.copyright);
+    g_displayClock = appConfig.display_clock ?? true;
 
     let button = document.getElementById("submit-button");
     if (button) {
