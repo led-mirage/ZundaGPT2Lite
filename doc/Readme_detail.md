@@ -85,6 +85,11 @@ Söhne, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Canta
 
 UIのテーマを指定するのだ。`light` または `dark` を指定できるのだ。
 
+##### ✨ display_clock（既定値 true）
+
+フルスクリーン時に時刻を表示するかどうかのオプションなのだ。
+`true`（表示）または、`false`（非表示）で設定するのだ。
+
 #### 📌 gemini カテゴリ
 
 ##### ✨ safety_filter_harassment（既定値 BLOCK_MEDIUM_AND_ABOVE）
