@@ -635,3 +635,22 @@ pre {
     font-size: 16px;
     z-index: 1000;
 }
+
+#fullscreen-clock {
+    display: flex;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    color: white;
+    font-size: 16px;
+    font-family: system-ui, -apple-system, sans-serif;
+    font-weight: 700;
+    z-index: 1000;
+    padding: 6px 10px;
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    letter-spacing: 1px;
+    align-items: center;
+    justify-content: center;
+    height: 28px;
+}

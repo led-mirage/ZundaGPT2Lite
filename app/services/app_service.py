@@ -2,7 +2,7 @@
 #
 # アプリケーション共通のサービス
 #
-# Copyright (c) 2024-2025 led-mirage
+# Copyright (c) 2024-2026 led-mirage
 # このソースコードは MITライセンス の下でライセンスされています。
 # ライセンスの詳細については、このプロジェクトのLICENSEファイルを参照してください。
 
@@ -26,6 +26,7 @@ class AppService:
             "language": self.app_config.system["language"],
             "copyright": f"Unlimited Code Works / {COPYRIGHT}",
             "theme": self.app_config.system["theme"],
+            "displayClock": self.app_config.system["display_clock"],
         }
 
     # クリップボードにテキストをコピーする
