@@ -7,5 +7,5 @@
 # ライセンスの詳細については、このプロジェクトのLICENSEファイルを参照してください。
 
 APP_NAME = "ZundaGPT2 Lite"
-APP_VERSION = "1.40.0"
+APP_VERSION = "1.41.0"
 COPYRIGHT = "© 2024-2026 led-mirage"
