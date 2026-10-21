@@ -7,7 +7,7 @@
 # ライセンスの詳細については、このプロジェクトのLICENSEファイルを参照してください。
 
 import os
-import httpx
+import httpx2
 
 from openai import OpenAI
 
@@ -37,7 +37,7 @@ class ChatOpenAI(ChatOpenAIBase):
         self._client = None
         if api_key:
             base_url = api_base_url if api_base_url else None
-            self._client = OpenAI(base_url=base_url, api_key=api_key, timeout=httpx.Timeout(api_timeout, connect=5.0))
+            self._client = OpenAI(base_url=base_url, api_key=api_key, timeout=httpx2.Timeout(api_timeout, connect=5.0))
 
         if api_key is None:
             self.client_creation_error = get_text_resource("ERROR_MISSING_OPENAI_API_KEY")

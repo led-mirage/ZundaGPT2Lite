@@ -7,7 +7,7 @@
 # ライセンスの詳細については、このプロジェクトのLICENSEファイルを参照してください。
 
 import os
-import httpx
+import httpx2
 
 from openai import AzureOpenAI
 
@@ -42,7 +42,7 @@ class ChatAzureOpenAI(ChatOpenAIBase):
         self._client = None
         if endpoint and api_key:
             self._client = AzureOpenAI(azure_endpoint=endpoint, api_key=api_key, api_version="2025-04-01-preview",
-                                 timeout=httpx.Timeout(api_timeout, connect=5.0))
+                                 timeout=httpx2.Timeout(api_timeout, connect=5.0))
 
         if endpoint is None:
             self.client_creation_error = get_text_resource("ERROR_MISSING_AZURE_OPENAI_ENDPOINT")
