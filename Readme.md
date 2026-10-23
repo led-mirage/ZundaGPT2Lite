@@ -356,11 +356,11 @@ CSSを知らない人はなんのことかわからないかもしれないけ�
 
 VirusTotalでのチェック結果はこちらなのだ。
 
-- **Windows版:** [68個中2個のアンチウィルスエンジンで検出 :2026/06/24 v1.41.0](https://www.virustotal.com/gui/file/9efeee46e28c2fe096c88d3d50d285fb7caa981a25aa1d0013d2c48132055e3e/detection)
-- **Raspberry Pi版:** [58個のアンチウィルスエンジンで検出なし :2026/06/24 v1.41.0](https://www.virustotal.com/gui/file/d2c134780524c6c7c3814dfc131afaeb3f22629a1016006d732d4722af9f1b82/detection)
-- **Linux版:** [59個のアンチウィルスエンジンで検出なし :2026/06/24 v1.41.0](https://www.virustotal.com/gui/file/9bb6ba5cbf9eaad62b9c91ea98c907ce37412b394fcf6d3dfc62645b8c0f6e5f/detection)
+- **Windows版:** [68個中4個のアンチウィルスエンジンで検出 :2026/10/24 v1.42.0](https://www.virustotal.com/gui/file/e2edb1dbd3a6ebd5b5487c3a6ad40ff08b3b4a4501e74c7fbd3bc564df87f668/detection)
+- **Raspberry Pi版:** [57個のアンチウィルスエンジンで検出なし :2026/10/24 v1.42.0](https://www.virustotal.com/gui/file/57054e91f379c523cefc491073387bfbd110acf0d30c42b41e55a61272497c60/detection)
+- **Linux版:** [57個のアンチウィルスエンジンで検出なし :2026/10/24 v1.42.0](https://www.virustotal.com/gui/file/bb577cd8ddcacbeceb7a15e4fc4626d3320b14267aeba6e858abecabd4e9e276/detection)
 
-<img src="doc/images/virustotal_1.41.0.png" width="600">
+<img src="doc/images/virustotal_1.42.0.png" width="600">
 
 ### ⚡ ご利用について
 
