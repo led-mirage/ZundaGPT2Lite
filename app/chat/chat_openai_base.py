@@ -7,9 +7,9 @@
 # ライセンスの詳細については、このプロジェクトのLICENSEファイルを参照してください。
 
 import copy
-import httpx
+import httpx2
 from datetime import datetime
-from httpx import ReadTimeout
+from httpx2 import ReadTimeout
 
 from openai import APITimeoutError, AuthenticationError, NotFoundError, BadRequestError, omit
 
@@ -195,7 +195,7 @@ class ChatOpenAIBase(Chat):
                 temperature = self._temperature
 
             completion = self._client.chat.completions.create(
-                model=self._model, temperature=temperature, messages=messages, timeout=httpx.Timeout(300.0, connect=5.0))
+                model=self._model, temperature=temperature, messages=messages, timeout=httpx2.Timeout(300.0, connect=5.0))
             content = completion.choices[0].message.content
             role = completion.choices[0].message.role
 
@@ -442,7 +442,7 @@ class ChatOpenAIBase(Chat):
                 model=self._model,
                 temperature=temperature,
                 input=responses_input,
-                timeout=httpx.Timeout(300.0, connect=5.0)
+                timeout=httpx2.Timeout(300.0, connect=5.0)
             )
 
             # 出力テキストを抽出

@@ -290,17 +290,17 @@ Please understand that the developer cannot be held responsible for any damages 
 Homepage: https://github.com/r0x0r/pywebview  
 License: BSD-3-Clause license
 
-### 🔖 openai 2.41.1
+### 🔖 openai 3.35.1
 
 Homepage： https://github.com/openai/openai-python  
 License：Apache License 2.0
 
-### 🔖 google-genai 2.8.0
+### 🔖 google-genai 2.32.0
 
 Homepage： https://github.com/googleapis/python-genai  
 License：Apache License 2.0
 
-### 🔖 anthropic 0.109.1
+### 🔖 anthropic 1.15.0
 
 Homepage： https://github.com/anthropics/anthropic-sdk-python  
 License：MIT license
@@ -320,7 +320,7 @@ License：Apache License 2.0
 Homepage： https://github.com/asweigart/pyperclip  
 License：BSD 3-Clause "New" or "Revised" License
 
-### 🔖 Pillow 12.2.0
+### 🔖 Pillow 13.0.0
 
 Homepage： https://github.com/python-pillow/Pillow  
 License：MIT-CMU license

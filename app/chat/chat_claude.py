@@ -8,6 +8,7 @@
 
 import copy
 import os
+import re
 from datetime import datetime
 
 import anthropic
@@ -35,6 +36,8 @@ class ChatClaude(Chat):
         )
 
         self.claude_options = claude_options
+
+        self.model_info_cache = {}  # モデルの情報をキャッシュする
 
         if api_key_envvar:
             api_key = os.environ.get(api_key_envvar)
@@ -93,20 +96,93 @@ class ChatClaude(Chat):
             sentence = ""
             paragraph = ""
 
-            max_tokens = self.claude_options["max_tokens"]
-            if self.claude_options["extended_thinking"]:
-                thinking = {
-                    "type": "enabled",
-                    "budget_tokens": self.claude_options["budget_tokens"]
-                }
-            else:
-                thinking = {
-                    "type": "disabled"
-                }
+            #------------------------------
+            # モデルの対応機能を取得
+            #------------------------------
+            model_info = self.model_info_cache.get(self._model)
+            if model_info is None:
+                model_info = self._client.models.retrieve(self._model)
+                self.model_info_cache[self._model] = model_info
 
-            temperature = anthropic.omit
-            if self._temperature:
-                temperature = self._temperature
+            if model_info.capabilities is None:
+                raise ValueError(
+                    f"{self._model} does not provide model capabilities"
+                )            
+
+            #------------------------------
+            # max_tokens オプション
+            #------------------------------
+            max_tokens = self.claude_options["max_tokens"]
+
+            #------------------------------
+            # thinking オプション
+            #------------------------------
+            thinking_types = (
+                model_info.capabilities.thinking.types.model_dump(
+                    exclude_none=True
+                )
+            )
+
+            def supports_thinking(type_name):
+                return thinking_types.get(
+                    type_name, {}
+                ).get("supported", False)
+
+            if self.claude_options["extended_thinking"]:
+                if supports_thinking("adaptive"):
+                    thinking = {"type": "adaptive"}
+                elif supports_thinking("enabled"):
+                    thinking = {
+                        "type": "enabled",
+                        "budget_tokens": self.claude_options["budget_tokens"]
+                    }
+                else:
+                    raise ValueError(
+                        f"{self._model} does not support extended thinking"
+                    )
+            else:
+                if supports_thinking("disabled"):
+                    thinking = {"type": "disabled"}
+                elif supports_thinking("between_tools"):
+                    thinking = {"type": "between_tools"}
+                elif supports_thinking("adaptive"):
+                    thinking = {"type": "adaptive"}
+                else:
+                    raise ValueError(
+                        f"{self._model} does not support disabling thinking"
+                    )
+
+            #------------------------------
+            # temperature オプション
+            #------------------------------
+            # temperature の指定に対応している既知のモデル
+            TEMPERATURE_SUPPORTED_MODELS = {
+                "claude-opus-4-6",
+                "claude-sonnet-4-6",
+                "claude-opus-4-5",
+                "claude-sonnet-4-5",
+                "claude-haiku-4-5",
+            }
+
+            # Models APIで取得済みの情報を再利用
+            model_id = re.sub(
+                r"-\d{8}$", "", model_info.id
+            )
+
+            # temperature を指定できる条件
+            temperature_supported = (
+                model_id in TEMPERATURE_SUPPORTED_MODELS
+                and isinstance(thinking, dict)
+                and thinking.get("type") == "disabled"
+            )
+
+            extra_body = None
+
+            if self._temperature is not None and temperature_supported:
+                if not 0.0 <= self._temperature <= 1.0:
+                    raise ValueError("temperature must be between 0.0 and 1.0")
+
+                extra_body = {"temperature": self._temperature}
 
             with self._client.messages.stream(
                 max_tokens=max_tokens,
@@ -114,7 +190,7 @@ class ChatClaude(Chat):
                 system=self._instruction,
                 messages=messages,
                 model=self._model,
-                temperature=temperature
+                extra_body=extra_body
             ) as stream:
                 code_block = 0
                 code_block_inside = False

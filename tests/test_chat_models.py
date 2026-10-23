@@ -59,14 +59,13 @@ def test_models(api_id: str, api_key_envvar: str, models: list, error_detail: bo
 
 
 def test_openai(error_detail: bool=False):
-    models = ["chat-latest","gpt-5.5", "gpt-5.5-pro",
+    models = ["chat-latest", "gpt-6-astra", "gpt-6.1-sol", "gpt-6-luna", "gpt-6-sol",
+              "gpt-5.6-luna", "gpt-5.6-terra", "gpt-5.6-sol",
+              "gpt-5.5", "gpt-5.5-pro",
               "gpt-5.4", "gpt-5.4-mini", "gpt-5.4-nano", "gpt-5.4-pro",
-              "gpt-5.3-chat-latest", "gpt-5.3-codex",
-              "gpt-5.2", "gpt-5.2-chat-latest", "gpt-5.2-codex", "gpt-5.2-pro",
-              "gpt-5.1", "gpt-5.1-chat-latest", "gpt-5.1-codex", "gpt-5.1-codex-mini",
-              "gpt-5", "gpt-5-pro", "gpt-5-mini", "gpt-5-nano", "gpt-5-chat-latest", "gpt-5-codex",
+              "gpt-5.3-codex", "gpt-5.2", "gpt-5.2-pro", "gpt-5.1",
+              "gpt-5", "gpt-5-pro", "gpt-5-mini", "gpt-5-nano",
               "gpt-4.1", "gpt-4.1-mini", "gpt-4.1-nano", "gpt-4o",
-              "gpt-4o-search-preview", "gpt-4o-mini-search-preview", "chatgpt-4o-latest",
               "gpt-3.5-turbo", "o4-mini", "o3", "o3-mini", "o1"]
 
     print("\n=== Testing OpenAI Models...")
@@ -74,36 +73,32 @@ def test_openai(error_detail: bool=False):
 
 
 def test_openai_new(error_detail: bool=False):
-    models = ["chat-latest","gpt-5.5", "gpt-5.5-pro",
-              "gpt-5.4", "gpt-5.4-mini", "gpt-5.4-nano", "gpt-5.4-pro",
-              "gpt-5.3-chat-latest", "gpt-5.3-codex"]
+    models = ["gpt-6-astra", "gpt-6.1-sol", "gpt-6-luna", "gpt-6-sol",
+              "gpt-5.6-luna", "gpt-5.6-terra", "gpt-5.6-sol"]
 
     print("\n=== Testing OpenAI Models...")
     test_models("OpenAI", "OPENAI_API_KEY", models, error_detail=error_detail)
 
 
 def test_openai_one(error_detail: bool=False):
-    models = ["chatgpt-4o-latest"]
+    models = ["gpt-6.1-sol"]
 
     print("\n=== Testing OpenAI Models...")
     test_models("OpenAI", "OPENAI_API_KEY", models, error_detail=error_detail)
 
 
 def test_claude(error_detail: bool=False):
-    models = ["claude-opus-4-8", "claude-opus-4-7", "claude-opus-4-6", "claude-opus-4-5", "claude-opus-4-1", "claude-opus-4-0",
-              "claude-sonnet-4-6", "claude-sonnet-4-5", "claude-sonnet-4-0",
-              "claude-haiku-4-5"]
+    models = ["claude-fable-5-1", "claude-fable-5",
+              "claude-opus-5-5", "claude-opus-4-8", "claude-opus-4-7", "claude-opus-4-6", "claude-opus-4-5",
+              "claude-sonnet-5-5", "claude-sonnet-4-6", "claude-sonnet-4-5",
+              "claude-haiku-5-5", "claude-haiku-4-5"]
     
-    #models = ["claude-opus-4-6"]
-
     print("\n=== Testing Claude Models...")
     test_models("Claude", "ANTHROPIC_API_KEY", models, error_detail=error_detail)
 
 
 def test_claude_new(error_detail: bool=False):
-    models = ["claude-fable-5",
-              "claude-opus-4-8", "claude-opus-4-7",
-              "claude-sonnet-4-6"]
+    models = ["claude-fable-5-1", "claude-opus-5-5", "claude-sonnet-5-5", "claude-haiku-5-5", "claude-fable-5"]
     
     print("\n=== Testing Claude Models...")
     test_models("Claude", "ANTHROPIC_API_KEY", models, error_detail=error_detail)
@@ -117,7 +112,8 @@ def test_claude_one(error_detail: bool=False):
 
 
 def test_gemini(error_detail: bool=False):
-    models = ["gemini-3.5-flash", "gemini-3.1-pro-preview", "gemini-3.1-flash-lite",
+    models = ["gemini-3.8-flash", "gemini-3.6-flash", "gemini-3.5-flash", "gemini-3.5-flash-lite",
+              "gemini-3.1-pro-preview", "gemini-3.1-flash-lite",
               "gemini-3-flash-preview",
               "gemini-2.5-pro", "gemini-2.5-flash", "gemini-2.5-flash-lite"]
     
@@ -125,13 +121,13 @@ def test_gemini(error_detail: bool=False):
     test_models("Gemini", "GEMINI_API_KEY", models, error_detail=error_detail)
 
 def test_gemini_one(error_detail: bool=False):
-    models = ["gemini-3.1-flash-lite"]
+    models = ["gemini-3.8-flash"]
     
     print("\n=== Testing Gemini Models...")
     test_models("Gemini", "GEMINI_API_KEY", models, error_detail=error_detail)
 
 
 if __name__ == "__main__":
-    #test_openai(error_detail=False)
-    #test_claude(error_detail=False)
-    test_gemini(error_detail=False)
+    #test_openai(error_detail=True)
+    #test_claude(error_detail=True)
+    test_gemini_one(error_detail=True)
