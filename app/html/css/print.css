@@ -30,6 +30,13 @@
     .chat-reanswer-btn {
         visibility: hidden;
     }
+    .user-message-toggle-row {
+        display: none;
+    }
+    .user-message-collapsed {
+        max-height: none;
+        overflow: visible;
+    }
     .chat-input {
         visibility: hidden;
     }

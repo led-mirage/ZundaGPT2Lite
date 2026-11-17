@@ -2,6 +2,7 @@ import { setFontFamilyAndSize, setCopyright, showBody, setClickEventHandler, sho
 import { setCurrentLanguage, getTextResource } from "./text-resources.js";
 
 const MAX_PASTED_IMAGES = 10;
+const USER_MESSAGE_COLLAPSED_LINES = 8;
 
 let g_userName = "あなた";
 let g_userColor = "#007bff";
@@ -67,6 +68,13 @@ document.addEventListener("DOMContentLoaded", function() {
     messageBox.addEventListener('paste', handleImagePaste);
     messageBox.addEventListener('drop', handleImageDrop);
     messageBox.addEventListener('dragover', handleDragOver);
+
+    // ウィンドウサイズ変更後に、長いユーザーメッセージの折りたたみ状態を再判定する
+    let collapseResizeTimer = null;
+    window.addEventListener("resize", function() {
+        clearTimeout(collapseResizeTimer);
+        collapseResizeTimer = setTimeout(refreshCollapsibleUserMessages, 100);
+    });
     
     autoResize.call(textarea);
 
@@ -770,10 +778,88 @@ function addChatMessage(role, speakerName, color, messageText) {
 
     // チャットメッセージ要素に発言者名とメッセージテキストの要素を追加
     chatMessageElement.appendChild(speakerElement);
-    chatMessageElement.appendChild(messageElement);
+    if (role === "user") {
+        const messageWrapper = createCollapsibleUserMessage(messageElement);
+        chatMessageElement.appendChild(messageWrapper);
+    }
+    else {
+        chatMessageElement.appendChild(messageElement);
+    }
 
     // 作成したチャットメッセージをコンテナに追加
     chatMessagesContainer.appendChild(chatMessageElement);
+
+    if (role === "user") {
+        refreshCollapsibleUserMessage(chatMessageElement.querySelector(".user-message-wrapper"));
+    }
+}
+
+// 長いユーザーメッセージを折りたたみ、必要な場合だけ展開ボタンを表示する
+function createCollapsibleUserMessage(messageElement) {
+    const wrapper = document.createElement("div");
+    wrapper.classList.add("user-message-wrapper");
+
+    const toggleRow = document.createElement("div");
+    toggleRow.classList.add("user-message-toggle-row");
+    toggleRow.hidden = true;
+
+    const toggleButton = document.createElement("button");
+    toggleButton.type = "button";
+    toggleButton.classList.add("user-message-toggle");
+    toggleButton.setAttribute("aria-expanded", "false");
+    toggleButton.addEventListener("click", function() {
+        const isExpanded = toggleButton.getAttribute("aria-expanded") === "true";
+        setUserMessageExpanded(wrapper, !isExpanded);
+    });
+
+    toggleRow.appendChild(toggleButton);
+    wrapper.appendChild(messageElement);
+    wrapper.appendChild(toggleRow);
+    return wrapper;
+}
+
+function setUserMessageExpanded(wrapper, isExpanded) {
+    const messageElement = wrapper.querySelector(".message-text");
+    const toggleButton = wrapper.querySelector(".user-message-toggle");
+    const label = getTextResource(
+        isExpanded ? "collapseMessageButton" : "expandMessageButton"
+    );
+    messageElement.classList.toggle("user-message-collapsed", !isExpanded);
+    toggleButton.setAttribute("aria-expanded", String(isExpanded));
+    toggleButton.setAttribute("aria-label", label);
+    toggleButton.title = label;
+    toggleButton.innerHTML = isExpanded
+        ? '<i class="fa-solid fa-chevron-up" aria-hidden="true"></i>'
+        : '<i class="fa-solid fa-chevron-down" aria-hidden="true"></i>';
+}
+
+function refreshCollapsibleUserMessage(wrapper) {
+    if (!wrapper) return;
+
+    const messageElement = wrapper.querySelector(".message-text");
+    const toggleRow = wrapper.querySelector(".user-message-toggle-row");
+    const toggleButton = wrapper.querySelector(".user-message-toggle");
+    const wasExpanded = toggleButton.getAttribute("aria-expanded") === "true";
+
+    // 折りたたみを一時解除し、現在の画面幅での実際の高さを測る
+    messageElement.classList.remove("user-message-collapsed");
+    const style = getComputedStyle(messageElement);
+    const lineHeight = parseFloat(style.lineHeight);
+    const verticalPadding = parseFloat(style.paddingTop) + parseFloat(style.paddingBottom);
+    const collapsedHeight = lineHeight * USER_MESSAGE_COLLAPSED_LINES + verticalPadding;
+    const needsToggle = messageElement.scrollHeight > collapsedHeight + 1;
+
+    toggleRow.hidden = !needsToggle;
+    if (needsToggle) {
+        setUserMessageExpanded(wrapper, wasExpanded);
+    }
+    else {
+        toggleButton.setAttribute("aria-expanded", "false");
+    }
+}
+
+function refreshCollapsibleUserMessages() {
+    document.querySelectorAll(".user-message-wrapper").forEach(refreshCollapsibleUserMessage);
 }
 
 // チャットメッセージのコードブロックにコピー用ボタンを追加する
@@ -916,6 +1002,11 @@ function searchText(query = "") {
 function highlightSearchResult(delay=0) {
     document.querySelectorAll("mark").forEach((element, index) => {
         if (index === g_searchTextIndex) {
+            const wrapper = element.closest(".user-message-wrapper");
+            const toggleRow = wrapper?.querySelector(".user-message-toggle-row");
+            if (wrapper && toggleRow && !toggleRow.hidden) {
+                setUserMessageExpanded(wrapper, true);
+            }
             element.style.color = "red";
             element.style.backgroundColor = ""
             element.scrollIntoView({ behavior: "smooth" });
@@ -1361,6 +1452,11 @@ function setChatMessages(messages) {
 function moveToMessageAt(messageIndex, highlightText) {
     const element = document.getElementById(`message-${messageIndex}`);
     if (element) {
+        const wrapper = element.querySelector(".user-message-wrapper");
+        const toggleRow = wrapper?.querySelector(".user-message-toggle-row");
+        if (wrapper && toggleRow && !toggleRow.hidden) {
+            setUserMessageExpanded(wrapper, true);
+        }
         element.scrollIntoView({ behavior: "smooth" });
         var instance = new Mark(document.body);
         instance.mark(highlightText);

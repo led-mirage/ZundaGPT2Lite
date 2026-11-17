@@ -53,6 +53,12 @@ body.dark-mode .message-copy-btn {
     border: var(--dark-tool-button-border);
 }
 
+body.dark-mode .user-message-toggle {
+    background-color: var(--dark-tool-button-bgcolor);
+    color: var(--dark-tool-button-color);
+    border: var(--dark-tool-button-border);
+}
+
 body.dark-mode .header button:hover {
     background-color: var(--dark-tool-button-hover-bgcolor);
     color: var(--dark-tool-button-hover-color);

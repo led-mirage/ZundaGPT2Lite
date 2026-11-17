@@ -33,6 +33,8 @@ const textResources = {
         summarizingProgressMessage: "チャットを要約しています...",
         summaryCopiedMessage: "要約をクリップボードにコピーしました",
         imageLimitAlert: "送信可能な画像は最大 ${max} 枚までです",
+        expandMessageButton: "展開",
+        collapseMessageButton: "折りたたむ",
         // 設定画面
         settingsTitle: "設定切替",
         settingsColumnSelect: "選択",
@@ -82,6 +84,8 @@ const textResources = {
         summarizingProgressMessage: "Summarizing chat...",
         summaryCopiedMessage: "Summary copied to clipboard",
         imageLimitAlert: "You can send up to ${max} images",
+        expandMessageButton: "Show more",
+        collapseMessageButton: "Show less",
         // Settings Screen
         settingsTitle: "Switch Settings",
         settingsColumnSelect: "Select",
@@ -131,6 +135,8 @@ const textResources = {
         summarizingProgressMessage: "Tiivistetään keskustelua...",
         summaryCopiedMessage: "Yhteenveto kopioitu leikepöydälle",
         imageLimitAlert: "Voit lähettää enintään ${max} kuvaa",
+        expandMessageButton: "Näytä lisää",
+        collapseMessageButton: "Näytä vähemmän",
         // Asetusnäyttö (設定画面)
         settingsTitle: "Vaihda asetuksia",
         settingsColumnSelect: "Valitse",
@@ -180,6 +186,8 @@ const textResources = {
         summarizingProgressMessage: "Resumiendo el chat...",
         summaryCopiedMessage: "Resumen copiado al portapapeles",
         imageLimitAlert: "Puedes enviar hasta ${max} imágenes",
+        expandMessageButton: "Mostrar más",
+        collapseMessageButton: "Mostrar menos",
         // Pantalla de configuración (設定画面)
         settingsTitle: "Cambiar configuración",
         settingsColumnSelect: "Seleccionar",
@@ -229,6 +237,8 @@ const textResources = {
         summarizingProgressMessage: "Chat wird zusammengefasst...",
         summaryCopiedMessage: "Zusammenfassung in die Zwischenablage kopiert",
         imageLimitAlert: "Du kannst bis zu ${max} Bilder senden",
+        expandMessageButton: "Mehr anzeigen",
+        collapseMessageButton: "Weniger anzeigen",
         // Einstellungsbildschirm (設定画面)
         settingsTitle: "Einstellungen ändern",
         settingsColumnSelect: "Auswählen",
@@ -278,6 +288,8 @@ const textResources = {
         summarizingProgressMessage: "Résumé du chat en cours...",
         summaryCopiedMessage: "Résumé copié dans le presse-papiers",
         imageLimitAlert: "Vous pouvez envoyer jusqu’à ${max} images",
+        expandMessageButton: "Afficher plus",
+        collapseMessageButton: "Afficher moins",
         // Écran des paramètres (設定画面)
         settingsTitle: "Changer les paramètres",
         settingsColumnSelect: "Sélection",
