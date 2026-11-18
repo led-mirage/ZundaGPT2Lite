@@ -2,6 +2,9 @@ import { setFontFamilyAndSize, setCopyright, showBody, setClickEventHandler, sho
 import { setCurrentLanguage, getTextResource } from "./text-resources.js";
 
 const MAX_PASTED_IMAGES = 10;
+const MAX_IMAGE_BYTES = 10 * 1024 * 1024;
+const MAX_TOTAL_IMAGE_BYTES = 50 * 1024 * 1024;
+const SUPPORTED_IMAGE_TYPES = new Set(["image/png", "image/jpeg", "image/webp"]);
 const USER_MESSAGE_COLLAPSED_LINES = 8;
 
 let g_userName = "あなた";
@@ -20,6 +23,8 @@ let g_aiAgentAvailable = false;
 let g_aiAgentCreationError = "";
 let g_savedCSS = {};
 let g_pastedImages = [];    // 添付画像管理配列： { src, sent, element }
+let g_sendingPrompt = null;
+let g_sendingMessageIndex = null;
 let g_clockIntervalId = null;
 let g_displayClock = true;
 
@@ -485,29 +490,29 @@ async function sendMessage() {
     }
 
     const text = document.getElementById("message").value;
-    if (text === "") return;
+    const unsentImages = g_pastedImages.filter(i => !i.sent);
+    if (text === "" && unsentImages.length === 0) return;
+    if (unsentImages.some(image => image.reading)) {
+        alert(getTextResource("imageProcessingAlert"));
+        return;
+    }
 
     setSubmitButtonState(true);
-
-    // HTMLにメッセージを追加
-    addChatMessage("user", g_userName, g_userColor, text)
-    scrollToBottom();
     hideChatRetryButton();
-    document.getElementById("message").value = "";
-
-    // 送信済み画像を少し薄くする
-    const unsentImages = g_pastedImages.filter(i => !i.sent);
-    for (const imgObj of unsentImages) {
-        imgObj.sent = true;
-        imgObj.element.style.opacity = '0.8';
-    }
+    hideSendingPrompt(text, unsentImages);
 
     // Python側に通知
     try {
-        await pywebview.api.send_message_to_chatgpt(text, unsentImages.map(i => i.src));
+        const sent = await pywebview.api.send_message_to_chatgpt(text, unsentImages.map(i => i.src));
+        if (!sent) {
+            restoreSendingPrompt();
+            setSubmitButtonState(false);
+        }
     }
     catch (error) {
         console.error("Error: " + error)
+        restoreSendingPrompt();
+        setSubmitButtonState(false);
     }
 }
 
@@ -525,6 +530,13 @@ async function stopSendMessage() {
 // 送信ボタンの状態を設定する
 function setSubmitButtonState(isSending) {
     const button = document.getElementById("submit-button");
+    const textarea = document.getElementById("message");
+    if (textarea) {
+        textarea.readOnly = isSending;
+    }
+    document.querySelectorAll(".delete-image-btn").forEach(deleteButton => {
+        deleteButton.disabled = isSending;
+    });
     if (button) {
         if (isSending) {
             button.textContent = getTextResource("stopButton");
@@ -684,7 +696,7 @@ function addWelcome() {
 }
 
 // チャットメッセージブロックを追加する
-function addChatMessage(role, speakerName, color, messageText) {
+function addChatMessage(role, speakerName, color, messageText, attachments = []) {
     // Welcomeメッセージの非表示
     showWelcome(false);
 
@@ -771,6 +783,9 @@ function addChatMessage(role, speakerName, color, messageText) {
     else {
         messageElement.classList.add("mathjax_ignore");
         messageElement.innerHTML = escapeHtml(messageText);
+        if (messageText === "") {
+            messageElement.style.display = "none";
+        }
     }
 
     // コードブロックにコピー用ボタンを追加
@@ -779,7 +794,7 @@ function addChatMessage(role, speakerName, color, messageText) {
     // チャットメッセージ要素に発言者名とメッセージテキストの要素を追加
     chatMessageElement.appendChild(speakerElement);
     if (role === "user") {
-        const messageWrapper = createCollapsibleUserMessage(messageElement);
+        const messageWrapper = createCollapsibleUserMessage(messageElement, attachments);
         chatMessageElement.appendChild(messageWrapper);
     }
     else {
@@ -795,9 +810,14 @@ function addChatMessage(role, speakerName, color, messageText) {
 }
 
 // 長いユーザーメッセージを折りたたみ、必要な場合だけ展開ボタンを表示する
-function createCollapsibleUserMessage(messageElement) {
+function createCollapsibleUserMessage(messageElement, attachments = []) {
     const wrapper = document.createElement("div");
     wrapper.classList.add("user-message-wrapper");
+
+    const attachmentGallery = createMessageAttachmentGallery(attachments);
+    if (attachmentGallery) {
+        wrapper.appendChild(attachmentGallery);
+    }
 
     const toggleRow = document.createElement("div");
     toggleRow.classList.add("user-message-toggle-row");
@@ -816,6 +836,36 @@ function createCollapsibleUserMessage(messageElement) {
     wrapper.appendChild(messageElement);
     wrapper.appendChild(toggleRow);
     return wrapper;
+}
+
+function createMessageAttachmentGallery(attachments) {
+    if (!attachments || attachments.length === 0) return null;
+
+    const gallery = document.createElement("div");
+    gallery.classList.add("message-attachments");
+    attachments.forEach((attachment, index) => {
+        if (attachment.missing || !attachment.thumbnail_data_url) {
+            const missing = document.createElement("div");
+            missing.classList.add("attachment-missing");
+            missing.textContent = getTextResource("attachmentMissing");
+            gallery.appendChild(missing);
+            return;
+        }
+
+        const button = document.createElement("button");
+        button.type = "button";
+        button.classList.add("attachment-thumbnail-button");
+        button.setAttribute("aria-label", getTextResource("attachmentAlt").replace("${index}", index + 1));
+
+        const img = document.createElement("img");
+        img.classList.add("attachment-thumbnail");
+        img.src = attachment.thumbnail_data_url;
+        img.alt = getTextResource("attachmentAlt").replace("${index}", index + 1);
+        button.appendChild(img);
+        button.addEventListener("click", () => openStoredAttachment(attachment.id, button));
+        gallery.appendChild(button);
+    });
+    return gallery;
 }
 
 function setUserMessageExpanded(wrapper, isExpanded) {
@@ -917,6 +967,7 @@ function addTargetBlank(targetElement) {
 async function newChat() {
     // チャット要素を削除
     document.getElementById("chat-messages").innerHTML = "";
+    clearPendingImages();
 
     // Python側に通知
     try {
@@ -1397,37 +1448,105 @@ function scrollToMessage(offset = 2) {
 // Pythonから呼び出される関数
 // チャット応答で例外が発生した
 function handleChatException(message) {
+    restoreSendingPrompt();
     alert(message);
-    endResponse();
+    setSubmitButtonState(false);
+    showChatRetryButton();
+}
+
+// 添付画像の保存・検証でエラーが発生した
+function handleAttachmentException(message) {
+    restoreSendingPrompt();
+    alert(message);
+    setSubmitButtonState(false);
+}
+
+// API応答待ちのユーザーメッセージを一時表示する
+function addSendingUserMessage(text, attachments) {
+    g_sendingMessageIndex = g_nextMessageIndex;
+    addChatMessage("user", g_userName, g_userColor, text, attachments);
+    scrollToBottom();
+}
+
+// 送信中のプロンプトを退避して入力欄から隠す
+function hideSendingPrompt(text, images) {
+    g_sendingPrompt = {
+        text: text,
+        images: [...images]
+    };
+
+    const textarea = document.getElementById("message");
+    textarea.value = "";
+    textarea.dispatchEvent(new Event("input"));
+    for (const image of images) {
+        image.element?.remove();
+    }
+}
+
+// API応答が失敗したら退避したプロンプトを入力欄へ戻す
+function restoreSendingPrompt() {
+    if (g_sendingPrompt === null) return;
+
+    const prompt = g_sendingPrompt;
+    g_sendingPrompt = null;
+
+    const textarea = document.getElementById("message");
+    textarea.value = prompt.text;
+    textarea.dispatchEvent(new Event("input"));
+
+    const pendingImages = document.getElementById("pending-images");
+    for (const image of prompt.images) {
+        if (image.element && g_pastedImages.includes(image)) {
+            pendingImages.appendChild(image.element);
+        }
+    }
+}
+
+// API応答が成功したら退避したプロンプトを破棄する
+function completeSentPrompt() {
+    g_sendingPrompt = null;
+    clearPendingImages();
+    const textarea = document.getElementById("message");
+    textarea.value = "";
+    textarea.style.height = "auto";
+    g_sendingMessageIndex = null;
+}
+
+// API応答が失敗したら一時表示した送信内容を取り除く
+function rollbackSendingMessage() {
+    if (g_sendingMessageIndex !== null) {
+        document.querySelectorAll("#chat-messages .chat-message").forEach(message => {
+            const index = parseInt(message.id.split("-")[1], 10);
+            if (index >= g_sendingMessageIndex) {
+                message.remove();
+            }
+        });
+        g_nextMessageIndex = g_sendingMessageIndex;
+        g_sendingMessageIndex = null;
+        const hasMessages = document.querySelectorAll("#chat-messages .chat-message").length > 0;
+        showWelcome(!hasMessages);
+    }
+    restoreSendingPrompt();
 }
 
 // Pythonから呼び出される関数
 // チャット応答で例外が発生した
-async function handleChatTimeoutException(message) {
-    if (confirm(`${message}\n` + getTextResource("retryConfirm"))) {
-        const messageTextElements = document.querySelectorAll("#chat-messages .message-text");
-        const lastMessageTextElement = messageTextElements[messageTextElements.length - 1];
-        if (lastMessageTextElement) {
-            lastMessageTextElement.textContent = "";
-        }
-
-        // Python側に通知
-        try {
-            await pywebview.api.retry_send_message_to_chatgpt();
-        }
-        catch (error) {
-            console.error("Error: " + error)
-        }
-    }
-    else {
-        endResponse()
-    }
+function handleChatTimeoutException(message) {
+    restoreSendingPrompt();
+    alert(message);
+    setSubmitButtonState(false);
+    showChatRetryButton();
 }
 
 // Pythonから呼び出される関数
 // チャットのメッセージを再設定する
-function setChatMessages(messages) {
+function setChatMessages(messages, preservePending = false) {
     console.log(messages);
+    if (!preservePending) {
+        clearPendingImages();
+    }
+    g_sendingMessageIndex = null;
+    g_nextMessageIndex = 0;
     document.getElementById("chat-messages").innerHTML = "";
     for (let message of messages) {
         let speakerName = "";
@@ -1440,7 +1559,13 @@ function setChatMessages(messages) {
             speakerName = g_userName;
             speakerColor = g_userColor;
         }
-        addChatMessage(message.role, speakerName, speakerColor, message.content);
+        addChatMessage(
+            message.role,
+            speakerName,
+            speakerColor,
+            message.content,
+            message.ui_attachments || []
+        );
     }
     MathJax.typesetPromise();
     scrollToBottom();
@@ -1526,12 +1651,42 @@ function handleDragOver(e) {
 
 // 画像ファイルの読み込み処理を共通化
 function handleImageFile(file) {
-    if (!file.type.startsWith('image/')) return;
+    if (document.getElementById("submit-button")?.classList.contains("submit-button-disabled")) {
+        return;
+    }
+    if (file.type && !SUPPORTED_IMAGE_TYPES.has(file.type)) {
+        alert(getTextResource("imageFormatAlert"));
+        return;
+    }
+    if (file.size > MAX_IMAGE_BYTES) {
+        alert(getTextResource("imageFileSizeAlert").replace("${max}", 10));
+        return;
+    }
 
     const unsentCount = g_pastedImages.filter(img => !img.sent).length;
+    const totalBytes = g_pastedImages
+        .filter(img => !img.sent)
+        .reduce((total, img) => total + img.size, 0);
     if (unsentCount < MAX_PASTED_IMAGES) {
+        if (totalBytes + file.size > MAX_TOTAL_IMAGE_BYTES) {
+            alert(getTextResource("imageTotalSizeAlert").replace("${max}", 50));
+            return;
+        }
+        const imageObject = {
+            src: "",
+            size: file.size,
+            sent: false,
+            reading: true,
+            element: null,
+        };
+        g_pastedImages.push(imageObject);
         const reader = new FileReader();
-        reader.onload = (event) => addImagePreview(event.target.result);
+        reader.onload = (event) => addImagePreview(event.target.result, imageObject);
+        reader.onerror = () => {
+            if (!g_pastedImages.includes(imageObject)) return;
+            g_pastedImages = g_pastedImages.filter(image => image !== imageObject);
+            alert(getTextResource("imageReadError"));
+        };
         reader.readAsDataURL(file);
     }
     else {
@@ -1541,81 +1696,93 @@ function handleImageFile(file) {
 }
 
 // 画像のプレビューを追加する
-function addImagePreview(src) {
-    showWelcome(false);
-
+function addImagePreview(src, imageObject) {
+    if (!g_pastedImages.includes(imageObject)) return;
     const container = document.createElement('div');
     container.className = 'image-preview-item';
-    container.style.display = 'inline-block';
-    container.style.position = 'relative';
-    container.style.margin = '6px';
 
     const img = document.createElement('img');
     img.src = src;
-    img.style.maxWidth = '160px';
-    img.style.borderRadius = '8px';
-    img.style.boxShadow = '0 0 4px rgba(0,0,0,0.3)';
-    img.style.display = 'block';
+    img.alt = getTextResource("pendingAttachmentAlt");
 
     const delBtn = document.createElement('button');
     delBtn.textContent = '×';
     delBtn.className = 'delete-image-btn';
-    delBtn.style.position = 'absolute';
-    delBtn.style.top = '-6px';
-    delBtn.style.right = '-6px';
-    delBtn.style.background = '#e74c3c';
-    delBtn.style.color = 'white';
-    delBtn.style.border = 'none';
-    delBtn.style.borderRadius = '50%';
-    delBtn.style.width = '22px';
-    delBtn.style.height = '22px';
-    delBtn.style.cursor = 'pointer';
-    delBtn.style.fontWeight = 'bold';
-    delBtn.style.boxShadow = '0 1px 3px rgba(0,0,0,0.4)';
-
+    imageObject.src = src;
+    imageObject.reading = false;
+    imageObject.element = container;
     delBtn.addEventListener('click', () => {
-        g_pastedImages = g_pastedImages.filter(i => i.src !== src);
+        g_pastedImages = g_pastedImages.filter(i => i !== imageObject);
         container.remove();
     });
 
-    const chatMessages = document.getElementById('chat-messages');
+    const pendingImages = document.getElementById('pending-images');
     container.appendChild(img);
     container.appendChild(delBtn);
-    chatMessages.appendChild(container);
+    pendingImages.appendChild(container);
     enlargeImage(img);
 
-    g_pastedImages.push({ src, sent: false, element: container });
+}
 
-    scrollToBottom();
+function clearPendingImages() {
+    g_sendingPrompt = null;
+    g_pastedImages = [];
+    const pendingImages = document.getElementById("pending-images");
+    if (pendingImages) {
+        pendingImages.innerHTML = "";
+    }
 }
 
 // 貼り付けた画像の拡大処理
 function enlargeImage(img) {
-    img.addEventListener('click', () => {
-        const modal = document.createElement('div');
-        modal.style.position = 'fixed';
-        modal.style.top = 0;
-        modal.style.left = 0;
-        modal.style.width = '100vw';
-        modal.style.height = '100vh';
-        modal.style.background = 'rgba(0,0,0,0.7)';
-        modal.style.display = 'flex';
-        modal.style.alignItems = 'center';
-        modal.style.justifyContent = 'center';
-        modal.style.zIndex = 99999;
-
-        const bigImg = document.createElement('img');
-        bigImg.src = img.src;
-        bigImg.style.maxWidth = '90%';
-        bigImg.style.maxHeight = '90%';
-        bigImg.style.borderRadius = '8px';
-        bigImg.style.boxShadow = '0 0 10px rgba(0,0,0,0.5)';
-
-        modal.appendChild(bigImg);
-        document.body.appendChild(modal);
-
-        modal.addEventListener('click', () => modal.remove());
+    img.tabIndex = 0;
+    img.addEventListener('click', () => showImageModal(img.src, img));
+    img.addEventListener('keydown', (event) => {
+        if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            showImageModal(img.src, img);
+        }
     });
+}
+
+async function openStoredAttachment(attachmentId, triggerElement) {
+    try {
+        const src = await pywebview.api.get_attachment_image(attachmentId);
+        if (!src) {
+            alert(getTextResource("attachmentLoadError"));
+            return;
+        }
+        showImageModal(src, triggerElement);
+    }
+    catch (error) {
+        console.error("Error: " + error);
+        alert(getTextResource("attachmentLoadError"));
+    }
+}
+
+function showImageModal(src, triggerElement) {
+    const modal = document.createElement('div');
+    modal.className = "attachment-modal";
+    modal.tabIndex = -1;
+
+    const bigImg = document.createElement('img');
+    bigImg.src = src;
+    bigImg.alt = getTextResource("attachmentExpandedAlt");
+
+    const close = () => {
+        modal.remove();
+        document.removeEventListener("keydown", handleKey);
+        triggerElement?.focus();
+    };
+    const handleKey = (event) => {
+        if (event.key === "Escape") close();
+    };
+
+    modal.appendChild(bigImg);
+    document.body.appendChild(modal);
+    modal.addEventListener('click', close);
+    document.addEventListener("keydown", handleKey);
+    modal.focus();
 }
 
 // Pythonから呼び出される関数（グローバルスコープに登録）
@@ -1628,6 +1795,10 @@ window.parsedParagraph = parsedParagraph;
 window.endResponse = endResponse;
 window.handleChatException = handleChatException;
 window.handleChatTimeoutException = handleChatTimeoutException;
+window.handleAttachmentException = handleAttachmentException;
+window.addSendingUserMessage = addSendingUserMessage;
+window.completeSentPrompt = completeSentPrompt;
+window.rollbackSendingMessage = rollbackSendingMessage;
 window.setChatMessages = setChatMessages;
 window.moveToMessageAt = moveToMessageAt;
 window.newChat = newChat;

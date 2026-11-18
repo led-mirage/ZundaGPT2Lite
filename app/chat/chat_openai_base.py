@@ -2,7 +2,7 @@
 #
 # チャットクラス（OpenAI基底）
 #
-# Copyright (c) 2024-2025 led-mirage
+# Copyright (c) 2024-2026 led-mirage
 # このソースコードは MITライセンス の下でライセンスされています。
 # ライセンスの詳細については、このプロジェクトのLICENSEファイルを参照してください。
 
@@ -37,19 +37,17 @@ class ChatOpenAIBase(Chat):
         images: list[str],
         listener: SendMessageListener) -> str:
 
+        self.messages.append({"role": "user", "content": text})
         try:
             return self.send_message_completions_streaming(text, images, listener)
 
         except StreamNotAllowedError:
-            self.messages = self.messages[:-1]
             return self.send_message_completions_not_streaming(text, images, listener)
 
         except ResponsesApiRequiredError:
-            self.messages = self.messages[:-1]
             try:
                 return self.send_message_responses_streaming(text, images, listener)
             except StreamNotAllowedError:
-                self.messages = self.messages[:-1]
                 return self.send_message_responses_not_streaming(text, images, listener)
 
     # メッセージを送信して回答を得る（Completions API・ストリーミング版）
@@ -62,7 +60,6 @@ class ChatOpenAIBase(Chat):
         try:
             self._stop_send_event.clear()
 
-            self.messages.append({"role": "user", "content": text})
             messages = copy.deepcopy(self._get_history())
 
             if images and len(images) > 0:
@@ -170,7 +167,6 @@ class ChatOpenAIBase(Chat):
             no_exception = False
             listener.on_non_streaming_start()
 
-            self.messages.append({"role": "user", "content": text})
             messages = copy.deepcopy(self._get_history())
 
             if images and len(images) > 0:
@@ -261,7 +257,6 @@ class ChatOpenAIBase(Chat):
         try:
             self._stop_send_event.clear()
 
-            self.messages.append({"role": "user", "content": text})
             messages = self._get_history()
             if not self._model.startswith(("o1", "o3")) and self._instruction:
                 messages.insert(0, {"role": "system", "content": self._instruction})
@@ -403,7 +398,6 @@ class ChatOpenAIBase(Chat):
             no_exception = False
             listener.on_non_streaming_start()
 
-            self.messages.append({"role": "user", "content": text})
             messages = self._get_history()
             if not self._model.startswith("o1") and not self._model.startswith("o3") and self._instruction:
                 messages.insert(0, {"role": "system", "content": self._instruction})

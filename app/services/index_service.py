@@ -2,11 +2,12 @@
 #
 # メイン画面のサービス
 #
-# Copyright (c) 2024-2025 led-mirage
+# Copyright (c) 2024-2026 led-mirage
 # このソースコードは MITライセンス の下でライセンスされています。
 # ライセンスの詳細については、このプロジェクトのLICENSEファイルを参照してください。
 
 import base64
+import copy
 import re
 
 import langdetect
@@ -21,6 +22,7 @@ from const import APP_NAME, APP_VERSION
 from utility.utils import get_location, get_exception_name, to_css_url_format
 from utility.multi_lang import set_current_language, get_text_resource
 from chat import Chat, ChatFactory, ChatFactoryOptions, SendMessageListener
+from attachment_store import AttachmentError, AttachmentStore
 
 
 log_settings = get_log_settings()
@@ -32,7 +34,10 @@ class IndexService:
         self.app_config = app_config
         self.state = state
         self.window = window
-        self.last_sent_images = None
+        self._pending_send = None
+
+    def get_attachment_store(self):
+        return AttachmentStore(ChatLog.LOG_FOLDER)
 
     # ページロードイベントハンドラ（UI）
     def page_loaded(self):
@@ -76,6 +81,7 @@ class IndexService:
         )
 
         self.state.chat = ChatFactory.create(options)
+        self.state.last_send_message = None
 
         self.set_chatinfo_to_ui()
         self.set_window_title()
@@ -177,13 +183,21 @@ class IndexService:
     def change_current_chat(self, loaded_settings: Settings, loaded_chat: Chat):
         self.state.settings = loaded_settings
         self.state.chat = loaded_chat
+        self.state.last_send_message = None
         self.set_chatinfo_to_ui()
         self.set_chatmessages_to_ui(loaded_chat.messages)
         self.set_window_title()
 
     # チャットの内容をUIに送信する
-    def set_chatmessages_to_ui(self, messages: list[dict]):
-        self.window.js.setChatMessages(messages)
+    def set_chatmessages_to_ui(self, messages: list[dict], preserve_pending=False):
+        ui_messages = copy.deepcopy(messages)
+        store = self.get_attachment_store()
+        for message in ui_messages:
+            message["ui_attachments"] = store.build_ui_attachments(
+                self.state.chat,
+                message.get("attachments", [])
+            )
+        self.window.js.setChatMessages(ui_messages, preserve_pending)
 
     # カレントチャット削除イベントハンドラ（UI）
     def delete_current_chat(self):
@@ -195,6 +209,7 @@ class IndexService:
 
         is_empty = (prev_logfile is None) and (next_logfile is None)
         is_tail = (next_logfile is None)
+        ChatLog.delete_log_file(self.state.chat)
         if is_empty or is_tail:
             self.window.js.newChat()
         else:
@@ -205,9 +220,107 @@ class IndexService:
 
     # メッセージ送信イベントハンドラ（UI）
     def send_message_to_chatgpt(self, text, images):
+        images = images or []
+        if not text and not images:
+            return False
+
+        attachments = []
+        store = self.get_attachment_store()
+        try:
+            if images:
+                if not ChatLog.LOG_FOLDER:
+                    raise AttachmentError("ERROR_ATTACHMENT_SAVE")
+                attachments = store.save_images(self.state.chat, images)
+        except AttachmentError as e:
+            self.window.js.handleAttachmentException(self.format_attachment_error(e))
+            return False
+        except Exception:
+            self.window.js.handleAttachmentException(
+                get_text_resource("ERROR_ATTACHMENT_SAVE")
+            )
+            return False
+
+        self._pending_send = {
+            "user_index": len(self.state.chat.messages),
+            "attachments": attachments,
+            "delete_attachments_on_error": True,
+            "restore_messages": None,
+            "clear_prompt_on_success": True,
+        }
+        ui_attachments = store.build_ui_attachments(self.state.chat, attachments)
+        self.window.js.addSendingUserMessage(text, ui_attachments)
         self.window.js.startResponse()
-        self.state.last_send_message = text
-        self.last_sent_images = images
+        self.state.chat.send_message(
+            text,
+            images,
+            listener=SendMessageListener(
+                self.on_receive_chunk,
+                self.on_receive_sentence,
+                self.on_receive_paragraph,
+                self.on_non_streaming_start,
+                self.on_non_streaming_end,
+                self.on_end_response,
+                self.on_chat_error
+            )
+        )
+        return True
+
+    def format_attachment_error(self, error: AttachmentError):
+        message = get_text_resource(error.code)
+        for key, value in error.params.items():
+            message = message.replace(f"${{{key}}}", str(value))
+        return message
+
+    def find_attachment(self, attachment_id: str):
+        for message in self.state.chat.messages:
+            for attachment in message.get("attachments", []):
+                if attachment.get("id") == attachment_id:
+                    return attachment
+        return None
+
+    def get_attachment_image(self, attachment_id: str):
+        attachment = self.find_attachment(attachment_id)
+        if attachment is None:
+            return ""
+        return self.get_attachment_store().get_original_data_url(attachment)
+
+    # メッセージ送信中止イベントハンドラ（UI）
+    def stop_send_message_to_chatgpt(self):
+        self.state.chat.stop_send_message()
+
+    # メッセージ削除イベントハンドラ（UI）
+    def truncate_messages(self, index):
+        original_messages = self.state.chat.messages
+        self.state.chat.messages = self.state.chat.messages[:index]
+        try:
+            ChatLog.save(self.state.settings, self.state.chat)
+            self.get_attachment_store().cleanup_unreferenced(self.state.chat)
+        except Exception:
+            self.state.chat.messages = original_messages
+            raise
+
+    # 別の回答を取得するイベントハンドラ（UI）
+    def ask_another_reply_to_chatgpt(self, index):
+        original_messages = copy.deepcopy(self.state.chat.messages)
+        message = self.state.chat.messages[index - 1]
+        text = message["content"]
+        attachments = copy.deepcopy(message.get("attachments", []))
+        images = self.get_attachment_store().load_original_data_urls(attachments)
+        if attachments and len(images) != len(attachments):
+            self.window.js.handleAttachmentException(
+                get_text_resource("ERROR_ATTACHMENT_LOAD")
+            )
+            self.set_chatmessages_to_ui(self.state.chat.messages)
+            return
+        self.state.chat.truncate_messages(index - 1)
+        self._pending_send = {
+            "user_index": len(self.state.chat.messages),
+            "attachments": attachments,
+            "delete_attachments_on_error": False,
+            "restore_messages": original_messages,
+            "clear_prompt_on_success": False,
+        }
+        self.window.js.startResponse()
         self.state.chat.send_message(
             text,
             images,
@@ -222,42 +335,16 @@ class IndexService:
             )
         )
 
-    # メッセージ再送信イベントハンドラ（UI）
-    def retry_send_message_to_chatgpt(self):
-        self.state.chat.messages.pop()  # 最後のメッセージを削除（削除しないと重複する）
-        self.state.chat.send_message(
-            self.state.last_send_message,
-            self.last_sent_images,
-            listener=SendMessageListener(
-                self.on_receive_chunk,
-                self.on_receive_sentence,
-                self.on_receive_paragraph,
-                self.on_non_streaming_start,
-                self.on_non_streaming_end,
-                self.on_end_response,
-                self.on_chat_error
-            )
-        )
-
-    # メッセージ送信中止イベントハンドラ（UI）
-    def stop_send_message_to_chatgpt(self):
-        self.state.chat.stop_send_message()
-
-    # メッセージ削除イベントハンドラ（UI）
-    def truncate_messages(self, index):
-        self.state.chat.truncate_messages(index)
-        ChatLog.save(self.state.settings, self.state.chat)
-
-    # 別の回答を取得するイベントハンドラ（UI）
-    def ask_another_reply_to_chatgpt(self, index):
-        text = self.state.chat.messages[index - 1]["content"]
-        self.state.chat.truncate_messages(index - 1)
-        ChatLog.save(self.state.settings, self.state.chat)
-        self.send_message_to_chatgpt(text, self.last_sent_images)
-
     # チャットメッセージのテキストを取得する（UI）
     def get_message_text(self, index):
-        text = self.state.chat.messages[index]["content"] + "\n"
+        message = self.state.chat.messages[index]
+        text = message["content"] + "\n"
+        attachment_count = len(message.get("attachments", []))
+        if attachment_count:
+            marker = get_text_resource("ATTACHED_IMAGE_COUNT").replace(
+                "${count}", str(attachment_count)
+            )
+            text += marker + "\n"
         return text
 
     # チャットのすべてのメッセージを取得する（UI）
@@ -286,6 +373,12 @@ class IndexService:
 
             text += f"## {name}\n\n"
             text += f"{message['content']}\n\n"
+            attachment_count = len(message.get("attachments", []))
+            if attachment_count:
+                marker = get_text_resource("ATTACHED_IMAGE_COUNT").replace(
+                    "${count}", str(attachment_count)
+                )
+                text += marker + "\n\n"
         return text
 
     # チャットの内容を要約する
@@ -335,11 +428,45 @@ class IndexService:
 
     # レスポンス受信完了イベントハンドラ（Chat）
     def on_end_response(self, content: str):
-        ChatLog.save(self.state.settings, self.state.chat)
+        pending_send = self._pending_send
+        self._pending_send = None
+        if pending_send is not None:
+            user_index = pending_send["user_index"]
+            if user_index < len(self.state.chat.messages):
+                user_message = self.state.chat.messages[user_index]
+                if user_message.get("role") == "user":
+                    attachments = pending_send["attachments"]
+                    if attachments:
+                        user_message["attachments"] = copy.deepcopy(attachments)
+        try:
+            ChatLog.save(self.state.settings, self.state.chat)
+            self.get_attachment_store().cleanup_unreferenced(self.state.chat)
+        except Exception as e:
+            AppLogger.error(f"Failed to save chat log: {e}")
+        if pending_send is not None and pending_send["clear_prompt_on_success"]:
+            self.window.js.completeSentPrompt()
         self.window.js.endResponse(content)
 
     # チャット例外イベントハンドラ（Chat）
     def on_chat_error(self, e: Exception, cause: str, info: str=""):
+        pending_send = self._pending_send
+        self._pending_send = None
+        if pending_send is not None:
+            restore_messages = pending_send["restore_messages"]
+            if restore_messages is not None:
+                self.state.chat.messages = restore_messages
+                self.set_chatmessages_to_ui(
+                    self.state.chat.messages,
+                    preserve_pending=True
+                )
+            else:
+                user_index = pending_send["user_index"]
+                self.state.chat.messages = self.state.chat.messages[:user_index]
+                if pending_send["delete_attachments_on_error"]:
+                    self.get_attachment_store().delete_attachments(
+                        pending_send["attachments"]
+                    )
+                self.window.js.rollbackSendingMessage()
         location = get_location(self)
         error_type = get_exception_name(e)
         AppLogger.error(f"{cause} : {info}")
