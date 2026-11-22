@@ -208,7 +208,7 @@ Windowsの場合は、Windowsの検索窓で「環境変数を編集」で検索
 
 以下のリンクから ZundaGPT2Lite.ZIP をダウンロードして、作成したフォルダに展開するのだ。
 
-https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.42.0
+https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.43.0
 
 #### 3. 実行
 
@@ -356,11 +356,11 @@ CSSを知らない人はなんのことかわからないかもしれないけ�
 
 VirusTotalでのチェック結果はこちらなのだ。
 
-- **Windows版:** [68個中4個のアンチウィルスエンジンで検出 :2026/10/24 v1.42.0](https://www.virustotal.com/gui/file/e2edb1dbd3a6ebd5b5487c3a6ad40ff08b3b4a4501e74c7fbd3bc564df87f668/detection)
-- **Raspberry Pi版:** [57個のアンチウィルスエンジンで検出なし :2026/10/24 v1.42.0](https://www.virustotal.com/gui/file/57054e91f379c523cefc491073387bfbd110acf0d30c42b41e55a61272497c60/detection)
-- **Linux版:** [57個のアンチウィルスエンジンで検出なし :2026/10/24 v1.42.0](https://www.virustotal.com/gui/file/bb577cd8ddcacbeceb7a15e4fc4626d3320b14267aeba6e858abecabd4e9e276/detection)
+- **Windows版:** [69個中1個のアンチウィルスエンジンで検出 :2026/11/22 v1.43.0](https://www.virustotal.com/gui/file/e74546ebb7e7ade970a82e95533907f4dbe152e68fc4139b4a7193d2a403c128/detection)
+- **Raspberry Pi版:** [58個のアンチウィルスエンジンで検出なし :2026/11/22 v1.43.0](https://www.virustotal.com/gui/file/574eecf4e8dfa91e332f2c161fb4bcbf3f32e633602fad2e4d2137503a392adf/detection)
+- **Linux版:** [60個のアンチウィルスエンジンで検出なし :2026/11/22 v1.43.0](https://www.virustotal.com/gui/file/cee354dfc244b1dfb1de2398826d37f59c66c17a50ca7064ad1b203ca4f69bac/detection)
 
-<img src="doc/images/virustotal_1.42.0.png" width="600">
+<img src="doc/images/virustotal_1.43.0.png" width="600">
 
 ### ⚡ ご利用について
 
