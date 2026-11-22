@@ -2,7 +2,7 @@
 #
 # チャットクラス
 #
-# Copyright (c) 2024-2025 led-mirage
+# Copyright (c) 2024-2026 led-mirage
 # このソースコードは MITライセンス の下でライセンスされています。
 # ライセンスの詳細については、このプロジェクトのLICENSEファイルを参照してください。
 
@@ -64,14 +64,17 @@ class Chat:
     def send_message(self, text: str, images: list[str], listener: SendMessageListener) -> str:
         pass
 
-    # 送信する会話履歴を取得するメッセージメッセージ
+    # 送信する会話履歴を取得する
     def _get_history(self):
         # まずhistory_size件だけ切り出す
         target_messages = self.messages[-self._history_size:]
 
         # history_char_limitの指定がなければそのまま返す
         if self._history_char_limit <= 0:
-            return target_messages
+            return [
+                {"role": msg["role"], "content": msg["content"]}
+                for msg in target_messages
+            ]
 
         # 末尾（新しい順）から合計文字数をカウントしつつ、history_char_limitで切る
         result = []
@@ -91,4 +94,7 @@ class Chat:
             result.pop()
 
         # 新しい順に並び替えて返却
-        return list(reversed(result))
+        return [
+            {"role": msg["role"], "content": msg["content"]}
+            for msg in reversed(result)
+        ]

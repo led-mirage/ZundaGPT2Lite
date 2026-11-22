@@ -2,7 +2,7 @@
 #
 # 言語サポート
 #
-# Copyright (c) 2024-2025 led-mirage
+# Copyright (c) 2024-2026 led-mirage
 # このソースコードは MITライセンス の下でライセンスされています。
 # ライセンスの詳細については、このプロジェクトのLICENSEファイルを参照してください。
 
@@ -25,6 +25,17 @@ text_resources = {
         "ERROR_RATE_LIMIT_REACHED": "レート制限に達したのだ",
         "ERROR_API_ERROR_OCCURRED": "APIエラーが発生したのだ",
         "ERROR_UNKNOWN_OCCURRED": "なんかわからないエラーが発生したのだ",
+        "ERROR_ATTACHMENT_COUNT": "添付画像は最大 ${max} 枚までです。",
+        "ERROR_ATTACHMENT_FILE_SIZE": "画像1枚のサイズは ${max} MiB 以下にしてください。",
+        "ERROR_ATTACHMENT_TOTAL_SIZE": "添付画像の合計サイズは ${max} MiB 以下にしてください。",
+        "ERROR_ATTACHMENT_FORMAT": "対応している画像形式は PNG、JPEG、WebP です。",
+        "ERROR_ATTACHMENT_ANIMATED": "アニメーション画像には対応していません。",
+        "ERROR_ATTACHMENT_PIXELS": "画像は最大 ${max} メガピクセルまでです。",
+        "ERROR_ATTACHMENT_INVALID": "画像データが壊れているか、画像として認識できません。",
+        "ERROR_ATTACHMENT_INVALID_PATH": "添付画像の保存先が不正です。",
+        "ERROR_ATTACHMENT_SAVE": "添付画像を保存できなかったため、送信を中止しました。",
+        "ERROR_ATTACHMENT_LOAD": "添付画像の原寸データを読み込めませんでした。",
+        "ATTACHED_IMAGE_COUNT": "[添付画像: ${count}件]",
         "ERROR_GOOGLETTS_FFMPEG_NOT_FOUND": "Google Text-to-Speechを使用するには、あらかじめFFmpegをインストールしておく必要があります\n\nFFmpegをインストールしてパスを通しておいてください",
         "SUMMARIZE_PROMPT": textwrap.dedent("""\
             以下のチャット会話を分かりやすく要約してください。
@@ -59,6 +70,17 @@ text_resources = {
         "ERROR_RATE_LIMIT_REACHED": "Rate limit reached.",
         "ERROR_API_ERROR_OCCURRED": "An API error occurred.",
         "ERROR_UNKNOWN_OCCURRED": "An unknown error has occurred.",
+        "ERROR_ATTACHMENT_COUNT": "You can attach up to ${max} images.",
+        "ERROR_ATTACHMENT_FILE_SIZE": "Each image must be ${max} MiB or smaller.",
+        "ERROR_ATTACHMENT_TOTAL_SIZE": "The total attachment size must be ${max} MiB or smaller.",
+        "ERROR_ATTACHMENT_FORMAT": "Supported image formats are PNG, JPEG, and WebP.",
+        "ERROR_ATTACHMENT_ANIMATED": "Animated images are not supported.",
+        "ERROR_ATTACHMENT_PIXELS": "Images may contain up to ${max} megapixels.",
+        "ERROR_ATTACHMENT_INVALID": "The image is corrupted or could not be recognized.",
+        "ERROR_ATTACHMENT_INVALID_PATH": "The attachment path is invalid.",
+        "ERROR_ATTACHMENT_SAVE": "The message was not sent because the attachment could not be saved.",
+        "ERROR_ATTACHMENT_LOAD": "The full-size attachment could not be loaded.",
+        "ATTACHED_IMAGE_COUNT": "[Attached images: ${count}]",
         "ERROR_GOOGLETTS_FFMPEG_NOT_FOUND": "To use Google Text-to-Speech, you need to install FFmpeg beforehand.\n\nPlease install FFmpeg and ensure that it is added to the system path.",
         "SUMMARIZE_PROMPT": textwrap.dedent("""\
             Please summarize the following chat conversation clearly and concisely.
@@ -93,6 +115,17 @@ text_resources = {
         "ERROR_RATE_LIMIT_REACHED": "Nopeusraja on saavutettu.",
         "ERROR_API_ERROR_OCCURRED": "API-virhe tapahtui.",
         "ERROR_UNKNOWN_OCCURRED": "Tapahtui tuntematon virhe.",
+        "ERROR_ATTACHMENT_COUNT": "Voit liittää enintään ${max} kuvaa.",
+        "ERROR_ATTACHMENT_FILE_SIZE": "Kuvan enimmäiskoko on ${max} MiB.",
+        "ERROR_ATTACHMENT_TOTAL_SIZE": "Liitteiden yhteiskoko saa olla enintään ${max} MiB.",
+        "ERROR_ATTACHMENT_FORMAT": "Tuetut kuvamuodot ovat PNG, JPEG ja WebP.",
+        "ERROR_ATTACHMENT_ANIMATED": "Animoituja kuvia ei tueta.",
+        "ERROR_ATTACHMENT_PIXELS": "Kuvan enimmäiskoko on ${max} megapikseliä.",
+        "ERROR_ATTACHMENT_INVALID": "Kuva on vioittunut tai sitä ei tunnistettu.",
+        "ERROR_ATTACHMENT_INVALID_PATH": "Liitteen polku on virheellinen.",
+        "ERROR_ATTACHMENT_SAVE": "Viestiä ei lähetetty, koska liitettä ei voitu tallentaa.",
+        "ERROR_ATTACHMENT_LOAD": "Täysikokoista liitekuvaa ei voitu ladata.",
+        "ATTACHED_IMAGE_COUNT": "[Liitetyt kuvat: ${count}]",
         "ERROR_GOOGLETTS_FFMPEG_NOT_FOUND": "Google Text-to-Speech -toiminnon käyttö edellyttää FFmpeg-asennusta etukäteen.\n\nAsenna FFmpeg ja varmista, että se on lisätty järjestelmäpolkuun.",
         "SUMMARIZE_PROMPT": textwrap.dedent("""\
             Tiivistä seuraava keskustelu selkeästi ja ytimekkäästi.
@@ -127,6 +160,17 @@ text_resources = {
         "ERROR_RATE_LIMIT_REACHED": "Se alcanzó el límite de solicitudes.",
         "ERROR_API_ERROR_OCCURRED": "Ocurrió un error en la API.",
         "ERROR_UNKNOWN_OCCURRED": "Ocurrió un error desconocido.",
+        "ERROR_ATTACHMENT_COUNT": "Puedes adjuntar hasta ${max} imágenes.",
+        "ERROR_ATTACHMENT_FILE_SIZE": "Cada imagen debe ocupar ${max} MiB o menos.",
+        "ERROR_ATTACHMENT_TOTAL_SIZE": "El tamaño total debe ser de ${max} MiB o menos.",
+        "ERROR_ATTACHMENT_FORMAT": "Los formatos compatibles son PNG, JPEG y WebP.",
+        "ERROR_ATTACHMENT_ANIMATED": "No se admiten imágenes animadas.",
+        "ERROR_ATTACHMENT_PIXELS": "Las imágenes pueden tener hasta ${max} megapíxeles.",
+        "ERROR_ATTACHMENT_INVALID": "La imagen está dañada o no se pudo reconocer.",
+        "ERROR_ATTACHMENT_INVALID_PATH": "La ruta del archivo adjunto no es válida.",
+        "ERROR_ATTACHMENT_SAVE": "El mensaje no se envió porque no se pudo guardar el archivo adjunto.",
+        "ERROR_ATTACHMENT_LOAD": "No se pudo cargar la imagen adjunta a tamaño completo.",
+        "ATTACHED_IMAGE_COUNT": "[Imágenes adjuntas: ${count}]",
         "ERROR_GOOGLETTS_FFMPEG_NOT_FOUND": "Para usar Google Text-to-Speech, necesitas instalar FFmpeg previamente.\n\nPor favor, instala FFmpeg y asegúrate de que se haya agregado a la ruta del sistema.",
         "SUMMARIZE_PROMPT": textwrap.dedent("""\
             Por favor, resume la siguiente conversación de chat de manera clara y concisa.
@@ -161,6 +205,17 @@ text_resources = {
         "ERROR_RATE_LIMIT_REACHED": "Das Ratelimit wurde erreicht.",
         "ERROR_API_ERROR_OCCURRED": "Ein API-Fehler ist aufgetreten.",
         "ERROR_UNKNOWN_OCCURRED": "Ein unbekannter Fehler ist aufgetreten.",
+        "ERROR_ATTACHMENT_COUNT": "Sie können bis zu ${max} Bilder anhängen.",
+        "ERROR_ATTACHMENT_FILE_SIZE": "Jedes Bild darf höchstens ${max} MiB groß sein.",
+        "ERROR_ATTACHMENT_TOTAL_SIZE": "Die Anhänge dürfen zusammen höchstens ${max} MiB groß sein.",
+        "ERROR_ATTACHMENT_FORMAT": "Unterstützt werden PNG, JPEG und WebP.",
+        "ERROR_ATTACHMENT_ANIMATED": "Animierte Bilder werden nicht unterstützt.",
+        "ERROR_ATTACHMENT_PIXELS": "Bilder dürfen höchstens ${max} Megapixel haben.",
+        "ERROR_ATTACHMENT_INVALID": "Das Bild ist beschädigt oder wurde nicht erkannt.",
+        "ERROR_ATTACHMENT_INVALID_PATH": "Der Anhangspfad ist ungültig.",
+        "ERROR_ATTACHMENT_SAVE": "Die Nachricht wurde nicht gesendet, da der Anhang nicht gespeichert werden konnte.",
+        "ERROR_ATTACHMENT_LOAD": "Das angehängte Bild konnte nicht in Originalgröße geladen werden.",
+        "ATTACHED_IMAGE_COUNT": "[Angehängte Bilder: ${count}]",
         "ERROR_GOOGLETTS_FFMPEG_NOT_FOUND": "Um Google Text-to-Speech zu verwenden, musst du vorher FFmpeg installieren.\n\nBitte installiere FFmpeg und stelle sicher, dass es zum Systempfad hinzugefügt wurde.",
         "SUMMARIZE_PROMPT": textwrap.dedent("""\
             Bitte fassen Sie das folgende Chat-Gespräch klar und präzise zusammen.
@@ -195,6 +250,17 @@ text_resources = {
         "ERROR_RATE_LIMIT_REACHED": "Limite de débit atteinte.",
         "ERROR_API_ERROR_OCCURRED": "Une erreur API s'est produite.",
         "ERROR_UNKNOWN_OCCURRED": "Une erreur inconnue s'est produite.",
+        "ERROR_ATTACHMENT_COUNT": "Vous pouvez joindre jusqu’à ${max} images.",
+        "ERROR_ATTACHMENT_FILE_SIZE": "Chaque image doit faire au maximum ${max} Mio.",
+        "ERROR_ATTACHMENT_TOTAL_SIZE": "La taille totale doit être au maximum de ${max} Mio.",
+        "ERROR_ATTACHMENT_FORMAT": "Les formats pris en charge sont PNG, JPEG et WebP.",
+        "ERROR_ATTACHMENT_ANIMATED": "Les images animées ne sont pas prises en charge.",
+        "ERROR_ATTACHMENT_PIXELS": "Les images sont limitées à ${max} mégapixels.",
+        "ERROR_ATTACHMENT_INVALID": "L’image est endommagée ou n’a pas été reconnue.",
+        "ERROR_ATTACHMENT_INVALID_PATH": "Le chemin de la pièce jointe est invalide.",
+        "ERROR_ATTACHMENT_SAVE": "Le message n’a pas été envoyé car la pièce jointe n’a pas pu être enregistrée.",
+        "ERROR_ATTACHMENT_LOAD": "Impossible de charger l’image jointe en taille réelle.",
+        "ATTACHED_IMAGE_COUNT": "[Images jointes : ${count}]",
         "ERROR_GOOGLETTS_FFMPEG_NOT_FOUND": "Pour utiliser Google Text-to-Speech, vous devez d'abord installer FFmpeg.\n\nVeuillez installer FFmpeg et vous assurer qu'il est ajouté au chemin système.",
         "SUMMARIZE_PROMPT": textwrap.dedent("""\
             Veuillez résumer clairement et de manière concise la conversation de chat suivante.

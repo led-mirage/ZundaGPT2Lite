@@ -2,7 +2,7 @@
 #
 # JSからの要求を受け付けルーティングするクラス
 #
-# Copyright (c) 2024-2025 led-mirage
+# Copyright (c) 2024-2026 led-mirage
 # このソースコードは MITライセンス の下でライセンスされています。
 # ライセンスの詳細については、このプロジェクトのLICENSEファイルを参照してください。
 
@@ -67,9 +67,9 @@ class ApiRouter:
     def send_message_to_chatgpt(self, text, images):
         return self.index_service.send_message_to_chatgpt(text, images)
 
-    # メッセージ再送信イベントハンドラ（UI）
-    def retry_send_message_to_chatgpt(self):
-        return self.index_service.retry_send_message_to_chatgpt()
+    # 添付画像の原寸データを取得する
+    def get_attachment_image(self, attachment_id):
+        return self.index_service.get_attachment_image(attachment_id)
 
     # メッセージ送信中止イベントハンドラ（UI）
     def stop_send_message_to_chatgpt(self):

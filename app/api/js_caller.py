@@ -2,7 +2,7 @@
 #
 # JSの関数を呼び出すクラス
 #
-# Copyright (c) 2024-2025 led-mirage
+# Copyright (c) 2024-2026 led-mirage
 # このソースコードは MITライセンス の下でライセンスされています。
 # ライセンスの詳細については、このプロジェクトのLICENSEファイルを参照してください。
 
@@ -80,8 +80,29 @@ class JSCaller:
         js_literal = json.dumps(info)
         self.window.evaluate_js(f"setChatInfo({js_literal})")
 
-    def setChatMessages(self, messages: list[dict]):
-        self.window.evaluate_js(f"setChatMessages({messages})")
+    def setChatMessages(self, messages: list[dict], preserve_pending: bool = False):
+        js_literal = json.dumps(messages, ensure_ascii=False)
+        preserve_literal = "true" if preserve_pending else "false"
+        self.window.evaluate_js(
+            f"setChatMessages({js_literal}, {preserve_literal})"
+        )
+
+    def addSendingUserMessage(self, text: str, attachments: list[dict]):
+        text_literal = json.dumps(text, ensure_ascii=False)
+        attachments_literal = json.dumps(attachments, ensure_ascii=False)
+        self.window.evaluate_js(
+            f"addSendingUserMessage({text_literal}, {attachments_literal})"
+        )
+
+    def completeSentPrompt(self):
+        self.window.evaluate_js("completeSentPrompt()")
+
+    def rollbackSendingMessage(self):
+        self.window.evaluate_js("rollbackSendingMessage()")
+
+    def handleAttachmentException(self, message: str):
+        message_literal = json.dumps(message, ensure_ascii=False)
+        self.window.evaluate_js(f"handleAttachmentException({message_literal})")
 
     def newChat(self):
         self.window.evaluate_js(f"newChat()")

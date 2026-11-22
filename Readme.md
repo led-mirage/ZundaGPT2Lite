@@ -208,7 +208,7 @@ Windowsの場合は、Windowsの検索窓で「環境変数を編集」で検索
 
 以下のリンクから ZundaGPT2Lite.ZIP をダウンロードして、作成したフォルダに展開するのだ。
 
-https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.42.0
+https://github.com/led-mirage/ZundaGPT2Lite/releases/tag/v1.43.0
 
 #### 3. 実行
 
@@ -356,11 +356,11 @@ CSSを知らない人はなんのことかわからないかもしれないけ�
 
 VirusTotalでのチェック結果はこちらなのだ。
 
-- **Windows版:** [68個中4個のアンチウィルスエンジンで検出 :2026/10/24 v1.42.0](https://www.virustotal.com/gui/file/e2edb1dbd3a6ebd5b5487c3a6ad40ff08b3b4a4501e74c7fbd3bc564df87f668/detection)
-- **Raspberry Pi版:** [57個のアンチウィルスエンジンで検出なし :2026/10/24 v1.42.0](https://www.virustotal.com/gui/file/57054e91f379c523cefc491073387bfbd110acf0d30c42b41e55a61272497c60/detection)
-- **Linux版:** [57個のアンチウィルスエンジンで検出なし :2026/10/24 v1.42.0](https://www.virustotal.com/gui/file/bb577cd8ddcacbeceb7a15e4fc4626d3320b14267aeba6e858abecabd4e9e276/detection)
+- **Windows版:** [69個中1個のアンチウィルスエンジンで検出 :2026/11/22 v1.43.0](https://www.virustotal.com/gui/file/e74546ebb7e7ade970a82e95533907f4dbe152e68fc4139b4a7193d2a403c128/detection)
+- **Raspberry Pi版:** [58個のアンチウィルスエンジンで検出なし :2026/11/22 v1.43.0](https://www.virustotal.com/gui/file/574eecf4e8dfa91e332f2c161fb4bcbf3f32e633602fad2e4d2137503a392adf/detection)
+- **Linux版:** [60個のアンチウィルスエンジンで検出なし :2026/11/22 v1.43.0](https://www.virustotal.com/gui/file/cee354dfc244b1dfb1de2398826d37f59c66c17a50ca7064ad1b203ca4f69bac/detection)
 
-<img src="doc/images/virustotal_1.42.0.png" width="600">
+<img src="doc/images/virustotal_1.43.0.png" width="600">
 
 ### ⚡ ご利用について
 
@@ -464,6 +464,21 @@ VirusTotalでのチェック結果はこちらなのだ。
 ## 💎 バージョン履歴
 
 バージョンアップの詳しい内容については [Zennの記事](https://zenn.dev/ledmirage/books/8ec854ef6b8e12) を見て欲しいのだ。
+
+### 1.43.0 (2026/11/22)
+
+- 長いユーザーメッセージを自動的に折りたたんで表示する機能を追加
+  - メッセージ右下のアイコンで展開・折りたたみが可能
+- プロンプトに添付した画像をチャットログへ保存し、過去ログでも表示できるようにした
+  - 最大辺320pxのサムネイルを表示し、クリックすると元の画像を拡大表示
+  - 画像のみのメッセージ送信に対応
+  - 画像付きメッセージの再回答時に、添付画像も再送信
+  - チャットログの削除時に、対応する添付画像も削除
+- 添付できる画像をPNG、JPEG、WebP形式に制限
+  - 1枚あたり最大10MB、合計50MB、最大10枚まで添付可能
+- API呼び出しに失敗した場合の動作を改善
+  - 失敗したユーザーメッセージをチャットログへ保存しないように変更
+  - 送信時には入力欄からプロンプトを消し、失敗時にはテキストと添付画像を復元
 
 ### 1.42.0 (2026/10/25)
 

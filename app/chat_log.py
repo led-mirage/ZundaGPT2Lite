@@ -2,14 +2,16 @@
 #
 # チャットログクラス
 #
-# Copyright (c) 2024-2025 led-mirage
+# Copyright (c) 2024-2026 led-mirage
 # このソースコードは MITライセンス の下でライセンスされています。
 # ライセンスの詳細については、このプロジェクトのLICENSEファイルを参照してください。
 
 import glob
 import json
 import os
+import shutil
 from datetime import datetime
+from pathlib import Path
 
 from config.app_config import AppConfig
 from config.app_settings import Settings
@@ -18,7 +20,7 @@ from chat import ChatFactory, ChatFactoryOptions
 
 # チャットログクラス
 class ChatLog:
-    FILE_VER = 10
+    FILE_VER = 11
     LOG_FOLDER = "log"
 
     cache = {}
@@ -48,8 +50,14 @@ class ChatLog:
 
         filename = ChatLog.get_logfile_name(chat)
         path = os.path.join(log_folder, filename)
-        with open(path, "w", encoding="utf-8") as file:
-            json.dump(data, file, ensure_ascii=False, indent=4)
+        temp_path = path + ".tmp"
+        try:
+            with open(temp_path, "w", encoding="utf-8") as file:
+                json.dump(data, file, ensure_ascii=False, indent=4)
+            os.replace(temp_path, path)
+        finally:
+            if os.path.exists(temp_path):
+                os.remove(temp_path)
 
         ChatLog.cache[filename] = (settings, chat)
 
@@ -126,6 +134,11 @@ class ChatLog:
                 # バグ修正 v1.38.0
                 if "welcome_icon_visible" not in data["settings"]:
                     data["settings"]["welcome_icon_visible"] = True
+
+            # v10以前のログにはattachmentsが存在しない
+            for message in data.get("messages", []):
+                if message.get("role") == "user":
+                    message.setdefault("attachments", [])
 
             app_config = AppConfig()
             app_config.load()
@@ -217,7 +230,20 @@ class ChatLog:
     def delete_log_file(chat: Chat):
         logfile = ChatLog.get_logfile_name(chat)
         path = os.path.join(ChatLog.LOG_FOLDER, logfile)
-        os.remove(path)
+        if os.path.exists(path):
+            os.remove(path)
+
+        attachment_dir = (
+            Path(ChatLog.LOG_FOLDER)
+            / "attachments"
+            / Path(logfile).stem
+        )
+        if attachment_dir.is_dir():
+            shutil.rmtree(attachment_dir)
+
+        attachments_root = Path(ChatLog.LOG_FOLDER) / "attachments"
+        if attachments_root.is_dir() and not any(attachments_root.iterdir()):
+            attachments_root.rmdir()
 
         if logfile in ChatLog.cache:
             del ChatLog.cache[logfile]

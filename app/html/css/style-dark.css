@@ -53,6 +53,12 @@ body.dark-mode .message-copy-btn {
     border: var(--dark-tool-button-border);
 }
 
+body.dark-mode .user-message-toggle {
+    background-color: var(--dark-tool-button-bgcolor);
+    color: var(--dark-tool-button-color);
+    border: var(--dark-tool-button-border);
+}
+
 body.dark-mode .header button:hover {
     background-color: var(--dark-tool-button-hover-bgcolor);
     color: var(--dark-tool-button-hover-color);
@@ -74,13 +80,18 @@ body.dark-mode .chat-input textarea:focus {
     outline: var(--dark-chat-input-textarea-focus-outline);
 }
 
-body.dark-mode .chat-input button {
+body.dark-mode .chat-input > #submit-button {
     background-image: var(--dark-chat-input-button-bgimage);
     color: var(--dark-chat-input-button-color);
 }
 
-body.dark-mode .chat-input button.submit-button-disabled {
+body.dark-mode .chat-input > #submit-button.submit-button-disabled {
     background-image: var(--dark-chat-input-button-disabled-bgimage);
+}
+
+body.dark-mode .attachment-missing {
+    color: #bbb;
+    border-color: #777;
 }
 
 body.dark-mode .speaker-name {
